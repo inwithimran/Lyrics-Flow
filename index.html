@@ -10,9 +10,10 @@
     <style>
         :root {
             --accent: #00f2ff;
-            --accent-glow: rgba(0, 242, 255, 0.25);
+            --accent-glow: rgba(0, 242, 255, 0.2);
             --bg-base: #030712;
-            --card-bg: rgba(15, 23, 42, 0.75);
+            --card-bg: rgba(15, 23, 42, 0.85);
+            --viz-opacity: 0.55;
         }
 
         html, body {
@@ -30,12 +31,12 @@
             -webkit-user-select: none;
         }
 
-        /* Cyberpunk Ambient Grid */
+        /* Ambient Background Grid */
         .bg-grid {
             position: fixed;
             inset: 0;
             background-image: 
-                radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.8) 0%, transparent 80%),
+                radial-gradient(circle at 50% 30%, rgba(15, 23, 42, 0.95) 0%, transparent 85%),
                 linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
                 linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
             background-size: 100% 100%, 40px 40px, 40px 40px;
@@ -44,7 +45,25 @@
 
         .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Smooth Lyrics Viewport */
+        /* Dedicated Visualizer Container right above controls */
+        #viz-wrapper {
+            width: 100%;
+            height: 70px;
+            pointer-events: none;
+            z-index: 25;
+            flex-shrink: 0;
+            margin-bottom: -15px; /* Subtle overlay effect with the footer line */
+            position: relative;
+        }
+
+        #p-viz {
+            width: 100%;
+            height: 100%;
+            opacity: var(--viz-opacity);
+            transition: opacity 0.4s ease;
+        }
+
+        /* Lyrics Viewport Container */
         #p-lyrics-container {
             flex: 1 1 0%;
             min-height: 0;
@@ -62,18 +81,18 @@
             left: 0;
             width: 100%;
             will-change: transform;
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .preview-line {
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-            opacity: 0.2;
+            transition: all 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0.25;
             transform: scale(0.88);
             text-align: center;
             margin: 0;
             padding: 16px 24px;
             width: 100%;
-            font-size: 1.4rem;
+            font-size: 1.45rem;
             line-height: 1.4;
             font-weight: 700;
             color: #94a3b8;
@@ -81,47 +100,51 @@
             word-wrap: break-word;
             cursor: pointer;
             border-radius: 16px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.8);
         }
 
         .preview-line:hover {
-            opacity: 0.5;
+            opacity: 0.6;
             color: #f8fafc;
         }
 
         @media (min-width: 640px) {
             .preview-line {
-                font-size: 2rem;
+                font-size: 2.1rem;
                 padding: 22px 40px;
+            }
+            #viz-wrapper {
+                height: 90px;
             }
         }
 
         .preview-line.active {
             opacity: 1;
-            transform: scale(1.1);
+            transform: scale(1.08);
             color: var(--accent);
-            text-shadow: 0 0 25px var(--accent-glow);
+            text-shadow: 0 0 20px var(--accent-glow), 0 4px 15px rgba(0,0,0,0.9);
         }
 
         /* Glassmorphism Panels */
         .glass-panel {
             background: var(--card-bg);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
 
         .glass-footer {
-            background: rgba(8, 12, 22, 0.92);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border-top: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 36px 36px 0 0;
+            background: rgba(8, 12, 22, 0.94);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px 32px 0 0;
             z-index: 40;
             flex-shrink: 0;
             padding-bottom: max(1.25rem, env(safe-area-inset-bottom));
         }
 
-        /* Accent Buttons */
+        /* Buttons */
         .btn-accent {
             background: var(--accent);
             color: #030712;
@@ -130,14 +153,14 @@
         }
 
         .btn-accent:active {
-            transform: scale(0.95);
+            transform: scale(0.92);
         }
 
         /* Progress Slider */
         .custom-slider {
             -webkit-appearance: none;
             width: 100%;
-            background: rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.1);
             height: 6px;
             border-radius: 3px;
             outline: none;
@@ -165,7 +188,7 @@
             height: 44px;
             border-radius: 50%;
             background: radial-gradient(circle, #000 30%, #1e293b 31%, #0f172a 60%, #000 100%);
-            border: 2px solid rgba(255,255,255,0.1);
+            border: 2px solid rgba(255,255,255,0.12);
             box-shadow: 0 0 15px rgba(0,0,0,0.5);
             animation: spin 8s linear infinite;
             animation-play-state: paused;
@@ -180,7 +203,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Modals */
+        /* Modal Overlay */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -208,7 +231,6 @@
             transform: scale(1.1);
         }
 
-        /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
@@ -217,9 +239,8 @@
 <body>
 
     <div class="bg-grid"></div>
-    <canvas id="p-viz" class="absolute inset-0 w-full h-full opacity-30 pointer-events-none z-0"></canvas>
 
-    <!-- Header Section -->
+    <!-- Header Area -->
     <header class="p-4 sm:p-6 flex justify-between items-center z-20 flex-shrink-0">
         <div class="flex items-center gap-3">
             <div id="vinyl-art" class="vinyl-record flex items-center justify-center">
@@ -235,7 +256,7 @@
         </div>
 
         <div class="flex items-center gap-2">
-            <!-- Search / Quick Filter Button -->
+            <!-- Search Button -->
             <button id="search-btn" class="w-10 h-10 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-white active:scale-90 transition-transform">
                 <i class="fa-solid fa-magnifying-glass text-sm"></i>
             </button>
@@ -246,7 +267,7 @@
         </div>
     </header>
 
-    <!-- Search Overlay Container -->
+    <!-- Search Bar Box -->
     <div id="search-bar-container" class="px-6 hidden z-20 flex-shrink-0 mb-2">
         <div class="glass-panel rounded-xl flex items-center px-3 py-2 border border-white/10">
             <i class="fa-solid fa-search text-white/40 text-xs mr-2"></i>
@@ -255,17 +276,22 @@
         </div>
     </div>
 
-    <!-- Lyrics Viewport -->
+    <!-- Lyrics Viewport Area -->
     <main id="p-lyrics-container">
         <div id="p-lyrics-scroller">
             <div class="preview-line">Load audio & lyrics file to start</div>
         </div>
     </main>
 
-    <!-- Main Player Controls Footer -->
+    <!-- Dedicated Visualizer Strip (Right on top of controls) -->
+    <div id="viz-wrapper">
+        <canvas id="p-viz"></canvas>
+    </div>
+
+    <!-- Control Footer -->
     <footer class="glass-footer p-4 sm:p-6">
         <div class="max-w-md mx-auto space-y-4">
-            <!-- Progress Bar -->
+            <!-- Audio Progress Slider -->
             <div class="space-y-1.5">
                 <input type="range" id="progress-slider" class="custom-slider" value="0" step="0.1">
                 <div class="flex justify-between text-[10px] font-bold opacity-50 tracking-widest uppercase mono">
@@ -276,7 +302,7 @@
 
             <!-- Controls Row -->
             <div class="flex items-center justify-between px-2">
-                <!-- Repeat Track -->
+                <!-- Loop Track -->
                 <button id="loop-btn" class="w-9 h-9 rounded-lg text-white/40 hover:text-white flex items-center justify-center transition-colors">
                     <i class="fa-solid fa-repeat text-sm"></i>
                 </button>
@@ -286,7 +312,7 @@
                     <i class="fa-solid fa-rotate-left text-base"></i>
                 </button>
                 
-                <!-- Play/Pause Main -->
+                <!-- Play/Pause Button -->
                 <button id="play-pause" class="w-16 h-16 sm:w-18 sm:h-18 btn-accent rounded-full flex items-center justify-center shadow-xl active:scale-90 transition-transform">
                     <i id="play-icon" class="fa-solid fa-play text-2xl ml-1"></i>
                     <i id="pause-icon" class="fa-solid fa-pause text-2xl hidden"></i>
@@ -297,7 +323,7 @@
                     <i class="fa-solid fa-rotate-right text-base"></i>
                 </button>
 
-                <!-- Sync Offset Settings -->
+                <!-- Sync Offset Button -->
                 <button id="offset-btn" class="w-9 h-9 rounded-lg text-white/40 hover:text-white flex items-center justify-center transition-colors">
                     <i class="fa-solid fa-clock-rotate-left text-sm"></i>
                 </button>
@@ -305,7 +331,7 @@
         </div>
     </footer>
 
-    <!-- Settings / Studio Configuration Modal -->
+    <!-- Configuration Modal -->
     <div id="setup-modal" class="modal-overlay hidden opacity-0">
         <div class="cyber-panel glass-panel rounded-3xl p-6 w-full max-w-sm space-y-5 shadow-2xl border border-white/10">
             <div class="flex justify-between items-center border-b border-white/10 pb-3">
@@ -316,14 +342,14 @@
             </div>
             
             <div class="space-y-4 text-xs">
-                <!-- Demo Media Quick Loader -->
+                <!-- Demo Song Quick Loader -->
                 <button id="demo-load-btn" class="w-full py-2.5 px-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold hover:bg-cyan-500/20 transition-all flex items-center justify-center gap-2">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Load Demo Song & Lyrics
                 </button>
 
-                <!-- Local Files Upload -->
+                <!-- Local File Uploads -->
                 <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Import Local Tracks</p>
+                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Import Local Media</p>
                     <label class="block cursor-pointer bg-white/5 border border-white/10 p-3 rounded-xl hover:bg-white/10 transition-all">
                         <input type="file" id="audio-input" accept="audio/*" class="hidden">
                         <div class="flex items-center gap-3">
@@ -341,6 +367,16 @@
                     </label>
                 </div>
 
+                <!-- Visualizer Modes & Opacity Control -->
+                <div class="space-y-2">
+                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Visualizer Style</p>
+                    <div class="flex gap-2">
+                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-[10px]" data-style="bars">SOFT BARS</button>
+                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="wave">NEON WAVE</button>
+                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="off">OFF</button>
+                    </div>
+                </div>
+
                 <!-- Playback Speed -->
                 <div class="space-y-2">
                     <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Playback Speed</p>
@@ -352,25 +388,15 @@
                     </div>
                 </div>
 
-                <!-- Visualizer Modes -->
+                <!-- Color Theme -->
                 <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Visualizer Style</p>
-                    <div class="flex gap-2">
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-[10px]" data-style="bars">BARS</button>
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="wave">WAVE</button>
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="circle">CIRCLE</button>
-                    </div>
-                </div>
-
-                <!-- Color Theme Engine -->
-                <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Aesthetic Preset</p>
+                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Color Theme Preset</p>
                     <div class="flex justify-between gap-2" id="theme-selector">
-                        <div class="theme-dot active" style="background: #00f2ff;" data-color="#00f2ff" data-dim="rgba(0, 242, 255, 0.25)" data-name="CYBER CYAN"></div>
-                        <div class="theme-dot" style="background: #a855f7;" data-color="#a855f7" data-dim="rgba(168, 85, 247, 0.25)" data-name="PLASMA PURPLE"></div>
-                        <div class="theme-dot" style="background: #f97316;" data-color="#f97316" data-dim="rgba(249, 115, 22, 0.25)" data-name="SUNSET ORANGE"></div>
-                        <div class="theme-dot" style="background: #22c55e;" data-color="#22c55e" data-dim="rgba(34, 197, 94, 0.25)" data-name="MATRIX GREEN"></div>
-                        <div class="theme-dot" style="background: #ef4444;" data-color="#ef4444" data-dim="rgba(239, 68, 68, 0.25)" data-name="NEON RED"></div>
+                        <div class="theme-dot active" style="background: #00f2ff;" data-color="#00f2ff" data-dim="rgba(0, 242, 255, 0.2)" data-name="CYBER CYAN"></div>
+                        <div class="theme-dot" style="background: #a855f7;" data-color="#a855f7" data-dim="rgba(168, 85, 247, 0.2)" data-name="PLASMA PURPLE"></div>
+                        <div class="theme-dot" style="background: #f97316;" data-color="#f97316" data-dim="rgba(249, 115, 22, 0.2)" data-name="SUNSET ORANGE"></div>
+                        <div class="theme-dot" style="background: #22c55e;" data-color="#22c55e" data-dim="rgba(34, 197, 94, 0.2)" data-name="MATRIX GREEN"></div>
+                        <div class="theme-dot" style="background: #ef4444;" data-color="#ef4444" data-dim="rgba(239, 68, 68, 0.2)" data-name="NEON RED"></div>
                     </div>
                 </div>
             </div>
@@ -401,7 +427,7 @@
     <audio id="audio-player" crossorigin="anonymous"></audio>
 
     <script>
-        // Core Element Selectors
+        // Core Selectors
         const audio = document.getElementById('audio-player');
         const scroller = document.getElementById('p-lyrics-scroller');
         const container = document.getElementById('p-lyrics-container');
@@ -410,24 +436,30 @@
         const setupModal = document.getElementById('setup-modal');
         const offsetModal = document.getElementById('offset-modal');
         const canvas = document.getElementById('p-viz');
+        const vizWrapper = document.getElementById('viz-wrapper');
         const ctx = canvas.getContext('2d');
         const vinylArt = document.getElementById('vinyl-art');
         const offsetBadge = document.getElementById('offset-badge');
 
-        // Application State
+        // State Engine
         let lyrics = [];
         let activeIndex = -1;
         let audioCtx, analyzer, dataArray;
         let currentThemeColor = "#00f2ff";
-        let timeOffset = 0.0; // In seconds
+        let timeOffset = 0.0;
         let isLooping = false;
         let visualizerMode = 'bars';
+        
+        // Smooth Interpolation Array for Visualizer Bars
+        const barCount = 32;
+        let smoothBars = new Array(barCount).fill(0);
 
-        // Initialize Canvas Size
+        // Resize Canvas dynamically inside the Wrapper
         function initCanvas() {
             const dpr = window.devicePixelRatio || 1;
-            canvas.width = window.innerWidth * dpr;
-            canvas.height = window.innerHeight * dpr;
+            const rect = vizWrapper.getBoundingClientRect();
+            canvas.width = rect.width * dpr;
+            canvas.height = rect.height * dpr;
             ctx.scale(dpr, dpr);
         }
         window.onresize = () => {
@@ -436,7 +468,7 @@
         };
         initCanvas();
 
-        // Audio Context & Visualizer Engine
+        // Audio Context Initializer
         async function initAudio() {
             if (audioCtx) return;
             try {
@@ -445,87 +477,127 @@
                 const source = audioCtx.createMediaElementSource(audio);
                 source.connect(analyzer);
                 analyzer.connect(audioCtx.destination);
-                analyzer.fftSize = 256;
+                analyzer.fftSize = 128;
                 dataArray = new Uint8Array(analyzer.frequencyBinCount);
-                drawViz();
             } catch (e) {
-                console.log("AudioContext blocked or unavailable:", e);
+                console.log("AudioContext fallback:", e);
             }
         }
 
+        // Precise Visualizer Engine Anchored Right Above Controls
         function drawViz() {
             requestAnimationFrame(drawViz);
-            if (!analyzer) return;
-            analyzer.getByteFrequencyData(dataArray);
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            const rect = vizWrapper.getBoundingClientRect();
+            const width = rect.width;
+            const height = rect.height;
 
-            const width = window.innerWidth;
-            const height = window.innerHeight;
+            ctx.clearRect(0, 0, width, height);
+
+            if (visualizerMode === 'off') return;
+
+            let hasRealData = false;
+            if (analyzer && !audio.paused) {
+                analyzer.getByteFrequencyData(dataArray);
+                for(let val of dataArray) {
+                    if (val > 0) { hasRealData = true; break; }
+                }
+            }
+
+            let displayData = new Array(barCount).fill(0);
+
+            if (hasRealData) {
+                for(let i = 0; i < barCount; i++) {
+                    displayData[i] = dataArray[i] || 0;
+                }
+            } else if (!audio.paused) {
+                const now = Date.now() / 250;
+                for (let i = 0; i < barCount; i++) {
+                    displayData[i] = (Math.sin(now + i * 0.25) * 0.5 + 0.5) * 140 + 20;
+                }
+            }
+
+            // Smooth Interpolation
+            for(let i = 0; i < barCount; i++) {
+                smoothBars[i] += (displayData[i] - smoothBars[i]) * 0.18;
+            }
 
             if (visualizerMode === 'bars') {
-                const barWidth = (width / dataArray.length) * 2;
-                for(let i = 0; i < dataArray.length; i++) {
-                    const h = (dataArray[i] / 255) * 130;
-                    ctx.fillStyle = currentThemeColor;
-                    ctx.globalAlpha = dataArray[i]/700;
-                    ctx.fillRect(i * barWidth, height - h, barWidth - 2, h);
+                const barWidth = (width / barCount) * 0.55;
+                const gap = (width / barCount) * 0.45;
+
+                for (let i = 0; i < barCount; i++) {
+                    const h = (smoothBars[i] / 255) * (height * 0.85); // Up to 85% of wrapper height
+                    const x = i * (barWidth + gap) + gap / 2;
+                    const y = height - h;
+
+                    const grad = ctx.createLinearGradient(0, height, 0, y);
+                    grad.addColorStop(0, 'transparent');
+                    grad.addColorStop(0.3, currentThemeColor);
+                    grad.addColorStop(1, '#ffffff');
+
+                    ctx.fillStyle = grad;
+                    ctx.globalAlpha = 0.9;
+                    
+                    ctx.beginPath();
+                    ctx.roundRect(x, y, barWidth, h, [4, 4, 0, 0]);
+                    ctx.fill();
                 }
-            } else if (visualizerMode === 'wave') {
+            } 
+            else if (visualizerMode === 'wave') {
                 ctx.beginPath();
                 ctx.lineWidth = 3;
                 ctx.strokeStyle = currentThemeColor;
-                ctx.globalAlpha = 0.6;
-                const sliceWidth = width / dataArray.length;
+                ctx.globalAlpha = 0.9;
+
+                const sliceWidth = width / (barCount - 1);
                 let x = 0;
-                for(let i = 0; i < dataArray.length; i++) {
-                    const v = dataArray[i] / 128.0;
-                    const y = (v * height) / 4 + height / 2;
-                    if(i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
+
+                for (let i = 0; i < barCount; i++) {
+                    const v = smoothBars[i] / 255.0;
+                    const y = height - (v * height * 0.75) - 5;
+
+                    if (i === 0) ctx.moveTo(x, y);
+                    else {
+                        const prevX = x - sliceWidth;
+                        const prevY = height - ((smoothBars[i-1] / 255.0) * height * 0.75) - 5;
+                        const xc = (prevX + x) / 2;
+                        const yc = (prevY + y) / 2;
+                        ctx.quadraticCurveTo(prevX, prevY, xc, yc);
+                    }
                     x += sliceWidth;
                 }
                 ctx.stroke();
-            } else if (visualizerMode === 'circle') {
-                const centerX = width / 2;
-                const centerY = height / 2;
-                const radius = 80;
-                ctx.beginPath();
-                ctx.strokeStyle = currentThemeColor;
-                ctx.lineWidth = 2;
-                ctx.globalAlpha = 0.5;
-                for(let i = 0; i < dataArray.length; i++) {
-                    const angle = (i / dataArray.length) * Math.PI * 2;
-                    const amp = dataArray[i] / 3;
-                    const x = centerX + Math.cos(angle) * (radius + amp);
-                    const y = centerY + Math.sin(angle) * (radius + amp);
-                    if(i === 0) ctx.moveTo(x, y);
-                    else ctx.lineTo(x, y);
-                }
-                ctx.closePath();
-                ctx.stroke();
+
+                ctx.lineTo(width, height);
+                ctx.lineTo(0, height);
+                const waveGrad = ctx.createLinearGradient(0, 0, 0, height);
+                waveGrad.addColorStop(0, currentThemeColor);
+                waveGrad.addColorStop(1, 'transparent');
+                ctx.fillStyle = waveGrad;
+                ctx.globalAlpha = 0.2;
+                ctx.fill();
             }
             ctx.globalAlpha = 1;
         }
+        drawViz();
 
-        // Robust & Flexible LRC Parser Engine
+        // LRC Parsing Engine
         function parseLRC(text) {
             lyrics = [];
             if (!text) return;
 
             const cleanText = text.replace(/^\uFEFF/, '').replace(/\r\n/g, '\n').replace(/\r/g, '\n');
             const lines = cleanText.split('\n');
-
-            // Matches standard timestamp formats [mm:ss.xx] or [mm:ss:xx] or [mm:ss]
             const timestampRegex = /[\[<\(]\s*(\d{1,3})\s*:\s*(\d{1,2})(?:\s*[\.\:,]\s*(\d{1,3}))?\s*[\]>\)]/g;
 
             lines.forEach((line) => {
-                // Ignore metadata lines
                 if (/^\s*[\[<\(]\s*(ar|ti|al|by|offset|length)\s*:/i.test(line)) return;
 
                 const matches = [...line.matchAll(timestampRegex)];
                 if (matches.length > 0) {
                     let content = line.replace(timestampRegex, '').trim();
-                    if (!content) content = "♪ ♪ ♪"; // Instrumental placeholder
+                    if (!content) content = "♪ ♪ ♪";
 
                     matches.forEach(match => {
                         const min = parseInt(match[1], 10);
@@ -561,7 +633,6 @@
                 div.id = `line-${i}`;
                 div.innerText = l.content;
                 
-                // Click line to jump directly to timestamp
                 div.onclick = () => {
                     audio.currentTime = Math.max(0, l.time + timeOffset);
                     if (audio.paused) audio.play();
@@ -573,7 +644,7 @@
             updateScroll(-1);
         }
 
-        // High-Precision 60FPS Sync Engine
+        // High precision 60FPS Lyric Sync Loop
         function syncLyricLoop() {
             if (!audio.paused && !audio.ended) {
                 updateLyricPosition();
@@ -589,7 +660,6 @@
                 progressSlider.value = (cur / audio.duration) * 100;
             }
 
-            // Sync with Time Offset calculation
             const adjustedTime = cur - timeOffset;
 
             let idx = -1;
@@ -626,7 +696,7 @@
             }
         }
 
-        // File Loaders
+        // File Input Listeners
         document.getElementById('audio-input').onchange = (e) => {
             const file = e.target.files[0];
             if (file) {
@@ -648,19 +718,18 @@
 
         // Demo Track Loader
         document.getElementById('demo-load-btn').onclick = () => {
-            // High quality Royalty-free demo music
             audio.src = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3";
             document.getElementById('song-title').innerText = "Cyber Lofi Chill (Demo)";
             
             const demoLRC = `
-[00:00.00] ♪ Instrumental Intro ♪
-[00:04.00] Welcome to Lyrics Flow Pro Studio
-[00:08.50] Experience real-time lyric synchronization
-[00:13.00] High performance responsive engine
-[00:18.00] Feel the rhythm and visualizer glow
-[00:23.50] Designed for mobile and desktop screens
-[00:29.00] ♪ Instrumental Bridge ♪
-[00:35.00] Keep flowing with your favorite tunes
+[00:00.00] ♪ Soft Ambient Intro ♪
+[00:05.00] Welcome to Lyrics Flow Pro Studio
+[00:09.50] High precision lyric synchronization
+[00:14.00] Elegant and clear typography
+[00:19.00] Visualizer anchored right on top of controls
+[00:24.00] Optimized for mobile & desktop screens
+[00:30.00] ♪ Instrumental Bridge ♪
+[00:36.00] Enjoy your music experience!
             `;
             parseLRC(demoLRC);
             closeModals();
@@ -697,7 +766,7 @@
         document.getElementById('rewind-btn').onclick = () => audio.currentTime = Math.max(0, audio.currentTime - 5);
         document.getElementById('forward-btn').onclick = () => audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
 
-        // Loop Mode
+        // Loop Button
         const loopBtn = document.getElementById('loop-btn');
         loopBtn.onclick = () => {
             isLooping = !isLooping;
@@ -705,7 +774,7 @@
             loopBtn.style.color = isLooping ? currentThemeColor : 'rgba(255,255,255,0.4)';
         };
 
-        // Offset Controls
+        // Sync Offset Controls
         document.getElementById('offset-btn').onclick = () => openModal(offsetModal);
         document.getElementById('close-offset').onclick = () => closeModal(offsetModal);
 
@@ -727,7 +796,7 @@
             offsetBadge.innerText = formatted;
         }
 
-        // Theme Engine
+        // Color Theme Preset
         document.querySelectorAll('.theme-dot').forEach(dot => {
             dot.onclick = () => {
                 document.querySelectorAll('.theme-dot').forEach(d => d.classList.remove('active'));
@@ -758,7 +827,7 @@
             };
         });
 
-        // Visualizer Style Switcher
+        // Visualizer Mode Selector
         document.querySelectorAll('.viz-style-btn').forEach(btn => {
             btn.onclick = () => {
                 document.querySelectorAll('.viz-style-btn').forEach(b => {
@@ -770,7 +839,7 @@
             };
         });
 
-        // Lyrics Search Functionality
+        // Lyrics Search Logic
         const searchBtn = document.getElementById('search-btn');
         const searchContainer = document.getElementById('search-bar-container');
         const searchInput = document.getElementById('lyrics-search-input');
@@ -784,7 +853,7 @@
             const lines = document.querySelectorAll('.preview-line');
             lines.forEach(line => {
                 if (query && line.innerText.toLowerCase().includes(query)) {
-                    line.style.color = '#facc15'; // Highlight yellow
+                    line.style.color = '#facc15';
                     line.style.opacity = '1';
                 } else {
                     line.style.color = '';
@@ -793,7 +862,7 @@
             });
         };
 
-        // Progress Slider
+        // Slider Progress Logic
         audio.onloadedmetadata = () => document.getElementById('duration-time').innerText = formatTime(audio.duration);
         progressSlider.oninput = (e) => {
             if (audio.duration) {
@@ -802,7 +871,7 @@
             }
         };
 
-        // Modal Helpers
+        // Modal Controls
         document.getElementById('config-btn').onclick = () => openModal(setupModal);
         document.getElementById('close-modal').onclick = () => closeModal(setupModal);
         document.getElementById('apply-btn').onclick = () => closeModal(setupModal);
@@ -822,7 +891,7 @@
             closeModal(offsetModal);
         }
 
-        // Keyboard Shortcuts (Desktop Support)
+        // Keyboard Shortcuts
         window.onkeydown = (e) => {
             if (e.code === 'Space') {
                 e.preventDefault();
@@ -834,7 +903,6 @@
             }
         };
 
-        // Utility: Time Formatter
         function formatTime(s) {
             if (isNaN(s)) return "00:00.00";
             const m = Math.floor(s / 60);

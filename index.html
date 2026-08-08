@@ -13,7 +13,7 @@
             --accent-glow: rgba(0, 242, 255, 0.2);
             --bg-base: #030712;
             --card-bg: rgba(15, 23, 42, 0.85);
-            --viz-opacity: 0.25;
+            --viz-opacity: 0.45;
         }
 
         html, body {
@@ -45,18 +45,30 @@
 
         .mono { font-family: 'JetBrains Mono', monospace; }
 
-        /* Dedicated Visualizer Container right above controls */
+        /* Full Overlay Canvas for Center Galaxy Visualizer */
+        #p-viz-bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.30;
+            transition: opacity 0.4s ease;
+        }
+
+        /* Dedicated Visualizer Strip Above Controls for Soft Bars */
         #viz-wrapper {
             width: 100%;
-            height: 70px;
+            height: 65px;
             pointer-events: none;
             z-index: 25;
             flex-shrink: 0;
-            margin-bottom: -15px; /* Subtle overlay effect with the footer line */
+            margin-bottom: -15px;
             position: relative;
         }
 
-        #p-viz {
+        #p-viz-bar {
             width: 100%;
             height: 100%;
             opacity: var(--viz-opacity);
@@ -114,7 +126,7 @@
                 padding: 22px 40px;
             }
             #viz-wrapper {
-                height: 90px;
+                height: 85px;
             }
         }
 
@@ -240,6 +252,9 @@
 
     <div class="bg-grid"></div>
 
+    <!-- Center Galaxy Visualizer Canvas (Background behind lyrics) -->
+    <canvas id="p-viz-bg"></canvas>
+
     <!-- Header Area -->
     <header class="p-4 sm:p-6 flex justify-between items-center z-20 flex-shrink-0">
         <div class="flex items-center gap-3">
@@ -283,9 +298,9 @@
         </div>
     </main>
 
-    <!-- Dedicated Visualizer Strip (Right on top of controls) -->
+    <!-- Dedicated Visualizer Strip for Soft Bars (Above Controls) -->
     <div id="viz-wrapper">
-        <canvas id="p-viz"></canvas>
+        <canvas id="p-viz-bar"></canvas>
     </div>
 
     <!-- Control Footer -->
@@ -367,12 +382,12 @@
                     </label>
                 </div>
 
-                <!-- Visualizer Modes & Opacity Control -->
+                <!-- Visualizer Style Modes -->
                 <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Visualizer Style</p>
+                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Visualizer Mode</p>
                     <div class="flex gap-2">
                         <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-[10px]" data-style="bars">SOFT BARS</button>
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="wave">NEON WAVE</button>
+                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="circle">GALAXY ORBIT</button>
                         <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="off">OFF</button>
                     </div>
                 </div>
@@ -435,9 +450,14 @@
         const progressSlider = document.getElementById('progress-slider');
         const setupModal = document.getElementById('setup-modal');
         const offsetModal = document.getElementById('offset-modal');
-        const canvas = document.getElementById('p-viz');
+        
+        const canvasBar = document.getElementById('p-viz-bar');
         const vizWrapper = document.getElementById('viz-wrapper');
-        const ctx = canvas.getContext('2d');
+        const ctxBar = canvasBar.getContext('2d');
+
+        const canvasBg = document.getElementById('p-viz-bg');
+        const ctxBg = canvasBg.getContext('2d');
+
         const vinylArt = document.getElementById('vinyl-art');
         const offsetBadge = document.getElementById('offset-badge');
 
@@ -454,13 +474,20 @@
         const barCount = 32;
         let smoothBars = new Array(barCount).fill(0);
 
-        // Resize Canvas dynamically inside the Wrapper
+        // Resize Canvas dynamically
         function initCanvas() {
             const dpr = window.devicePixelRatio || 1;
-            const rect = vizWrapper.getBoundingClientRect();
-            canvas.width = rect.width * dpr;
-            canvas.height = rect.height * dpr;
-            ctx.scale(dpr, dpr);
+            
+            // Bar Canvas Size inside Wrapper
+            const rectBar = vizWrapper.getBoundingClientRect();
+            canvasBar.width = rectBar.width * dpr;
+            canvasBar.height = rectBar.height * dpr;
+            ctxBar.scale(dpr, dpr);
+
+            // Background Galaxy Canvas Fullscreen Size
+            canvasBg.width = window.innerWidth * dpr;
+            canvasBg.height = window.innerHeight * dpr;
+            ctxBg.scale(dpr, dpr);
         }
         window.onresize = () => {
             initCanvas();
@@ -484,17 +511,19 @@
             }
         }
 
-        // Precise Visualizer Engine Anchored Right Above Controls
+        // Dual Canvas Rendering Engine
         function drawViz() {
             requestAnimationFrame(drawViz);
-            
-            const rect = vizWrapper.getBoundingClientRect();
-            const width = rect.width;
-            const height = rect.height;
 
-            ctx.clearRect(0, 0, width, height);
+            // Clear canvases
+            const barRect = vizWrapper.getBoundingClientRect();
+            ctxBar.clearRect(0, 0, barRect.width, barRect.height);
+            ctxBg.clearRect(0, 0, window.innerWidth, window.innerHeight);
 
-            if (visualizerMode === 'off') return;
+            if (visualizerMode === 'off') {
+                vizWrapper.style.display = 'none';
+                return;
+            }
 
             let hasRealData = false;
             if (analyzer && !audio.paused) {
@@ -522,63 +551,74 @@
                 smoothBars[i] += (displayData[i] - smoothBars[i]) * 0.18;
             }
 
+            // 1. SOFT BARS MODE (Anchored Right Above Controls)
             if (visualizerMode === 'bars') {
+                vizWrapper.style.display = 'block';
+                const width = barRect.width;
+                const height = barRect.height;
                 const barWidth = (width / barCount) * 0.55;
                 const gap = (width / barCount) * 0.45;
 
                 for (let i = 0; i < barCount; i++) {
-                    const h = (smoothBars[i] / 255) * (height * 0.85); // Up to 85% of wrapper height
+                    const h = (smoothBars[i] / 255) * (height * 0.85);
                     const x = i * (barWidth + gap) + gap / 2;
                     const y = height - h;
 
-                    const grad = ctx.createLinearGradient(0, height, 0, y);
+                    const grad = ctxBar.createLinearGradient(0, height, 0, y);
                     grad.addColorStop(0, 'transparent');
                     grad.addColorStop(0.3, currentThemeColor);
                     grad.addColorStop(1, '#ffffff');
 
-                    ctx.fillStyle = grad;
-                    ctx.globalAlpha = 0.9;
+                    ctxBar.fillStyle = grad;
+                    ctxBar.globalAlpha = 0.9;
                     
-                    ctx.beginPath();
-                    ctx.roundRect(x, y, barWidth, h, [4, 4, 0, 0]);
-                    ctx.fill();
+                    ctxBar.beginPath();
+                    ctxBar.roundRect(x, y, barWidth, h, [4, 4, 0, 0]);
+                    ctxBar.fill();
                 }
             } 
-            else if (visualizerMode === 'wave') {
-                ctx.beginPath();
-                ctx.lineWidth = 3;
-                ctx.strokeStyle = currentThemeColor;
-                ctx.globalAlpha = 0.9;
+            // 2. GALAXY ORBIT MODE (Centered behind Lyrics)
+            else if (visualizerMode === 'circle') {
+                vizWrapper.style.display = 'none';
 
-                const sliceWidth = width / (barCount - 1);
-                let x = 0;
+                const centerX = window.innerWidth / 2;
+                const centerY = window.innerHeight / 2 - 20; // Center in Lyrics Viewport
+                const baseRadius = Math.min(window.innerWidth, window.innerHeight) * 0.18;
+
+                ctxBg.save();
+                ctxBg.translate(centerX, centerY);
 
                 for (let i = 0; i < barCount; i++) {
+                    const angle = (i / barCount) * Math.PI * 2;
                     const v = smoothBars[i] / 255.0;
-                    const y = height - (v * height * 0.75) - 5;
+                    const h = v * 55; // Orbit height pulse
 
-                    if (i === 0) ctx.moveTo(x, y);
-                    else {
-                        const prevX = x - sliceWidth;
-                        const prevY = height - ((smoothBars[i-1] / 255.0) * height * 0.75) - 5;
-                        const xc = (prevX + x) / 2;
-                        const yc = (prevY + y) / 2;
-                        ctx.quadraticCurveTo(prevX, prevY, xc, yc);
-                    }
-                    x += sliceWidth;
+                    const x1 = Math.cos(angle) * baseRadius;
+                    const y1 = Math.sin(angle) * baseRadius;
+                    const x2 = Math.cos(angle) * (baseRadius + h);
+                    const y2 = Math.sin(angle) * (baseRadius + h);
+
+                    ctxBg.beginPath();
+                    ctxBg.moveTo(x1, y1);
+                    ctxBg.lineTo(x2, y2);
+                    ctxBg.strokeStyle = currentThemeColor;
+                    ctxBg.lineWidth = 3.5;
+                    ctxBg.lineCap = 'round';
+                    ctxBg.globalAlpha = 0.75;
+                    ctxBg.stroke();
                 }
-                ctx.stroke();
 
-                ctx.lineTo(width, height);
-                ctx.lineTo(0, height);
-                const waveGrad = ctx.createLinearGradient(0, 0, 0, height);
-                waveGrad.addColorStop(0, currentThemeColor);
-                waveGrad.addColorStop(1, 'transparent');
-                ctx.fillStyle = waveGrad;
-                ctx.globalAlpha = 0.2;
-                ctx.fill();
+                // Inner Soft Pulse Disc
+                ctxBg.beginPath();
+                ctxBg.arc(0, 0, baseRadius - 8, 0, Math.PI * 2);
+                ctxBg.fillStyle = currentThemeColor;
+                ctxBg.globalAlpha = 0.08;
+                ctxBg.fill();
+
+                ctxBg.restore();
             }
-            ctx.globalAlpha = 1;
+            ctxBar.globalAlpha = 1;
+            ctxBg.globalAlpha = 1;
         }
         drawViz();
 
@@ -696,6 +736,18 @@
             }
         }
 
+        // Helper Function to trigger auto play smoothly
+        async function triggerPlay() {
+            if (audio.src) {
+                await initAudio();
+                try {
+                    await audio.play();
+                } catch (err) {
+                    console.log("Autoplay prevented:", err);
+                }
+            }
+        }
+
         // File Input Listeners
         document.getElementById('audio-input').onchange = (e) => {
             const file = e.target.files[0];
@@ -717,7 +769,7 @@
         };
 
         // Demo Track Loader
-        document.getElementById('demo-load-btn').onclick = () => {
+        document.getElementById('demo-load-btn').onclick = async () => {
             audio.src = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3";
             document.getElementById('song-title').innerText = "Cyber Lofi Chill (Demo)";
             
@@ -726,26 +778,24 @@
 [00:05.00] Welcome to Lyrics Flow Pro Studio
 [00:09.50] High precision lyric synchronization
 [00:14.00] Elegant and clear typography
-[00:19.00] Visualizer anchored right on top of controls
+[00:19.00] Switch visualizers between soft bars and galaxy orbit
 [00:24.00] Optimized for mobile & desktop screens
 [00:30.00] ♪ Instrumental Bridge ♪
 [00:36.00] Enjoy your music experience!
             `;
             parseLRC(demoLRC);
             closeModals();
-            initAudio();
-            audio.play();
+            await triggerPlay();
         };
 
         // Player Actions
-        playPauseBtn.onclick = () => {
+        playPauseBtn.onclick = async () => {
             if (!audio.src) {
                 openModal(setupModal);
                 return;
             }
             if (audio.paused) {
-                initAudio();
-                audio.play();
+                await triggerPlay();
             } else {
                 audio.pause();
             }
@@ -871,10 +921,16 @@
             }
         };
 
-        // Modal Controls
+        // Modal Controls & Auto-Play on Apply
         document.getElementById('config-btn').onclick = () => openModal(setupModal);
         document.getElementById('close-modal').onclick = () => closeModal(setupModal);
-        document.getElementById('apply-btn').onclick = () => closeModal(setupModal);
+        
+        document.getElementById('apply-btn').onclick = async () => {
+            closeModal(setupModal);
+            if (audio.src && audio.paused) {
+                await triggerPlay();
+            }
+        };
 
         function openModal(modal) {
             modal.classList.remove('hidden');

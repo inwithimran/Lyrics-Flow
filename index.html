@@ -464,6 +464,13 @@
                         <div class="theme-dot" style="background: #ef4444;" data-color="#ef4444" data-dim="rgba(239, 68, 68, 0.2)" data-name="NEON RED"></div>
                     </div>
                 </div>
+
+                <!-- Reset Default Settings Button -->
+                <div class="pt-2 border-t border-white/10">
+                    <button id="reset-settings-btn" class="w-full py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 font-bold hover:bg-red-500/20 transition-all flex items-center justify-center gap-2 text-[11px]">
+                        <i class="fa-solid fa-rotate-left"></i> Reset Default Settings
+                    </button>
+                </div>
             </div>
 
             <button id="apply-btn" class="w-full py-3 btn-accent font-black rounded-xl uppercase tracking-wider text-xs mt-1">
@@ -513,14 +520,26 @@
         const vinylArt = document.getElementById('vinyl-art');
         const offsetBadge = document.getElementById('offset-badge');
 
+        // Defaults Config
+        const DEFAULT_PREFERENCES = {
+            visualizerMode: 'bars',
+            playbackSpeed: 1.0,
+            themeName: 'CYBER CYAN',
+            themeColor: '#00f2ff',
+            themeDim: 'rgba(0, 242, 255, 0.2)',
+            timeOffset: 0.0,
+            isLooping: false
+        };
+
         // State Engine
         let lyrics = [];
         let activeIndex = -1;
         let audioCtx, analyzer, dataArray;
-        let currentThemeColor = "#00f2ff";
-        let timeOffset = 0.0;
-        let isLooping = false;
-        let visualizerMode = 'bars';
+        let currentThemeColor = DEFAULT_PREFERENCES.themeColor;
+        let timeOffset = DEFAULT_PREFERENCES.timeOffset;
+        let isLooping = DEFAULT_PREFERENCES.isLooping;
+        let visualizerMode = DEFAULT_PREFERENCES.visualizerMode;
+        let playbackSpeed = DEFAULT_PREFERENCES.playbackSpeed;
         
         // Smooth Interpolation Array for Visualizer Bars
         const barCount = 32;
@@ -820,6 +839,85 @@
             }
         }
 
+        // --- LOCAL STORAGE & PREFERENCES ENGINE ---
+        function savePreferences() {
+            const activeThemeDot = document.querySelector('.theme-dot.active');
+            const prefs = {
+                visualizerMode: visualizerMode,
+                playbackSpeed: audio.playbackRate || playbackSpeed,
+                themeName: activeThemeDot ? activeThemeDot.dataset.name : DEFAULT_PREFERENCES.themeName,
+                themeColor: activeThemeDot ? activeThemeDot.dataset.color : DEFAULT_PREFERENCES.themeColor,
+                themeDim: activeThemeDot ? activeThemeDot.dataset.dim : DEFAULT_PREFERENCES.themeDim,
+                timeOffset: timeOffset,
+                isLooping: isLooping
+            };
+            localStorage.setItem('lyrics_flow_preferences', JSON.stringify(prefs));
+        }
+
+        function loadPreferences() {
+            const saved = localStorage.getItem('lyrics_flow_preferences');
+            let prefs = DEFAULT_PREFERENCES;
+            if (saved) {
+                try {
+                    prefs = { ...DEFAULT_PREFERENCES, ...JSON.parse(saved) };
+                } catch (e) {
+                    console.error("Error loading saved preferences:", e);
+                }
+            }
+            applyPreferences(prefs);
+        }
+
+        function applyPreferences(prefs) {
+            // Apply Visualizer Style Mode
+            visualizerMode = prefs.visualizerMode;
+            document.querySelectorAll('.viz-style-btn').forEach(btn => {
+                if (btn.dataset.style === visualizerMode) {
+                    btn.classList.add('bg-white/10', 'border', 'border-white/20', 'text-white');
+                    btn.classList.remove('bg-white/5', 'text-white/60');
+                } else {
+                    btn.classList.remove('bg-white/10', 'border', 'border-white/20', 'text-white');
+                    btn.classList.add('bg-white/5', 'text-white/60');
+                }
+            });
+
+            // Apply Playback Speed
+            playbackSpeed = prefs.playbackSpeed;
+            audio.playbackRate = playbackSpeed;
+            document.querySelectorAll('.speed-btn').forEach(btn => {
+                if (parseFloat(btn.dataset.speed) === playbackSpeed) {
+                    btn.classList.add('bg-white/10', 'text-white');
+                    btn.classList.remove('text-white/60');
+                } else {
+                    btn.classList.remove('bg-white/10', 'text-white');
+                    btn.classList.add('text-white/60');
+                }
+            });
+
+            // Apply Color Theme
+            document.querySelectorAll('.theme-dot').forEach(dot => {
+                if (dot.dataset.name === prefs.themeName || dot.dataset.color === prefs.themeColor) {
+                    dot.classList.add('active');
+                } else {
+                    dot.classList.remove('active');
+                }
+            });
+            document.documentElement.style.setProperty('--accent', prefs.themeColor);
+            document.documentElement.style.setProperty('--accent-glow', prefs.themeDim);
+            currentThemeColor = prefs.themeColor;
+            document.getElementById('theme-tag').innerText = prefs.themeName;
+            document.getElementById('theme-tag').style.color = prefs.themeColor;
+
+            // Apply Loop State
+            isLooping = prefs.isLooping;
+            audio.loop = isLooping;
+            const loopBtn = document.getElementById('loop-btn');
+            loopBtn.style.color = isLooping ? currentThemeColor : 'rgba(255,255,255,0.4)';
+
+            // Apply Time Offset
+            timeOffset = prefs.timeOffset;
+            updateOffsetUI();
+        }
+
         // Tab Switching Logic (Exact 2 Tabs)
         document.querySelectorAll('.tab-btn').forEach(btn => {
             btn.onclick = () => {
@@ -918,6 +1016,7 @@
             isLooping = !isLooping;
             audio.loop = isLooping;
             loopBtn.style.color = isLooping ? currentThemeColor : 'rgba(255,255,255,0.4)';
+            savePreferences();
         };
 
         // Sync Offset Controls
@@ -929,11 +1028,13 @@
         document.getElementById('offset-reset').onclick = () => {
             timeOffset = 0.0;
             updateOffsetUI();
+            savePreferences();
         };
 
         function adjustOffset(val) {
             timeOffset += val;
             updateOffsetUI();
+            savePreferences();
         }
 
         function updateOffsetUI() {
@@ -958,6 +1059,7 @@
                 document.getElementById('theme-tag').innerText = name;
                 document.getElementById('theme-tag').style.color = color;
                 if (isLooping) loopBtn.style.color = color;
+                savePreferences();
             };
         });
 
@@ -970,6 +1072,7 @@
                 });
                 btn.classList.add('bg-white/10', 'text-white');
                 audio.playbackRate = parseFloat(btn.dataset.speed);
+                savePreferences();
             };
         });
 
@@ -982,8 +1085,15 @@
                 });
                 btn.classList.add('bg-white/10', 'border', 'border-white/20', 'text-white');
                 visualizerMode = btn.dataset.style;
+                savePreferences();
             };
         });
+
+        // Reset Settings Button Action
+        document.getElementById('reset-settings-btn').onclick = () => {
+            localStorage.removeItem('lyrics_flow_preferences');
+            applyPreferences(DEFAULT_PREFERENCES);
+        };
 
         // Lyrics Search Logic
         const searchBtn = document.getElementById('search-btn');
@@ -1070,7 +1180,9 @@
             const ms = Math.floor((s % 1) * 100);
             return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}.${ms.toString().padStart(2, '0')}`;
         }
+
+        // Initialize Preferences on startup
+        loadPreferences();
     </script>
 </body>
 </html>
-

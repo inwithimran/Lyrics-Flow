@@ -85,6 +85,12 @@
             z-index: 10;
             mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
             -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 15%, black 85%, transparent 100%);
+            touch-action: none;
+            cursor: grab;
+        }
+
+        #p-lyrics-container:active {
+            cursor: grabbing;
         }
 
         #p-lyrics-scroller {
@@ -265,6 +271,14 @@
             border-top-right-radius: 8px;
         }
 
+        /* Toggle Switch Styling */
+        .toggle-bg {
+            transition: background-color 0.2s ease;
+        }
+        .toggle-dot {
+            transition: transform 0.2s ease;
+        }
+
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 2px; }
@@ -318,6 +332,12 @@
         <div id="p-lyrics-scroller">
             <div class="preview-line">Load audio & lyrics file to start</div>
         </div>
+
+        <!-- Floating Sync Resume Indicator (Auto-Scroll Lock) -->
+        <button id="resume-sync-btn" class="hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-30 px-4 py-2 rounded-full glass-panel border border-cyan-400/40 text-cyan-300 text-xs font-bold shadow-2xl flex items-center gap-2 hover:bg-cyan-500/20 active:scale-95 transition-all">
+            <i class="fa-solid fa-arrows-rotate animate-spin text-[10px]"></i>
+            Resume Auto-Sync
+        </button>
     </main>
 
     <!-- Dedicated Visualizer Strip for Soft Bars (Above Controls) -->
@@ -453,6 +473,17 @@
                     </div>
                 </div>
 
+                <!-- Keep Screen Awake Toggle (Screen Always On) -->
+                <div class="flex items-center justify-between py-1 border-t border-b border-white/5">
+                    <div>
+                        <p class="font-bold text-white text-[11px]">Keep Screen Awake</p>
+                        <p class="text-[9px] text-white/40">Prevent display timeout during playback</p>
+                    </div>
+                    <button id="wake-lock-toggle" class="w-10 h-6 bg-white/10 rounded-full p-1 toggle-bg flex items-center transition-colors duration-200">
+                        <div id="wake-lock-dot" class="w-4 h-4 bg-white/40 rounded-full toggle-dot transition-transform duration-200"></div>
+                    </button>
+                </div>
+
                 <!-- Color Theme -->
                 <div class="space-y-2">
                     <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Color Theme Preset</p>
@@ -509,6 +540,7 @@
         const offsetModal = document.getElementById('offset-modal');
         const lrcTextInput = document.getElementById('lrc-text-input');
         const clearTextBtn = document.getElementById('clear-text-btn');
+        const resumeSyncBtn = document.getElementById('resume-sync-btn');
         
         const canvasBar = document.getElementById('p-viz-bar');
         const vizWrapper = document.getElementById('viz-wrapper');
@@ -520,6 +552,10 @@
         const vinylArt = document.getElementById('vinyl-art');
         const offsetBadge = document.getElementById('offset-badge');
 
+        // Wake Lock & Scroll Lock Selectors
+        const wakeLockToggle = document.getElementById('wake-lock-toggle');
+        const wakeLockDot = document.getElementById('wake-lock-dot');
+
         // Defaults Config
         const DEFAULT_PREFERENCES = {
             visualizerMode: 'bars',
@@ -528,7 +564,8 @@
             themeColor: '#00f2ff',
             themeDim: 'rgba(0, 242, 255, 0.2)',
             timeOffset: 0.0,
-            isLooping: false
+            isLooping: false,
+            keepAwake: true
         };
 
         // State Engine
@@ -541,6 +578,17 @@
         let visualizerMode = DEFAULT_PREFERENCES.visualizerMode;
         let playbackSpeed = DEFAULT_PREFERENCES.playbackSpeed;
         
+        // Wake Lock & Auto-Scroll Lock State
+        let wakeLock = null;
+        let keepAwake = DEFAULT_PREFERENCES.keepAwake;
+        let isAutoScrollLocked = false;
+
+        // Manual Touch / Mouse Drag State
+        let isDragging = false;
+        let dragStartY = 0;
+        let dragStartTransformY = 0;
+        let totalDragDistance = 0;
+
         // Smooth Interpolation Array for Visualizer Bars
         const barCount = 32;
         let smoothBars = new Array(barCount).fill(0);
@@ -764,9 +812,12 @@
                 div.id = `line-${i}`;
                 div.innerText = l.content;
                 
-                div.onclick = () => {
+                div.onclick = (e) => {
+                    // Ignore line click if it was part of a touch/mouse drag scroll gesture
+                    if (totalDragDistance > 12) return;
                     audio.currentTime = Math.max(0, l.time + timeOffset);
                     if (audio.paused) audio.play();
+                    resumeAutoSync();
                 };
 
                 scroller.appendChild(div);
@@ -774,6 +825,76 @@
             activeIndex = -1;
             updateScroll(-1);
         }
+
+        // --- TOUCH & MOUSE DRAG SCROLLING LOGIC ---
+        function getCurrentTransformY() {
+            const style = window.getComputedStyle(scroller);
+            const matrix = new WebKitCSSMatrix(style.transform);
+            return matrix.m42 || container.offsetHeight / 2;
+        }
+
+        function onDragStart(clientY) {
+            if (lyrics.length === 0) return;
+            isDragging = true;
+            dragStartY = clientY;
+            dragStartTransformY = getCurrentTransformY();
+            totalDragDistance = 0;
+            
+            scroller.style.transition = 'none'; // Instant response during direct touch drag
+            isAutoScrollLocked = true;
+            resumeSyncBtn.classList.remove('hidden');
+        }
+
+        function onDragMove(clientY) {
+            if (!isDragging) return;
+            const deltaY = clientY - dragStartY;
+            totalDragDistance += Math.abs(deltaY);
+            
+            const newY = dragStartTransformY + deltaY;
+            scroller.style.transform = `translateY(${newY}px)`;
+        }
+
+        function onDragEnd() {
+            if (!isDragging) return;
+            isDragging = false;
+            scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+        }
+
+        // Mouse Drag Listeners
+        container.addEventListener('mousedown', (e) => onDragStart(e.clientY));
+        window.addEventListener('mousemove', (e) => { if (isDragging) onDragMove(e.clientY); });
+        window.addEventListener('mouseup', () => onDragEnd());
+
+        // Touch Drag Listeners
+        container.addEventListener('touchstart', (e) => {
+            if (e.touches.length === 1) onDragStart(e.touches[0].clientY);
+        }, { passive: true });
+
+        container.addEventListener('touchmove', (e) => {
+            if (e.touches.length === 1 && isDragging) onDragMove(e.touches[0].clientY);
+        }, { passive: true });
+
+        container.addEventListener('touchend', () => onDragEnd());
+
+        // Mouse Wheel Scroll Listener
+        container.addEventListener('wheel', (e) => {
+            if (lyrics.length === 0) return;
+            isAutoScrollLocked = true;
+            resumeSyncBtn.classList.remove('hidden');
+
+            const currentY = getCurrentTransformY();
+            const newY = currentY - e.deltaY;
+            scroller.style.transition = 'transform 0.2s ease-out';
+            scroller.style.transform = `translateY(${newY}px)`;
+        }, { passive: true });
+
+        function resumeAutoSync() {
+            isAutoScrollLocked = false;
+            resumeSyncBtn.classList.add('hidden');
+            updateScroll(activeIndex, true);
+        }
+
+        resumeSyncBtn.onclick = resumeAutoSync;
 
         // High precision 60FPS Lyric Sync Loop
         function syncLyricLoop() {
@@ -808,22 +929,28 @@
             }
         }
 
-        function updateScroll(idx) {
+        function updateScroll(idx, force = false) {
             const lines = document.querySelectorAll('.preview-line');
             lines.forEach(el => el.classList.remove('active'));
 
             const containerHeight = container.offsetHeight;
 
             if (idx === -1 || !lines.length) {
-                scroller.style.transform = `translateY(${containerHeight / 2}px)`;
+                if (!isAutoScrollLocked || force) {
+                    scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+                    scroller.style.transform = `translateY(${containerHeight / 2}px)`;
+                }
                 return;
             }
 
             const target = document.getElementById(`line-${idx}`);
             if (target) {
                 target.classList.add('active');
-                const offset = (containerHeight / 2) - (target.offsetTop + target.offsetHeight / 2);
-                scroller.style.transform = `translateY(${offset}px)`;
+                if (!isAutoScrollLocked || force) {
+                    const offset = (containerHeight / 2) - (target.offsetTop + target.offsetHeight / 2);
+                    scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+                    scroller.style.transform = `translateY(${offset}px)`;
+                }
             }
         }
 
@@ -839,6 +966,63 @@
             }
         }
 
+        // --- WAKE LOCK ENGINE (Keep Screen Awake) ---
+        async function requestWakeLock() {
+            if ('wakeLock' in navigator && keepAwake && !wakeLock && !audio.paused) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                    wakeLock.addEventListener('release', () => {
+                        wakeLock = null;
+                    });
+                } catch (err) {
+                    console.log(`Wake Lock Error: ${err.name}, ${err.message}`);
+                }
+            }
+        }
+
+        function releaseWakeLock() {
+            if (wakeLock) {
+                wakeLock.release().then(() => {
+                    wakeLock = null;
+                });
+            }
+        }
+
+        // Re-aquire Wake Lock when returning to tab
+        document.addEventListener('visibilitychange', async () => {
+            if (document.visibilityState === 'visible' && !audio.paused) {
+                await requestWakeLock();
+            }
+        });
+
+        // Toggle Switch Event Listener for Wake Lock
+        wakeLockToggle.onclick = () => {
+            keepAwake = !keepAwake;
+            updateWakeLockUI();
+            if (keepAwake) {
+                requestWakeLock();
+            } else {
+                releaseWakeLock();
+            }
+            savePreferences();
+        };
+
+        function updateWakeLockUI() {
+            if (keepAwake) {
+                wakeLockToggle.classList.remove('bg-white/10');
+                wakeLockToggle.style.backgroundColor = currentThemeColor;
+                wakeLockDot.classList.add('translate-x-4');
+                wakeLockDot.classList.remove('bg-white/40');
+                wakeLockDot.classList.add('bg-black');
+            } else {
+                wakeLockToggle.style.backgroundColor = '';
+                wakeLockToggle.classList.add('bg-white/10');
+                wakeLockDot.classList.remove('translate-x-4');
+                wakeLockDot.classList.remove('bg-black');
+                wakeLockDot.classList.add('bg-white/40');
+            }
+        }
+
         // --- LOCAL STORAGE & PREFERENCES ENGINE ---
         function savePreferences() {
             const activeThemeDot = document.querySelector('.theme-dot.active');
@@ -849,7 +1033,8 @@
                 themeColor: activeThemeDot ? activeThemeDot.dataset.color : DEFAULT_PREFERENCES.themeColor,
                 themeDim: activeThemeDot ? activeThemeDot.dataset.dim : DEFAULT_PREFERENCES.themeDim,
                 timeOffset: timeOffset,
-                isLooping: isLooping
+                isLooping: isLooping,
+                keepAwake: keepAwake
             };
             localStorage.setItem('lyrics_flow_preferences', JSON.stringify(prefs));
         }
@@ -916,6 +1101,10 @@
             // Apply Time Offset
             timeOffset = prefs.timeOffset;
             updateOffsetUI();
+
+            // Apply Keep Awake State
+            keepAwake = prefs.keepAwake !== undefined ? prefs.keepAwake : DEFAULT_PREFERENCES.keepAwake;
+            updateWakeLockUI();
         }
 
         // Tab Switching Logic (Exact 2 Tabs)
@@ -937,6 +1126,7 @@
                 audio.src = URL.createObjectURL(file);
                 document.getElementById('song-title').innerText = file.name.replace(/\.[^/.]+$/, "");
                 document.getElementById('audio-label').innerText = "✓ " + file.name;
+                resumeAutoSync();
             }
         };
 
@@ -948,6 +1138,7 @@
                     const content = ev.target.result;
                     lrcTextInput.value = content;
                     parseLRC(content);
+                    resumeAutoSync();
                 };
                 reader.readAsText(file);
                 document.getElementById('lrc-label').innerText = "✓ " + file.name;
@@ -959,6 +1150,7 @@
             lrcTextInput.value = '';
             document.getElementById('lrc-label').innerText = "Choose LRC File";
             parseLRC('');
+            resumeAutoSync();
         };
 
         // Demo Track Loader
@@ -978,6 +1170,7 @@
             `;
             lrcTextInput.value = demoLRC.trim();
             parseLRC(demoLRC);
+            resumeAutoSync();
             closeModals();
             await triggerPlay();
         };
@@ -999,16 +1192,24 @@
             document.getElementById('play-icon').classList.add('hidden');
             document.getElementById('pause-icon').classList.remove('hidden');
             vinylArt.classList.add('playing');
+            requestWakeLock();
         };
 
         audio.onpause = () => {
             document.getElementById('play-icon').classList.remove('hidden');
             document.getElementById('pause-icon').classList.add('hidden');
             vinylArt.classList.remove('playing');
+            releaseWakeLock();
         };
 
-        document.getElementById('rewind-btn').onclick = () => audio.currentTime = Math.max(0, audio.currentTime - 5);
-        document.getElementById('forward-btn').onclick = () => audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+        document.getElementById('rewind-btn').onclick = () => {
+            audio.currentTime = Math.max(0, audio.currentTime - 5);
+            if (isAutoScrollLocked) resumeAutoSync();
+        };
+        document.getElementById('forward-btn').onclick = () => {
+            audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+            if (isAutoScrollLocked) resumeAutoSync();
+        };
 
         // Loop Button
         const loopBtn = document.getElementById('loop-btn');
@@ -1059,6 +1260,7 @@
                 document.getElementById('theme-tag').innerText = name;
                 document.getElementById('theme-tag').style.color = color;
                 if (isLooping) loopBtn.style.color = color;
+                updateWakeLockUI();
                 savePreferences();
             };
         });
@@ -1124,6 +1326,7 @@
             if (audio.duration) {
                 audio.currentTime = (e.target.value / 100) * audio.duration;
                 updateLyricPosition();
+                if (isAutoScrollLocked) resumeAutoSync();
             }
         };
 
@@ -1168,8 +1371,10 @@
                 playPauseBtn.click();
             } else if (e.code === 'ArrowLeft') {
                 audio.currentTime = Math.max(0, audio.currentTime - 5);
+                if (isAutoScrollLocked) resumeAutoSync();
             } else if (e.code === 'ArrowRight') {
                 audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+                if (isAutoScrollLocked) resumeAutoSync();
             }
         };
 

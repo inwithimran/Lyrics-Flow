@@ -6,13 +6,15 @@
     <title>Lyrics Flow Pro - Studio Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --accent: #00f2ff;
             --accent-glow: rgba(0, 242, 255, 0.2);
             --bg-base: #030712;
             --card-bg: rgba(15, 23, 42, 0.85);
+            --sheet-bg: #0B132B;
+            --sheet-card: rgba(255, 255, 255, 0.04);
             --viz-opacity: 0.65;
         }
 
@@ -221,63 +223,119 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Modal Overlay */
+        /* Modal Overlay & Android Bottom Sheet */
         .modal-overlay {
             position: fixed;
             inset: 0;
-            background: rgba(2, 6, 23, 0.88);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(0, 0, 0, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             z-index: 100;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            transition: opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        @media (min-width: 640px) {
+            .modal-overlay {
+                align-items: center;
+            }
+            .android-sheet {
+                border-radius: 32px !important;
+                max-width: 420px !important;
+            }
+        }
+
+        .android-sheet {
+            background: #0d1527;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: none;
+            border-radius: 32px 32px 0 0;
+            width: 100%;
+            box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.8);
+            transform: translateY(100%);
+            transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .modal-overlay:not(.hidden):not(.opacity-0) .android-sheet {
+            transform: translateY(0);
+        }
+
+        /* Android Style UI Components */
+        .android-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            transition: all 0.2s ease;
+        }
+
+        .android-card:hover {
+            background: rgba(255, 255, 255, 0.05);
+            border-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .android-input {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1.5px solid rgba(255, 255, 255, 0.1);
+            border-radius: 14px;
+            color: #ffffff;
+            transition: all 0.2s ease;
+        }
+
+        .android-input:focus {
+            border-color: var(--accent);
+            background: rgba(0, 242, 255, 0.04);
+            box-shadow: 0 0 10px rgba(0, 242, 255, 0.15);
+        }
+
+        /* Android Material Segmented Tab Switcher */
+        .android-tab-bar {
+            background: rgba(0, 0, 0, 0.35);
+            padding: 4px;
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .tab-btn {
+            padding: 10px 12px;
+            font-size: 11px;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.5);
+            border-radius: 14px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+            width: 50%;
+            text-align: center;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 20px;
-            transition: opacity 0.3s ease;
+            gap: 6px;
+        }
+
+        .tab-btn.active {
+            color: #030712;
+            background: var(--accent);
+            box-shadow: 0 4px 15px var(--accent-glow);
+            font-weight: 800;
         }
 
         .theme-dot {
             width: 38px;
             height: 38px;
-            border-radius: 12px;
+            border-radius: 14px;
             cursor: pointer;
             border: 2.5px solid transparent;
             transition: transform 0.2s, border-color 0.2s;
         }
+
         .theme-dot.active {
             border-color: #ffffff;
-            transform: scale(1.1);
-        }
-
-        /* 2-Tab Navigation Styling */
-        .tab-btn {
-            position: relative;
-            padding: 10px 14px;
-            font-size: 11px;
-            font-weight: 800;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: rgba(255, 255, 255, 0.4);
-            transition: all 0.2s ease;
-            border-bottom: 2px solid transparent;
-            width: 50%;
-            text-align: center;
-        }
-        .tab-btn.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
-            background: rgba(255, 255, 255, 0.03);
-            border-top-left-radius: 8px;
-            border-top-right-radius: 8px;
+            transform: scale(1.12);
         }
 
         /* Toggle Switch Styling */
-        .toggle-bg {
-            transition: background-color 0.2s ease;
-        }
-        .toggle-dot {
-            transition: transform 0.2s ease;
-        }
+        .toggle-bg { transition: background-color 0.2s ease; }
+        .toggle-dot { transition: transform 0.2s ease; }
 
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
@@ -322,7 +380,7 @@
     <div id="search-bar-container" class="px-6 hidden z-20 flex-shrink-0 mb-2">
         <div class="glass-panel rounded-xl flex items-center px-3 py-2 border border-white/10">
             <i class="fa-solid fa-search text-white/40 text-xs mr-2"></i>
-            <input type="text" id="lyrics-search-input" placeholder="Search lyrics..." class="bg-transparent text-xs text-white outline-none w-full">
+            <input type="text" id="lyrics-search-input" placeholder="Search loaded lyrics..." class="bg-transparent text-xs text-white outline-none w-full">
             <button id="close-search" class="text-white/40 text-xs px-2"><i class="fa-solid fa-xmark"></i></button>
         </div>
     </div>
@@ -388,131 +446,197 @@
         </div>
     </footer>
 
-    <!-- Studio Control Modal with Exactly 2 Clean Tabs -->
+    <!-- Studio Control Modal (Android Bottom Sheet Design) -->
     <div id="setup-modal" class="modal-overlay hidden opacity-0">
-        <div class="cyber-panel glass-panel rounded-3xl p-5 w-full max-w-sm space-y-4 shadow-2xl border border-white/10">
+        <div class="android-sheet p-5 space-y-4 max-h-[88vh] flex flex-direction flex-col">
+            
+            <!-- Android Drag Handle Pill -->
+            <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto -mt-1 mb-1 shrink-0"></div>
+
             <!-- Modal Header -->
-            <div class="flex justify-between items-center border-b border-white/10 pb-3">
-                <h2 class="text-base font-extrabold tracking-tight text-white flex items-center gap-2">
-                    <i class="fa-solid fa-sliders text-xs text-cyan-400"></i> STUDIO CONTROL
-                </h2>
-                <button id="close-modal" class="text-white/40 hover:text-white"><i class="fa-solid fa-xmark text-sm"></i></button>
+            <div class="flex justify-between items-center pb-2 border-b border-white/10 shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-full bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400">
+                        <i class="fa-solid fa-sliders text-xs"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-sm font-extrabold tracking-tight text-white uppercase">Studio Control</h2>
+                        <p class="text-[10px] text-white/40">Manage lyrics, media & audio settings</p>
+                    </div>
+                </div>
+                <button id="close-modal" class="w-8 h-8 rounded-full bg-white/5 hover:bg-white/10 text-white/60 hover:text-white flex items-center justify-center active:scale-90 transition-transform">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
             </div>
             
-            <!-- 2 Tab Options Bar -->
-            <div class="flex border-b border-white/10">
+            <!-- Android Segmented Tab Bar -->
+            <div class="android-tab-bar flex shrink-0">
                 <button class="tab-btn active" data-tab="tab-lyrics-media">
-                    <i class="fa-solid fa-music mr-1.5"></i> Lyrics & Media
+                    <i class="fa-solid fa-music"></i> Lyrics & Media
                 </button>
                 <button class="tab-btn" data-tab="tab-settings">
-                    <i class="fa-solid fa-gear mr-1.5"></i> Preferences
+                    <i class="fa-solid fa-sliders"></i> Preferences
                 </button>
             </div>
 
-            <!-- TAB 1: LYRICS & MEDIA -->
-            <div id="tab-lyrics-media" class="tab-content space-y-3.5 text-xs">
-                <!-- Quick Demo Track Loader -->
-                <button id="demo-load-btn" class="w-full py-2.5 px-3 rounded-xl bg-cyan-500/10 border border-cyan-500/30 text-cyan-300 font-bold hover:bg-cyan-500/20 transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-wand-magic-sparkles"></i> Load Demo Song & Lyrics
-                </button>
+            <!-- Scrollable Content Container -->
+            <div class="overflow-y-auto pr-1 space-y-4 flex-1">
 
-                <!-- Audio File Selector -->
-                <div class="space-y-1.5">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Audio File</p>
-                    <label class="block cursor-pointer bg-white/5 border border-white/10 p-2.5 rounded-xl hover:bg-white/10 transition-all">
-                        <input type="file" id="audio-input" accept="audio/*" class="hidden">
-                        <div class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-music text-white/50"></i>
-                            <span id="audio-label" class="font-semibold text-white/80 truncate">Choose Audio File</span>
+                <!-- TAB 1: LYRICS & MEDIA (Logically Ordered: Audio, LRC File, LRC Finder, Lyrics Box, Demo) -->
+                <div id="tab-lyrics-media" class="tab-content space-y-3 text-xs">
+                    
+                    <!-- 1. Audio File Selector -->
+                    <div class="android-card p-3 space-y-2">
+                        <div class="flex items-center justify-between">
+                            <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] flex items-center gap-1.5">
+                                <i class="fa-solid fa-circle-play text-cyan-400"></i> 1. Audio File
+                            </span>
                         </div>
-                    </label>
-                </div>
+                        <label class="block cursor-pointer bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all active:scale-[0.99]">
+                            <input type="file" id="audio-input" accept="audio/*" class="hidden">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-cyan-500/10 border border-cyan-500/20 flex items-center justify-center text-cyan-400 shrink-0">
+                                        <i class="fa-solid fa-music text-xs"></i>
+                                    </div>
+                                    <span id="audio-label" class="font-bold text-white/90 truncate text-xs">Choose Audio File</span>
+                                </div>
+                                <span class="text-[10px] bg-cyan-500/20 text-cyan-300 px-2 py-1 rounded-lg font-bold shrink-0">Browse</span>
+                            </div>
+                        </label>
+                    </div>
 
-                <!-- LRC File Selector -->
-                <div class="space-y-1.5">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">LRC File</p>
-                    <label class="block cursor-pointer bg-white/5 border border-white/10 p-2.5 rounded-xl hover:bg-white/10 transition-all">
-                        <input type="file" id="lrc-input" accept=".lrc,.txt" class="hidden">
-                        <div class="flex items-center gap-2.5">
-                            <i class="fa-solid fa-file-lines text-white/50"></i>
-                            <span id="lrc-label" class="font-semibold text-white/80 truncate">Choose LRC File</span>
+                    <!-- 2. Local LRC File Selector -->
+                    <div class="android-card p-3 space-y-2">
+                        <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] block">
+                            <i class="fa-solid fa-file-code text-cyan-400 mr-1"></i> 2. Local LRC File
+                        </span>
+                        <label class="block cursor-pointer bg-white/5 border border-white/10 p-3 rounded-2xl hover:bg-white/10 transition-all active:scale-[0.99]">
+                            <input type="file" id="lrc-input" accept=".lrc,.txt" class="hidden">
+                            <div class="flex items-center justify-between gap-2">
+                                <div class="flex items-center gap-3 min-w-0">
+                                    <div class="w-8 h-8 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 shrink-0">
+                                        <i class="fa-solid fa-file-lines text-xs"></i>
+                                    </div>
+                                    <span id="lrc-label" class="font-bold text-white/90 truncate text-xs">Choose LRC File</span>
+                                </div>
+                                <span class="text-[10px] bg-white/10 text-white/80 px-2 py-1 rounded-lg font-bold shrink-0">Upload</span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- 3. Auto Online Synced LRC Finder -->
+                    <div class="android-card p-3.5 space-y-3 bg-gradient-to-b from-cyan-500/5 to-transparent border-cyan-500/20">
+                        <div class="flex items-center justify-between">
+                            <span class="font-extrabold text-cyan-400 uppercase tracking-wider text-[9px] flex items-center gap-1.5">
+                                <i class="fa-solid fa-wand-magic-sparkles text-cyan-400"></i> 3. Auto Online Synced LRC Finder
+                            </span>
+                            <span class="text-[9px] text-white/40 bg-white/5 px-2 py-0.5 rounded-full">AI Powered</span>
                         </div>
-                    </label>
-                </div>
 
-                <!-- Direct Text Lyrics Box -->
-                <div class="space-y-1.5">
-                    <div class="flex justify-between items-center">
-                        <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Or Paste / Type Lyrics</p>
-                        <button id="clear-text-btn" class="text-[9px] text-white/40 hover:text-white underline">Clear</button>
-                    </div>
-                    <textarea id="lrc-text-input" rows="3" placeholder="[00:05.00] Paste lyrics here with or without timestamps..." class="w-full bg-white/5 border border-white/10 rounded-xl p-2 text-xs text-white placeholder-white/30 outline-none focus:border-cyan-400 transition-all resize-none mono"></textarea>
-                </div>
-            </div>
+                        <div class="space-y-2.5">
+                            <!-- Track Name Input -->
+                            <div>
+                                <span class="text-[9px] font-bold text-white/50 uppercase tracking-wider block mb-1">Song / Track Title *</span>
+                                <input type="text" id="online-song-input" placeholder="e.g. Shape of You" class="android-input w-full px-3 py-2 text-xs outline-none">
+                            </div>
 
-            <!-- TAB 2: SETTINGS & PREFERENCES -->
-            <div id="tab-settings" class="tab-content hidden space-y-4 text-xs">
-                <!-- Visualizer Style Modes -->
-                <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Visualizer Style</p>
-                    <div class="flex gap-2">
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-[10px]" data-style="bars">SOFT BARS</button>
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="circle">GALAXY ORBIT</button>
-                        <button class="viz-style-btn flex-1 py-2 rounded-xl bg-white/5 text-white/60 font-bold text-[10px]" data-style="off">OFF</button>
-                    </div>
-                </div>
+                            <!-- Artist Name Input -->
+                            <div>
+                                <span class="text-[9px] font-bold text-white/50 uppercase tracking-wider block mb-1">Artist Name (Optional)</span>
+                                <input type="text" id="online-artist-input" placeholder="e.g. Ed Sheeran" class="android-input w-full px-3 py-2 text-xs outline-none">
+                            </div>
+                        </div>
 
-                <!-- Playback Speed -->
-                <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Playback Speed</p>
-                    <div class="flex justify-between gap-1 bg-white/5 p-1 rounded-xl" id="speed-selector">
-                        <button class="speed-btn flex-1 py-1 rounded-lg text-white/60 font-bold hover:text-white" data-speed="0.75">0.75x</button>
-                        <button class="speed-btn flex-1 py-1 rounded-lg bg-white/10 text-white font-bold" data-speed="1.0">1.0x</button>
-                        <button class="speed-btn flex-1 py-1 rounded-lg text-white/60 font-bold hover:text-white" data-speed="1.25">1.25x</button>
-                        <button class="speed-btn flex-1 py-1 rounded-lg text-white/60 font-bold hover:text-white" data-speed="1.5">1.5x</button>
+                        <button id="online-search-btn" class="w-full py-2.5 bg-cyan-400 text-black font-extrabold rounded-xl hover:bg-cyan-300 transition-all active:scale-[0.98] flex items-center justify-center gap-2 text-xs shadow-lg shadow-cyan-500/10">
+                            <i class="fa-solid fa-magnifying-glass"></i> Find & Sync Lyrics
+                        </button>
+                        
+                        <p id="online-search-status" class="text-[9px] text-white/50 hidden pt-1"></p>
                     </div>
-                </div>
 
-                <!-- Keep Screen Awake Toggle (Screen Always On) -->
-                <div class="flex items-center justify-between py-1 border-t border-b border-white/5">
-                    <div>
-                        <p class="font-bold text-white text-[11px]">Keep Screen Awake</p>
-                        <p class="text-[9px] text-white/40">Prevent display timeout during playback</p>
+                    <!-- 4. Direct Text / Paste Lyrics Box -->
+                    <div class="android-card p-3 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] flex items-center gap-1">
+                                <i class="fa-solid fa-keyboard text-cyan-400 mr-1"></i> 4. Paste / Type Lyrics
+                            </span>
+                            <button id="clear-text-btn" class="text-[9px] text-white/40 hover:text-white underline">Clear</button>
+                        </div>
+                        <textarea id="lrc-text-input" rows="3" placeholder="[00:05.00] Paste lyrics here with or without timestamps..." class="android-input w-full p-2.5 text-xs placeholder-white/30 outline-none resize-none mono"></textarea>
                     </div>
-                    <button id="wake-lock-toggle" class="w-10 h-6 bg-white/10 rounded-full p-1 toggle-bg flex items-center transition-colors duration-200">
-                        <div id="wake-lock-dot" class="w-4 h-4 bg-white/40 rounded-full toggle-dot transition-transform duration-200"></div>
+
+                    <!-- 5. Quick Demo Track Loader -->
+                    <button id="demo-load-btn" class="w-full py-3 px-3 rounded-2xl bg-white/5 border border-white/10 text-white/80 font-bold hover:bg-white/10 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-xs">
+                        <i class="fa-solid fa-circle-play text-cyan-400"></i> 5. Load Demo Song & Lyrics
                     </button>
+
                 </div>
 
-                <!-- Color Theme -->
-                <div class="space-y-2">
-                    <p class="font-bold text-white/40 uppercase tracking-wider text-[9px]">Color Theme Preset</p>
-                    <div class="flex justify-between gap-2" id="theme-selector">
-                        <div class="theme-dot active" style="background: #00f2ff;" data-color="#00f2ff" data-dim="rgba(0, 242, 255, 0.2)" data-name="CYBER CYAN"></div>
-                        <div class="theme-dot" style="background: #a855f7;" data-color="#a855f7" data-dim="rgba(168, 85, 247, 0.2)" data-name="PLASMA PURPLE"></div>
-                        <div class="theme-dot" style="background: #f97316;" data-color="#f97316" data-dim="rgba(249, 115, 22, 0.2)" data-name="SUNSET ORANGE"></div>
-                        <div class="theme-dot" style="background: #22c55e;" data-color="#22c55e" data-dim="rgba(34, 197, 94, 0.2)" data-name="MATRIX GREEN"></div>
-                        <div class="theme-dot" style="background: #ef4444;" data-color="#ef4444" data-dim="rgba(239, 68, 68, 0.2)" data-name="NEON RED"></div>
+                <!-- TAB 2: SETTINGS & PREFERENCES -->
+                <div id="tab-settings" class="tab-content hidden space-y-3.5 text-xs">
+                    <!-- Visualizer Style Modes -->
+                    <div class="android-card p-3.5 space-y-2.5">
+                        <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] block">Visualizer Style</span>
+                        <div class="flex gap-2">
+                            <button class="viz-style-btn flex-1 py-2.5 rounded-xl bg-white/10 border border-white/20 text-white font-bold text-[10px] active:scale-95 transition-transform" data-style="bars">SOFT BARS</button>
+                            <button class="viz-style-btn flex-1 py-2.5 rounded-xl bg-white/5 text-white/60 font-bold text-[10px] active:scale-95 transition-transform" data-style="circle">GALAXY ORBIT</button>
+                            <button class="viz-style-btn flex-1 py-2.5 rounded-xl bg-white/5 text-white/60 font-bold text-[10px] active:scale-95 transition-transform" data-style="off">OFF</button>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Reset Default Settings Button -->
-                <div class="pt-2 border-t border-white/10">
-                    <button id="reset-settings-btn" class="w-full py-2.5 rounded-xl bg-red-500/10 border border-red-500/20 text-red-400 font-bold hover:bg-red-500/20 transition-all flex items-center justify-center gap-2 text-[11px]">
+                    <!-- Playback Speed -->
+                    <div class="android-card p-3.5 space-y-2.5">
+                        <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] block">Playback Speed</span>
+                        <div class="flex justify-between gap-1.5 bg-black/40 p-1.5 rounded-2xl" id="speed-selector">
+                            <button class="speed-btn flex-1 py-1.5 rounded-xl text-white/60 font-bold hover:text-white transition-colors" data-speed="0.75">0.75x</button>
+                            <button class="speed-btn flex-1 py-1.5 rounded-xl bg-white/10 text-white font-bold transition-colors" data-speed="1.0">1.0x</button>
+                            <button class="speed-btn flex-1 py-1.5 rounded-xl text-white/60 font-bold hover:text-white transition-colors" data-speed="1.25">1.25x</button>
+                            <button class="speed-btn flex-1 py-1.5 rounded-xl text-white/60 font-bold hover:text-white transition-colors" data-speed="1.5">1.5x</button>
+                        </div>
+                    </div>
+
+                    <!-- Keep Screen Awake Toggle (Screen Always On) -->
+                    <div class="android-card p-3.5 flex items-center justify-between">
+                        <div>
+                            <p class="font-bold text-white text-xs">Keep Screen Awake</p>
+                            <p class="text-[10px] text-white/40">Prevent display timeout during playback</p>
+                        </div>
+                        <button id="wake-lock-toggle" class="w-11 h-6 bg-white/10 rounded-full p-1 toggle-bg flex items-center transition-colors duration-200">
+                            <div id="wake-lock-dot" class="w-4 h-4 bg-white/40 rounded-full toggle-dot transition-transform duration-200"></div>
+                        </button>
+                    </div>
+
+                    <!-- Color Theme -->
+                    <div class="android-card p-3.5 space-y-2.5">
+                        <span class="font-extrabold text-white/50 uppercase tracking-wider text-[9px] block">Color Theme Preset</span>
+                        <div class="flex justify-between gap-2" id="theme-selector">
+                            <div class="theme-dot active" style="background: #00f2ff;" data-color="#00f2ff" data-dim="rgba(0, 242, 255, 0.2)" data-name="CYBER CYAN"></div>
+                            <div class="theme-dot" style="background: #a855f7;" data-color="#a855f7" data-dim="rgba(168, 85, 247, 0.2)" data-name="PLASMA PURPLE"></div>
+                            <div class="theme-dot" style="background: #f97316;" data-color="#f97316" data-dim="rgba(249, 115, 22, 0.2)" data-name="SUNSET ORANGE"></div>
+                            <div class="theme-dot" style="background: #22c55e;" data-color="#22c55e" data-dim="rgba(34, 197, 94, 0.2)" data-name="MATRIX GREEN"></div>
+                            <div class="theme-dot" style="background: #ef4444;" data-color="#ef4444" data-dim="rgba(239, 68, 68, 0.2)" data-name="NEON RED"></div>
+                        </div>
+                    </div>
+
+                    <!-- Reset Default Settings Button -->
+                    <button id="reset-settings-btn" class="w-full py-3 rounded-2xl bg-red-500/10 border border-red-500/20 text-red-400 font-bold hover:bg-red-500/20 active:scale-[0.98] transition-all flex items-center justify-center gap-2 text-xs">
                         <i class="fa-solid fa-rotate-left"></i> Reset Default Settings
                     </button>
                 </div>
+
             </div>
 
-            <button id="apply-btn" class="w-full py-3 btn-accent font-black rounded-xl uppercase tracking-wider text-xs mt-1">
-                Apply Settings
+            <!-- Apply Button -->
+            <button id="apply-btn" class="w-full py-3.5 btn-accent font-black rounded-2xl uppercase tracking-wider text-xs shrink-0 shadow-lg active:scale-[0.98] transition-all">
+                Apply & Close
             </button>
         </div>
     </div>
 
     <!-- Sync Offset Modal -->
     <div id="offset-modal" class="modal-overlay hidden opacity-0">
-        <div class="glass-panel rounded-3xl p-6 w-full max-w-xs space-y-4 text-center border border-white/10">
+        <div class="glass-panel rounded-3xl p-6 w-full max-w-xs space-y-4 text-center border border-white/10 my-auto">
             <h3 class="font-bold text-sm text-white">Adjust Lyric Sync Offset</h3>
             <p class="text-[11px] text-white/50">Shift lyrics earlier or later to match audio perfectly.</p>
             
@@ -826,6 +950,76 @@
             updateScroll(-1);
         }
 
+        // --- ONLINE LRC FETCH ASSISTANT ENGINE (2 SEPARATE INPUTS) ---
+        const onlineSongInput = document.getElementById('online-song-input');
+        const onlineArtistInput = document.getElementById('online-artist-input');
+        const onlineSearchBtn = document.getElementById('online-search-btn');
+        const onlineSearchStatus = document.getElementById('online-search-status');
+
+        onlineSearchBtn.onclick = async () => {
+            const songName = onlineSongInput.value.trim();
+            const artistName = onlineArtistInput.value.trim();
+
+            if (!songName) {
+                onlineSearchStatus.className = 'text-[9px] text-red-400 font-semibold';
+                onlineSearchStatus.innerText = '✕ Please enter a song title first.';
+                onlineSearchStatus.classList.remove('hidden');
+                return;
+            }
+
+            onlineSearchStatus.classList.remove('hidden', 'text-red-400');
+            onlineSearchStatus.classList.add('text-cyan-400');
+            onlineSearchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin"></i> Searching database for "${songName}"...`;
+
+            try {
+                // Build search parameters
+                let apiUrl = `https://lrclib.net/api/search?track_name=${encodeURIComponent(songName)}`;
+                if (artistName) {
+                    apiUrl += `&artist_name=${encodeURIComponent(artistName)}`;
+                }
+
+                let response = await fetch(apiUrl);
+                let data = await response.json();
+
+                // Fallback to general query if strict parameter search returns empty
+                if (!data || data.length === 0) {
+                    const combinedQuery = `${songName} ${artistName}`.trim();
+                    response = await fetch(`https://lrclib.net/api/search?q=${encodeURIComponent(combinedQuery)}`);
+                    data = await response.json();
+                }
+
+                if (data && data.length > 0) {
+                    // Prefer Synced LRC over Plain Text
+                    let item = data.find(d => d.syncedLyrics) || data[0];
+                    let lrcText = item.syncedLyrics || item.plainLyrics;
+
+                    if (lrcText) {
+                        lrcTextInput.value = lrcText;
+                        parseLRC(lrcText);
+                        
+                        const displayTitle = item.artistName ? `${item.trackName} - ${item.artistName}` : item.trackName;
+                        document.getElementById('lrc-label').innerText = "✓ Found: " + displayTitle;
+                        
+                        if (!document.getElementById('song-title').innerText || document.getElementById('song-title').innerText === "No Track Loaded") {
+                            document.getElementById('song-title').innerText = displayTitle;
+                        }
+                        
+                        onlineSearchStatus.className = 'text-[9px] text-green-400 font-semibold';
+                        onlineSearchStatus.innerText = `✓ Synced Lyrics loaded for "${displayTitle}"!`;
+                        resumeAutoSync();
+                    } else {
+                        throw new Error("Lyrics found but no synced timestamp available.");
+                    }
+                } else {
+                    throw new Error("No lyrics found online for this song.");
+                }
+            } catch (err) {
+                console.error("Online LRC fetch error:", err);
+                onlineSearchStatus.className = 'text-[9px] text-red-400 font-semibold';
+                onlineSearchStatus.innerText = `✕ ${err.message || "Could not fetch lyrics online."}`;
+            }
+        };
+
         // --- TOUCH & MOUSE DRAG SCROLLING LOGIC ---
         function getCurrentTransformY() {
             const style = window.getComputedStyle(scroller);
@@ -1011,13 +1205,13 @@
             if (keepAwake) {
                 wakeLockToggle.classList.remove('bg-white/10');
                 wakeLockToggle.style.backgroundColor = currentThemeColor;
-                wakeLockDot.classList.add('translate-x-4');
+                wakeLockDot.classList.add('translate-x-5');
                 wakeLockDot.classList.remove('bg-white/40');
                 wakeLockDot.classList.add('bg-black');
             } else {
                 wakeLockToggle.style.backgroundColor = '';
                 wakeLockToggle.classList.add('bg-white/10');
-                wakeLockDot.classList.remove('translate-x-4');
+                wakeLockDot.classList.remove('translate-x-5');
                 wakeLockDot.classList.remove('bg-black');
                 wakeLockDot.classList.add('bg-white/40');
             }
@@ -1124,8 +1318,20 @@
             const file = e.target.files[0];
             if (file) {
                 audio.src = URL.createObjectURL(file);
-                document.getElementById('song-title').innerText = file.name.replace(/\.[^/.]+$/, "");
-                document.getElementById('audio-label').innerText = "✓ " + file.name;
+                const fullFileName = file.name.replace(/\.[^/.]+$/, "");
+                document.getElementById('song-title').innerText = fullFileName;
+                document.getElementById('audio-label').innerText = file.name;
+                
+                // Smart auto-fill for Track Name & Artist Name if file is formatted as "Artist - Song"
+                if (fullFileName.includes('-')) {
+                    const parts = fullFileName.split('-');
+                    onlineArtistInput.value = parts[0].trim();
+                    onlineSongInput.value = parts.slice(1).join('-').trim();
+                } else {
+                    onlineSongInput.value = fullFileName;
+                    onlineArtistInput.value = '';
+                }
+                
                 resumeAutoSync();
             }
         };
@@ -1141,7 +1347,7 @@
                     resumeAutoSync();
                 };
                 reader.readAsText(file);
-                document.getElementById('lrc-label').innerText = "✓ " + file.name;
+                document.getElementById('lrc-label').innerText = file.name;
             }
         };
 
@@ -1157,6 +1363,8 @@
         document.getElementById('demo-load-btn').onclick = async () => {
             audio.src = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3";
             document.getElementById('song-title').innerText = "Cyber Lofi Chill (Demo)";
+            onlineSongInput.value = "Cyber Lofi Chill";
+            onlineArtistInput.value = "Demo Artist";
             
             const demoLRC = `
 [00:00.00] ♪ Soft Ambient Intro ♪
@@ -1352,7 +1560,7 @@
 
         function closeModal(modal) {
             modal.classList.add('opacity-0');
-            setTimeout(() => modal.classList.add('hidden'), 300);
+            setTimeout(() => modal.classList.add('hidden'), 350);
         }
 
         function closeModals() {
@@ -1362,7 +1570,7 @@
 
         // Keyboard Shortcuts
         window.onkeydown = (e) => {
-            if (document.activeElement === lrcTextInput || document.activeElement === searchInput) {
+            if (document.activeElement === lrcTextInput || document.activeElement === searchInput || document.activeElement === onlineSongInput || document.activeElement === onlineArtistInput) {
                 return;
             }
 
@@ -1391,3 +1599,4 @@
     </script>
 </body>
 </html>
+

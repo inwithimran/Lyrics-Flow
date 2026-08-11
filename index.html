@@ -45,7 +45,7 @@
             --m3-primary-rgb: 56, 189, 248;
             --m3-glow: rgba(56, 189, 248, 0.25);
             --font-scale: 1;
-            --lyric-base-size: 1.5rem; /* মোবাইল ফন্ট বেস সাইজ */
+            --lyric-base-size: 1.5rem;
         }
 
         * {
@@ -79,7 +79,7 @@
             filter: blur(60px);
         }
 
-        /* Rotating Vinyl Disk Animation with State Pause/Resume */
+        /* Rotating Vinyl Disk Animation */
         @keyframes spinDisk {
             from { transform: rotate(0deg); }
             to { transform: rotate(360deg); }
@@ -122,7 +122,7 @@
             transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        /* Responsive Dynamic Lyrics Formatting */
+        /* Lyrics Formatting */
         .lyric-line {
             transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease;
             opacity: 0.35;
@@ -153,25 +153,14 @@
             text-shadow: 0 0 25px var(--m3-glow);
         }
 
-        /* ট্যাবলেট এবং ডেসটপ স্ক্রিনের জন্য রেসপন্সিভ সাইজ */
         @media (min-width: 640px) {
-            :root {
-                --lyric-base-size: 2rem; /* ট্যাবলেট সাইজ */
-            }
-            .lyric-line {
-                padding: 16px 28px;
-                margin: 6px auto;
-            }
+            :root { --lyric-base-size: 2rem; }
+            .lyric-line { padding: 16px 28px; margin: 6px auto; }
         }
 
         @media (min-width: 1024px) {
-            :root {
-                --lyric-base-size: 2.5rem; /* কম্পিউটার/পিসি বড় সাইজ */
-            }
-            .lyric-line {
-                padding: 18px 36px;
-                margin: 8px auto;
-            }
+            :root { --lyric-base-size: 2.5rem; }
+            .lyric-line { padding: 18px 36px; margin: 8px auto; }
         }
 
         /* Material 3 Bottom Surface Control Bar */
@@ -209,9 +198,7 @@
             transition: transform 0.15s ease;
         }
 
-        .m3-slider::-webkit-slider-thumb:hover {
-            transform: scale(1.25);
-        }
+        .m3-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
         /* Visualizer Canvases */
         #viz-canvas-bg {
@@ -283,9 +270,7 @@
             }
         }
 
-        .sheet-overlay.open .m3-bottom-sheet {
-            transform: translateY(0);
-        }
+        .sheet-overlay.open .m3-bottom-sheet { transform: translateY(0); }
 
         /* Modal Dialog Popup */
         .dialog-overlay {
@@ -304,10 +289,7 @@
             padding: 20px;
         }
 
-        .dialog-overlay.open {
-            opacity: 1;
-            pointer-events: auto;
-        }
+        .dialog-overlay.open { opacity: 1; pointer-events: auto; }
 
         .m3-dialog {
             background: #171C28;
@@ -321,9 +303,7 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
         }
 
-        .dialog-overlay.open .m3-dialog {
-            transform: scale(1);
-        }
+        .dialog-overlay.open .m3-dialog { transform: scale(1); }
 
         /* Android Segmented Tab Pills */
         .m3-tab-pill {
@@ -357,9 +337,7 @@
             gap: 12px;
         }
 
-        .m3-list-row:last-child {
-            border-bottom: none;
-        }
+        .m3-list-row:last-child { border-bottom: none; }
 
         .m3-input {
             width: 100%;
@@ -373,9 +351,7 @@
             transition: border-color 0.2s ease;
         }
 
-        .m3-input:focus {
-            border-color: var(--m3-primary);
-        }
+        .m3-input:focus { border-color: var(--m3-primary); }
 
         /* Custom Scrollbar */
         ::-webkit-scrollbar { width: 4px; }
@@ -395,28 +371,34 @@
     <header class="w-full max-w-4xl mx-auto px-5 py-4 flex items-center justify-between z-20 flex-shrink-0 relative">
         <div class="flex items-center gap-3.5 min-w-0">
             <!-- Vinyl Artwork Badge -->
-            <div id="track-art" class="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-m3-surfaceHigh border border-white/10 flex items-center justify-center shrink-0 shadow-lg relative overflow-hidden transition-transform duration-500">
-                <i class="fa-solid fa-compact-disc text-xl md:text-2xl text-m3-primary" id="track-art-icon"></i>
+            <div id="track-art" class="shrink-0 flex items-center justify-center">
+                <i class="fa-solid fa-compact-disc text-3xl text-m3-primary" id="track-art-icon"></i>
             </div>
             
             <div class="min-w-0">
-                <div class="flex items-center gap-2">
+                <div class="flex items-center gap-2 flex-wrap">
                     <span id="theme-tag" class="text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest text-m3-primary">CYBER CYAN</span>
                     <span id="offset-tag" class="text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-white/70">0.0s</span>
+                    
+                    <!-- Sleep Timer Countdown Badge (Home View) -->
+                    <span id="sleep-countdown-badge" class="hidden text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1 animate-pulse">
+                        <i class="fa-solid fa-moon text-[8px]"></i>
+                        <span id="sleep-countdown-text">00:00</span>
+                    </span>
                 </div>
                 <h1 id="track-title" class="text-sm sm:text-base md:text-lg font-bold truncate text-slate-100 leading-tight">No Track Loaded</h1>
-                <p id="track-artist" class="text-xs md:text-sm text-slate-400 truncate">Tap studio button to configure music & sync</p>
+                <p id="track-artist" class="text-xs md:text-sm text-slate-400 truncate">Tap music library button or studio controls</p>
             </div>
         </div>
 
         <div class="flex items-center gap-2 shrink-0">
-            <!-- Sleep Timer Modal Launcher -->
-            <button id="sleep-timer-btn" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl bg-white/5 hover:bg-white/10 border border-white/10 flex items-center justify-center text-slate-300 transition-all text-xs md:text-sm" title="Sleep Timer">
-                <i class="fa-solid fa-moon"></i>
+            <!-- Music Library Button -->
+            <button id="open-library-btn" class="p-2 text-slate-300 hover:text-white transition-all text-base active:scale-95" title="Music Library">
+                <i class="fa-solid fa-music"></i>
             </button>
 
             <!-- Studio Control Sheet Button -->
-            <button id="open-studio-btn" class="w-11 h-11 md:w-12 md:h-12 rounded-2xl bg-m3-primary text-slate-950 font-extrabold flex items-center justify-center transition-all shadow-lg shadow-sky-500/20 active:scale-95 text-sm md:text-base" title="Studio Controls">
+            <button id="open-studio-btn" class="p-2 text-m3-primary hover:text-white transition-all text-base active:scale-95" title="Studio Controls">
                 <i class="fa-solid fa-sliders"></i>
             </button>
         </div>
@@ -426,7 +408,7 @@
     <main id="lyrics-container">
         <div id="lyrics-scroller">
             <div class="lyric-line active">Welcome to Lyrics Flow Pro</div>
-            <div class="lyric-line">Tap studio button <i class="fa-solid fa-sliders mx-1"></i> to load audio & lyrics</div>
+            <div class="lyric-line">Tap music library <i class="fa-solid fa-music mx-1"></i> or studio <i class="fa-solid fa-sliders mx-1"></i> to play tracks</div>
         </div>
 
         <!-- Floating Auto-Sync Resume Pill -->
@@ -484,6 +466,33 @@
             </div>
         </div>
     </footer>
+
+    <!-- MUSIC LIBRARY BOTTOM SHEET MODAL -->
+    <div id="library-sheet" class="sheet-overlay">
+        <div class="m3-bottom-sheet">
+            <div class="w-12 h-1.5 bg-white/20 rounded-full mx-auto my-3 shrink-0 sm:hidden"></div>
+            
+            <div class="px-6 py-3 sm:pt-5 flex items-center justify-between border-b border-white/10 shrink-0">
+                <div class="flex items-center gap-3">
+                    <div class="w-9 h-9 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400">
+                        <i class="fa-solid fa-music text-xs"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-sm md:text-base font-extrabold text-white tracking-tight">Music Library</h2>
+                        <p class="text-[10px] md:text-xs text-slate-400">Select a song to load audio & synced lyrics</p>
+                    </div>
+                </div>
+                <button class="close-library-btn w-8 h-8 rounded-full bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+                    <i class="fa-solid fa-xmark text-sm"></i>
+                </button>
+            </div>
+
+            <!-- Library Song List View -->
+            <div class="px-6 py-4 overflow-y-auto space-y-2 flex-1" id="playlist-container">
+                <!-- Dynamically Populated by JS -->
+            </div>
+        </div>
+    </div>
 
     <!-- STUDIO MATERIAL BOTTOM SHEET MODAL -->
     <div id="studio-sheet" class="sheet-overlay">
@@ -668,7 +677,7 @@
                     </div>
                 </div>
 
-                <!-- TAB 4: PREFERENCES & THEMES -->
+                <!-- TAB 4: PREFERENCES, SLEEP TIMER & THEMES -->
                 <div id="tab-prefs" class="tab-pane hidden space-y-4">
                     
                     <!-- 1. ALWAYS DISPLAY ON FEATURE -->
@@ -683,8 +692,35 @@
                         </label>
                     </div>
 
+                    <!-- 2. SLEEP TIMER SECTION -->
+                    <div class="py-3 border-y border-white/10 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
+                                    <i class="fa-solid fa-moon text-sky-400"></i> Sleep Mode Timer
+                                </span>
+                                <p id="pref-sleep-status" class="text-[10px] text-slate-400 mt-0.5">Automatically pauses playback when expired</p>
+                            </div>
+                            <span id="pref-sleep-countdown" class="hidden text-xs font-mono font-extrabold text-amber-300 bg-amber-500/20 px-2 py-0.5 rounded-full border border-amber-500/30">00:00</span>
+                        </div>
+
+                        <div class="grid grid-cols-4 gap-2" id="sleep-options">
+                            <button class="m3-tab-pill justify-center text-xs py-2 sleep-btn" data-time="15">15 Min</button>
+                            <button class="m3-tab-pill justify-center text-xs py-2 sleep-btn" data-time="30">30 Min</button>
+                            <button class="m3-tab-pill justify-center text-xs py-2 sleep-btn" data-time="45">45 Min</button>
+                            <button class="m3-tab-pill justify-center text-xs py-2 sleep-btn" data-time="60">60 Min</button>
+                        </div>
+
+                        <!-- Custom Sleep Time Input & Cancel -->
+                        <div class="flex gap-2">
+                            <input type="number" id="custom-sleep-min" placeholder="Custom mins" class="m3-input py-2 text-xs font-mono flex-1" min="1" max="300">
+                            <button id="btn-set-custom-sleep" class="px-3 py-2 bg-sky-500 text-slate-950 font-extrabold text-xs rounded-xl">Set</button>
+                            <button id="btn-cancel-sleep" class="px-3 py-2 bg-red-500/20 text-red-400 font-bold text-xs rounded-xl hover:bg-red-500/30 transition-all">Off</button>
+                        </div>
+                    </div>
+
                     <!-- Visualizer Mode -->
-                    <div class="space-y-2 pt-2">
+                    <div class="space-y-2 pt-1">
                         <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block">Visualizer Style</span>
                         <div class="grid grid-cols-3 gap-2">
                             <button class="viz-style-chip m3-tab-pill active justify-center" data-style="bars">Soft Bars</button>
@@ -771,29 +807,11 @@
         </div>
     </div>
 
-    <!-- SLEEP TIMER SHEET MODAL -->
-    <div id="sleep-sheet" class="sheet-overlay">
-        <div class="m3-bottom-sheet max-w-xs mx-auto my-auto rounded-3xl p-6 space-y-4 text-center border border-white/10">
-            <div class="w-10 h-10 rounded-2xl bg-sky-500/10 text-sky-400 flex items-center justify-center mx-auto text-lg">
-                <i class="fa-solid fa-moon"></i>
-            </div>
-            <h3 class="text-sm font-extrabold text-white">Sleep Timer</h3>
-            <p id="sleep-timer-status" class="text-xs text-slate-400">Pause music playback automatically after timer expires.</p>
-
-            <div class="grid grid-cols-2 gap-2" id="sleep-options">
-                <button class="m3-tab-pill justify-center text-xs py-2.5" data-time="15">15 Mins</button>
-                <button class="m3-tab-pill justify-center text-xs py-2.5" data-time="30">30 Mins</button>
-                <button class="m3-tab-pill justify-center text-xs py-2.5" data-time="45">45 Mins</button>
-                <button class="m3-tab-pill justify-center text-xs py-2.5" data-time="60">60 Mins</button>
-            </div>
-
-            <button id="btn-cancel-sleep" class="w-full py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 font-bold rounded-xl text-xs transition-all">Turn Off Sleep Timer</button>
-            <button class="close-sleep-sheet w-full py-2 bg-white/10 text-slate-300 font-bold rounded-xl text-xs">Close</button>
-        </div>
-    </div>
-
     <audio id="audio-player" crossorigin="anonymous"></audio>
 
+    <script src="Data/musicData.js"></script>
+
+    <!-- MAIN APP ENGINE -->
     <script>
         // DEFAULT CONFIGURATION OBJECT
         const DEFAULT_SETTINGS = {
@@ -849,6 +867,10 @@
         let onlineArtistName = '';
         let fileTrackTitle = '';
         let fileArtistName = '';
+        let activeSongId = null;
+
+        // Blob URL Cache to prevent byte-range / seeking restart bugs on HTTP streams
+        let currentBlobUrl = null;
 
         // Wake Lock Screen State
         let wakeLock = null;
@@ -870,8 +892,10 @@
         let eqBands = [];
         const EQ_FREQS = [60, 230, 910, 4000, 14000];
 
-        // Sleep Timer
+        // Sleep Timer Live Countdown State
+        let sleepEndTime = null;
         let sleepTimerTimeout = null;
+        let sleepIntervalId = null;
 
         // Touch Drag State
         let isDragging = false;
@@ -882,6 +906,62 @@
         // Visualizer Bars Smooth Interpolation
         const barCount = 32;
         let smoothBars = new Array(barCount).fill(0);
+
+        // --- SAFE AUDIO SOURCE LOADER (Converts Remote URLs to Blob for Instant Seeking) ---
+        async function setAudioSource(source) {
+            if (currentBlobUrl) {
+                URL.revokeObjectURL(currentBlobUrl);
+                currentBlobUrl = null;
+            }
+
+            if (!source) return;
+
+            // Local File or Blob object
+            if (source instanceof File || source instanceof Blob) {
+                currentBlobUrl = URL.createObjectURL(source);
+                audio.setAttribute('crossorigin', 'anonymous');
+                audio.src = currentBlobUrl;
+                return;
+            }
+
+            // Remote String URL
+            if (typeof source === 'string') {
+                if (source.startsWith('http://') || source.startsWith('https://')) {
+                    try {
+                        const response = await fetch(source);
+                        if (response.ok) {
+                            const blob = await response.blob();
+                            currentBlobUrl = URL.createObjectURL(blob);
+                            audio.setAttribute('crossorigin', 'anonymous');
+                            audio.src = currentBlobUrl;
+                            return;
+                        }
+                    } catch (err) {
+                        console.warn('Fallback to direct URL stream:', err);
+                    }
+                }
+                audio.removeAttribute('crossorigin');
+                audio.src = source;
+            }
+        }
+
+        // --- SAFE SEEKING WRAPPER (Prevents seeking reset when media isn't ready) ---
+        function seekAudioTo(targetTime) {
+            if (!audio.src) return;
+            if (isNaN(targetTime) || !isFinite(targetTime)) return;
+
+            const validTime = Math.max(0, Math.min(audio.duration || Infinity, targetTime));
+
+            if (audio.readyState >= 1) {
+                audio.currentTime = validTime;
+            } else {
+                const onLoaded = () => {
+                    audio.currentTime = validTime;
+                    audio.removeEventListener('loadedmetadata', onLoaded);
+                };
+                audio.addEventListener('loadedmetadata', onLoaded);
+            }
+        }
 
         // --- ALWAYS DISPLAY ON (SCREEN WAKE LOCK) ---
         const wakeLockToggle = document.getElementById('wake-lock-toggle');
@@ -917,50 +997,41 @@
             }
         };
 
-        // Re-acquire WakeLock when returning to tab if enabled
         document.addEventListener('visibilitychange', async () => {
             if (wakeLock !== null && document.visibilityState === 'visible' && userSettings.isWakeLockActive) {
                 await requestWakeLock();
             }
         });
 
-        // Initialize WakeLock on launch
         if (userSettings.isWakeLockActive) {
             requestWakeLock();
         }
 
         // --- APPLY INITIAL / RESTORED SETTINGS TO UI & ENGINE ---
         function applySettingsToUI() {
-            // Wake Lock Toggle Switch
             wakeLockToggle.checked = userSettings.isWakeLockActive;
 
-            // Theme Accent
             document.documentElement.style.setProperty('--m3-primary', userSettings.themeColor);
             document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
             document.getElementById('theme-tag').innerText = userSettings.themeName;
             document.getElementById('theme-tag').style.color = userSettings.themeColor;
 
-            // Visualizer Chip Active State
             document.querySelectorAll('.viz-style-chip').forEach(btn => {
                 if (btn.dataset.style === userSettings.visualizerMode) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
 
-            // Font Scale Slider (ডাইরেক্ট রুট ভ্যারিয়েবলে আপডেট)
             document.documentElement.style.setProperty('--font-scale', userSettings.fontScale);
             document.getElementById('font-scale-slider').value = userSettings.fontScale;
             document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
 
-            // Sync Offset Display
             updateOffsetUI();
 
-            // Equalizer Presets
             document.querySelectorAll('.eq-preset-btn').forEach(btn => {
                 if (btn.dataset.preset === userSettings.eqPreset) btn.classList.add('active');
                 else btn.classList.remove('active');
             });
 
-            // Equalizer Band Sliders
             userSettings.eqBands.forEach((val, i) => {
                 const slider = document.querySelector(`.eq-band[data-band="${i}"]`);
                 if (slider) slider.value = val;
@@ -983,7 +1054,7 @@
                 artistEl.innerText = fileArtistName || 'Local File Track';
             } else {
                 titleEl.innerText = 'No Track Loaded';
-                artistEl.innerText = 'Tap studio button to configure music & sync';
+                artistEl.innerText = 'Tap music library or studio buttons';
             }
         }
 
@@ -1021,8 +1092,7 @@
                     else if (idx === EQ_FREQS.length - 1) filter.type = 'highshelf';
                     else { filter.type = 'peaking'; filter.Q.value = 1.0; }
                     
-                    filter.frequency.value = freq;
-                    filter.gain.value = userSettings.eqBands[idx] || 0;
+                    filter.frequency.value = userSettings.eqBands[idx] || 0;
                     
                     lastNode.connect(filter);
                     lastNode = filter;
@@ -1068,7 +1138,6 @@
                 smoothBars[i] += (displayData[i] - smoothBars[i]) * 0.2;
             }
 
-            // SOFT BARS
             if (userSettings.visualizerMode === 'bars') {
                 const barW = (wBar / barCount) * 0.55;
                 const gap = (wBar / barCount) * 0.45;
@@ -1089,7 +1158,6 @@
                     ctxBar.fill();
                 }
             } 
-            // GALAXY ORBIT
             else if (userSettings.visualizerMode === 'circle') {
                 const cx = wBg / 2;
                 const cy = hBg / 2 - 20;
@@ -1152,10 +1220,9 @@
                 }
             });
 
-            // Plain text fallback
             if (!timestamped) {
                 const cleanLines = lines.filter(l => l.trim() !== '');
-                const step = audio.duration ? audio.duration / cleanLines.length : 3.5;
+                const step = (audio.duration && !isNaN(audio.duration)) ? audio.duration / cleanLines.length : 3.5;
                 cleanLines.forEach((content, i) => {
                     lyrics.push({ time: i * step, content: content.trim() });
                 });
@@ -1181,7 +1248,7 @@
 
                 div.onclick = () => {
                     if (totalDragDistance > 10) return;
-                    audio.currentTime = Math.max(0, item.time + userSettings.timeOffset);
+                    seekAudioTo(item.time + userSettings.timeOffset);
                     if (audio.paused) triggerPlay();
                     resumeAutoSync();
                 };
@@ -1220,7 +1287,9 @@
             if (!audio.paused && !audio.ended) {
                 const cur = audio.currentTime;
                 currTimeLbl.innerText = formatTime(cur);
-                if (audio.duration) scrubber.value = (cur / audio.duration) * 100;
+                if (audio.duration && !isNaN(audio.duration)) {
+                    scrubber.value = (cur / audio.duration) * 100;
+                }
 
                 const adj = cur - userSettings.timeOffset;
                 let idx = -1;
@@ -1282,6 +1351,69 @@
             updateScroll(activeIndex, true);
         }
         resumeSyncBtn.onclick = resumeAutoSync;
+
+        // --- MUSIC LIBRARY RENDERER & TRACK SELECTOR ---
+        const playlistContainer = document.getElementById('playlist-container');
+
+        function renderLibraryPlaylist() {
+            playlistContainer.innerHTML = '';
+            const playlist = window.PLAYLIST_DATA || [];
+
+            playlist.forEach((song, idx) => {
+                const isSelected = song.id === activeSongId;
+                const card = document.createElement('div');
+                card.className = `p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    isSelected 
+                        ? 'bg-sky-500/10 border-sky-500/40 text-sky-300' 
+                        : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 ${isSelected ? 'text-sky-400' : 'text-slate-400'}">
+                            <i class="fa-solid ${isSelected ? 'fa-chart-simple animate-pulse' : 'fa-music'} text-sm"></i>
+                        </div>
+                        <div class="min-w-0">
+                            <h4 class="text-xs md:text-sm font-bold truncate">${song.title}</h4>
+                            <p class="text-[10px] md:text-xs text-slate-400 truncate">${song.artist}</p>
+                        </div>
+                    </div>
+                    <button class="w-8 h-8 rounded-full ${isSelected ? 'bg-sky-500 text-slate-950' : 'bg-white/10 text-slate-200'} flex items-center justify-center shrink-0 text-xs shadow">
+                        <i class="fa-solid ${isSelected && !audio.paused ? 'fa-pause' : 'fa-play'}"></i>
+                    </button>
+                `;
+
+                card.onclick = () => loadTrackFromLibrary(song);
+                playlistContainer.appendChild(card);
+            });
+        }
+
+        async function loadTrackFromLibrary(song) {
+            activeSongId = song.id;
+
+            onlineTrackTitle = song.title;
+            onlineArtistName = song.artist;
+            fileTrackTitle = '';
+            fileArtistName = '';
+            updateHeaderTitle();
+
+            await setAudioSource(song.audioUrl);
+
+            songInput.value = song.title;
+            artistInput.value = song.artist;
+
+            if (song.lrcText) {
+                document.getElementById('raw-lrc-input').value = song.lrcText;
+                parseLRC(song.lrcText);
+            } else {
+                executeOnlineSync(true);
+            }
+
+            renderLibraryPlaylist();
+            closeSheet(document.getElementById('library-sheet'));
+            resumeAutoSync();
+            await triggerPlay();
+        }
 
         // --- AUTO ONLINE SYNCED LRC FINDER ENGINE ---
         const songInput = document.getElementById('online-song-input');
@@ -1350,32 +1482,35 @@
         // --- PLAYER CONTROLS ---
         async function triggerPlay() {
             if (audio.src) {
-                await setupAudioContext();
-                if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+                try {
+                    await setupAudioContext();
+                    if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+                } catch (e) { console.log("AudioContext warning:", e); }
                 try { await audio.play(); } catch (e) { console.log("Play error:", e); }
             }
         }
 
         btnPlayPause.onclick = () => {
             if (!audio.src) {
-                openSheet(document.getElementById('studio-sheet'));
+                openSheet(document.getElementById('library-sheet'));
                 return;
             }
             if (audio.paused) triggerPlay();
             else audio.pause();
         };
 
-        // Smooth Disk Animation Resume (toggles animation-play-state)
         audio.onplay = () => {
             playIcon.classList.add('hidden');
             pauseIcon.classList.remove('hidden');
             trackArtIcon.classList.add('playing');
+            renderLibraryPlaylist();
         };
 
         audio.onpause = () => {
             playIcon.classList.remove('hidden');
             pauseIcon.classList.add('hidden');
             trackArtIcon.classList.remove('playing');
+            renderLibraryPlaylist();
         };
 
         audio.onloadedmetadata = () => {
@@ -1383,17 +1518,17 @@
         };
 
         scrubber.oninput = e => {
-            if (audio.duration) {
-                audio.currentTime = (e.target.value / 100) * audio.duration;
+            if (audio.duration && !isNaN(audio.duration)) {
+                seekAudioTo((e.target.value / 100) * audio.duration);
                 if (isAutoScrollLocked) resumeAutoSync();
             }
         };
 
         document.getElementById('btn-rewind').onclick = () => {
-            audio.currentTime = Math.max(0, audio.currentTime - 5);
+            seekAudioTo(audio.currentTime - 5);
         };
         document.getElementById('btn-forward').onclick = () => {
-            audio.currentTime = Math.min(audio.duration || 0, audio.currentTime + 5);
+            seekAudioTo(audio.currentTime + 5);
         };
 
         document.getElementById('btn-loop').onclick = () => {
@@ -1481,36 +1616,81 @@
             };
         });
 
-        // --- SLEEP TIMER ---
-        const sleepSheet = document.getElementById('sleep-sheet');
-        document.getElementById('sleep-timer-btn').onclick = () => openSheet(sleepSheet);
+        // --- SLEEP MODE & LIVE COUNTDOWN ENGINE (IN PREFERENCES TAB) ---
+        const homeSleepBadge = document.getElementById('sleep-countdown-badge');
+        const homeSleepText = document.getElementById('sleep-countdown-text');
+        const prefSleepCountdown = document.getElementById('pref-sleep-countdown');
+        const prefSleepStatus = document.getElementById('pref-sleep-status');
 
-        document.querySelectorAll('#sleep-options button').forEach(btn => {
+        function startSleepTimer(minutes) {
+            clearSleepTimer();
+            const totalMs = minutes * 60 * 1000;
+            sleepEndTime = Date.now() + totalMs;
+
+            sleepTimerTimeout = setTimeout(() => {
+                audio.pause();
+                clearSleepTimer();
+                prefSleepStatus.innerText = "Sleep timer expired. Playback stopped.";
+            }, totalMs);
+
+            updateSleepCountdown();
+            sleepIntervalId = setInterval(updateSleepCountdown, 1000);
+        }
+
+        function updateSleepCountdown() {
+            if (!sleepEndTime) return;
+            const remaining = Math.max(0, Math.ceil((sleepEndTime - Date.now()) / 1000));
+
+            if (remaining <= 0) {
+                clearSleepTimer();
+                return;
+            }
+
+            const formatted = formatTime(remaining);
+            homeSleepText.innerText = formatted;
+            homeSleepBadge.classList.remove('hidden');
+
+            prefSleepCountdown.innerText = formatted;
+            prefSleepCountdown.classList.remove('hidden');
+            prefSleepStatus.innerText = `Active sleep timer expiring in ${formatted}`;
+        }
+
+        function clearSleepTimer() {
+            if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
+            if (sleepIntervalId) clearInterval(sleepIntervalId);
+            sleepEndTime = null;
+            sleepTimerTimeout = null;
+            sleepIntervalId = null;
+
+            homeSleepBadge.classList.add('hidden');
+            prefSleepCountdown.classList.add('hidden');
+            prefSleepStatus.innerText = "Automatically pauses playback when expired";
+        }
+
+        document.querySelectorAll('.sleep-btn').forEach(btn => {
             btn.onclick = () => {
                 const mins = parseInt(btn.dataset.time, 10);
-                if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
-
-                sleepTimerTimeout = setTimeout(() => {
-                    audio.pause();
-                    document.getElementById('sleep-timer-status').innerText = "Playback stopped by sleep timer.";
-                }, mins * 60 * 1000);
-
-                document.getElementById('sleep-timer-status').innerText = `Sleep timer active: Pausing in ${mins} minutes.`;
-                closeSheet(sleepSheet);
+                startSleepTimer(mins);
             };
         });
 
-        document.getElementById('btn-cancel-sleep').onclick = () => {
-            if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
-            sleepTimerTimeout = null;
-            document.getElementById('sleep-timer-status').innerText = "Sleep timer disabled.";
+        document.getElementById('btn-set-custom-sleep').onclick = () => {
+            const input = document.getElementById('custom-sleep-min');
+            const mins = parseInt(input.value, 10);
+            if (!isNaN(mins) && mins > 0) {
+                startSleepTimer(mins);
+                input.value = '';
+            }
         };
 
+        document.getElementById('btn-cancel-sleep').onclick = clearSleepTimer;
+
         // --- FILE INPUTS & SMART AUTO-FILL ---
-        document.getElementById('audio-file-input').onchange = e => {
+        document.getElementById('audio-file-input').onchange = async e => {
             const file = e.target.files[0];
             if (file) {
-                audio.src = URL.createObjectURL(file);
+                activeSongId = 'custom-file';
+                await setAudioSource(file);
                 const rawName = file.name.replace(/\.[^/.]+$/, "");
                 
                 if (rawName.includes('-')) {
@@ -1531,6 +1711,7 @@
                 updateHeaderTitle();
 
                 document.getElementById('lbl-audio-name').innerText = file.name;
+                renderLibraryPlaylist();
                 executeOnlineSync(true);
                 resumeAutoSync();
             }
@@ -1557,31 +1738,11 @@
             resumeAutoSync();
         };
 
-        document.getElementById('btn-load-demo').onclick = async () => {
-            audio.src = "https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3";
-            
-            onlineTrackTitle = "Cyber Lofi Chill (Demo)";
-            onlineArtistName = "Studio Production";
-            updateHeaderTitle();
-
-            songInput.value = "Cyber Lofi Chill";
-            artistInput.value = "Demo Artist";
-            
-            const demoLRC = `
-[00:00.00] ♪ Soft Ambient Intro ♪
-[00:05.00] Welcome to Lyrics Flow Pro Android Edition
-[00:09.50] Clean Material You design standard
-[00:14.00] Realtime 5-Band Equalizer and DSP Engine
-[00:19.00] Auto online synchronized lyrics database
-[00:24.00] Continuous spinning vinyl disk animation
-[00:30.00] ♪ Soft Bars and Galaxy Orbit Visualizer ♪
-[00:36.00] Enjoy your synchronized audio experience!
-            `;
-            document.getElementById('raw-lrc-input').value = demoLRC.trim();
-            parseLRC(demoLRC);
+        document.getElementById('btn-load-demo').onclick = () => {
+            if (window.PLAYLIST_DATA && window.PLAYLIST_DATA.length > 0) {
+                loadTrackFromLibrary(window.PLAYLIST_DATA[0]);
+            }
             closeSheet(document.getElementById('studio-sheet'));
-            resumeAutoSync();
-            await triggerPlay();
         };
 
         // --- PREFERENCES & THEMES ---
@@ -1609,7 +1770,6 @@
             };
         });
 
-        // ফন্ট স্কেল চেঞ্জ রিয়েল-টাইম ইভেন্ট
         const fontScaleSlider = document.getElementById('font-scale-slider');
         fontScaleSlider.oninput = e => {
             const val = parseFloat(e.target.value);
@@ -1650,24 +1810,26 @@
             localStorage.removeItem(STORAGE_KEY);
             userSettings = { ...DEFAULT_SETTINGS };
             applySettingsToUI();
+            clearSleepTimer();
             resetDialog.classList.remove('open');
         };
 
-        // Apply settings on script initialization
         applySettingsToUI();
+        renderLibraryPlaylist();
 
         // --- SHEET & TAB NAVIGATION ---
+        document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));
         document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
 
         document.querySelectorAll('.close-sheet-btn').forEach(btn => {
-    btn.onclick = () => {
-        closeSheet(document.getElementById('studio-sheet'));
-        triggerPlay();
-    };
-});
+            btn.onclick = () => {
+                closeSheet(document.getElementById('studio-sheet'));
+                triggerPlay();
+            };
+        });
 
-        document.querySelectorAll('.close-sleep-sheet').forEach(btn => {
-            btn.onclick = () => closeSheet(sleepSheet);
+        document.querySelectorAll('.close-library-btn').forEach(btn => {
+            btn.onclick = () => closeSheet(document.getElementById('library-sheet'));
         });
 
         function openSheet(sheet) { sheet.classList.add('open'); }
@@ -1689,7 +1851,7 @@
         });
 
         function formatTime(s) {
-            if (isNaN(s)) return "00:00";
+            if (isNaN(s) || !isFinite(s)) return "00:00";
             const m = Math.floor(s / 60);
             const sec = Math.floor(s % 60);
             return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;

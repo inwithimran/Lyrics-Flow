@@ -22,17 +22,17 @@ window.PLAYLIST_DATA = [
             },
         {
                 id: 'track-4',
-                title: 'Creative Minds',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3',
-                searchQuery: 'Creative Minds Bensound'
+                title: 'Somewhere Only We Know',
+                artist: 'Keane',
+                audioUrl: 'Data/music/Keane - Somewhere Only We Know.mp3',
+                searchQuery: 'Keane Somewhere Only We Know'
             },
         {
                 id: 'track-5',
-                title: 'Creative Minds',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3',
-                searchQuery: 'Creative Minds Bensound'
+                title: 'Attention',
+                artist: 'Charlie Puth',
+                audioUrl: 'Data/music/Charlie Puth - Attention.mp3',
+                searchQuery: 'Charlie Puth Attention'
             },
         {
                 id: 'track-6',

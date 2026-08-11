@@ -15,10 +15,10 @@ window.PLAYLIST_DATA = [
             },
             {
                 id: 'track-3',
-                title: 'Creative Minds',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3',
-                searchQuery: 'Creative Minds Bensound'
+                title: 'Juliet',
+                artist: 'Cavetown',
+                audioUrl: 'Data/music/Cavetown - Juliet.mp3',
+                searchQuery: 'Cavetown Juliet'
             },
         {
                 id: 'track-4',

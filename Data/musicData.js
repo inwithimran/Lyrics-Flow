@@ -1,10 +1,10 @@
 window.PLAYLIST_DATA = [
             {
                 id: 'track-1',
-                title: 'Baby',
-                artist: 'Justin Bieber',
-                audioUrl: 'https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=lofi-study-112191.mp3',
-                searchQuery: ''
+                title: 'Meri Banogi Kya',
+                artist: 'Rito Riba',
+                audioUrl: 'Data/music/Rito Riba - Meri Banogi Kya.mp3',
+                searchQuery: 'Meri Banogi Kya Rito Riba'
             },
             {
                 id: 'track-2',

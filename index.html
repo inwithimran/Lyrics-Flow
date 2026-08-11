@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="bn" class="dark">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -124,22 +124,23 @@
 
         /* Lyrics Formatting */
         .lyric-line {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease;
-            opacity: 0.35;
-            transform: scale(0.75);
-            transform-origin: center center;
-            text-align: center;
-            padding: 12px 20px;
-            font-size: calc(var(--lyric-base-size) * var(--font-scale));
-            line-height: 1.45;
-            font-weight: 700;
-            color: #94A3B8;
-            word-wrap: break-word;
-            margin: 4px auto;
-            max-width: 1100px;
-            cursor: pointer;
-            will-change: transform, opacity;
-        }
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease;
+    opacity: 0.35;
+    transform: scale(0.75);
+    transform-origin: center center;
+    text-align: center;
+    padding: 12px 24px;
+    font-size: calc(var(--lyric-base-size) * var(--font-scale));
+    line-height: 1.45;
+    font-weight: 700;
+    color: #94A3B8;
+    word-wrap: break-word;
+    margin: 4px auto;
+    max-width: calc(100% - 25px);
+    cursor: pointer;
+    will-change: transform, opacity;
+}
+
 
         .lyric-line:hover {
             opacity: 0.7;
@@ -439,29 +440,29 @@
             <!-- Playback Actions -->
             <div class="flex items-center justify-between px-2">
                 <!-- Repeat / Loop -->
-                <button id="btn-loop" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl text-slate-400 hover:text-slate-100 flex items-center justify-center transition-all">
+                <button id="btn-loop" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl text-slate-400 hover:text-slate-100 flex items-center justify-center transition-all" title="Toggle Loop">
                     <i class="fa-solid fa-repeat text-sm md:text-base"></i>
                 </button>
 
                 <!-- Seek -5s -->
-                <button id="btn-rewind" class="w-11 h-11 md:w-12 md:h-12 rounded-full text-slate-200 hover:bg-white/5 active:scale-90 transition-transform flex items-center justify-center">
+                <button id="btn-rewind" class="w-11 h-11 md:w-12 md:h-12 rounded-full text-slate-200 hover:bg-white/5 active:scale-90 transition-transform flex items-center justify-center" title="Rewind 5s">
                     <i class="fa-solid fa-rotate-left text-base md:text-lg"></i>
                 </button>
 
                 <!-- Play / Pause Fab -->
-                <button id="btn-play-pause" class="w-16 h-16 md:w-18 md:h-18 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform">
+                <button id="btn-play-pause" class="w-16 h-16 md:w-18 md:h-18 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform" title="Play/Pause">
                     <i class="fa-solid fa-play text-xl md:text-2xl ml-0.5" id="play-icon"></i>
                     <i class="fa-solid fa-pause text-xl md:text-2xl hidden" id="pause-icon"></i>
                 </button>
 
                 <!-- Seek +5s -->
-                <button id="btn-forward" class="w-11 h-11 md:w-12 md:h-12 rounded-full text-slate-200 hover:bg-white/5 active:scale-90 transition-transform flex items-center justify-center">
+                <button id="btn-forward" class="w-11 h-11 md:w-12 md:h-12 rounded-full text-slate-200 hover:bg-white/5 active:scale-90 transition-transform flex items-center justify-center" title="Forward 5s">
                     <i class="fa-solid fa-rotate-right text-base md:text-lg"></i>
                 </button>
 
-                <!-- Speed Indicator Button -->
-                <button id="btn-speed-modal" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl text-slate-400 hover:text-slate-100 flex items-center justify-center transition-all text-xs md:text-sm font-mono font-bold">
-                    <span id="speed-indicator">1.0x</span>
+                <!-- Sync Offset Indicator Button -->
+                <button id="btn-offset-modal" class="w-10 h-10 md:w-11 md:h-11 rounded-2xl text-slate-400 hover:text-slate-100 flex items-center justify-center transition-all text-xs md:text-sm font-mono font-bold" title="Sync Offset Settings">
+                    <span id="offset-indicator">0.0s</span>
                 </button>
             </div>
         </div>
@@ -534,7 +535,7 @@
             </div>
 
             <!-- Tab Content Container -->
-            <div class="px-6 py-4 overflow-y-auto space-y-2 flex-1">
+            <div id="studio-tab-container" class="px-6 py-4 overflow-y-auto space-y-2 flex-1">
 
                 <!-- TAB 1: LYRICS & MEDIA -->
                 <div id="tab-source" class="tab-pane space-y-4">
@@ -751,7 +752,7 @@
                     </div>
 
                     <!-- Global Sync Offset Adjustment -->
-                    <div class="py-2 space-y-3">
+                    <div id="offset-settings-container" class="py-2 space-y-3">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-200">
                             <span>Sync Offset Adjustment</span>
                             <span id="offset-val-display" class="font-mono text-sky-400">0.0s</span>
@@ -776,7 +777,7 @@
 
             <!-- Apply CTA Button -->
             <div class="p-4 border-t border-white/10 shrink-0">
-                <button class="close-sheet-btn w-full py-3.5 bg-sky-500 text-slate-950 font-extrabold uppercase tracking-wider text-xs rounded-2xl shadow-lg active:scale-98 transition-all">
+                <button id="btn-apply-done" class="w-full py-3.5 bg-sky-500 text-slate-950 font-extrabold uppercase tracking-wider text-xs rounded-2xl shadow-lg active:scale-98 transition-all">
                     Apply & Done
                 </button>
             </div>
@@ -869,8 +870,12 @@
         let fileArtistName = '';
         let activeSongId = null;
 
-        // Blob URL Cache to prevent byte-range / seeking restart bugs on HTTP streams
+        // Smart First-Time Play Flag
+        let isFirstTimeLoaded = false;
+
+        // Blob URL Cache
         let currentBlobUrl = null;
+        let activeFetchController = null;
 
         // Wake Lock Screen State
         let wakeLock = null;
@@ -907,8 +912,13 @@
         const barCount = 32;
         let smoothBars = new Array(barCount).fill(0);
 
-        // --- SAFE AUDIO SOURCE LOADER (Converts Remote URLs to Blob for Instant Seeking) ---
+        // --- OPTIMIZED FAST AUDIO SOURCE LOADER & BACKGROUND CACHING ---
         async function setAudioSource(source) {
+            if (activeFetchController) {
+                activeFetchController.abort();
+                activeFetchController = null;
+            }
+
             if (currentBlobUrl) {
                 URL.revokeObjectURL(currentBlobUrl);
                 currentBlobUrl = null;
@@ -916,50 +926,91 @@
 
             if (!source) return;
 
+            isFirstTimeLoaded = true;
+            audio.crossOrigin = 'anonymous';
+
             // Local File or Blob object
             if (source instanceof File || source instanceof Blob) {
                 currentBlobUrl = URL.createObjectURL(source);
-                audio.setAttribute('crossorigin', 'anonymous');
                 audio.src = currentBlobUrl;
                 return;
             }
 
-            // Remote String URL
+            // Remote String URL: Instant Direct Playback + Background Memory Caching for Smooth Seeking
             if (typeof source === 'string') {
-                if (source.startsWith('http://') || source.startsWith('https://')) {
-                    try {
-                        const response = await fetch(source);
-                        if (response.ok) {
-                            const blob = await response.blob();
-                            currentBlobUrl = URL.createObjectURL(blob);
-                            audio.setAttribute('crossorigin', 'anonymous');
-                            audio.src = currentBlobUrl;
-                            return;
-                        }
-                    } catch (err) {
-                        console.warn('Fallback to direct URL stream:', err);
-                    }
-                }
-                audio.removeAttribute('crossorigin');
                 audio.src = source;
+
+                if (source.startsWith('http://') || source.startsWith('https://')) {
+                    const controller = new AbortController();
+                    activeFetchController = controller;
+
+                    fetch(source, { signal: controller.signal })
+                        .then(res => {
+                            if (!res.ok) throw new Error("Network response was not ok");
+                            return res.blob();
+                        })
+                        .then(blob => {
+                            if (activeFetchController !== controller) return;
+
+                            const savedTime = audio.currentTime || 0;
+                            const wasPaused = audio.paused;
+
+                            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+                            currentBlobUrl = URL.createObjectURL(blob);
+
+                            audio.src = currentBlobUrl;
+
+                            const restoreState = () => {
+                                seekAudioTo(savedTime);
+                                if (!wasPaused) {
+                                    triggerPlay();
+                                }
+                                audio.removeEventListener('loadedmetadata', restoreState);
+                            };
+
+                            if (audio.readyState >= 1) {
+                                restoreState();
+                            } else {
+                                audio.addEventListener('loadedmetadata', restoreState);
+                            }
+                        })
+                        .catch(err => {
+                            if (err.name !== 'AbortError') {
+                                console.warn("Background audio caching skipped:", err);
+                            }
+                        });
+                }
             }
         }
 
-        // --- SAFE SEEKING WRAPPER (Prevents seeking reset when media isn't ready) ---
+        // --- SAFE SEEKING WRAPPER ---
         function seekAudioTo(targetTime) {
             if (!audio.src) return;
             if (isNaN(targetTime) || !isFinite(targetTime)) return;
 
-            const validTime = Math.max(0, Math.min(audio.duration || Infinity, targetTime));
+            let maxTime = audio.duration;
+            if (isNaN(maxTime) || !isFinite(maxTime)) {
+                if (audio.seekable && audio.seekable.length > 0) {
+                    maxTime = audio.seekable.end(audio.seekable.length - 1);
+                } else {
+                    maxTime = targetTime;
+                }
+            }
 
-            if (audio.readyState >= 1) {
-                audio.currentTime = validTime;
-            } else {
-                const onLoaded = () => {
+            const validTime = Math.max(0, Math.min(maxTime, targetTime));
+
+            try {
+                if (audio.readyState >= 1) {
                     audio.currentTime = validTime;
-                    audio.removeEventListener('loadedmetadata', onLoaded);
-                };
-                audio.addEventListener('loadedmetadata', onLoaded);
+                } else {
+                    const onLoaded = () => {
+                        audio.currentTime = validTime;
+                        audio.removeEventListener('loadedmetadata', onLoaded);
+                    };
+                    audio.addEventListener('loadedmetadata', onLoaded);
+                }
+            } catch (e) {
+                console.warn("Seek error:", e);
             }
         }
 
@@ -1246,12 +1297,17 @@
                 div.id = `line-${idx}`;
                 div.innerText = item.content;
 
-                div.onclick = () => {
-                    if (totalDragDistance > 10) return;
-                    seekAudioTo(item.time + userSettings.timeOffset);
-                    if (audio.paused) triggerPlay();
-                    resumeAutoSync();
-                };
+                div.onclick = (e) => {
+    e.stopPropagation();
+    if (totalDragDistance > 10) return;
+    seekAudioTo(item.time + userSettings.timeOffset);
+    if (audio.paused) triggerPlay();
+    
+    isAutoScrollLocked = false;
+    resumeSyncBtn.classList.add('hidden');
+    updateScroll(idx, true);
+};
+
 
                 scroller.appendChild(div);
             });
@@ -1308,42 +1364,50 @@
         requestAnimationFrame(syncLoop);
 
         // --- DRAG / TOUCH FOR LYRICS ---
-        function getCurrentTransformY() {
-            const matrix = new WebKitCSSMatrix(window.getComputedStyle(scroller).transform);
-            return matrix.m42 || container.offsetHeight / 2;
-        }
+function getCurrentTransformY() {
+    const matrix = new WebKitCSSMatrix(window.getComputedStyle(scroller).transform);
+    return matrix.m42 || container.offsetHeight / 2;
+}
 
-        function startDrag(clientY) {
-            if (!lyrics.length) return;
-            isDragging = true;
-            dragStartY = clientY;
-            dragStartTransformY = getCurrentTransformY();
-            totalDragDistance = 0;
-            scroller.style.transition = 'none';
-            isAutoScrollLocked = true;
-            resumeSyncBtn.classList.remove('hidden');
-        }
+function startDrag(clientY) {
+    if (!lyrics.length) return;
+    isDragging = true;
+    dragStartY = clientY;
+    dragStartTransformY = getCurrentTransformY();
+    totalDragDistance = 0;
+    scroller.style.transition = 'none';
+}
 
-        function moveDrag(clientY) {
-            if (!isDragging) return;
-            const deltaY = clientY - dragStartY;
-            totalDragDistance += Math.abs(deltaY);
-            scroller.style.transform = `translateY(${dragStartTransformY + deltaY}px)`;
-        }
+function moveDrag(clientY) {
+    if (!isDragging) return;
+    const deltaY = clientY - dragStartY;
+    totalDragDistance += Math.abs(deltaY);
 
-        function endDrag() {
-            if (!isDragging) return;
-            isDragging = false;
-            scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
-        }
+    // আঙুল বা মাউস ৫ পিক্সেলের বেশি সরলে স্ক্রল লক ও বাটন দেখাবে
+    if (totalDragDistance > 5) {
+        isAutoScrollLocked = true;
+        resumeSyncBtn.classList.remove('hidden');
+    }
 
-        container.addEventListener('mousedown', e => startDrag(e.clientY));
-        window.addEventListener('mousemove', e => { if (isDragging) moveDrag(e.clientY); });
-        window.addEventListener('mouseup', endDrag);
+    scroller.style.transform = `translateY(${dragStartTransformY + deltaY}px)`;
+}
 
-        container.addEventListener('touchstart', e => { if (e.touches.length === 1) startDrag(e.touches[0].clientY); }, { passive: true });
-        container.addEventListener('touchmove', e => { if (e.touches.length === 1) moveDrag(e.touches[0].clientY); }, { passive: true });
-        container.addEventListener('touchend', endDrag);
+function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+}
+
+container.addEventListener('mousedown', e => startDrag(e.clientY));
+window.addEventListener('mousemove', e => { if (isDragging) moveDrag(e.clientY); });
+window.addEventListener('mouseup', endDrag);
+
+container.addEventListener('touchstart', e => { 
+    if (e.touches.length === 1) startDrag(e.touches[0].clientY); 
+}, { passive: true });
+container.addEventListener('touchmove', e => { if (e.touches.length === 1) moveDrag(e.touches[0].clientY); }, { passive: true });
+container.addEventListener('touchend', endDrag);
+
 
         function resumeAutoSync() {
             isAutoScrollLocked = false;
@@ -1389,6 +1453,17 @@
         }
 
         async function loadTrackFromLibrary(song) {
+            // FIX: If clicking the currently playing track, toggle play/pause without restarting!
+            if (song.id === activeSongId) {
+                if (audio.paused) {
+                    await triggerPlay();
+                } else {
+                    audio.pause();
+                }
+                closeSheet(document.getElementById('library-sheet'));
+                return;
+            }
+
             activeSongId = song.id;
 
             onlineTrackTitle = song.title;
@@ -1525,10 +1600,12 @@
         };
 
         document.getElementById('btn-rewind').onclick = () => {
-            seekAudioTo(audio.currentTime - 5);
+            const cur = audio.currentTime || 0;
+            seekAudioTo(cur - 5);
         };
         document.getElementById('btn-forward').onclick = () => {
-            seekAudioTo(audio.currentTime + 5);
+            const cur = audio.currentTime || 0;
+            seekAudioTo(cur + 5);
         };
 
         document.getElementById('btn-loop').onclick = () => {
@@ -1542,12 +1619,22 @@
             const val = parseFloat(e.target.value);
             audio.playbackRate = val;
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
-            document.getElementById('speed-indicator').innerText = val.toFixed(1) + 'x';
         };
 
-        document.getElementById('btn-speed-modal').onclick = () => {
+        // Offset Button on Control Bar with Smooth Auto-Scroll
+        document.getElementById('btn-offset-modal').onclick = () => {
             openSheet(document.getElementById('studio-sheet'));
-            switchTab('tab-dsp');
+            switchTab('tab-prefs');
+            setTimeout(() => {
+                const target = document.getElementById('offset-settings-container');
+                const scrollContainer = document.getElementById('studio-tab-container');
+                if (target && scrollContainer) {
+                    scrollContainer.scrollTo({
+                        top: target.offsetTop - scrollContainer.offsetTop - 12,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 150);
         };
 
         // --- EXPORT & COPY LRC TOOL ---
@@ -1616,7 +1703,7 @@
             };
         });
 
-        // --- SLEEP MODE & LIVE COUNTDOWN ENGINE (IN PREFERENCES TAB) ---
+        // --- SLEEP MODE & LIVE COUNTDOWN ENGINE ---
         const homeSleepBadge = document.getElementById('sleep-countdown-badge');
         const homeSleepText = document.getElementById('sleep-countdown-text');
         const prefSleepCountdown = document.getElementById('pref-sleep-countdown');
@@ -1796,11 +1883,24 @@
         }
 
         function updateOffsetUI() {
-            const formatted = (userSettings.timeOffset >= 0 ? '+' : '') + userSettings.timeOffset.toFixed(1) + 's';
-            document.getElementById('offset-val-display').innerText = formatted;
-            document.getElementById('offset-tag').innerText = formatted;
-        }
+    const offsetVal = userSettings.timeOffset;
+    const formatted = (offsetVal >= 0 ? '+' : '') + offsetVal.toFixed(1) + 's';
+    
+    document.getElementById('offset-val-display').innerText = formatted;
+    
+    const offsetInd = document.getElementById('offset-indicator');
+    if (offsetInd) offsetInd.innerText = formatted;
 
+    const offsetTag = document.getElementById('offset-tag');
+    if (offsetTag) {
+        offsetTag.innerText = formatted;
+        if (Math.abs(offsetVal) < 0.05) {
+            offsetTag.classList.add('hidden');
+        } else {
+            offsetTag.classList.remove('hidden');
+        }
+    }
+}
         // --- RESET PREFERENCES DIALOG SYSTEM ---
         const resetDialog = document.getElementById('reset-dialog');
         document.getElementById('btn-open-reset-modal').onclick = () => resetDialog.classList.add('open');
@@ -1821,11 +1921,17 @@
         document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));
         document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
 
-        document.querySelectorAll('.close-sheet-btn').forEach(btn => {
-            btn.onclick = () => {
-                closeSheet(document.getElementById('studio-sheet'));
+        // Apply & Done Button Logic
+        document.getElementById('btn-apply-done').onclick = () => {
+            closeSheet(document.getElementById('studio-sheet'));
+            if (isFirstTimeLoaded) {
                 triggerPlay();
-            };
+                isFirstTimeLoaded = false;
+            }
+        };
+
+        document.querySelectorAll('.close-sheet-btn:not(#btn-apply-done)').forEach(btn => {
+            btn.onclick = () => closeSheet(document.getElementById('studio-sheet'));
         });
 
         document.querySelectorAll('.close-library-btn').forEach(btn => {
@@ -1859,4 +1965,3 @@
     </script>
 </body>
 </html>
-

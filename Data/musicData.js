@@ -8,10 +8,10 @@ window.PLAYLIST_DATA = [
             },
             {
                 id: 'track-2',
-                title: 'Let Me Down Slowly',
-                artist: 'Alec Benjamin',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-acousticbreeze.mp3',
-                searchQuery: 'Acoustic Breeze Benjamin Tissot'
+                title: 'Let Her Go',
+                artist: 'Passenger',
+                audioUrl: 'Data/music/Passenger - Let Her Go.mp3',
+                searchQuery: 'Passenger Let Her Go'
             },
             {
                 id: 'track-3',

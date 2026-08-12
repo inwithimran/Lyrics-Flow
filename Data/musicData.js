@@ -36,20 +36,20 @@ window.PLAYLIST_DATA = [
             },
         {
                 id: 'track-6',
-                title: 'Creative Minds',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-creativeminds.mp3',
-                searchQuery: 'Creative Minds Bensound'
+                title: 'Mera Pyar Tera Pyar.mp3',
+                artist: 'Jeet Gannguli',
+                audioUrl: 'Data/music/Jeet Gannguli - Mera Pyar Tera Pyar.mp3',
+                searchQuery: 'Jeet Gannguli Mera Pyar Tera Pyar'
             },
             {
-                id: 'track-4',
+                id: 'track-7',
                 title: 'Memories',
                 artist: 'Bensound',
                 audioUrl: 'https://www.bensound.com/bensound-music/bensound-memories.mp3',
                 searchQuery: 'Memories Bensound'
             },
             {
-                id: 'track-5',
+                id: 'track-8',
                 title: 'Ukulele Joy',
                 artist: 'Bensound',
                 audioUrl: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3',

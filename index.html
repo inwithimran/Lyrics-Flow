@@ -603,7 +603,8 @@
         </aside>
 
         <!-- CENTER PANEL: Synchronized Lyrics Viewport Container -->
-        <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-slate-900/30 lg:bg-slate-900/40 lg:border lg:border-white/10 lg:rounded-2xl lg:backdrop-blur-xl relative overflow-hidden flex flex-col shadow-2xl lg:py-6">
+        <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-transparent lg:border lg:border-white/10 lg:rounded-2xl relative overflow-hidden flex flex-col shadow-2xl lg:py-6">
+
             
             <!-- Desktop Top Lyrics Bar (Font Scale Controls) -->
             <div class="hidden lg:flex items-center justify-between px-5 py-3 border-b border-white/10 bg-slate-950/40 shrink-0 z-20">
@@ -736,7 +737,7 @@
     </div>
 
     <!-- Soft Spectrum Visualizer Bar Strip -->
-    <div class="w-full flex-shrink-0 z-20 px-0 pointer-events-none -mb-2" id="bar-viz-wrapper">
+    <div class="w-full flex-shrink-0 z-20 px-0 pointer-events-none mb-1" id="bar-viz-wrapper">
         <canvas id="viz-canvas-bar"></canvas>
     </div>
 

@@ -43,16 +43,16 @@ window.PLAYLIST_DATA = [
             },
             {
                 id: 'track-7',
-                title: 'Memories',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-memories.mp3',
+                title: 'Dai Dai',
+                artist: 'Shakira',
+                audioUrl: 'Data/music/Shakira - Dai Dai.mp3',
                 searchQuery: 'Memories Bensound'
             },
             {
                 id: 'track-8',
-                title: 'Ukulele Joy',
-                artist: 'Bensound',
-                audioUrl: 'https://www.bensound.com/bensound-music/bensound-ukulele.mp3',
+                title: 'Goals',
+                artist: 'Lisa',
+                audioUrl: 'Data/music/Lisa - Goals.mp3',
                 searchQuery: 'Ukulele Bensound'
             }
         ];

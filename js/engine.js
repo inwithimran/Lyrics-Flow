@@ -84,6 +84,8 @@
 
         let barCount = window.innerWidth >= 768 ? 128 : 64;
         let smoothBars = new Array(128).fill(0);
+        let barVelocities = new Array(128).fill(0);
+
 
         // --- OPTIMIZED FAST AUDIO SOURCE LOADER & BACKGROUND CACHING ---
         async function setAudioSource(source) {
@@ -448,6 +450,8 @@
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioCtx.createAnalyser();
                 analyser.fftSize = window.innerWidth >= 768 ? 512 : 256;
+         analyser.smoothingTimeConstant = 0.65;
+
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
 
                 sourceNode = audioCtx.createMediaElementSource(audio);
@@ -501,16 +505,32 @@
                 for (let i = 0; i < barCount; i++) displayData[i] = (Math.sin(time + i * 0.3) * 0.5 + 0.5) * 120 + 20;
             }
 
-            for (let i = 0; i < barCount; i++) {
-                smoothBars[i] += (displayData[i] - smoothBars[i]) * 0.2;
-            }
+            const gravity = 1.8;
+const attackForce = 0.45;
+
+for (let i = 0; i < barCount; i++) {
+    let target = Math.pow(displayData[i] / 255, 1.8) * 255;
+
+    if (target > smoothBars[i]) {
+        smoothBars[i] += (target - smoothBars[i]) * attackForce;
+        barVelocities[i] = (target - smoothBars[i]) * 0.2;
+    } else {
+        barVelocities[i] += gravity;
+        smoothBars[i] -= barVelocities[i];
+        if (smoothBars[i] < 0) {
+            smoothBars[i] = 0;
+            barVelocities[i] = 0;
+        }
+    }
+}
+
 
             if (userSettings.visualizerMode === 'bars') {
                 const slotWidth = wBar / barCount;
                 const barW = slotWidth * 0.45;
 
                 for (let i = 0; i < barCount; i++) {
-                    const h = (smoothBars[i] / 255) * (hBar * 0.85);
+                    const h = (smoothBars[i] / 255) * (hBar * 1.1);
                     const x = (i * slotWidth) + (slotWidth - barW) / 2;
                     const y = hBar - h;
 
@@ -526,17 +546,23 @@
                 }
             } 
             else if (userSettings.visualizerMode === 'circle') {
+    // Ensure canvas sits in front of ambient background but behind lyric text
+    canvasBg.style.zIndex = '5';
+
     const dpr = window.devicePixelRatio || 1;
-    const cx = (canvasBg.width / dpr) / 2;
-    const cy = (canvasBg.height / dpr) / 2;
-    const radius = Math.min(cx, cy) * 0.45;
+    const containerRect = container.getBoundingClientRect();
+    
+    // Center the circle in Desktop mode inside the lyric viewport area
+    const cx = containerRect.width > 0 ? (containerRect.left + containerRect.width / 2) : (window.innerWidth / 2);
+    const cy = containerRect.height > 0 ? (containerRect.top + containerRect.height / 2) : (window.innerHeight / 2);
+    const radius = Math.min(containerRect.width || window.innerWidth, containerRect.height || window.innerHeight) * 0.28;
 
     ctxBg.save();
     ctxBg.translate(cx, cy);
 
     for (let i = 0; i < barCount; i++) {
         const angle = (i / barCount) * Math.PI * 2;
-        const h = (smoothBars[i] / 255) * (radius * 0.5);
+        const h = (smoothBars[i] / 255) * (radius * 0.75);
 
         const x1 = Math.cos(angle) * radius;
         const y1 = Math.sin(angle) * radius;
@@ -555,6 +581,7 @@
 
     ctxBg.restore();
 }
+
 
         }
         drawVisualizer();

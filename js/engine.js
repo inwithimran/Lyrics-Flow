@@ -40,8 +40,7 @@
         const scroller = document.getElementById('lyrics-scroller');
         const container = document.getElementById('lyrics-container');
         const btnPlayPause = document.getElementById('btn-play-pause');
-        const playIcon = document.getElementById('play-icon');
-        const pauseIcon = document.getElementById('pause-icon');
+        const btnPlayPauseMob = document.getElementById('btn-play-pause-mob');
         const scrubber = document.getElementById('audio-scrubber');
         const currTimeLbl = document.getElementById('curr-time');
         const durTimeLbl = document.getElementById('dur-time');
@@ -232,30 +231,45 @@
 
         // --- PLAYBACK MODE TOGGLE ENGINE ---
         function updateLoopModeUI() {
-            const btn = document.getElementById('btn-loop-mode');
-            const icon = document.getElementById('loop-mode-icon');
-            const text = document.getElementById('loop-mode-text');
-            const badge = document.getElementById('loop-mode-badge');
+    const btn = document.getElementById('btn-loop-mode');
+    const icon = document.getElementById('loop-mode-icon');
+    const text = document.getElementById('loop-mode-text');
+    const badge = document.getElementById('loop-mode-badge');
 
-            btn.classList.remove('active-mode');
-            badge.classList.add('hidden');
-            badge.classList.remove('flex');
+    const btnDt = document.getElementById('btn-loop-mode-dt');
+    const iconDt = document.getElementById('loop-mode-icon-dt');
+    const textDt = document.getElementById('loop-mode-text-dt');
 
-            if (userSettings.playbackMode === 'one') {
-                btn.classList.add('active-mode');
-                icon.className = 'fa-solid fa-repeat text-xs';
-                text.innerText = 'Repeat';
-                badge.classList.remove('hidden');
-                badge.classList.add('flex');
-            } else if (userSettings.playbackMode === 'shuffle') {
-                btn.classList.add('active-mode');
-                icon.className = 'fa-solid fa-shuffle text-xs';
-                text.innerText = 'Shuffle';
-            } else {
-                icon.className = 'fa-solid fa-repeat text-xs';
-                text.innerText = 'Off';
-            }
-        }
+    btn.classList.remove('active-mode');
+    if (btnDt) btnDt.classList.remove('active-mode');
+
+    badge.classList.add('hidden');
+    badge.classList.remove('flex');
+
+    if (userSettings.playbackMode === 'one') {
+        btn.classList.add('active-mode');
+        if (btnDt) btnDt.classList.add('active-mode');
+        icon.className = 'fa-solid fa-repeat text-xs';
+        text.innerText = 'Repeat';
+        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
+        if (textDt) textDt.innerText = 'Repeat';
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+    } else if (userSettings.playbackMode === 'shuffle') {
+        btn.classList.add('active-mode');
+        if (btnDt) btnDt.classList.add('active-mode');
+        icon.className = 'fa-solid fa-shuffle text-xs';
+        text.innerText = 'Shuffle';
+        if (iconDt) iconDt.className = 'fa-solid fa-shuffle text-sm';
+        if (textDt) textDt.innerText = 'Shuffle';
+    } else {
+        icon.className = 'fa-solid fa-repeat text-xs';
+        text.innerText = 'Off';
+        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
+        if (textDt) textDt.innerText = 'Off';
+    }
+}
+
 
         document.getElementById('btn-loop-mode').onclick = () => {
             if (userSettings.playbackMode === 'off') {
@@ -377,10 +391,11 @@
             });
 
             userSettings.eqBands.forEach((val, i) => {
-                const slider = document.querySelector(`.eq-band[data-band="${i}"]`);
-                if (slider) slider.value = val;
-                if (eqBands[i]) eqBands[i].gain.value = val;
-            });
+    const sliders = document.querySelectorAll(`.eq-band[data-band="${i}"], .dt-eq-band[data-band="${i}"]`);
+    sliders.forEach(slider => { if (slider) slider.value = val; });
+    if (eqBands[i]) eqBands[i].gain.value = val;
+});
+
 
             updateScroll(activeIndex);
         }
@@ -511,34 +526,36 @@
                 }
             } 
             else if (userSettings.visualizerMode === 'circle') {
-                const cx = wBg / 2;
-                const cy = hBg / 2 - 20;
-                const radius = Math.min(wBg, hBg) * 0.22;
+    const dpr = window.devicePixelRatio || 1;
+    const cx = (canvasBg.width / dpr) / 2;
+    const cy = (canvasBg.height / dpr) / 2;
+    const radius = Math.min(cx, cy) * 0.45;
 
-                ctxBg.save();
-                ctxBg.translate(cx, cy);
+    ctxBg.save();
+    ctxBg.translate(cx, cy);
 
-                for (let i = 0; i < barCount; i++) {
-                    const angle = (i / barCount) * Math.PI * 2;
-                    const h = (smoothBars[i] / 255) * 60;
+    for (let i = 0; i < barCount; i++) {
+        const angle = (i / barCount) * Math.PI * 2;
+        const h = (smoothBars[i] / 255) * (radius * 0.5);
 
-                    const x1 = Math.cos(angle) * radius;
-                    const y1 = Math.sin(angle) * radius;
-                    const x2 = Math.cos(angle) * (radius + h);
-                    const y2 = Math.sin(angle) * (radius + h);
+        const x1 = Math.cos(angle) * radius;
+        const y1 = Math.sin(angle) * radius;
+        const x2 = Math.cos(angle) * (radius + h);
+        const y2 = Math.sin(angle) * (radius + h);
 
-                    ctxBg.beginPath();
-                    ctxBg.moveTo(x1, y1);
-                    ctxBg.lineTo(x2, y2);
-                    ctxBg.strokeStyle = userSettings.themeColor;
-                    ctxBg.lineWidth = 2;
-                    ctxBg.lineCap = 'round';
-                    ctxBg.globalAlpha = 0.8;
-                    ctxBg.stroke();
-                }
+        ctxBg.beginPath();
+        ctxBg.moveTo(x1, y1);
+        ctxBg.lineTo(x2, y2);
+        ctxBg.strokeStyle = userSettings.themeColor;
+        ctxBg.lineWidth = 3;
+        ctxBg.lineCap = 'round';
+        ctxBg.globalAlpha = 0.85;
+        ctxBg.stroke();
+    }
 
-                ctxBg.restore();
-            }
+    ctxBg.restore();
+}
+
         }
         drawVisualizer();
 
@@ -919,28 +936,32 @@
             }
         }
 
-        btnPlayPause.onclick = () => {
-            if (!audio.src) {
-                openSheet(document.getElementById('library-sheet'));
-                return;
-            }
-            if (audio.paused) triggerPlay();
-            else audio.pause();
-        };
+        const handlePlayPause = () => {
+    if (!audio.src) {
+        openSheet(document.getElementById('library-sheet'));
+        return;
+    }
+    if (audio.paused) triggerPlay();
+    else audio.pause();
+};
+
+btnPlayPause.onclick = handlePlayPause;
+if (btnPlayPauseMob) btnPlayPauseMob.onclick = handlePlayPause;
 
         audio.onplay = () => {
-            playIcon.classList.add('hidden');
-            pauseIcon.classList.remove('hidden');
-            trackArtIcon.classList.add('playing');
-            renderLibraryPlaylist();
-        };
+    document.querySelectorAll('#play-icon, .play-icon-target').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('#pause-icon, .pause-icon-target').forEach(el => el.classList.remove('hidden'));
+    if (trackArtIcon) trackArtIcon.classList.add('playing');
+    renderLibraryPlaylist();
+};
 
-        audio.onpause = () => {
-            playIcon.classList.remove('hidden');
-            pauseIcon.classList.add('hidden');
-            trackArtIcon.classList.remove('playing');
-            renderLibraryPlaylist();
-        };
+audio.onpause = () => {
+    document.querySelectorAll('#play-icon, .play-icon-target').forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('#pause-icon, .pause-icon-target').forEach(el => el.classList.add('hidden'));
+    if (trackArtIcon) trackArtIcon.classList.remove('playing');
+    renderLibraryPlaylist();
+};
+
 
         audio.onloadedmetadata = () => {
             durTimeLbl.innerText = formatTime(audio.duration);

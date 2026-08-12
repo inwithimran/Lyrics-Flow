@@ -477,7 +477,7 @@
     </main>
 
     <!-- Soft Spectrum Visualizer Bar Strip -->
-    <div class="w-full max-w-full mx-auto flex-shrink-0 z-20 px-0 pointer-events-none -mb-2" id="bar-viz-wrapper">
+    <div class="w-full flex-shrink-0 z-20 px-0 pointer-events-none -mb-2" id="bar-viz-wrapper">
         <canvas id="viz-canvas-bar"></canvas>
     </div>
 
@@ -911,7 +911,7 @@
             timeOffset: 0.0,
             eqPreset: 'flat',
             eqBands: [0, 0, 0, 0, 0],
-            playbackMode: 'off' // 'off', 'one', 'shuffle'
+            playbackMode: 'off'
         };
 
         // LOCALSTORAGE PERSISTENCE ENGINE
@@ -950,56 +950,43 @@
         const resumeSyncBtn = document.getElementById('resume-sync-btn');
         const trackArtIcon = document.getElementById('track-art-icon');
 
-        // Header Title Priority Track State
         let onlineTrackTitle = '';
         let onlineArtistName = '';
         let fileTrackTitle = '';
         let fileArtistName = '';
         let activeSongId = null;
 
-        // Search State
         let searchQuery = '';
-
-        // Smart First-Time Play Flag
         let isFirstTimeLoaded = false;
 
-        // Blob URL Cache
         let currentBlobUrl = null;
         let activeFetchController = null;
-
-        // Wake Lock Screen State
         let wakeLock = null;
 
-        // Canvases
         const canvasBar = document.getElementById('viz-canvas-bar');
         const ctxBar = canvasBar.getContext('2d');
         const canvasBg = document.getElementById('viz-canvas-bg');
         const ctxBg = canvasBg.getContext('2d');
 
-        // State Engine
         let lyrics = [];
         let activeIndex = -1;
         let isAutoScrollLocked = false;
 
-        // Web Audio Context & Equalizer Nodes
         let audioCtx, analyser, dataArray, sourceNode;
         let eqBands = [];
         const EQ_FREQS = [60, 230, 910, 4000, 14000];
 
-        // Sleep Timer Live Countdown State
         let sleepEndTime = null;
         let sleepTimerTimeout = null;
         let sleepIntervalId = null;
 
-        // Touch Drag State
         let isDragging = false;
         let dragStartY = 0;
         let dragStartTransformY = 0;
         let totalDragDistance = 0;
 
-        // Visualizer Bars Smooth Interpolation
-        const barCount = 50;
-        let smoothBars = new Array(barCount).fill(0);
+        let barCount = window.innerWidth >= 768 ? 128 : 64;
+        let smoothBars = new Array(128).fill(0);
 
         // --- OPTIMIZED FAST AUDIO SOURCE LOADER & BACKGROUND CACHING ---
         async function setAudioSource(source) {
@@ -1018,14 +1005,12 @@
             isFirstTimeLoaded = true;
             audio.crossOrigin = 'anonymous';
 
-            // Local File or Blob object
             if (source instanceof File || source instanceof Blob) {
                 currentBlobUrl = URL.createObjectURL(source);
                 audio.src = currentBlobUrl;
                 return;
             }
 
-            // Remote String URL: Instant Direct Playback + Background Memory Caching for Smooth Seeking
             if (typeof source === 'string') {
                 audio.src = source;
 
@@ -1169,7 +1154,6 @@
                 icon.className = 'fa-solid fa-shuffle text-xs';
                 text.innerText = 'Shuffle';
             } else {
-                // Off / Default List Loop Mode
                 icon.className = 'fa-solid fa-repeat text-xs';
                 text.innerText = 'Off';
             }
@@ -1189,28 +1173,24 @@
 
         // --- AUTO PLAY NEXT SONG & ENDED EVENT ---
         audio.onended = () => {
-            // Mode 1: Repeat Single Track
             if (userSettings.playbackMode === 'one') {
                 seekAudioTo(0);
                 triggerPlay();
                 return;
             }
 
-            // Next Song Logic works strictly for Library tracks (not custom uploaded files)
             const playlist = window.PLAYLIST_DATA || [];
             if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return;
 
             let nextTrack = null;
 
             if (userSettings.playbackMode === 'shuffle') {
-                // Mode 2: Shuffle Playback
                 let randomIndex;
                 do {
                     randomIndex = Math.floor(Math.random() * playlist.length);
                 } while (playlist.length > 1 && playlist[randomIndex].id === activeSongId);
                 nextTrack = playlist[randomIndex];
             } else {
-                // Mode 3: Next Song in List Order
                 const currentIndex = playlist.findIndex(s => s.id === activeSongId);
                 if (currentIndex !== -1) {
                     const nextIndex = (currentIndex + 1) % playlist.length;
@@ -1223,7 +1203,6 @@
             }
         };
 
-        // PREVIOUS AND NEXT TRACK BUTTON CONTROLS
         function playPreviousTrack() {
             if (audio.currentTime > 3) {
                 seekAudioTo(0);
@@ -1337,6 +1316,14 @@
             canvasBg.width = window.innerWidth * dpr;
             canvasBg.height = window.innerHeight * dpr;
             ctxBg.scale(dpr, dpr);
+
+            if (window.innerWidth >= 768) {
+                barCount = 128;
+                if (analyser) analyser.fftSize = 512;
+            } else {
+                barCount = 64;
+                if (analyser) analyser.fftSize = 256;
+            }
         }
         window.onresize = () => { initCanvas(); updateScroll(activeIndex); };
         initCanvas();
@@ -1347,7 +1334,7 @@
             try {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 analyser = audioCtx.createAnalyser();
-                analyser.fftSize = 128;
+                analyser.fftSize = window.innerWidth >= 768 ? 512 : 256;
                 dataArray = new Uint8Array(analyser.frequencyBinCount);
 
                 sourceNode = audioCtx.createMediaElementSource(audio);
@@ -1406,12 +1393,12 @@
             }
 
             if (userSettings.visualizerMode === 'bars') {
-                const barW = (wBar / barCount) * 0.55;
-                const gap = (wBar / barCount) * 0.45;
+                const slotWidth = wBar / barCount;
+                const barW = slotWidth * 0.45;
 
                 for (let i = 0; i < barCount; i++) {
                     const h = (smoothBars[i] / 255) * (hBar * 0.85);
-                    const x = i * (barW + gap) + gap / 2;
+                    const x = (i * slotWidth) + (slotWidth - barW) / 2;
                     const y = hBar - h;
 
                     const grad = ctxBar.createLinearGradient(0, hBar, 0, y);
@@ -1421,7 +1408,7 @@
 
                     ctxBar.fillStyle = grad;
                     ctxBar.beginPath();
-                    ctxBar.roundRect(x, y, barW, h, [4, 4, 0, 0]);
+                    ctxBar.roundRect(x, y, barW, h, [3, 3, 0, 0]);
                     ctxBar.fill();
                 }
             } 
@@ -1446,7 +1433,7 @@
                     ctxBg.moveTo(x1, y1);
                     ctxBg.lineTo(x2, y2);
                     ctxBg.strokeStyle = userSettings.themeColor;
-                    ctxBg.lineWidth = 3;
+                    ctxBg.lineWidth = 2;
                     ctxBg.lineCap = 'round';
                     ctxBg.globalAlpha = 0.8;
                     ctxBg.stroke();
@@ -1677,7 +1664,6 @@
                         : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
                 }`;
 
-                // Dancing Equalizer Bars Icon Component for Playing Track
                 const activeIconHtml = `
                     <div class="equalizer-icon ${isPlaying ? '' : 'paused'}">
                         <span class="equalizer-bar"></span>
@@ -1724,7 +1710,6 @@
         };
 
         async function loadTrackFromLibrary(song) {
-            // Toggle play/pause if clicking currently active song
             if (song.id === activeSongId) {
                 if (audio.paused) {
                     await triggerPlay();
@@ -1886,7 +1871,6 @@
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
         };
 
-        // Offset Button on Control Bar with Smooth Auto-Scroll
         document.getElementById('btn-offset-modal').onclick = () => {
             openSheet(document.getElementById('studio-sheet'));
             switchTab('tab-prefs');
@@ -2187,7 +2171,6 @@
         document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));
         document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
 
-        // Apply & Done Button Logic
         document.getElementById('btn-apply-done').onclick = () => {
             closeSheet(document.getElementById('studio-sheet'));
             if (isFirstTimeLoaded) {
@@ -2207,7 +2190,6 @@
         function openSheet(sheet) { sheet.classList.add('open'); }
         function closeSheet(sheet) { sheet.classList.remove('open'); }
 
-        // শীট ও ডায়ালগের বাইরে ব্যাকড্রপে (Outside backdrop) ক্লিক করলে বন্ধ করার লজিক
         document.querySelectorAll('.sheet-overlay').forEach(sheet => {
             sheet.addEventListener('click', (e) => {
                 if (e.target === sheet) {

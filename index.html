@@ -199,8 +199,8 @@
         }
 
         @media (min-width: 1024px) {
-            :root { --lyric-base-size: 2.5rem; }
-            .lyric-line { padding: 20px 36px; margin: 10px auto; max-width: 85%; }
+            :root { --lyric-base-size: 3rem; }
+            .lyric-line { padding: 24px 40px; margin: 12px auto; max-width: 90%; }
         }
 
         @media (min-width: 1400px) {
@@ -600,23 +600,10 @@
                 </div>
             </div>
 
-            <!-- Desktop System Status Card -->
-            <div class="p-3.5 dt-panel-card space-y-2 text-[10px] text-slate-400 mt-auto">
-                <div class="flex items-center justify-between font-mono text-[9px]">
-                    <span class="text-slate-300 font-bold uppercase tracking-wider">ENGINE STATUS</span>
-                    <span class="text-emerald-400 flex items-center gap-1.5 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
-                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE
-                    </span>
-                </div>
-                <p class="text-[10px] text-slate-400 leading-relaxed">
-                    Interactive high-precision LRC timestamp renderer with dynamic canvas frequency visualization.
-                </p>
-            </div>
-
         </aside>
 
         <!-- CENTER PANEL: Synchronized Lyrics Viewport Container -->
-        <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-slate-900/30 lg:bg-slate-900/40 lg:border lg:border-white/10 lg:rounded-2xl lg:backdrop-blur-xl relative overflow-hidden flex flex-col shadow-2xl">
+        <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-slate-900/30 lg:bg-slate-900/40 lg:border lg:border-white/10 lg:rounded-2xl lg:backdrop-blur-xl relative overflow-hidden flex flex-col shadow-2xl lg:py-6">
             
             <!-- Desktop Top Lyrics Bar (Font Scale Controls) -->
             <div class="hidden lg:flex items-center justify-between px-5 py-3 border-b border-white/10 bg-slate-950/40 shrink-0 z-20">
@@ -755,82 +742,107 @@
 
     <!-- Material Player Control Footer Console -->
     <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-[1700px] mx-auto w-full">
-        <div class="max-w-4xl mx-auto space-y-2">
+    <div class="max-w-6xl mx-auto space-y-3">
+        
+        <!-- Time Scrubber -->
+        <div class="space-y-0.5">
+            <input type="range" id="audio-scrubber" class="m3-slider" value="0" min="0" max="100" step="0.1">
+            <div class="flex justify-between text-[10px] md:text-xs font-mono font-bold text-slate-400 px-0.5">
+                <span id="curr-time">00:00</span>
+                <span id="dur-time">00:00</span>
+            </div>
+        </div>
+
+        <!-- MOBILE-ONLY TOP ROW (Loop Mode Left, Sync Offset Right Above Next Track) -->
+        <div class="flex sm:hidden items-center justify-between px-1">
+            <button id="btn-loop-mode" class="ctrl-btn px-3 py-1.5 text-xs font-semibold gap-1.5 relative bg-white/5 border border-white/10">
+                <i class="fa-solid fa-repeat text-xs" id="loop-mode-icon"></i>
+                <span id="loop-mode-text" class="text-[10px] font-bold">Off</span>
+                <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
+            </button>
+
+            <!-- Offset shifted right side above Next Track button -->
+            <button id="btn-offset-modal" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
+                <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
+                <span id="offset-indicator" class="text-[11px]">0.0s</span>
+            </button>
+        </div>
+
+        <!-- DESKTOP ONE-LINE ROW CONTROLS (Hidden on mobile, flex on desktop) -->
+        <div class="hidden sm:flex items-center justify-between gap-4 px-2">
             
-            <!-- Time Scrub Bar -->
-            <div class="space-y-0.5">
-                <input type="range" id="audio-scrubber" class="m3-slider" value="0" min="0" max="100" step="0.1">
-                <div class="flex justify-between text-[10px] md:text-xs font-mono font-bold text-slate-400 px-0.5">
-                    <span id="curr-time">00:00</span>
-                    <span id="dur-time">00:00</span>
-                </div>
+            <!-- Left Corner: Shuffle/Repeat -->
+            <div class="flex items-center gap-2">
+                <button id="btn-loop-mode-dt" class="ctrl-btn px-3.5 py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10" onclick="document.getElementById('btn-loop-mode').click()">
+    <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
+    <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
+</button>
+
             </div>
 
-            <!-- TOP AUXILIARY CONTROL BUTTON LINE (Repeat Mode Left, Sync Offset Middle, Volume Right) -->
-            <div class="grid grid-cols-3 items-center px-1">
-                <!-- Left: Repeat / Mode Button -->
-                <div class="flex justify-start">
-                    <button id="btn-loop-mode" class="ctrl-btn px-2.5 py-1 text-xs font-semibold gap-1.5 relative bg-white/5 border border-white/10" title="Playback Mode (Off / 1 / Shuffle)">
-                        <i class="fa-solid fa-repeat text-[11px]" id="loop-mode-icon"></i>
-                        <span id="loop-mode-text" class="text-[10px] font-bold">Off</span>
-                        <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
-                    </button>
-                </div>
-
-                <!-- Center: Sync Offset Button -->
-                <div class="flex justify-center">
-                    <button id="btn-offset-modal" class="ctrl-btn px-2.5 py-1 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95 transition-all shadow-sm" title="Sync Offset Settings">
-                        <i class="fa-solid fa-clock-rotate-left text-[10px] text-m3-primary"></i>
-                        <span id="offset-indicator" class="text-[11px]">0.0s</span>
-                    </button>
-                </div>
-
-                <!-- Right: Desktop Volume Control Slider & Mobile Quick Mute -->
-                <div class="flex justify-end">
-                    <div class="hidden sm:flex items-center gap-2 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 min-w-[120px]" id="volume-container">
-                        <button id="btn-mute" class="text-slate-400 hover:text-white text-xs" title="Mute/Unmute">
-                            <i class="fa-solid fa-volume-high text-sky-400" id="vol-icon"></i>
-                        </button>
-                        <input type="range" id="volume-slider" class="m3-slider h-1" min="0" max="1" step="0.05" value="1">
-                    </div>
-                    <button id="btn-mute-mobile" class="sm:hidden ctrl-btn w-7 h-7 bg-white/5 border border-white/10" title="Mute/Unmute">
-                        <i class="fa-solid fa-volume-high text-xs text-sky-400" id="vol-icon-mobile"></i>
-                    </button>
-                </div>
-            </div>
-
-            <!-- MAIN AUDIO PLAYBACK CONTROLS LINE -->
-            <div class="flex items-center justify-center sm:justify-evenly px-1 gap-2 sm:gap-0">
-                
-                <!-- 1. Previous Track -->
-                <button id="btn-prev-track" class="ctrl-btn w-10 h-10 sm:w-11 sm:h-11 text-slate-200" title="Previous Track">
-                    <i class="fa-solid fa-backward-step text-sm sm:text-base"></i>
+            <!-- Center: Larger Playback Buttons in One Line -->
+            <div class="flex items-center gap-3 justify-center">
+                <button id="btn-prev-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
+                    <i class="fa-solid fa-backward-step text-lg"></i>
                 </button>
 
-                <!-- 2. Rewind -5s -->
-                <button id="btn-rewind" class="ctrl-btn w-10 h-10 sm:w-11 sm:h-11 font-mono text-xs sm:text-xs font-extrabold text-slate-300" title="Rewind 5s">
+                <button id="btn-rewind" class="ctrl-btn w-12 h-12 font-mono text-xs font-extrabold text-slate-300 hover:scale-105 active:scale-95" title="Rewind 5s">
                     -5s
                 </button>
 
-                <!-- 3. Play / Pause FAB -->
-                <button id="btn-play-pause" class="w-12 h-12 sm:w-14 sm:h-14 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform shrink-0 mx-2" title="Play/Pause">
-                    <i class="fa-solid fa-play text-base sm:text-lg ml-0.5" id="play-icon"></i>
-                    <i class="fa-solid fa-pause text-base sm:text-lg hidden" id="pause-icon"></i>
+                <button id="btn-play-pause" class="w-16 h-16 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/30 hover:scale-105 active:scale-90 transition-transform shrink-0 mx-2" title="Play/Pause">
+                    <i class="fa-solid fa-play text-xl ml-0.5" id="play-icon"></i>
+                    <i class="fa-solid fa-pause text-xl hidden" id="pause-icon"></i>
                 </button>
 
-                <!-- 4. Forward +5s -->
-                <button id="btn-forward" class="ctrl-btn w-10 h-10 sm:w-11 sm:h-11 font-mono text-xs sm:text-xs font-extrabold text-slate-300" title="Forward 5s">
+                <button id="btn-forward" class="ctrl-btn w-12 h-12 font-mono text-xs font-extrabold text-slate-300 hover:scale-105 active:scale-95" title="Forward 5s">
                     +5s
                 </button>
 
-                <!-- 5. Next Track -->
-                <button id="btn-next-track" class="ctrl-btn w-10 h-10 sm:w-11 sm:h-11 text-slate-200" title="Next Track">
-                    <i class="fa-solid fa-forward-step text-sm sm:text-base"></i>
+                <button id="btn-next-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Next Track">
+                    <i class="fa-solid fa-forward-step text-lg"></i>
+                </button>
+            </div>
+
+            <!-- Right Corner: Offset & Desktop Volume Slider (Hidden on Mobile) -->
+            <div class="flex items-center gap-3">
+                <button id="btn-offset-modal-dt" class="ctrl-btn px-3.5 py-2 text-xs font-mono font-bold gap-2 bg-white/5 border border-white/10 hover:bg-white/10" onclick="document.getElementById('btn-offset-modal').click()">
+                    <i class="fa-solid fa-clock-rotate-left text-m3-primary text-xs"></i>
+                    <span>Offset</span>
                 </button>
 
+                <!-- Desktop Volume Control (Only visible on desktop sm+) -->
+                <div class="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10 w-36">
+                    <button id="btn-mute" class="text-slate-400 hover:text-white text-xs">
+                        <i class="fa-solid fa-volume-high text-sky-400" id="vol-icon"></i>
+                    </button>
+                    <input type="range" id="volume-slider" class="m3-slider h-1.5" min="0" max="1" step="0.05" value="1">
+                </div>
             </div>
+
         </div>
-    </footer>
+
+        <!-- MOBILE PLAYBACK CONTROLS -->
+        <div class="flex sm:hidden items-center justify-between px-2 pt-1">
+            <button id="btn-prev-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-prev-track').click()">
+                <i class="fa-solid fa-backward-step text-base"></i>
+            </button>
+            <button id="btn-rewind-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-rewind').click()">-5s</button>
+            
+            <button id="btn-play-pause-mob" class="w-14 h-14 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-lg active:scale-90" onclick="document.getElementById('btn-play-pause').click()">
+    <i class="fa-solid fa-play text-lg ml-0.5 play-icon-target"></i>
+    <i class="fa-solid fa-pause text-lg hidden pause-icon-target"></i>
+</button>
+
+
+            <button id="btn-forward-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-forward').click()">+5s</button>
+            <button id="btn-next-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-next-track').click()">
+                <i class="fa-solid fa-forward-step text-base"></i>
+            </button>
+        </div>
+
+    </div>
+</footer>
 
     <!-- MUSIC LIBRARY BOTTOM SHEET MODAL WITH SEARCH -->
     <div id="library-sheet" class="sheet-overlay">
@@ -1303,6 +1315,42 @@
 
     <!-- MAIN APP ENGINE -->
     <script src="js/engine.js"></script>
+    
+    
+        <!-- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dtEqBands = document.querySelectorAll('.dt-eq-band');
+            const mainEqBands = document.querySelectorAll('.eq-band');
+
+            // 1. Right Sidebar EQ -> Studio EQ
+            dtEqBands.forEach((dtBand) => {
+                dtBand.addEventListener('input', (e) => {
+                    const idx = e.target.getAttribute('data-band');
+                    const val = e.target.value;
+                    mainEqBands.forEach((mBand) => {
+                        if (mBand.getAttribute('data-band') === idx) {
+                            mBand.value = val;
+                            mBand.dispatchEvent(new Event('input'));
+                        }
+                    });
+                });
+            });
+
+            // 2. Studio EQ / Reset -> Right Sidebar EQ
+            mainEqBands.forEach((mBand) => {
+                mBand.addEventListener('input', (e) => {
+                    const idx = e.target.getAttribute('data-band');
+                    const val = e.target.value;
+                    dtEqBands.forEach((dtBand) => {
+                        if (dtBand.getAttribute('data-band') === idx) {
+                            dtBand.value = val;
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
     <!-- DESKTOP ONLINE LRC SEARCH BRIDGE SCRIPT -->
     <script>

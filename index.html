@@ -477,7 +477,7 @@
     </main>
 
     <!-- Soft Spectrum Visualizer Bar Strip -->
-    <div class="w-full max-w-4xl mx-auto flex-shrink-0 z-20 px-4 pointer-events-none -mb-2" id="bar-viz-wrapper">
+    <div class="w-full max-w-full mx-auto flex-shrink-0 z-20 px-0 pointer-events-none -mb-2" id="bar-viz-wrapper">
         <canvas id="viz-canvas-bar"></canvas>
     </div>
 
@@ -998,7 +998,7 @@
         let totalDragDistance = 0;
 
         // Visualizer Bars Smooth Interpolation
-        const barCount = 32;
+        const barCount = 50;
         let smoothBars = new Array(barCount).fill(0);
 
         // --- OPTIMIZED FAST AUDIO SOURCE LOADER & BACKGROUND CACHING ---
@@ -1594,7 +1594,7 @@
         }
 
         function moveDrag(clientY) {
-            if (!isDragging) return;
+            if (!isDragging || !lyrics.length) return;
             const deltaY = clientY - dragStartY;
             totalDragDistance += Math.abs(deltaY);
 
@@ -1603,7 +1603,20 @@
                 resumeSyncBtn.classList.remove('hidden');
             }
 
-            scroller.style.transform = `translateY(${dragStartTransformY + deltaY}px)`;
+            const lines = document.querySelectorAll('.lyric-line');
+            if (lines.length > 0) {
+                const containerH = container.offsetHeight;
+                const firstLine = lines[0];
+                const lastLine = lines[lines.length - 1];
+
+                const maxY = containerH / 2 - (firstLine.offsetTop + firstLine.offsetHeight / 2);
+                const minY = containerH / 2 - (lastLine.offsetTop + lastLine.offsetHeight / 2);
+
+                const targetY = dragStartTransformY + deltaY;
+                const clampedY = Math.max(minY, Math.min(maxY, targetY));
+
+                scroller.style.transform = `translateY(${clampedY}px)`;
+            }
         }
 
         function endDrag() {
@@ -2194,6 +2207,23 @@
         function openSheet(sheet) { sheet.classList.add('open'); }
         function closeSheet(sheet) { sheet.classList.remove('open'); }
 
+        // শীট ও ডায়ালগের বাইরে ব্যাকড্রপে (Outside backdrop) ক্লিক করলে বন্ধ করার লজিক
+        document.querySelectorAll('.sheet-overlay').forEach(sheet => {
+            sheet.addEventListener('click', (e) => {
+                if (e.target === sheet) {
+                    closeSheet(sheet);
+                }
+            });
+        });
+
+        document.querySelectorAll('.dialog-overlay').forEach(dialog => {
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.classList.remove('open');
+                }
+            });
+        });
+
         function switchTab(tabId) {
             document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
                 if (chip.dataset.tab === tabId) chip.classList.add('active');
@@ -2218,4 +2248,3 @@
     </script>
 </body>
 </html>
-

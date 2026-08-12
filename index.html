@@ -204,7 +204,7 @@
         }
 
         @media (min-width: 1400px) {
-            :root { --lyric-base-size: 2.4rem; }
+            :root { --lyric-base-size: 2.3rem; }
         }
 
         /* Material 3 Bottom Surface Control Bar */
@@ -445,6 +445,21 @@
             box-shadow: 0 10px 30px -10px rgba(var(--m3-primary-rgb), 0.2);
         }
 
+        /* Custom Desktop Card Glass Polish */
+        .dt-panel-card {
+            background: rgba(18, 23, 36, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .dt-panel-card:hover {
+            border-color: rgba(var(--m3-primary-rgb), 0.3);
+            box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.5);
+        }
+
         /* Seamless List Row */
         .m3-list-row {
             padding: 12px 0;
@@ -466,16 +481,19 @@
             font-size: 0.8rem;
             color: #F8FAFC;
             outline: none;
-            transition: border-color 0.2s ease;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
 
-        .m3-input:focus { border-color: var(--m3-primary); }
+        .m3-input:focus { 
+            border-color: var(--m3-primary);
+            box-shadow: 0 0 12px rgba(var(--m3-primary-rgb), 0.25);
+        }
 
         /* Custom Scrollbar */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.3); }
+        ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
     </style>
 </head>
 <body>
@@ -487,8 +505,8 @@
     <canvas id="viz-canvas-bg"></canvas>
 
     <!-- Material Top App Header -->
-    <header class="w-full max-w-7xl mx-auto px-4 sm:px-6 py-2.5 flex items-center justify-between z-20 flex-shrink-0 relative">
-        <div class="flex items-center gap-3 min-w-0">
+    <header class="w-full max-w-[1700px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between z-20 flex-shrink-0 relative">
+        <div class="flex items-center gap-3.5 min-w-0">
             <!-- Vinyl Artwork Badge (Mobile/Tablet View) -->
             <div id="track-art" class="shrink-0 flex items-center justify-center lg:hidden">
                 <i class="fa-solid fa-compact-disc text-2xl sm:text-3xl text-m3-primary" id="track-art-icon"></i>
@@ -496,7 +514,7 @@
             
             <div class="min-w-0">
                 <div class="flex items-center gap-2 flex-wrap">
-                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-m3-primary hidden lg:inline-flex items-center gap-1 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20">
+                    <span class="text-[9px] font-extrabold uppercase tracking-widest text-m3-primary hidden lg:inline-flex items-center gap-1.5 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20 shadow-sm">
                         <i class="fa-solid fa-sliders text-[8px]"></i> Studio Workstation
                     </span>
                     <span id="theme-tag" class="text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest text-m3-primary">CYBER CYAN</span>
@@ -508,20 +526,20 @@
                         <span id="sleep-countdown-text">00:00</span>
                     </span>
                 </div>
-                <h1 id="track-title" class="text-xs sm:text-sm md:text-base font-bold truncate text-slate-100 leading-tight">No Track Loaded</h1>
+                <h1 id="track-title" class="text-xs sm:text-sm md:text-base lg:text-lg font-black truncate text-slate-100 leading-tight">No Track Loaded</h1>
                 <p id="track-artist" class="text-[11px] md:text-xs text-slate-400 truncate">Tap music library button or studio controls</p>
             </div>
         </div>
 
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center gap-2.5 shrink-0">
             <!-- Music Library Button -->
-            <button id="open-library-btn" class="px-3 py-1.5 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10" title="Music Library">
+            <button id="open-library-btn" class="px-3.5 py-1.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
                 <i class="fa-solid fa-music text-sky-400"></i>
                 <span class="hidden sm:inline">Library</span>
             </button>
 
             <!-- Studio Control Sheet Button -->
-            <button id="open-studio-btn" class="px-3 py-1.5 bg-m3-primary/10 hover:bg-m3-primary/20 border border-m3-primary/30 rounded-2xl text-m3-primary transition-all text-xs font-bold flex items-center gap-2 active:scale-95" title="Studio Dashboard">
+            <button id="open-studio-btn" class="px-3.5 py-1.5 sm:py-2 bg-m3-primary/10 hover:bg-m3-primary/20 border border-m3-primary/30 rounded-2xl text-m3-primary transition-all text-xs font-bold flex items-center gap-2 active:scale-95 shadow-sm" title="Studio Dashboard">
                 <i class="fa-solid fa-sliders"></i>
                 <span class="hidden sm:inline">Studio</span>
             </button>
@@ -529,16 +547,16 @@
     </header>
 
     <!-- MAIN RESPONSIVE WORKSPACE CONTAINER -->
-    <div class="flex-1 w-full max-w-[1700px] mx-auto px-2 sm:px-4 lg:px-6 flex flex-col lg:flex-row gap-3.5 min-h-0 relative z-10 overflow-hidden pb-1">
+    <div class="flex-1 w-full max-w-[1700px] mx-auto px-2 sm:px-4 lg:px-6 flex flex-col lg:flex-row gap-4 min-h-0 relative z-10 overflow-hidden pb-1">
 
-        <!-- DESKTOP LEFT SIDEBAR (Compact Vinyl Showcase & Quick Dock) -->
-        <aside class="hidden lg:flex lg:w-60 xl:w-64 flex-col gap-3 flex-shrink-0 h-full overflow-y-auto pr-0.5">
+        <!-- DESKTOP LEFT SIDEBAR (Vinyl Showcase & Studio Status Dock) -->
+        <aside class="hidden lg:flex lg:w-72 xl:w-80 flex-col gap-3.5 flex-shrink-0 h-full overflow-y-auto pr-0.5">
             
             <!-- Elevated Vinyl Artwork Showcase Card -->
-            <div class="p-3.5 rounded-2xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center group">
+            <div class="p-4 rounded-2xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center group shrink-0">
                 
                 <!-- Perfectly Centered CSS Spinning Vinyl Disc -->
-                <div class="w-32 h-32 xl:w-36 xl:h-36 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
+                <div class="w-36 h-36 xl:w-44 xl:h-44 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
                     <!-- Vinyl Grooves Pattern Background -->
                     <div class="absolute inset-0 rounded-full opacity-40 pointer-events-none" style="background: repeating-radial-gradient(circle at center, #000 0px, #000 2px, #222 3px, #111 5px);"></div>
                     
@@ -548,45 +566,45 @@
                         <div class="absolute inset-0 rounded-full opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent pointer-events-none"></div>
                         
                         <!-- Center Disc Label -->
-                        <div class="w-12 h-12 rounded-full border-2 border-white/20 shadow-inner flex items-center justify-center relative z-10" style="background: radial-gradient(circle, var(--m3-primary) 0%, #0F172A 100%);">
-                            <i class="fa-solid fa-compact-disc text-white/90 text-sm"></i>
+                        <div class="w-14 h-14 xl:w-16 xl:h-16 rounded-full border-2 border-white/20 shadow-inner flex items-center justify-center relative z-10" style="background: radial-gradient(circle, var(--m3-primary) 0%, #0F172A 100%);">
+                            <i class="fa-solid fa-compact-disc text-white/90 text-lg"></i>
                         </div>
                     </div>
 
                     <!-- Spindle Center Hole -->
-                    <div class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-white/40 absolute z-20 shadow-md"></div>
+                    <div class="w-4 h-4 rounded-full bg-slate-950 border border-white/40 absolute z-20 shadow-md"></div>
                 </div>
 
-                <div class="w-full pt-1.5 space-y-0.5">
+                <div class="w-full pt-2 space-y-1">
                     <span class="text-[9px] font-extrabold uppercase tracking-widest text-m3-primary block">NOW PLAYING</span>
-                    <h2 class="text-xs font-extrabold text-white truncate" id="desktop-side-title">Lyrics Flow Pro</h2>
-                    <p class="text-[10px] text-slate-400 truncate" id="desktop-side-artist">Studio Lyrics Engine</p>
+                    <h2 class="text-xs xl:text-sm font-black text-white truncate px-1" id="desktop-side-title">Lyrics Flow Pro</h2>
+                    <p class="text-[11px] text-slate-400 truncate px-1" id="desktop-side-artist">Studio Lyrics Engine</p>
                 </div>
             </div>
 
             <!-- Desktop Quick Controls Widget -->
-            <div class="p-3 rounded-2xl bg-slate-900/60 border border-white/10 space-y-2">
+            <div class="p-3.5 dt-panel-card space-y-2.5">
                 <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-bold text-slate-200 flex items-center gap-1.5">
-                        <i class="fa-solid fa-wand-magic-sparkles text-m3-primary text-[10px]"></i> Quick Presets
+                    <span class="text-[11px] font-bold text-slate-200 flex items-center gap-2">
+                        <i class="fa-solid fa-wand-magic-sparkles text-m3-primary text-[11px]"></i> Studio Navigation
                     </span>
-                    <span class="text-[9px] font-mono text-slate-400">Desktop</span>
+                    <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">Quick Access</span>
                 </div>
-                <div class="grid grid-cols-2 gap-1.5 text-[11px] font-bold">
-                    <button class="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-1.5 transition-all active:scale-95" onclick="document.getElementById('open-library-btn').click()">
+                <div class="grid grid-cols-2 gap-2 text-[11px] font-bold">
+                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-library-btn').click()">
                         <i class="fa-solid fa-list-ul text-sky-400 text-xs"></i> Tracks
                     </button>
-                    <button class="p-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-1.5 transition-all active:scale-95" onclick="document.getElementById('open-studio-btn').click()">
+                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-studio-btn').click()">
                         <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
                     </button>
                 </div>
             </div>
 
             <!-- Desktop System Status Card -->
-            <div class="p-3 rounded-2xl bg-slate-900/40 border border-white/5 space-y-1.5 text-[10px] text-slate-400 mt-auto">
+            <div class="p-3.5 dt-panel-card space-y-2 text-[10px] text-slate-400 mt-auto">
                 <div class="flex items-center justify-between font-mono text-[9px]">
-                    <span>ENGINE STATUS</span>
-                    <span class="text-emerald-400 flex items-center gap-1 font-bold">
+                    <span class="text-slate-300 font-bold uppercase tracking-wider">ENGINE STATUS</span>
+                    <span class="text-emerald-400 flex items-center gap-1.5 font-bold bg-emerald-500/10 px-2 py-0.5 rounded-full border border-emerald-500/20">
                         <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> ONLINE
                     </span>
                 </div>
@@ -601,18 +619,18 @@
         <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-slate-900/30 lg:bg-slate-900/40 lg:border lg:border-white/10 lg:rounded-2xl lg:backdrop-blur-xl relative overflow-hidden flex flex-col shadow-2xl">
             
             <!-- Desktop Top Lyrics Bar (Font Scale Controls) -->
-            <div class="hidden lg:flex items-center justify-between px-5 py-2.5 border-b border-white/10 bg-slate-950/40 shrink-0 z-20">
-                <div class="flex items-center gap-2">
+            <div class="hidden lg:flex items-center justify-between px-5 py-3 border-b border-white/10 bg-slate-950/40 shrink-0 z-20">
+                <div class="flex items-center gap-2.5">
                     <i class="fa-solid fa-align-center text-xs text-m3-primary"></i>
-                    <span class="text-xs font-bold text-slate-300">Synchronized Lyrics Stage</span>
+                    <span class="text-xs font-bold text-slate-200 tracking-wide">Synchronized Lyrics Stage</span>
                 </div>
                 <div class="flex items-center gap-2">
-                    <div class="flex items-center gap-1 bg-white/5 px-2.5 py-0.5 rounded-lg border border-white/10 text-[11px] font-mono">
-                        <span class="text-slate-400">Size:</span>
+                    <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 text-[11px] font-mono">
+                        <span class="text-slate-400">Scale:</span>
                         <span id="dt-font-scale-lbl" class="text-sky-400 font-bold">1.0x</span>
                     </div>
-                    <button id="dt-font-down" class="w-6 h-6 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95" title="Decrease Font Size">-</button>
-                    <button id="dt-font-up" class="w-6 h-6 rounded-md bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95" title="Increase Font Size">+</button>
+                    <button id="dt-font-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Font Size">-</button>
+                    <button id="dt-font-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Font Size">+</button>
                 </div>
             </div>
 
@@ -628,52 +646,68 @@
             </button>
         </main>
 
-        <!-- DESKTOP RIGHT SIDEBAR (Compact Local Media Dock & Acoustic EQ) -->
-        <aside class="hidden xl:flex xl:w-64 flex-col gap-3 flex-shrink-0 h-full overflow-y-auto pl-0.5">
+        <!-- DESKTOP RIGHT SIDEBAR (Online LRC Search, Local Media & Equalizer Dock) -->
+        <aside class="hidden lg:flex lg:w-72 xl:w-80 flex-col gap-3.5 flex-shrink-0 h-full overflow-y-auto pl-0.5">
             
-            <!-- LOCAL FILE & LYRICS LOADER DOCK -->
-            <div class="p-3 rounded-2xl bg-slate-900/60 border border-white/10 space-y-2.5">
+            <!-- 1. ONLINE LRC FINDER CARD (DESKTOP RIGHT SIDEBAR INTEGRATION) -->
+            <div class="p-3.5 dt-panel-card space-y-3">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
-                        <i class="fa-solid fa-folder-open text-m3-primary text-xs"></i> Local Track & Lyrics
+                        <i class="fa-solid fa-wand-magic-sparkles text-m3-primary text-xs"></i> Online LRC Search
                     </span>
-                    <span class="text-[9px] bg-sky-500/20 text-sky-300 font-extrabold px-1.5 py-0.5 rounded-md">Local Dock</span>
+                    <span class="text-[9px] bg-sky-500/20 text-sky-300 font-extrabold px-2 py-0.5 rounded-full border border-sky-500/30">LRCLIB</span>
+                </div>
+
+                <div class="space-y-2">
+                    <input type="text" id="dt-online-song-input" placeholder="Track Name *" class="m3-input py-2 text-xs">
+                    <input type="text" id="dt-online-artist-input" placeholder="Artist Name (Optional)" class="m3-input py-2 text-xs">
+                </div>
+
+                <button id="dt-btn-fetch-online-lrc" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
+                    <i class="fa-solid fa-magnifying-glass text-xs"></i> Fetch & Auto-Sync Lyrics
+                </button>
+
+                <p id="dt-online-fetch-status" class="text-[10px] font-semibold text-slate-400 hidden text-center"></p>
+            </div>
+
+            <!-- 2. LOCAL FILE & LYRICS LOADER DOCK -->
+            <div class="p-3.5 dt-panel-card space-y-2.5">
+                <div class="flex items-center justify-between">
+                    <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
+                        <i class="fa-solid fa-folder-open text-m3-primary text-xs"></i> Local Audio & LRC
+                    </span>
+                    <span class="text-[9px] bg-white/5 text-slate-400 font-bold px-2 py-0.5 rounded-full">Local Files</span>
                 </div>
                 
                 <div class="space-y-2 text-xs">
                     <!-- Quick Local Audio Button -->
-                    <button class="w-full py-2 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95" onclick="document.getElementById('audio-file-input').click()">
-                        <span class="truncate flex items-center gap-1.5">
+                    <button class="w-full py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95 shadow-sm" onclick="document.getElementById('audio-file-input').click()">
+                        <span class="truncate flex items-center gap-2">
                             <i class="fa-solid fa-music text-sky-400"></i> Open Audio MP3
                         </span>
                         <i class="fa-solid fa-plus text-[10px] text-slate-400"></i>
                     </button>
 
                     <!-- Quick Local LRC Button -->
-                    <button class="w-full py-2 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95" onclick="document.getElementById('lrc-file-input').click()">
-                        <span class="truncate flex items-center gap-1.5">
+                    <button class="w-full py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95 shadow-sm" onclick="document.getElementById('lrc-file-input').click()">
+                        <span class="truncate flex items-center gap-2">
                             <i class="fa-solid fa-file-lines text-purple-400"></i> Load .LRC File
                         </span>
                         <i class="fa-solid fa-upload text-[10px] text-slate-400"></i>
                     </button>
-
-                    <!-- Direct Studio Source Opener -->
-                    <button class="w-full py-2 bg-m3-primary text-slate-950 font-extrabold rounded-xl text-[11px] flex items-center justify-center gap-1.5 active:scale-95 transition-all shadow-md" onclick="document.getElementById('open-studio-btn').click()">
-                        <i class="fa-solid fa-sliders text-xs"></i> Open Studio Lyrics Editor
-                    </button>
                 </div>
             </div>
 
-            <!-- Equalizer Quick Sliders Widget -->
-            <div class="p-3 rounded-2xl bg-slate-900/60 border border-white/10 space-y-2.5">
+            <!-- 3. Equalizer Quick Sliders Widget -->
+            <div class="p-3.5 dt-panel-card space-y-2.5">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
                         <i class="fa-solid fa-wave-square text-m3-primary text-xs"></i> 5-Band Acoustic EQ
                     </span>
-                    <span class="text-[9px] text-slate-400">DSP</span>
+                    <span class="text-[9px] text-slate-400 font-mono">DSP</span>
                 </div>
                 
-                <div class="grid grid-cols-5 gap-1 text-center text-[9px] font-mono pt-1">
+                <div class="grid grid-cols-5 gap-1.5 text-center text-[9px] font-mono pt-1">
                     <div class="space-y-1">
                         <input type="range" class="dt-eq-band m3-slider" data-band="0" min="-12" max="12" value="0">
                         <span class="text-slate-400 block text-[8px]">60Hz</span>
@@ -720,7 +754,7 @@
     </div>
 
     <!-- Material Player Control Footer Console -->
-    <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-7xl mx-auto w-full">
+    <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-[1700px] mx-auto w-full">
         <div class="max-w-4xl mx-auto space-y-2">
             
             <!-- Time Scrub Bar -->
@@ -1270,6 +1304,55 @@
     <!-- MAIN APP ENGINE -->
     <script src="js/engine.js"></script>
 
+    <!-- DESKTOP ONLINE LRC SEARCH BRIDGE SCRIPT -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const dtSongInput = document.getElementById('dt-online-song-input');
+            const dtArtistInput = document.getElementById('dt-online-artist-input');
+            const dtFetchBtn = document.getElementById('dt-btn-fetch-online-lrc');
+            const dtFetchStatus = document.getElementById('dt-online-fetch-status');
+
+            const modalSongInput = document.getElementById('online-song-input');
+            const modalArtistInput = document.getElementById('online-artist-input');
+            const modalFetchBtn = document.getElementById('btn-fetch-online-lrc');
+            const modalFetchStatus = document.getElementById('online-fetch-status');
+
+            if (!dtFetchBtn || !modalFetchBtn) return;
+
+            // Trigger fetch from desktop widget by bridging to core engine handlers
+            dtFetchBtn.addEventListener('click', () => {
+                if (modalSongInput) modalSongInput.value = dtSongInput ? dtSongInput.value : '';
+                if (modalArtistInput) modalArtistInput.value = dtArtistInput ? dtArtistInput.value : '';
+                
+                modalFetchBtn.click();
+            });
+
+            // Sync inputs live between desktop right sidebar and studio drawer modal
+            if (dtSongInput && modalSongInput) {
+                dtSongInput.addEventListener('input', () => modalSongInput.value = dtSongInput.value);
+                modalSongInput.addEventListener('input', () => dtSongInput.value = modalSongInput.value);
+            }
+
+            if (dtArtistInput && modalArtistInput) {
+                dtArtistInput.addEventListener('input', () => modalArtistInput.value = dtArtistInput.value);
+                modalArtistInput.addEventListener('input', () => dtArtistInput.value = modalArtistInput.value);
+            }
+
+            // Sync status messages
+            if (modalFetchStatus && dtFetchStatus) {
+                const observer = new MutationObserver(() => {
+                    dtFetchStatus.textContent = modalFetchStatus.textContent;
+                    dtFetchStatus.className = modalFetchStatus.className;
+                    if (modalFetchStatus.classList.contains('hidden')) {
+                        dtFetchStatus.classList.add('hidden');
+                    } else {
+                        dtFetchStatus.classList.remove('hidden');
+                    }
+                });
+                observer.observe(modalFetchStatus, { attributes: true, childList: true, characterData: true, subtree: true });
+            }
+        });
+    </script>
     <!-- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {

@@ -51,8 +51,8 @@ window.PLAYLIST_DATA = [
             {
                 id: 'track-8',
                 title: 'Goals',
-                artist: 'Lisa',
-                audioUrl: 'Data/music/Lisa - Goals.mp3',
+                artist: 'LISA',
+                audioUrl: 'Data/music/LISA - Goals.mp3',
                 searchQuery: 'Ukulele Bensound'
             }
         ];

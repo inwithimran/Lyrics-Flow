@@ -264,11 +264,18 @@
             opacity: 0.35;
         }
 
+        
         #viz-canvas-bar {
             width: 100%;
-            height: 38px;
+            height: 50px;
             pointer-events: none;
         }
+
+@media (min-width: 1024px) {
+        #viz-canvas-bar {
+            height: 80px;
+    }
+}
 
         /* Responsive Bottom Sheet System */
         .sheet-overlay {
@@ -509,7 +516,7 @@
         <div class="flex items-center gap-3.5 min-w-0">
             <!-- Vinyl Artwork Badge (Mobile/Tablet View) -->
             <div id="track-art" class="shrink-0 flex items-center justify-center lg:hidden">
-                <i class="fa-solid fa-compact-disc text-2xl sm:text-3xl text-m3-primary" id="track-art-icon"></i>
+                <i class="fa-solid fa-compact-disc text-4xl sm:text-5xl text-m3-primary" id="track-art-icon"></i>
             </div>
             
             <div class="min-w-0">
@@ -549,13 +556,13 @@
 
         <div class="flex items-center gap-2.5 shrink-0">
             <!-- Music Library Button -->
-            <button id="open-library-btn" class="px-3.5 py-1.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
+            <button id="open-library-btn" class="px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
                 <i class="fa-solid fa-music text-sky-400"></i>
                 <span class="hidden sm:inline">Library</span>
             </button>
 
             <!-- Studio Control Sheet Button -->
-            <button id="open-studio-btn" class="px-3.5 py-1.5 sm:py-2 bg-m3-primary/10 hover:bg-m3-primary/20 border border-m3-primary/30 rounded-2xl text-m3-primary transition-all text-xs font-bold flex items-center gap-2 active:scale-95 shadow-sm" title="Studio Dashboard">
+            <button id="open-studio-btn" class="px-5 py-2.5 sm:py-2 bg-m3-primary/10 hover:bg-m3-primary/20 border border-m3-primary/30 rounded-2xl text-m3-primary transition-all text-xs font-bold flex items-center gap-2 active:scale-95 shadow-sm" title="Studio Dashboard">
                 <i class="fa-solid fa-sliders"></i>
                 <span class="hidden sm:inline">Studio</span>
             </button>
@@ -737,7 +744,7 @@
     </div>
 
     <!-- Soft Spectrum Visualizer Bar Strip -->
-    <div class="w-full flex-shrink-0 z-20 px-0 pointer-events-none mb-1" id="bar-viz-wrapper">
+    <div class="w-full flex-shrink-0 z-20 px-0 pointer-events-none -mb-1" id="bar-viz-wrapper">
         <canvas id="viz-canvas-bar"></canvas>
     </div>
 

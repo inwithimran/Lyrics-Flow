@@ -531,6 +531,22 @@
             </div>
         </div>
 
+        <!-- MOVED: Synchronized Lyrics Stage Bar (Desktop Top Header Alignment) -->
+        <div class="hidden lg:flex items-center gap-4 px-4 py-2 rounded-2xl bg-slate-950/40 border border-white/10">
+            <div class="flex items-center gap-2.5">
+                <i class="fa-solid fa-align-center text-xs text-m3-primary"></i>
+                <span class="text-xs font-bold text-slate-200 tracking-wide">Synchronized Lyrics Stage</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 text-[11px] font-mono">
+                    <span class="text-slate-400">Scale:</span>
+                    <span id="dt-font-scale-lbl" class="text-sky-400 font-bold">1.0x</span>
+                </div>
+                <button id="dt-font-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Font Size">-</button>
+                <button id="dt-font-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Font Size">+</button>
+            </div>
+        </div>
+
         <div class="flex items-center gap-2.5 shrink-0">
             <!-- Music Library Button -->
             <button id="open-library-btn" class="px-3.5 py-1.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
@@ -600,27 +616,23 @@
                 </div>
             </div>
 
+            <!-- MOVED: Developer Quick Info (Next to Studio Navigation Quick Access) -->
+            <div class="p-3 rounded-2xl bg-slate-900/40 border border-white/5 space-y-1.5 mt-auto">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-m3-primary font-bold text-xs">
+                        TI
+                    </div>
+                    <div>
+                        <h4 class="text-xs font-extrabold text-white">Tabib Imran</h4>
+                        <p class="text-[9px] text-slate-400">Studio Audio Architect</p>
+                    </div>
+                </div>
+            </div>
+
         </aside>
 
         <!-- CENTER PANEL: Synchronized Lyrics Viewport Container -->
         <main id="lyrics-container" class="flex-1 h-full min-w-0 bg-transparent lg:border lg:border-white/10 lg:rounded-2xl relative overflow-hidden flex flex-col shadow-2xl lg:py-6">
-
-            
-            <!-- Desktop Top Lyrics Bar (Font Scale Controls) -->
-            <div class="hidden lg:flex items-center justify-between px-5 py-3 border-b border-white/10 bg-slate-950/40 shrink-0 z-20">
-                <div class="flex items-center gap-2.5">
-                    <i class="fa-solid fa-align-center text-xs text-m3-primary"></i>
-                    <span class="text-xs font-bold text-slate-200 tracking-wide">Synchronized Lyrics Stage</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 text-[11px] font-mono">
-                        <span class="text-slate-400">Scale:</span>
-                        <span id="dt-font-scale-lbl" class="text-sky-400 font-bold">1.0x</span>
-                    </div>
-                    <button id="dt-font-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Font Size">-</button>
-                    <button id="dt-font-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Font Size">+</button>
-                </div>
-            </div>
 
             <div id="lyrics-scroller">
                 <div class="lyric-line active">Welcome to Lyrics Flow Pro</div>
@@ -715,19 +727,6 @@
                     <div class="space-y-1">
                         <input type="range" class="dt-eq-band m3-slider" data-band="4" min="-12" max="12" value="0">
                         <span class="text-slate-400 block text-[8px]">14kHz</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Developer Quick Info -->
-            <div class="p-3 rounded-2xl bg-slate-900/40 border border-white/5 space-y-1.5 mt-auto">
-                <div class="flex items-center gap-2.5">
-                    <div class="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-m3-primary font-bold text-xs">
-                        TI
-                    </div>
-                    <div>
-                        <h4 class="text-xs font-extrabold text-white">Tabib Imran</h4>
-                        <p class="text-[9px] text-slate-400">Studio Audio Architect</p>
                     </div>
                 </div>
             </div>

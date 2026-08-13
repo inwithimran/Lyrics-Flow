@@ -530,7 +530,7 @@ for (let i = 0; i < barCount; i++) {
                 const barW = slotWidth * 0.45;
 
                 for (let i = 0; i < barCount; i++) {
-                    const h = (smoothBars[i] / 255) * (hBar * 1.1);
+                    const h = (smoothBars[i] / 255) * (hBar * 1);
                     const x = (i * slotWidth) + (slotWidth - barW) / 2;
                     const y = hBar - h;
 

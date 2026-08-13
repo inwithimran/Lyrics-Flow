@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Title</title>
     <style>
         body {
             margin: 0;
@@ -76,7 +75,6 @@
             visibility: hidden;
         }
     </style>
-    <script src="js/index.js" defer></script>
 </head>
 <body>
 
@@ -93,20 +91,22 @@
     <footer></footer>
 
     <script>
-        const startTime = Date.now();
+    const startTime = Date.now();
 
-        window.addEventListener('load', () => {
-            const elapsedTime = Date.now() - startTime;
-            const remainingTime = Math.max(0, 3000 - elapsedTime);
+    window.addEventListener('load', () => {
+        const elapsedTime = Date.now() - startTime;
+        const minLoadingTime = 3000;
+        const remainingTime = Math.max(0, minLoadingTime - elapsedTime);
 
-            setTimeout(() => {
-                const loader = document.getElementById('app-loader');
-                if (loader) {
-                    loader.classList.add('loader-hidden');
-                    document.body.style.overflow = '';
-                }
-            }, remainingTime);
-        });
-    </script>
+        setTimeout(() => {
+            const loader = document.getElementById('app-loader');
+            if (loader) {
+                loader.classList.add('loader-hidden');
+                document.body.style.overflow = '';
+            }
+        }, remainingTime);
+    });
+</script>
+<script src="js/index.js" defer></script>
 </body>
 </html>

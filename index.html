@@ -3,8 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>App Title</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #090d16;
+            color: #f8fafc;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            overflow: hidden;
+        }
+
+        #app-loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-color: #090d16;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 99999;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .android-loader {
+            width: 48px;
+            height: 48px;
+            position: relative;
+        }
+
+        .android-loader svg {
+            width: 100%;
+            height: 100%;
+            animation: rotate 2s linear infinite;
+        }
+
+        .android-loader circle {
+            fill: none;
+            stroke: #38bdf8;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            animation: dash 1.5s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+
+        #app-loader.loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+    </style>
     <script src="js/index.js" defer></script>
 </head>
 <body>
+
+    <div id="app-loader">
+        <div class="android-loader">
+            <svg viewBox="25 25 50 50">
+                <circle cx="50" cy="50" r="20"></circle>
+            </svg>
+        </div>
+    </div>
+
+    <header></header>
+    <main></main>
+    <footer></footer>
+
+    <script>
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('app-loader');
+            if (loader) {
+                loader.classList.add('loader-hidden');
+                document.body.style.overflow = '';
+            }
+        });
+    </script>
 </body>
 </html>

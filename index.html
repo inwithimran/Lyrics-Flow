@@ -93,12 +93,19 @@
     <footer></footer>
 
     <script>
+        const startTime = Date.now();
+
         window.addEventListener('load', () => {
-            const loader = document.getElementById('app-loader');
-            if (loader) {
-                loader.classList.add('loader-hidden');
-                document.body.style.overflow = '';
-            }
+            const elapsedTime = Date.now() - startTime;
+            const remainingTime = Math.max(0, 3000 - elapsedTime);
+
+            setTimeout(() => {
+                const loader = document.getElementById('app-loader');
+                if (loader) {
+                    loader.classList.add('loader-hidden');
+                    document.body.style.overflow = '';
+                }
+            }, remainingTime);
         });
     </script>
 </body>

@@ -662,27 +662,29 @@ document.write(`
         <aside class="hidden lg:flex lg:w-72 xl:w-80 flex-col gap-3.5 flex-shrink-0 h-full overflow-y-auto pr-0.5 pb-24">
 
             
-            <!-- Elevated Vinyl Artwork Showcase Card -->
+           <!-- Elevated Vinyl Artwork Showcase Card -->
             <div class="p-4 rounded-2xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center group shrink-0">
                 
-                <!-- Perfectly Centered CSS Spinning Vinyl Disc -->
+                <!-- Spinning Disc with Dynamic Cover Image & Vinyl Groove Texture -->
                 <div class="w-36 h-36 xl:w-44 xl:h-44 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
-                    <!-- Vinyl Grooves Pattern Background -->
-                    <div class="absolute inset-0 rounded-full opacity-40 pointer-events-none" style="background: repeating-radial-gradient(circle at center, #000 0px, #000 2px, #222 3px, #111 5px);"></div>
                     
-                    <!-- Spinning Outer Disc Body -->
-                    <div class="w-full h-full rounded-full spin-element desktop-art-spin flex items-center justify-center relative">
-                        <!-- Disc Highlight Reflection -->
-                        <div class="absolute inset-0 rounded-full opacity-20 bg-gradient-to-tr from-transparent via-white to-transparent pointer-events-none"></div>
+                    <!-- Outer Rotating Disc Body carrying the Cover Image -->
+                    <div id="desktop-art-disc" class="w-full h-full rounded-full desktop-art-spin flex items-center justify-center relative bg-cover bg-center" style="background-image: url('Data/cover/1.jpg');">
                         
-                        <!-- Center Disc Label -->
-                        <div class="w-14 h-14 xl:w-16 xl:h-16 rounded-full border-2 border-white/20 shadow-inner flex items-center justify-center relative z-10" style="background: radial-gradient(circle, var(--m3-primary) 0%, #0F172A 100%);">
-                            <i class="fa-solid fa-compact-disc text-white/90 text-lg"></i>
+                        <!-- Vinyl Grooves Pattern Texture Overlay -->
+                        <div class="absolute inset-0 rounded-full opacity-40 pointer-events-none" style="background: repeating-radial-gradient(circle at center, rgba(0,0,0,0.8) 0px, rgba(0,0,0,0.8) 2px, rgba(255,255,255,0.05) 3px, rgba(0,0,0,0.9) 5px);"></div>
+                        
+                        <!-- Disc Highlight Light Reflection Overlay -->
+                        <div class="absolute inset-0 rounded-full opacity-25 bg-gradient-to-tr from-transparent via-white to-transparent pointer-events-none"></div>
+                        
+                        <!-- Center Label Ring -->
+                        <div class="w-10 h-10 xl:w-12 xl:h-12 rounded-full border-2 border-white/30 shadow-inner flex items-center justify-center relative z-10" style="background: radial-gradient(circle, var(--m3-primary) 0%, #0F172A 100%);">
+                            <i class="fa-solid fa-compact-disc text-white/90 text-sm"></i>
                         </div>
                     </div>
 
                     <!-- Spindle Center Hole -->
-                    <div class="w-4 h-4 rounded-full bg-slate-950 border border-white/40 absolute z-20 shadow-md"></div>
+                    <div class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-white/50 absolute z-20 shadow-md"></div>
                 </div>
 
                 <div class="w-full pt-2 space-y-1">
@@ -710,7 +712,7 @@ document.write(`
                 </div>
             </div>
 
-            <!-- MOVED: Developer Quick Info (Next to Studio Navigation Quick Access) -->
+            <!-- Developer Quick Info (Next to Studio Navigation Quick Access) -->
             <div class="p-3 rounded-2xl bg-slate-900/40 border border-white/5 space-y-1.5 mt-auto">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-m3-primary font-bold text-xs">

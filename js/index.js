@@ -665,26 +665,21 @@ document.write(`
            <!-- Elevated Vinyl Artwork Showcase Card -->
             <div class="p-4 rounded-2xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center group shrink-0">
                 
-                <!-- Spinning Disc with Dynamic Cover Image & Vinyl Groove Texture -->
+                <!-- Centered Dynamic Spinning Disc Container -->
                 <div class="w-36 h-36 xl:w-44 xl:h-44 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
                     
-                    <!-- Outer Rotating Disc Body carrying the Cover Image -->
-                    <div id="desktop-art-disc" class="w-full h-full rounded-full desktop-art-spin flex items-center justify-center relative bg-cover bg-center" style="background-image: url('Data/cover/1.jpg');">
+                    <!-- Spinning Disc Wrapper -->
+                    <div id="desktop-disc-wrapper" class="w-full h-full rounded-full desktop-art-spin flex items-center justify-center relative overflow-hidden">
                         
-                        <!-- Vinyl Grooves Pattern Texture Overlay -->
-                        <div class="absolute inset-0 rounded-full opacity-40 pointer-events-none" style="background: repeating-radial-gradient(circle at center, rgba(0,0,0,0.8) 0px, rgba(0,0,0,0.8) 2px, rgba(255,255,255,0.05) 3px, rgba(0,0,0,0.9) 5px);"></div>
+                        <!-- Dynamic Song Cover Art Image -->
+                        <img id="desktop-cover-img" src="Data/img/profile.jpg" alt="Cover Art" class="absolute inset-0 w-full h-full object-cover rounded-full">
                         
-                        <!-- Disc Highlight Light Reflection Overlay -->
-                        <div class="absolute inset-0 rounded-full opacity-25 bg-gradient-to-tr from-transparent via-white to-transparent pointer-events-none"></div>
-                        
-                        <!-- Center Label Ring -->
-                        <div class="w-10 h-10 xl:w-12 xl:h-12 rounded-full border-2 border-white/30 shadow-inner flex items-center justify-center relative z-10" style="background: radial-gradient(circle, var(--m3-primary) 0%, #0F172A 100%);">
-                            <i class="fa-solid fa-compact-disc text-white/90 text-sm"></i>
-                        </div>
+                        <!-- Vinyl Grooves & Reflection Overlay Texture -->
+                        <div class="absolute inset-0 rounded-full pointer-events-none opacity-60" style="background: repeating-radial-gradient(circle at center, transparent 0px, transparent 2px, rgba(0,0,0,0.4) 3px, rgba(0,0,0,0.6) 5px), linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 40%, rgba(255,255,255,0.15) 100%);"></div>
                     </div>
 
-                    <!-- Spindle Center Hole -->
-                    <div class="w-3.5 h-3.5 rounded-full bg-slate-950 border border-white/50 absolute z-20 shadow-md"></div>
+                    <!-- Center Spindle Hole -->
+                    <div class="w-4 h-4 rounded-full bg-slate-950 border border-white/40 absolute z-20 shadow-md"></div>
                 </div>
 
                 <div class="w-full pt-2 space-y-1">

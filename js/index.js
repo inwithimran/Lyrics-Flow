@@ -151,7 +151,9 @@ document.write(`
             filter: blur(60px);
         }
 
-                #track-art-icon {
+                        /* Rotating Vinyl Disc Animation for Mobile & Desktop */
+        #track-art-icon,
+        .desktop-art-spin {
             display: inline-block;
             animation: spinDisk 8s linear infinite;
             animation-play-state: paused;
@@ -167,10 +169,7 @@ document.write(`
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-#track-art-icon.playing,
-.desktop-art-spin.playing {
-    animation-play-state: running;
-}
+
 
 
         /* Equalizer Animation */

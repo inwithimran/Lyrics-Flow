@@ -3,7 +3,8 @@ window.PLAYLIST_DATA = [
                 id: 'track-1',
                 title: 'Meri Banogi Kya',
                 artist: 'Rito Riba',
-                audioUrl: 'Data/music/Rito Riba - Meri Banogi Kya.mp3'
+                audioUrl: 'Data/music/Rito Riba - Meri Banogi Kya.mp3',
+                
             },
             {
                 id: 'track-2',
@@ -27,7 +28,8 @@ window.PLAYLIST_DATA = [
                 id: 'track-5',
                 title: 'Attention',
                 artist: 'Charlie Puth',
-                audioUrl: 'Data/music/Charlie Puth - Attention.mp3'
+                audioUrl: 'Data/music/Charlie Puth - Attention.mp3',
+                coverUrl: 'Data/cover/1.jpg'
             },
         {
                 id: 'track-6',

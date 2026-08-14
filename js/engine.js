@@ -78,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     
-    <!-- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT -->
      document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
             const volumeSlider = document.getElementById('volume-slider');
@@ -127,28 +126,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Sync Desktop Left Sidebar Title & Artist
+            // Sync Desktop Left Sidebar Title, Artist, Cover Photo & Spinning Animation
             const mainTitle = document.getElementById('track-title');
             const mainArtist = document.getElementById('track-artist');
             const dtTitle = document.getElementById('desktop-side-title');
             const dtArtist = document.getElementById('desktop-side-artist');
             const dtSpin = document.querySelector('.desktop-art-spin');
             const mainIcon = document.getElementById('track-art-icon');
+            const dtDisc = document.getElementById('desktop-art-disc');
 
             if (mainTitle && dtTitle) {
                 const observer = new MutationObserver(() => {
                     dtTitle.textContent = mainTitle.textContent;
                     dtArtist.textContent = mainArtist.textContent;
-                    if (mainIcon && dtSpin) {
-                        if (mainIcon.classList.contains('playing')) {
-                            dtSpin.classList.add('playing');
-                        } else {
-                            dtSpin.classList.remove('playing');
-                        }
+
+                    // Update dynamic desktop vinyl cover photo
+                    const playlist = window.PLAYLIST_DATA || [];
+                    const currentSong = playlist.find(s => s.title === mainTitle.textContent);
+                    if (currentSong && currentSong.coverUrl && dtDisc) {
+                        dtDisc.style.backgroundImage = `url('${currentSong.coverUrl}')`;
                     }
                 });
                 observer.observe(mainTitle, { childList: true, characterData: true, subtree: true });
-                if (mainIcon) {
+
+                if (mainIcon && dtSpin) {
                     const spinObs = new MutationObserver(() => {
                         if (mainIcon.classList.contains('playing')) {
                             dtSpin.classList.add('playing');
@@ -159,7 +160,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     spinObs.observe(mainIcon, { attributes: true, attributeFilter: ['class'] });
                 }
             }
-
             // Desktop Font Scale Shortcuts
             const dtFontUp = document.getElementById('dt-font-up');
             const dtFontDown = document.getElementById('dt-font-down');

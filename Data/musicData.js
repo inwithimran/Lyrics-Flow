@@ -29,7 +29,7 @@ window.PLAYLIST_DATA = [
                 title: 'Attention',
                 artist: 'Charlie Puth',
                 audioUrl: 'Data/music/Charlie Puth - Attention.mp3',
-                coverUrl: 'Data/cover/1.jpg'
+                coverUrl: 'Data/covers/5.jpg'
             },
         {
                 id: 'track-6',

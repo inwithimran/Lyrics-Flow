@@ -78,6 +78,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     
+    <!-- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT -->
      document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
             const volumeSlider = document.getElementById('volume-slider');
@@ -126,30 +127,28 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             }
 
-            // Sync Desktop Left Sidebar Title, Artist, Cover Photo & Spinning Animation
+            // Sync Desktop Left Sidebar Title & Artist
             const mainTitle = document.getElementById('track-title');
             const mainArtist = document.getElementById('track-artist');
             const dtTitle = document.getElementById('desktop-side-title');
             const dtArtist = document.getElementById('desktop-side-artist');
             const dtSpin = document.querySelector('.desktop-art-spin');
             const mainIcon = document.getElementById('track-art-icon');
-            const dtDisc = document.getElementById('desktop-art-disc');
 
             if (mainTitle && dtTitle) {
                 const observer = new MutationObserver(() => {
                     dtTitle.textContent = mainTitle.textContent;
                     dtArtist.textContent = mainArtist.textContent;
-
-                    // Update dynamic desktop vinyl cover photo
-                    const playlist = window.PLAYLIST_DATA || [];
-                    const currentSong = playlist.find(s => s.title === mainTitle.textContent);
-                    if (currentSong && currentSong.coverUrl && dtDisc) {
-                        dtDisc.style.backgroundImage = `url('${currentSong.coverUrl}')`;
+                    if (mainIcon && dtSpin) {
+                        if (mainIcon.classList.contains('playing')) {
+                            dtSpin.classList.add('playing');
+                        } else {
+                            dtSpin.classList.remove('playing');
+                        }
                     }
                 });
                 observer.observe(mainTitle, { childList: true, characterData: true, subtree: true });
-
-                if (mainIcon && dtSpin) {
+                if (mainIcon) {
                     const spinObs = new MutationObserver(() => {
                         if (mainIcon.classList.contains('playing')) {
                             dtSpin.classList.add('playing');
@@ -160,6 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     spinObs.observe(mainIcon, { attributes: true, attributeFilter: ['class'] });
                 }
             }
+
             // Desktop Font Scale Shortcuts
             const dtFontUp = document.getElementById('dt-font-up');
             const dtFontDown = document.getElementById('dt-font-down');
@@ -1085,7 +1085,20 @@ for (let i = 0; i < barCount; i++) {
             renderLibraryPlaylist();
         };
 
-        async function loadTrackFromLibrary(song) {
+                async function loadTrackFromLibrary(song) {
+            // ১. ডেক্সটপ ডিস্কের কভার ইমেজ আপডেট
+            const coverImg = document.getElementById('desktop-cover-img');
+            if (coverImg) {
+                if (song.coverUrl) {
+                    coverImg.src = song.coverUrl;
+                } else if (song.cover) {
+                    coverImg.src = song.cover;
+                } else {
+                    coverImg.src = 'Data/img/default-cover.jpg';
+                }
+            }
+
+            // ২. একই গানে প্লে/পজ টগল করা
             if (song.id === activeSongId) {
                 if (audio.paused) {
                     await triggerPlay();
@@ -1106,11 +1119,12 @@ for (let i = 0; i < barCount; i++) {
 
             await setAudioSource(song.audioUrl);
 
-            songInput.value = song.title;
-            artistInput.value = song.artist;
+            if (songInput) songInput.value = song.title;
+            if (artistInput) artistInput.value = song.artist;
 
             if (song.lrcText) {
-                document.getElementById('raw-lrc-input').value = song.lrcText;
+                const rawInput = document.getElementById('raw-lrc-input');
+                if (rawInput) rawInput.value = song.lrcText;
                 parseLRC(song.lrcText);
             } else {
                 executeOnlineSync(true);
@@ -1121,6 +1135,7 @@ for (let i = 0; i < barCount; i++) {
             resumeAutoSync();
             await triggerPlay();
         }
+
 
         // --- AUTO ONLINE SYNCED LRC FINDER ENGINE ---
         const songInput = document.getElementById('online-song-input');
@@ -1225,55 +1240,6 @@ audio.onpause = () => {
     document.querySelectorAll('#play-icon, .play-icon-target').forEach(el => el.classList.remove('hidden'));
     document.querySelectorAll('#pause-icon, .pause-icon-target').forEach(el => el.classList.add('hidden'));
     
-        async function loadTrackFromLibrary(song) {
-            // ১. কভার আর্ট ব্যাকগ্রাউন্ড আপডেট করার লজিক (ডেডলক বা মিসিং ফটো প্রতিরোধে)
-            const dtSpinBg = document.getElementById('desktop-art-spin-bg');
-            if (dtSpinBg) {
-                if (song.coverUrl) {
-                    dtSpinBg.style.backgroundImage = `url('${song.coverUrl}')`;
-                } else {
-                    dtSpinBg.style.backgroundImage = `url('Data/img/default-cover.jpg')`;
-                }
-            }
-
-            // ২. একই গানে প্লে/পজ হ্যান্ডলিং
-            if (song.id === activeSongId) {
-                if (audio.paused) {
-                    await triggerPlay();
-                } else {
-                    audio.pause();
-                }
-                closeSheet(document.getElementById('library-sheet'));
-                return;
-            }
-
-            activeSongId = song.id;
-
-            onlineTrackTitle = song.title;
-            onlineArtistName = song.artist;
-            fileTrackTitle = '';
-            fileArtistName = '';
-            updateHeaderTitle();
-
-            await setAudioSource(song.audioUrl);
-
-            if (songInput) songInput.value = song.title;
-            if (artistInput) artistInput.value = song.artist;
-
-            if (song.lrcText) {
-                const rawInput = document.getElementById('raw-lrc-input');
-                if (rawInput) rawInput.value = song.lrcText;
-                parseLRC(song.lrcText);
-            } else {
-                executeOnlineSync(true);
-            }
-
-            renderLibraryPlaylist();
-            closeSheet(document.getElementById('library-sheet'));
-            resumeAutoSync();
-            await triggerPlay();
-        }
-
     document.querySelectorAll('#track-art-icon, .desktop-art-spin').forEach(el => {
         el.classList.remove('playing');
     });

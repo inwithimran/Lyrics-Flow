@@ -665,22 +665,32 @@ document.write(`
            <!-- Elevated Vinyl Artwork Showcase Card -->
             <div class="p-4 rounded-2xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center group shrink-0">
                 
-                <!-- Centered Dynamic Spinning Disc Container -->
-                <div class="w-36 h-36 xl:w-44 xl:h-44 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
-                    
-                    <!-- Spinning Disc Wrapper -->
-                    <div id="desktop-disc-wrapper" class="w-full h-full rounded-full desktop-art-spin flex items-center justify-center relative overflow-hidden">
-                        
-                        <!-- Dynamic Song Cover Art Image -->
-                        <img id="desktop-cover-img" src="Data/img/profile.jpg" alt="Cover Art" class="absolute inset-0 w-full h-full object-cover rounded-full">
-                        
-                        <!-- Vinyl Grooves & Reflection Overlay Texture -->
-                        <div class="absolute inset-0 rounded-full pointer-events-none opacity-60" style="background: repeating-radial-gradient(circle at center, transparent 0px, transparent 2px, rgba(0,0,0,0.4) 3px, rgba(0,0,0,0.6) 5px), linear-gradient(135deg, rgba(255,255,255,0.25) 0%, transparent 40%, rgba(255,255,255,0.15) 100%);"></div>
-                    </div>
+                <!-- Real Rotating Vinyl Disc Container with Cover Art Image -->
+<div class="w-36 h-36 xl:w-44 xl:h-44 rounded-full bg-slate-950 border-4 border-white/10 shadow-2xl flex items-center justify-center relative my-1 overflow-hidden shrink-0">
+    
+    <!-- Spinning Vinyl Body -->
+    <div id="desktop-vinyl-disc" class="w-full h-full rounded-full desktop-art-spin relative overflow-hidden flex items-center justify-center">
+        
+        <!-- Song Dynamic Cover Image -->
+        <img id="desktop-cover-img" src="Data/img/default-cover.jpg" alt="Song Cover" class="w-full h-full object-cover transition-opacity duration-300" onerror="this.src='Data/img/default-cover.jpg';">
+        
+        <!-- Realistic Vinyl Grooves Texture Overlay -->
+        <div class="absolute inset-0 rounded-full opacity-60 pointer-events-none" style="background: repeating-radial-gradient(circle at center, rgba(0,0,0,0.85) 0px, rgba(0,0,0,0.85) 2px, rgba(255,255,255,0.05) 3px, rgba(0,0,0,0.95) 5px);"></div>
+        
+        <!-- Reflection / Gloss Effect -->
+        <div class="absolute inset-0 rounded-full opacity-30 bg-gradient-to-tr from-transparent via-white/40 to-transparent pointer-events-none"></div>
+        
+        <!-- Center Hole & Ring -->
+        <div class="w-10 h-10 xl:w-12 xl:h-12 rounded-full border-2 border-slate-950 shadow-2xl flex items-center justify-center absolute z-10 bg-slate-950/90 backdrop-blur-xs">
+            <div class="w-3 h-3 rounded-full bg-slate-900 border border-white/20"></div>
+        </div>
+    </div>
 
-                    <!-- Center Spindle Hole -->
-                    <div class="w-4 h-4 rounded-full bg-slate-950 border border-white/40 absolute z-20 shadow-md"></div>
-                </div>
+    <!-- Center Spindle Pin -->
+    <div class="w-3 h-3 rounded-full bg-slate-200 border border-slate-800 absolute z-20 shadow-md"></div>
+</div>
+
+
 
                 <div class="w-full pt-2 space-y-1">
                     <span class="text-[9px] font-extrabold uppercase tracking-widest text-m3-primary block">NOW PLAYING</span>
@@ -1436,7 +1446,6 @@ document.write(`
 
 </body>
 </html>
-
 
 `);
 document.close();

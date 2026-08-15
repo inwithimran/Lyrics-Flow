@@ -562,18 +562,23 @@ btnOffsetModals.forEach(btn => {
     }
 }
 
+const toggleLoopMode = () => {
+    if (userSettings.playbackMode === 'off') {
+        userSettings.playbackMode = 'one';
+    } else if (userSettings.playbackMode === 'one') {
+        userSettings.playbackMode = 'shuffle';
+    } else {
+        userSettings.playbackMode = 'off';
+    }
+    saveSettings();
+    updateLoopModeUI();
+};
 
-        document.getElementById('btn-loop-mode').onclick = () => {
-            if (userSettings.playbackMode === 'off') {
-                userSettings.playbackMode = 'one';
-            } else if (userSettings.playbackMode === 'one') {
-                userSettings.playbackMode = 'shuffle';
-            } else {
-                userSettings.playbackMode = 'off';
-            }
-            saveSettings();
-            updateLoopModeUI();
-        };
+const btnLoopMob = document.getElementById('btn-loop-mode');
+const btnLoopDt = document.getElementById('btn-loop-mode-dt');
+if (btnLoopMob) btnLoopMob.onclick = toggleLoopMode;
+if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
+
 
         // --- AUTO PLAY NEXT SONG & ENDED EVENT ---
         audio.onended = () => {
@@ -761,19 +766,22 @@ btnOffsetModals.forEach(btn => {
 
                 sourceNode = audioCtx.createMediaElementSource(audio);
 
-                let lastNode = sourceNode;
-                EQ_FREQS.forEach((freq, idx) => {
-                    const filter = audioCtx.createBiquadFilter();
-                    if (idx === 0) filter.type = 'lowshelf';
-                    else if (idx === EQ_FREQS.length - 1) filter.type = 'highshelf';
-                    else { filter.type = 'peaking'; filter.Q.value = 1.0; }
-                    
-                    filter.frequency.value = userSettings.eqBands[idx] || 0;
-                    
-                    lastNode.connect(filter);
-                    lastNode = filter;
-                    eqBands.push(filter);
-                });
+                
+let lastNode = sourceNode;
+EQ_FREQS.forEach((freq, idx) => {
+    const filter = audioCtx.createBiquadFilter();
+    if (idx === 0) filter.type = 'lowshelf';
+    else if (idx === EQ_FREQS.length - 1) filter.type = 'highshelf';
+    else { filter.type = 'peaking'; filter.Q.value = 1.0; }
+    
+    filter.frequency.value = freq; 
+    filter.gain.value = userSettings.eqBands[idx] || 0; 
+    
+    lastNode.connect(filter);
+    lastNode = filter;
+    eqBands.push(filter);
+});
+
 
                 lastNode.connect(analyser);
                 analyser.connect(audioCtx.destination);

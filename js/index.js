@@ -887,7 +887,7 @@ document.write(`
                 </button>
 
                 <button id="btn-rewind" class="ctrl-btn w-10 h-10 text-slate-300 hover:text-white hover:scale-105 active:scale-95" title="Rewind 5s">
-                    <i class="fa-solid fa-rotate-left text-sm"></i>
+                    -5s
                 </button>
 
                 <button id="btn-play-pause" class="w-12 h-12 rounded-2xl bg-m3-primary text-slate-950 font-bold flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all" title="Play / Pause">
@@ -896,7 +896,7 @@ document.write(`
                 </button>
 
                 <button id="btn-forward" class="ctrl-btn w-10 h-10 text-slate-300 hover:text-white hover:scale-105 active:scale-95" title="Forward 5s">
-                    <i class="fa-solid fa-rotate-right text-sm"></i>
+                    +5s
                 </button>
 
                 <button id="btn-next-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Next Track">

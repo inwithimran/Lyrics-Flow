@@ -739,19 +739,19 @@ document.write(`
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
 </button>
 
-<button data-studio-tab="tab-prefs" data-scroll-to="pref-sleep-status" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+<button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
 </button>
 
-<button data-studio-tab="tab-prefs" data-scroll-to="theme-picker" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+<button data-studio-tab="tab-prefs" data-scroll-to="theme-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-palette text-emerald-400 text-xs"></i> Theme
 </button>
 
-<button data-studio-tab="tab-prefs" data-scroll-to="sleep-options" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+<button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-clock text-purple-400 text-xs"></i> Sleep Timer
 </button>
 
-<button data-studio-tab="tab-editor" data-scroll-to="btn-export-lrc" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+<button data-studio-tab="tab-editor" data-scroll-to="export-copy-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-file-export text-rose-400 text-xs"></i> Export & Copy
 </button>
 
@@ -1191,7 +1191,7 @@ document.write(`
 
                 <!-- TAB 3: EXPORT & COPY LRC TOOL -->
                 <div id="tab-editor" class="tab-pane hidden space-y-4">
-                    <div class="py-2 space-y-3">
+                    <div id="export-copy-section" class="py-2 space-y-3">
                         <div class="flex justify-between items-center">
                             <span class="text-xs font-extrabold text-sky-400">LRC Export & Copy Tools</span>
                             <span class="text-[9px] bg-sky-500/20 text-sky-300 px-2 py-0.5 rounded-full font-bold">LRC Studio</span>
@@ -1227,7 +1227,7 @@ document.write(`
                     </div>
 
                     <!-- 2. SLEEP TIMER SECTION -->
-                    <div class="py-3 border-y border-white/10 space-y-3">
+                    <div id="sleep-timer-section" class="py-3 border-y border-white/10 space-y-3">
                         <div class="flex justify-between items-center">
                             <div>
                                 <span class="text-xs font-bold text-slate-200 flex items-center gap-1.5">
@@ -1264,7 +1264,7 @@ document.write(`
                     </div>
 
                     <!-- Material Theme Palette Picker -->
-                    <div class="m3-list-row">
+                    <div id="theme-section" class="m3-list-row">
                         <span class="text-xs font-bold text-slate-200">Material Theme Accent</span>
                         <div class="flex items-center gap-2" id="theme-picker">
                             <button class="w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN"></button>

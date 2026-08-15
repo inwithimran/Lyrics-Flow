@@ -17,23 +17,21 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         
         
-        // Desktop Studio Navigation Quick Access Controls 
+        // ==========================================
+// 1. DESKTOP EQ / FX QUICK ACCESS FIX
+// ==========================================
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
-        let targetTab = 'tab-audio';
-        if (document.getElementById('tab-audio')) {
-            targetTab = 'tab-audio';
-        } else if (document.getElementById('tab-eq')) {
-            targetTab = 'tab-eq';
-        } else if (document.getElementById('tab-audio-fx')) {
-            targetTab = 'tab-audio-fx';
-        } else {
-            const eqPill = document.querySelector('.m3-tab-pill[data-tab*="audio"], .m3-tab-pill[data-tab*="eq"]');
-            if (eqPill) targetTab = eqPill.dataset.tab;
+        // ডায়নামিক ভাবে 'audio-fx', 'eq', অথবা 'audio' সম্বলিত পিল/ট্যাব খুঁজে বের করবে
+        let targetTab = 'audio-fx';
+        const fxPill = document.querySelector('.m3-tab-pill[data-tab="audio-fx"], .m3-tab-pill[data-tab="eq"], .m3-tab-pill[data-tab*="audio"]');
+        
+        if (fxPill && fxPill.dataset.tab) {
+            targetTab = fxPill.dataset.tab;
         }
 
         if (typeof switchTab === 'function') {
@@ -41,6 +39,40 @@ if (dtBtnEqFx) {
         }
     });
 }
+
+// ==========================================
+// 2. OFFSET BUTTON SMOOTH SCROLL FIX (DESKTOP & MOBILE)
+// ==========================================
+const btnOffsetModals = document.querySelectorAll('#btn-offset-modal');
+btnOffsetModals.forEach(btn => {
+    btn.onclick = () => {
+        const studioSheet = document.getElementById('studio-sheet');
+        if (studioSheet) openSheet(studioSheet);
+        
+        // Preferences / Settings ট্যাবে সুইচ করা
+        let prefsTab = 'prefs';
+        const prefPill = document.querySelector('.m3-tab-pill[data-tab="prefs"], .m3-tab-pill[data-tab="settings"], .m3-tab-pill[data-tab*="pref"]');
+        if (prefPill && prefPill.dataset.tab) {
+            prefsTab = prefPill.dataset.tab;
+        }
+
+        if (typeof switchTab === 'function') {
+            switchTab(prefsTab);
+        }
+
+        // ডেক্সটপে শীর্ট সম্পূর্ণ অপেন হওয়া পর্যন্ত রিকোয়েস্ট এনিমেশন ফ্রেম ও টাইমার ব্যবহার করে স্ক্রল
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                const target = document.getElementById('offset-settings-container') || 
+                               document.getElementById('offset-val-display') || 
+                               document.querySelector('[id*="offset"]');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 450); // ডেস্কটপের সিএসএস ট্রানজিশনের সাথে সামঞ্জস্য রেখে ৪৫০ms করা হয়েছে
+        });
+    };
+});
 
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ
@@ -1309,36 +1341,6 @@ audio.onpause = () => {
             audio.playbackRate = val;
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
         };
-
-        // Offset Button Click -> Open Studio, Switch to Prefs & Smooth Scroll (Desktop & Mobile Fixed)
-const btnOffsetModal = document.getElementById('btn-offset-modal');
-if (btnOffsetModal) {
-    btnOffsetModal.onclick = () => {
-        const studioSheet = document.getElementById('studio-sheet');
-        if (studioSheet) openSheet(studioSheet);
-        
-        // Preferences / Settings 
-        let prefsTab = 'tab-prefs';
-        if (!document.getElementById('tab-prefs')) {
-            const prefPill = document.querySelector('.m3-tab-pill[data-tab*="pref"], .m3-tab-pill[data-tab*="setting"]');
-            if (prefPill) prefsTab = prefPill.dataset.tab;
-        }
-
-        if (typeof switchTab === 'function') {
-            switchTab(prefsTab);
-        }
-
-        setTimeout(() => {
-            const target = document.getElementById('offset-settings-container') || 
-                           document.getElementById('offset-val-display') || 
-                           document.querySelector('[id*="offset"]');
-            if (target) {
-                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 380);
-    };
-}
-
 
 
         // --- EXPORT & COPY LRC TOOL ---

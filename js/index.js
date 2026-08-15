@@ -759,8 +759,8 @@ document.write(`
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
 </button>
 
-<button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
-    <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
+<button data-studio-tab="tab-prefs" data-scroll-to="visualizer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+    <i class="fa-solid fa-wave-square text-cyan-400 text-xs"></i> Visualizer
 </button>
 
 <button data-studio-tab="tab-prefs" data-scroll-to="theme-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
@@ -1277,7 +1277,7 @@ document.write(`
                     </div>
 
                     <!-- Visualizer Mode -->
-                    <div class="space-y-2 pt-1">
+                    <div id="visualizer-section" class="space-y-2 pt-1">
                         <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block">Visualizer Style</span>
                         <div class="grid grid-cols-3 gap-2">
                             <button class="viz-style-chip m3-tab-pill active justify-center" data-style="bars">Soft Bars</button>

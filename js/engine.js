@@ -16,87 +16,38 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         
-const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
-if (dtBtnEqFx) {
-    dtBtnEqFx.addEventListener('click', () => {
-        const studioSheet = document.getElementById('studio-sheet');
-        if (studioSheet) openSheet(studioSheet);
-        
-        const fxPill = document.querySelector(
-            '.m3-tab-pill[data-tab*="eq" i], ' +
-            '.m3-tab-pill[data-tab*="fx" i], ' +
-            '.m3-tab-pill[data-tab*="audio" i], ' +
-            '.m3-tab-pill[data-tab*="dsp" i], ' +
-            '.m3-tab-pill[data-tab*="sound" i]'
-        );
-        
-        if (fxPill && fxPill.dataset.tab) {
-            if (typeof switchTab === 'function') {
-                switchTab(fxPill.dataset.tab);
-            }
-        } else {
-            if (typeof switchTab === 'function') {
-                switchTab('eq');
-            }
-        }
-    });
-}
+// ✅ ডাইনামিক স্টুডিও নেভিগেশন লজিক (একটি ইভেন্ট দিয়েই সব বাটনে কাজ করবে)
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-studio-tab]');
+    if (!btn) return;
 
+    const sheetId = btn.dataset.targetSheet || 'studio-sheet';
+    const tabId = btn.dataset.studioTab;
+    const scrollTargetId = btn.dataset.scrollTo;
 
+    // ১. স্টুডিও মডাল/শিট ওপেন করা
+    const sheet = document.getElementById(sheetId);
+    if (sheet && typeof openSheet === 'function') {
+        openSheet(sheet);
+    }
 
-const btnOffsetModals = document.querySelectorAll('#btn-offset-modal');
-btnOffsetModals.forEach(btn => {
-    btn.onclick = () => {
-        const studioSheet = document.getElementById('studio-sheet');
-        if (studioSheet) openSheet(studioSheet);
-        
-        let prefsTab = 'prefs';
-        const prefPill = document.querySelector('.m3-tab-pill[data-tab="prefs"], .m3-tab-pill[data-tab="settings"], .m3-tab-pill[data-tab*="pref"]');
-        if (prefPill && prefPill.dataset.tab) {
-            prefsTab = prefPill.dataset.tab;
-        }
+    // ২. নির্দিষ্ট ট্যাবে সুইচের কাজ করা
+    if (tabId && typeof switchTab === 'function') {
+        switchTab(tabId);
+    }
 
-        if (typeof switchTab === 'function') {
-            switchTab(prefsTab);
-        }
-
+    // ৩. নির্দিষ্ট অপশন/এলিমেন্টে স্ক্রল করা (যদি data-scroll-to থাকে)
+    if (scrollTargetId) {
         requestAnimationFrame(() => {
             setTimeout(() => {
-                const target = document.getElementById('offset-settings-container') || 
-                               document.getElementById('offset-val-display') || 
-                               document.querySelector('[id*="offset"]');
-                if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }
-            }, 450);
-        });
-    };
-});
-
-// Quick Access Sleep Timer
-
-const dtBtnSleep = document.getElementById('dt-btn-sleep-timer');
-if (dtBtnSleep) {
-    dtBtnSleep.addEventListener('click', () => {
-        const studioSheet = document.getElementById('studio-sheet');
-        if (studioSheet) openSheet(studioSheet);
-        
-        if (typeof switchTab === 'function') {
-            switchTab('prefs');
-        }
-
-        requestAnimationFrame(() => {
-            setTimeout(() => {
-                const target = document.getElementById('pref-sleep-status') || 
-                               document.querySelector('[id*="sleep"]');
+                const target = document.getElementById(scrollTargetId);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
             }, 400);
         });
-    });
-}
-
+    }
+});
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ
             mainEqBands.forEach((mBand) => {

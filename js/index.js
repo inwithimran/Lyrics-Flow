@@ -869,18 +869,23 @@ document.write(`
             </button>
         </div>
 
-                        <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid with No Layout Shift) -->
-        <div class="hidden sm:grid sm:grid-cols-3 items-center gap-4 px-2 w-full">
-            
-            <!-- Left Corner: Shuffle/Repeat (Fixed Width Wrapper) -->
-            <div class="flex items-center justify-start">
-                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
-                    <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
-                    <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
-                </button>
-            </div>
+                <!-- DESKTOP ONE-LINE CONTROLS -->
+<div class="relative hidden sm:flex items-center justify-between w-full px-4">
+    
+    <div class="flex items-center justify-start z-10">
+        <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
+            <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
+            <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
+        </button>
+    </div>
 
-            <div class="flex items-center gap-3 justify-center">
+    <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 pointer-events-auto">
+    </div>
+
+    <div class="flex items-center justify-end z-10">
+    </div>
+
+</div>
 
 
                 <button id="btn-prev-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">

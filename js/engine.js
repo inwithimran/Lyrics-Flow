@@ -636,10 +636,18 @@ document.addEventListener('DOMContentLoaded', () => {
             updateScroll(activeIndex);
         }
 
-        // --- HEADER TITLE PRIORITY UPDATE ---
+                // --- HEADER TITLE PRIORITY UPDATE ---
         function updateHeaderTitle() {
             const titleEl = document.getElementById('track-title');
             const artistEl = document.getElementById('track-artist');
+
+            const dtSongInput = document.getElementById('dt-online-song-input');
+            const dtArtistInput = document.getElementById('dt-online-artist-input');
+            const modalSongInput = document.getElementById('online-song-input');
+            const modalArtistInput = document.getElementById('online-artist-input');
+
+            let currentTitle = onlineTrackTitle || fileTrackTitle || '';
+            let currentArtist = onlineArtistName || fileArtistName || '';
 
             if (onlineTrackTitle) {
                 titleEl.innerText = onlineTrackTitle;
@@ -650,6 +658,13 @@ document.addEventListener('DOMContentLoaded', () => {
             } else {
                 titleEl.innerText = 'No Track Loaded';
                 artistEl.innerText = 'Tap music library or studio buttons';
+            }
+        
+            if (currentTitle) {
+                if (dtSongInput) dtSongInput.value = currentTitle;
+                if (modalSongInput) modalSongInput.value = currentTitle;
+                if (dtArtistInput) dtArtistInput.value = currentArtist;
+                if (modalArtistInput) modalArtistInput.value = currentArtist;
             }
         }
 
@@ -1436,35 +1451,38 @@ audio.onpause = () => {
 
         // --- FILE INPUTS & SMART AUTO-FILL ---
         document.getElementById('audio-file-input').onchange = async e => {
-            const file = e.target.files[0];
-            if (file) {
-                activeSongId = 'custom-file';
-                await setAudioSource(file);
-                const rawName = file.name.replace(/\.[^/.]+$/, "");
-                
-                if (rawName.includes('-')) {
-                    const parts = rawName.split('-');
-                    fileArtistName = parts[0].trim();
-                    fileTrackTitle = parts.slice(1).join('-').trim();
-                    artistInput.value = fileArtistName;
-                    songInput.value = fileTrackTitle;
-                } else {
-                    fileTrackTitle = rawName;
-                    fileArtistName = '';
-                    songInput.value = rawName;
-                    artistInput.value = '';
-                }
+    const file = e.target.files[0];
+    if (file) {
+        activeSongId = 'custom-file';
+        await setAudioSource(file);
+        const rawName = file.name.replace(/\.[^/.]+$/, "");
+        
+        if (rawName.includes('-')) {
+            const parts = rawName.split('-');
+            fileArtistName = parts[0].trim();
+            fileTrackTitle = parts.slice(1).join('-').trim();
+            artistInput.value = fileArtistName;
+            songInput.value = fileTrackTitle;
+        } else {
+            fileTrackTitle = rawName;
+            fileArtistName = '';
+            songInput.value = rawName;
+            artistInput.value = '';
+        }
 
-                onlineTrackTitle = '';
-                onlineArtistName = '';
-                updateHeaderTitle();
+        onlineTrackTitle = '';
+        onlineArtistName = '';
+        updateHeaderTitle();
+        const lblAudio = document.getElementById('lbl-audio-name');
+        if (lblAudio) lblAudio.innerText = file.name;
 
-                document.getElementById('lbl-audio-name').innerText = file.name;
-                renderLibraryPlaylist();
-                executeOnlineSync(true);
-                resumeAutoSync();
-            }
-        };
+        renderLibraryPlaylist();
+        executeOnlineSync(true);
+        resumeAutoSync();
+        await triggerPlay(); 
+    }
+};
+
 
         document.getElementById('lrc-file-input').onchange = e => {
             const file = e.target.files[0];
@@ -1520,15 +1538,19 @@ audio.onpause = () => {
         });
 
         const fontScaleSlider = document.getElementById('font-scale-slider');
-        fontScaleSlider.oninput = e => {
-            const val = parseFloat(e.target.value);
-            userSettings.fontScale = val;
-            saveSettings();
+fontScaleSlider.oninput = e => {
+    const val = parseFloat(e.target.value);
+    userSettings.fontScale = val;
+    saveSettings();
 
-            document.documentElement.style.setProperty('--font-scale', val);
-            document.getElementById('font-scale-lbl').innerText = val.toFixed(2) + 'x';
-            updateScroll(activeIndex);
-        };
+    document.documentElement.style.setProperty('--font-scale', val);
+    document.getElementById('font-scale-lbl').innerText = val.toFixed(2) + 'x';
+
+    requestAnimationFrame(() => {
+        updateScroll(activeIndex, true);
+    });
+};
+
 
         document.getElementById('btn-offset-plus').onclick = () => adjustOffset(0.1);
         document.getElementById('btn-offset-minus').onclick = () => adjustOffset(-0.1);

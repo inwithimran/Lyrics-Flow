@@ -155,7 +155,7 @@ document.write(`
         #track-art-icon,
         .desktop-art-spin {
             display: inline-block;
-            animation: spinDisk 8s linear infinite;
+            animation: spinDisk 16s linear infinite;
             animation-play-state: paused;
             will-change: transform;
         }
@@ -233,7 +233,7 @@ document.write(`
 
         /* Lyrics Formatting */
         .lyric-line {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease, font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0.35;
             transform: scale(0.75);
             transform-origin: center center;
@@ -673,8 +673,9 @@ document.write(`
         <!-- Song Dynamic Cover Image -->
         <img id="desktop-cover-img" src="Data/img/default-cover.jpg" alt="Song Cover" class="w-full h-full object-cover transition-opacity duration-300" onerror="this.src='Data/img/default-cover.jpg';">
         
-        <!-- Realistic Vinyl Grooves Texture Overlay -->
-        <div class="absolute inset-0 rounded-full opacity-60 pointer-events-none" style="background: repeating-radial-gradient(circle at center, rgba(0,0,0,0.85) 0px, rgba(0,0,0,0.85) 2px, rgba(255,255,255,0.05) 3px, rgba(0,0,0,0.95) 5px);"></div>
+        <!-- Clean Disc Edge Vignette Overlay -->
+<div class="absolute inset-0 rounded-full pointer-events-none ring-1 ring-inset ring-white/15 shadow-[inset_0_0_20px_rgba(0,0,0,0.6)]"></div>
+
         
         <!-- Reflection / Gloss Effect -->
         <div class="absolute inset-0 rounded-full opacity-30 bg-gradient-to-tr from-transparent via-white/40 to-transparent pointer-events-none"></div>
@@ -868,20 +869,20 @@ document.write(`
             </button>
         </div>
 
-        <!-- DESKTOP ONE-LINE ROW CONTROLS (Hidden on mobile, flex on desktop) -->
+                <!-- DESKTOP ONE-LINE ROW CONTROLS (Hidden on mobile, flex on desktop) -->
         <div class="hidden sm:flex items-center justify-between gap-4 px-2">
             
             <!-- Left Corner: Shuffle/Repeat -->
-            <div class="flex items-center gap-2">
-                <button id="btn-loop-mode-dt" class="ctrl-btn px-3.5 py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10" onclick="document.getElementById('btn-loop-mode').click()">
-    <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
-    <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
-</button>
-
+            <div class="flex items-center gap-2 flex-1 justify-start">
+                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center" onclick="document.getElementById('btn-loop-mode').click()">
+                    <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
+                    <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
+                </button>
             </div>
 
             <!-- Center: Larger Playback Buttons in One Line -->
-            <div class="flex items-center gap-3 justify-center">
+            <div class="flex items-center gap-3 justify-center shrink-0">
+
                 <button id="btn-prev-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
                     <i class="fa-solid fa-backward-step text-lg"></i>
                 </button>

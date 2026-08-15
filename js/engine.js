@@ -160,39 +160,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
 
-            // Desktop Font Scale Shortcuts
+                       // Desktop Font Scale Shortcuts (Clean Trigger)
             const dtFontUp = document.getElementById('dt-font-up');
             const dtFontDown = document.getElementById('dt-font-down');
             const fontSlider = document.getElementById('font-scale-slider');
-            const dtFontLbl = document.getElementById('dt-font-scale-lbl');
 
-            if (fontSlider && dtFontLbl) {
-                const updateFontLbl = () => {
-                    dtFontLbl.textContent = parseFloat(fontSlider.value).toFixed(1) + 'x';
-                };
-                fontSlider.addEventListener('input', updateFontLbl);
-
-                if (dtFontUp) {
-                    dtFontUp.addEventListener('click', () => {
-                        let current = parseFloat(fontSlider.value);
-                        if (current < 1.8) {
-                            fontSlider.value = (current + 0.1).toFixed(2);
-                            fontSlider.dispatchEvent(new Event('input'));
-                            updateFontLbl();
-                        }
-                    });
-                }
-                if (dtFontDown) {
-                    dtFontDown.addEventListener('click', () => {
-                        let current = parseFloat(fontSlider.value);
-                        if (current > 0.7) {
-                            fontSlider.value = (current - 0.1).toFixed(2);
-                            fontSlider.dispatchEvent(new Event('input'));
-                            updateFontLbl();
-                        }
-                    });
-                }
+            if (dtFontUp && fontSlider) {
+                dtFontUp.addEventListener('click', () => {
+                    let current = parseFloat(fontSlider.value);
+                    if (current < 1.8) {
+                        fontSlider.value = Math.min(1.8, current + 0.1).toFixed(2);
+                        fontSlider.dispatchEvent(new Event('input'));
+                    }
+                });
             }
+            if (dtFontDown && fontSlider) {
+                dtFontDown.addEventListener('click', () => {
+                    let current = parseFloat(fontSlider.value);
+                    if (current > 0.7) {
+                        fontSlider.value = Math.max(0.7, current - 0.1).toFixed(2);
+                        fontSlider.dispatchEvent(new Event('input'));
+                    }
+                });
+            }
+
 
             // Sync Desktop Right Sidebar Finder & EQ to Main Inputs
             const dtSong = document.getElementById('dt-online-song');
@@ -1537,19 +1528,32 @@ audio.onpause = () => {
             };
         });
 
-        const fontScaleSlider = document.getElementById('font-scale-slider');
-fontScaleSlider.oninput = e => {
-    const val = parseFloat(e.target.value);
-    userSettings.fontScale = val;
-    saveSettings();
+                const fontScaleSlider = document.getElementById('font-scale-slider');
+        if (fontScaleSlider) {
+            fontScaleSlider.oninput = e => {
+                const val = parseFloat(e.target.value);
+                userSettings.fontScale = val;
+                saveSettings();
 
-    document.documentElement.style.setProperty('--font-scale', val);
-    document.getElementById('font-scale-lbl').innerText = val.toFixed(2) + 'x';
+                document.documentElement.style.setProperty('--font-scale', val);
 
-    requestAnimationFrame(() => {
-        updateScroll(activeIndex, true);
-    });
-};
+                const formattedLbl = val.toFixed(1) + 'x';
+                const fontLbl = document.getElementById('font-scale-lbl');
+                const dtFontLbl = document.getElementById('dt-font-scale-lbl');
+                if (fontLbl) fontLbl.innerText = formattedLbl;
+                if (dtFontLbl) dtFontLbl.innerText = formattedLbl;
+
+                let frames = 0;
+                const keepCentered = () => {
+                    updateScroll(activeIndex, true);
+                    if (++frames < 12) {
+                        requestAnimationFrame(keepCentered);
+                    }
+                };
+                requestAnimationFrame(keepCentered);
+            };
+        }
+
 
 
         document.getElementById('btn-offset-plus').onclick = () => adjustOffset(0.1);

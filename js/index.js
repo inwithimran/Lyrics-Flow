@@ -869,19 +869,19 @@ document.write(`
             </button>
         </div>
 
-                <!-- DESKTOP ONE-LINE ROW CONTROLS (Hidden on mobile, flex on desktop) -->
-        <div class="hidden sm:flex items-center justify-between gap-4 px-2">
+                        <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid with No Layout Shift) -->
+        <div class="hidden sm:grid sm:grid-cols-3 items-center gap-4 px-2 w-full">
             
-            <!-- Left Corner: Shuffle/Repeat -->
-            <div class="flex items-center gap-2 flex-1 justify-start">
-                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center" onclick="document.getElementById('btn-loop-mode').click()">
+            <!-- Left Corner: Shuffle/Repeat (Fixed Width Wrapper) -->
+            <div class="flex items-center justify-start">
+                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
                     <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
                     <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
                 </button>
             </div>
 
-            <!-- Center: Larger Playback Buttons in One Line -->
-            <div class="flex items-center gap-3 justify-center shrink-0">
+            <div class="flex items-center gap-3 justify-center">
+
 
                 <button id="btn-prev-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
                     <i class="fa-solid fa-backward-step text-lg"></i>

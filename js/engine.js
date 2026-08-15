@@ -20,25 +20,31 @@ document.addEventListener('DOMContentLoaded', () => {
         // ==========================================
 // 1. DESKTOP EQ / FX QUICK ACCESS FIX
 // ==========================================
+// ✅ নতুন এবং সঠিক কোড:
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
-        // ডায়নামিক ভাবে 'audio-fx', 'eq', অথবা 'audio' সম্বলিত পিল/ট্যাব খুঁজে বের করবে
-        let targetTab = 'audio-fx';
-        const fxPill = document.querySelector('.m3-tab-pill[data-tab="audio-fx"], .m3-tab-pill[data-tab="eq"], .m3-tab-pill[data-tab*="audio"]');
+        // ১. স্টুডিও শিটে বিদ্যমান প্রথম বা EQ সম্পর্কিত Active Tab/Pill খুঁজে বের করা
+        const fxPill = document.querySelector('.m3-tab-pill[data-tab*="eq"], .m3-tab-pill[data-tab*="fx"], .m3-tab-pill[data-tab*="audio"]') 
+                       || document.querySelector('.m3-tab-pill[data-tab]');
         
         if (fxPill && fxPill.dataset.tab) {
-            targetTab = fxPill.dataset.tab;
-        }
-
-        if (typeof switchTab === 'function') {
-            switchTab(targetTab);
+            if (typeof switchTab === 'function') {
+                switchTab(fxPill.dataset.tab);
+            }
+        } else {
+            // ২. কোনো Pill না পাওয়া গেলে প্রথম tab-pane সিলেক্ট করা যেন স্ক্রিন ব্ল্যাঙ্ক না হয়
+            const firstPane = document.querySelector('.tab-pane');
+            if (firstPane && typeof switchTab === 'function') {
+                switchTab(firstPane.id);
+            }
         }
     });
 }
+
 
 // ==========================================
 // 2. OFFSET BUTTON SMOOTH SCROLL FIX (DESKTOP & MOBILE)

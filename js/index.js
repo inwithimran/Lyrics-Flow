@@ -570,6 +570,30 @@ document.write(`
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
+
+        /* ✅ Quick Access হাইলাইট ইফেক্ট: থিম অ্যাকসেন্ট কালার অনুযায়ী কয়েক সেকেন্ডের glow/pulse */
+        .quick-access-highlight {
+            position: relative;
+            border-radius: 1rem;
+            animation: qa-pulse 2.2s ease-out 1;
+            outline: 2px solid rgba(var(--m3-primary-rgb), 0.8);
+            outline-offset: 3px;
+        }
+        @keyframes qa-pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(var(--m3-primary-rgb), 0.55);
+                background-color: rgba(var(--m3-primary-rgb), 0.16);
+            }
+            60% {
+                box-shadow: 0 0 0 14px rgba(var(--m3-primary-rgb), 0);
+                background-color: rgba(var(--m3-primary-rgb), 0.10);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(var(--m3-primary-rgb), 0);
+                background-color: transparent;
+                outline-color: transparent;
+            }
+        }
     </style>
 </head>
 <body>
@@ -880,7 +904,7 @@ document.write(`
                 <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
             </button>
 
-            <button id="btn-offset-modal" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
+            <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
                 <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
                 <span id="offset-indicator" class="text-[11px]">0.0s</span>
             </button>
@@ -924,9 +948,9 @@ document.write(`
             <!-- 3. Right Corner: Offset & Volume Controls -->
             <div class="flex items-center justify-end gap-3">
                 <!-- Sync Offset Modal Trigger -->
-                <button id="btn-offset-modal" class="ctrl-btn px-3 py-2 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95">
+                <button id="btn-offset-modal-dt" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn px-3 py-2 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95">
                     <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
-                    <span id="offset-indicator" class="text-[11px]">0.0s</span>
+                    <span id="offset-indicator-dt" class="text-[11px]">0.0s</span>
                 </button>
 
                 <!-- Volume Slider Control -->

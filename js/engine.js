@@ -1,3 +1,16 @@
+// ✅ গ্লোবাল হেল্পার ফাংশন (যেকোনো স্কোপ থেকে অ্যাক্সেসযোগ্য) — Sheet ওপেন/ক্লোজ ও ট্যাব সুইচ করার জন্য
+function openSheet(sheet) { if (sheet) sheet.classList.add('open'); }
+function closeSheet(sheet) { if (sheet) sheet.classList.remove('open'); }
+
+function switchTab(tabId) {
+    document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.tab === tabId);
+    });
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.toggle('hidden', pane.id !== tabId);
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
             const dtEqBands = document.querySelectorAll('.dt-eq-band');
             const mainEqBands = document.querySelectorAll('.eq-band');
@@ -36,13 +49,24 @@ document.addEventListener('click', (e) => {
         switchTab(tabId);
     }
 
-    // ৩. নির্দিষ্ট অপশন/এলিমেন্টে স্ক্রল করা (যদি data-scroll-to থাকে)
+    // ৩. নির্দিষ্ট অপশন/এলিমেন্টে স্ক্রল করা এবং কয়েক সেকেন্ডের জন্য হাইলাইট করা (যদি data-scroll-to থাকে)
     if (scrollTargetId) {
         requestAnimationFrame(() => {
             setTimeout(() => {
                 const target = document.getElementById(scrollTargetId);
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    // হাইলাইট ইফেক্ট: আগের কোনো হাইলাইট থাকলে সরিয়ে নতুন করে যোগ করা
+                    document.querySelectorAll('.quick-access-highlight').forEach(el => {
+                        el.classList.remove('quick-access-highlight');
+                    });
+                    // রিফ্লো ফোর্স করা যাতে animation রিস্টার্ট হয় (একই টার্গেটে বারবার ক্লিক করলেও)
+                    void target.offsetWidth;
+                    target.classList.add('quick-access-highlight');
+                    setTimeout(() => {
+                        target.classList.remove('quick-access-highlight');
+                    }, 2200);
                 }
             }, 400);
         });
@@ -1606,6 +1630,9 @@ audio.onpause = () => {
             const offsetInd = document.getElementById('offset-indicator');
             if (offsetInd) offsetInd.innerText = formatted;
 
+            const offsetIndDt = document.getElementById('offset-indicator-dt');
+            if (offsetIndDt) offsetIndDt.innerText = formatted;
+
             const offsetTag = document.getElementById('offset-tag');
             if (offsetTag) {
                 offsetTag.innerText = formatted;
@@ -1653,9 +1680,6 @@ audio.onpause = () => {
             btn.onclick = () => closeSheet(document.getElementById('library-sheet'));
         });
 
-        function openSheet(sheet) { sheet.classList.add('open'); }
-        function closeSheet(sheet) { sheet.classList.remove('open'); }
-
         document.querySelectorAll('.sheet-overlay').forEach(sheet => {
             sheet.addEventListener('click', (e) => {
                 if (e.target === sheet) {
@@ -1671,17 +1695,6 @@ audio.onpause = () => {
                 }
             });
         });
-
-        function switchTab(tabId) {
-            document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
-                if (chip.dataset.tab === tabId) chip.classList.add('active');
-                else chip.classList.remove('active');
-            });
-            document.querySelectorAll('.tab-pane').forEach(pane => {
-                if (pane.id === tabId) pane.classList.remove('hidden');
-                else pane.classList.add('hidden');
-            });
-        }
 
         document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
             chip.onclick = () => switchTab(chip.dataset.tab);

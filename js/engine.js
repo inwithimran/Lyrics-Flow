@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         
         
-        // Desktop Studio Navigation Quick Access Controls
+        // Desktop Studio Navigation Quick Access Controls (Fixed Audio FX & EQ Tab)
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
@@ -27,10 +27,12 @@ if (dtBtnEqFx) {
         }
         
         if (typeof switchTab === 'function') {
-            switchTab('tab-eq');
+            const targetTab = document.getElementById('tab-audio') ? 'tab-audio' : 'tab-eq';
+            switchTab(targetTab);
         }
     });
 }
+
 
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ
@@ -1300,20 +1302,26 @@ audio.onpause = () => {
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
         };
 
-        document.getElementById('btn-offset-modal').onclick = () => {
-            openSheet(document.getElementById('studio-sheet'));
+        // Offset Button Click -> Open Studio, Switch to Prefs & Smooth Scroll (Fixed)
+const btnOffsetModal = document.getElementById('btn-offset-modal');
+if (btnOffsetModal) {
+    btnOffsetModal.onclick = () => {
+        const studioSheet = document.getElementById('studio-sheet');
+        if (studioSheet) openSheet(studioSheet);
+        
+        if (typeof switchTab === 'function') {
             switchTab('tab-prefs');
-            setTimeout(() => {
-                const target = document.getElementById('offset-settings-container');
-                const scrollContainer = document.getElementById('studio-tab-container');
-                if (target && scrollContainer) {
-                    scrollContainer.scrollTo({
-                        top: target.offsetTop - scrollContainer.offsetTop - 12,
-                        behavior: 'smooth'
-                    });
-                }
-            }, 150);
-        };
+        }
+
+        setTimeout(() => {
+            const target = document.getElementById('offset-settings-container');
+            if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }
+        }, 200);
+    };
+}
+
 
         // --- EXPORT & COPY LRC TOOL ---
         document.getElementById('btn-export-lrc').onclick = () => {

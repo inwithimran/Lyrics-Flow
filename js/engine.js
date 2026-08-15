@@ -18,37 +18,38 @@ document.addEventListener('DOMContentLoaded', () => {
         
         
         // ==========================================
-// 1. DESKTOP EQ / FX QUICK ACCESS FIX
+// 1. DESKTOP EQ / FX QUICK ACCESS FIX (UPDATED)
 // ==========================================
-// ✅ নতুন এবং সঠিক কোড:
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
-        // ১. স্টুডিও শিটে বিদ্যমান প্রথম বা EQ সম্পর্কিত Active Tab/Pill খুঁজে বের করা
-        const fxPill = document.querySelector('.m3-tab-pill[data-tab*="eq"], .m3-tab-pill[data-tab*="fx"], .m3-tab-pill[data-tab*="audio"]') 
-                       || document.querySelector('.m3-tab-pill[data-tab]');
+        // ১. স্টুডিও শিটে EQ / Audio FX সম্পর্কিত Tab Pill খুঁজে বের করা (Case-insensitive 'i' flag সহ)
+        const fxPill = document.querySelector(
+            '.m3-tab-pill[data-tab*="eq" i], ' +
+            '.m3-tab-pill[data-tab*="fx" i], ' +
+            '.m3-tab-pill[data-tab*="audio" i], ' +
+            '.m3-tab-pill[data-tab*="dsp" i], ' +
+            '.m3-tab-pill[data-tab*="sound" i]'
+        );
         
         if (fxPill && fxPill.dataset.tab) {
             if (typeof switchTab === 'function') {
                 switchTab(fxPill.dataset.tab);
             }
         } else {
-            // ২. কোনো Pill না পাওয়া গেলে প্রথম tab-pane সিলেক্ট করা যেন স্ক্রিন ব্ল্যাঙ্ক না হয়
-            const firstPane = document.querySelector('.tab-pane');
-            if (firstPane && typeof switchTab === 'function') {
-                switchTab(firstPane.id);
+            // ২. সিলেক্টর ব্যর্থ হলে সরাসরি আপনার HTML-এর EQ ট্যাবের সুনির্দিষ্ট ID ব্যবহার করুন
+            if (typeof switchTab === 'function') {
+                switchTab('eq'); // আপনার HTML-এ EQ Tab Pane-এর id অনুযায়ী নাম বসান (যেমন: 'eq', 'equalizer', বা 'audio-fx')
             }
         }
     });
 }
 
 
-// ==========================================
-// 2. OFFSET BUTTON SMOOTH SCROLL FIX (DESKTOP & MOBILE)
-// ==========================================
+
 const btnOffsetModals = document.querySelectorAll('#btn-offset-modal');
 btnOffsetModals.forEach(btn => {
     btn.onclick = () => {

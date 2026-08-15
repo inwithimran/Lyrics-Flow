@@ -1170,12 +1170,13 @@ for (let i = 0; i < barCount; i++) {
 
             const coverImg = document.getElementById('desktop-cover-img');
             if (coverImg) {
+                delete coverImg.dataset.fallback;
                 if (song.coverUrl) {
                     coverImg.src = song.coverUrl;
                 } else if (song.cover) {
                     coverImg.src = song.cover;
                 } else {
-                    coverImg.src = 'Data/img/default-cover.jpg';
+                    coverImg.src = 'Data/covers/default-cover.jpg';
                 }
             }
 

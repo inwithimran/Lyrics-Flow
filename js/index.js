@@ -199,6 +199,26 @@ document.write(`
             height: 30% !important;
         }
 
+        /* ✅ Music Library Track Card - Enhanced Design */
+        .library-track-card {
+            transition: transform 0.18s ease, box-shadow 0.2s ease, background-color 0.2s ease, border-color 0.2s ease;
+        }
+        .library-track-card:hover {
+            transform: translateY(-2px);
+            background-color: rgba(255, 255, 255, 0.08) !important;
+        }
+        .library-track-card:active {
+            transform: translateY(0) scale(0.99);
+        }
+        .library-track-card.is-active {
+            background: linear-gradient(135deg, rgba(var(--m3-primary-rgb), 0.14) 0%, rgba(var(--m3-primary-rgb), 0.04) 100%) !important;
+            border-color: rgba(var(--m3-primary-rgb), 0.45) !important;
+            box-shadow: 0 10px 28px -12px rgba(var(--m3-primary-rgb), 0.4);
+        }
+        .library-track-index {
+            font-variant-numeric: tabular-nums;
+        }
+
         @keyframes bounceBar {
             0% { height: 25%; }
             50% { height: 100%; }
@@ -998,7 +1018,10 @@ document.write(`
                         <i class="fa-solid fa-music text-xs"></i>
                     </div>
                     <div>
-                        <h2 class="text-sm md:text-base font-extrabold text-white tracking-tight">Music Library</h2>
+                        <div class="flex items-center gap-2">
+                            <h2 class="text-sm md:text-base font-extrabold text-white tracking-tight">Music Library</h2>
+                            <span id="library-track-count" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300">0 tracks</span>
+                        </div>
                         <p class="text-[10px] md:text-xs text-slate-400">Select a song to load audio & synced lyrics</p>
                     </div>
                 </div>
@@ -1266,12 +1289,15 @@ document.write(`
                     <!-- Material Theme Palette Picker -->
                     <div id="theme-section" class="m3-list-row">
                         <span class="text-xs font-bold text-slate-200">Material Theme Accent</span>
-                        <div class="flex items-center gap-2" id="theme-picker">
+                        <div class="flex items-center gap-2 flex-wrap" id="theme-picker">
                             <button class="w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN"></button>
                             <button class="w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE"></button>
                             <button class="w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER"></button>
                             <button class="w-8 h-8 rounded-xl bg-emerald-400 active:scale-90 transition-transform" data-color="#34D399" data-rgb="52, 211, 153" data-name="MATRIX GREEN"></button>
                             <button class="w-8 h-8 rounded-xl bg-rose-500 active:scale-90 transition-transform" data-color="#F43F5E" data-rgb="244, 63, 94" data-name="NEON ROSE"></button>
+                            <button class="w-8 h-8 rounded-xl bg-indigo-500 active:scale-90 transition-transform" data-color="#6366F1" data-rgb="99, 102, 241" data-name="INDIGO NOVA"></button>
+                            <button class="w-8 h-8 rounded-xl bg-yellow-400 active:scale-90 transition-transform" data-color="#FACC15" data-rgb="250, 204, 21" data-name="GOLDEN SOLAR"></button>
+                            <button class="w-8 h-8 rounded-xl bg-red-500 active:scale-90 transition-transform" data-color="#EF4444" data-rgb="239, 68, 68" data-name="CRIMSON BLAZE"></button>
                         </div>
                     </div>
 

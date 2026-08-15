@@ -1,5 +1,17 @@
 // ✅ গ্লোবাল হেল্পার ফাংশন (যেকোনো স্কোপ থেকে অ্যাক্সেসযোগ্য) — Sheet ওপেন/ক্লোজ ও ট্যাব সুইচ করার জন্য
-function openSheet(sheet) { if (sheet) sheet.classList.add('open'); }
+function openSheet(sheet) {
+    if (!sheet) return;
+    sheet.classList.add('open');
+    // ✅ লাইব্রেরি শিট খুললেই লিস্ট ফ্রেশ রেন্ডার করে কারেন্ট গান মাঝখানে স্ক্রল করে দেখানো
+    if (sheet.id === 'library-sheet') {
+        if (typeof window.renderLibraryPlaylist === 'function') {
+            window.renderLibraryPlaylist();
+        }
+        if (typeof window.scrollToActiveTrack === 'function') {
+            window.scrollToActiveTrack();
+        }
+    }
+}
 function closeSheet(sheet) { if (sheet) sheet.classList.remove('open'); }
 
 function switchTab(tabId) {
@@ -1081,6 +1093,7 @@ for (let i = 0; i < barCount; i++) {
         const searchInput = document.getElementById('library-search-input');
         const clearSearchBtn = document.getElementById('btn-clear-library-search');
 
+        window.renderLibraryPlaylist = renderLibraryPlaylist;
         function renderLibraryPlaylist() {
             playlistContainer.innerHTML = '';
             const playlist = window.PLAYLIST_DATA || [];
@@ -1090,6 +1103,16 @@ for (let i = 0; i < barCount; i++) {
                 if (!query) return true;
                 return song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query);
             });
+
+            // ✅ হেডারে লাইভ ট্র্যাক কাউন্ট দেখানো (সার্চ করলে "X of Y")
+            const countBadge = document.getElementById('library-track-count');
+            if (countBadge) {
+                if (searchQuery.trim()) {
+                    countBadge.innerText = `${filtered.length} of ${playlist.length}`;
+                } else {
+                    countBadge.innerText = `${playlist.length} ${playlist.length === 1 ? 'track' : 'tracks'}`;
+                }
+            }
 
             if (filtered.length === 0) {
                 playlistContainer.innerHTML = `
@@ -1101,13 +1124,14 @@ for (let i = 0; i < barCount; i++) {
                 return;
             }
 
-            filtered.forEach((song) => {
+            filtered.forEach((song, index) => {
                 const isSelected = song.id === activeSongId;
                 const isPlaying = isSelected && !audio.paused;
                 const card = document.createElement('div');
-                card.className = `p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                    isSelected 
-                        ? 'bg-sky-500/10 border-sky-500/40 text-sky-300' 
+                card.dataset.songId = song.id;
+                card.className = `library-track-card p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    isSelected
+                        ? 'is-active text-white'
                         : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
                 }`;
 
@@ -1119,17 +1143,24 @@ for (let i = 0; i < barCount; i++) {
                     </div>
                 `;
 
+                const avatarStyle = isSelected
+                    ? `background-color: rgba(var(--m3-primary-rgb), 0.18); border-color: rgba(var(--m3-primary-rgb), 0.4); color: var(--m3-primary);`
+                    : '';
+
                 card.innerHTML = `
                     <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 ${isSelected ? 'text-sky-400' : 'text-slate-400'}">
-                            ${isSelected ? activeIconHtml : '<i class="fa-solid fa-music text-sm"></i>'}
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
+                            ${isSelected ? activeIconHtml : `<span class="library-track-index text-[10px] font-mono font-bold">${String(index + 1).padStart(2, '0')}</span>`}
                         </div>
                         <div class="min-w-0">
-                            <h4 class="text-xs md:text-sm font-bold truncate">${song.title}</h4>
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${song.title}</h4>
+                                ${isSelected ? `<span class="shrink-0 text-[8px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background-color: rgba(var(--m3-primary-rgb), 0.2); color: var(--m3-primary);">${isPlaying ? 'Playing' : 'Paused'}</span>` : ''}
+                            </div>
                             <p class="text-[10px] md:text-xs text-slate-400 truncate">${song.artist}</p>
                         </div>
                     </div>
-                    <button class="w-8 h-8 rounded-full ${isSelected ? 'bg-sky-500 text-slate-950' : 'bg-white/10 text-slate-200'} flex items-center justify-center shrink-0 text-xs shadow">
+                    <button class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow ${isSelected ? '' : 'bg-white/10 text-slate-200'}" style="${isSelected ? 'background-color: var(--m3-primary); color: #0a0d14;' : ''}">
                         <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
                     </button>
                 `;
@@ -1138,6 +1169,21 @@ for (let i = 0; i < barCount; i++) {
                 playlistContainer.appendChild(card);
             });
         }
+
+        // ✅ কারেন্ট/অ্যাক্টিভ গানটিকে লাইব্রেরি লিস্টের মাঝামাঝি স্ক্রল করে আনা
+        // (নোট: শিটের স্লাইড-ইন transition ০.৩৫s লাগে, তাই সেটা শেষ হওয়ার পর স্ক্রল করা হচ্ছে —
+        //  নাহলে transition চলাকালীন ভুল পজিশনে স্ক্রল হয়ে যেতে পারত)
+        window.scrollToActiveTrack = function() {
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    if (!activeSongId) return;
+                    const activeCard = playlistContainer.querySelector(`[data-song-id="${activeSongId}"]`);
+                    if (activeCard) {
+                        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 450);
+            });
+        };
 
         searchInput.oninput = (e) => {
             searchQuery = e.target.value;

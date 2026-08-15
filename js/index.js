@@ -711,11 +711,11 @@ document.write(`
                     <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-library-btn').click()">
                         <i class="fa-solid fa-list-ul text-sky-400 text-xs"></i> Tracks
                     </button>
-                    <button id="dt-btn-eq-fx" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+                    <button data-studio-tab="eq" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
 </button>
 
-<button id="dt-btn-sleep-timer" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+<button data-studio-tab="prefs" data-scroll-to="pref-sleep-status" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
 </button>
 
@@ -1452,7 +1452,6 @@ document.write(`
 
 </body>
 </html>
-
 `);
 document.close();
 

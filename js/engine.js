@@ -1,8 +1,18 @@
-// ✅ গ্লোবাল হেল্পার ফাংশন (যেকোনো স্কোপ থেকে অ্যাক্সেসযোগ্য) — Sheet ওপেন/ক্লোজ ও ট্যাব সুইচ করার জন্য
+// --- XSS PROTECTION: escape user/external text before inserting into innerHTML ---
+function escapeHTML(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (ch) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[ch]));
+}
+
+// --- GLOBAL SHEET & TAB HELPERS (accessible from any scope) ---
 function openSheet(sheet) {
     if (!sheet) return;
     sheet.classList.add('open');
-    // ✅ লাইব্রেরি শিট খুললেই লিস্ট ফ্রেশ রেন্ডার করে কারেন্ট গান মাঝখানে স্ক্রল করে দেখানো
     if (sheet.id === 'library-sheet') {
         if (typeof window.renderLibraryPlaylist === 'function') {
             window.renderLibraryPlaylist();
@@ -23,25 +33,7 @@ function switchTab(tabId) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-            const dtEqBands = document.querySelectorAll('.dt-eq-band');
-            const mainEqBands = document.querySelectorAll('.eq-band');
-
-            // 1. Right Sidebar EQ -> Studio EQ
-            dtEqBands.forEach((dtBand) => {
-                dtBand.addEventListener('input', (e) => {
-                    const idx = e.target.getAttribute('data-band');
-                    const val = e.target.value;
-                    mainEqBands.forEach((mBand) => {
-                        if (mBand.getAttribute('data-band') === idx) {
-                            mBand.value = val;
-                            mBand.dispatchEvent(new Event('input'));
-                        }
-                    });
-                });
-            });
-        
-// ✅ ডাইনামিক স্টুডিও নেভিগেশন লজিক (একটি ইভেন্ট দিয়েই সব বাটনে কাজ করবে)
+// --- STUDIO QUICK-ACCESS NAVIGATION (opens sheet, switches tab, scrolls & highlights target) ---
 document.addEventListener('click', (e) => {
     const btn = e.target.closest('[data-studio-tab]');
     if (!btn) return;
@@ -50,18 +42,15 @@ document.addEventListener('click', (e) => {
     const tabId = btn.dataset.studioTab;
     const scrollTargetId = btn.dataset.scrollTo;
 
-    // ১. স্টুডিও মডাল/শিট ওপেন করা
     const sheet = document.getElementById(sheetId);
     if (sheet && typeof openSheet === 'function') {
         openSheet(sheet);
     }
 
-    // ২. নির্দিষ্ট ট্যাবে সুইচের কাজ করা
     if (tabId && typeof switchTab === 'function') {
         switchTab(tabId);
     }
 
-    // ৩. নির্দিষ্ট অপশন/এলিমেন্টে স্ক্রল করা এবং কয়েক সেকেন্ডের জন্য হাইলাইট করা (যদি data-scroll-to থাকে)
     if (scrollTargetId) {
         requestAnimationFrame(() => {
             setTimeout(() => {
@@ -69,11 +58,9 @@ document.addEventListener('click', (e) => {
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-                    // হাইলাইট ইফেক্ট: আগের কোনো হাইলাইট থাকলে সরিয়ে নতুন করে যোগ করা
                     document.querySelectorAll('.quick-access-highlight').forEach(el => {
                         el.classList.remove('quick-access-highlight');
                     });
-                    // রিফ্লো ফোর্স করা যাতে animation রিস্টার্ট হয় (একই টার্গেটে বারবার ক্লিক করলেও)
                     void target.offsetWidth;
                     target.classList.add('quick-access-highlight');
                     setTimeout(() => {
@@ -85,21 +72,7 @@ document.addEventListener('click', (e) => {
     }
 });
 
-            // 2. Studio EQ / Reset -> Right Sidebar EQ
-            mainEqBands.forEach((mBand) => {
-                mBand.addEventListener('input', (e) => {
-                    const idx = e.target.getAttribute('data-band');
-                    const val = e.target.value;
-                    dtEqBands.forEach((dtBand) => {
-                        if (dtBand.getAttribute('data-band') === idx) {
-                            dtBand.value = val;
-                        }
-                    });
-                });
-            });
-        });
-
-    <!-- DESKTOP ONLINE LRC SEARCH BRIDGE SCRIPT -->
+// --- DESKTOP ONLINE LRC SEARCH BRIDGE SCRIPT ---
         document.addEventListener('DOMContentLoaded', () => {
             const dtSongInput = document.getElementById('dt-online-song-input');
             const dtArtistInput = document.getElementById('dt-online-artist-input');
@@ -147,7 +120,7 @@ document.addEventListener('click', (e) => {
             }
         });
     
-    <!-- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT -->
+// --- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT ---
      document.addEventListener('DOMContentLoaded', () => {
             const audioPlayer = document.getElementById('audio-player');
             const volumeSlider = document.getElementById('volume-slider');
@@ -181,6 +154,15 @@ document.addEventListener('click', (e) => {
 
             if (btnMute && audioPlayer) btnMute.addEventListener('click', toggleMute);
             if (btnMuteMobile && audioPlayer) btnMuteMobile.addEventListener('click', toggleMute);
+
+            // Exposed for keyboard shortcuts (mute toggle + step volume up/down)
+            window.toggleMute = toggleMute;
+            window.stepVolume = (delta) => {
+                const val = Math.max(0, Math.min(1, (audioPlayer.volume || 0) + delta));
+                audioPlayer.volume = val;
+                if (volumeSlider) volumeSlider.value = val;
+                updateVolIcon(val);
+            };
 
             function updateVolIcon(val) {
                 [volIcon, volIconMobile].forEach(icon => {
@@ -244,40 +226,6 @@ document.addEventListener('click', (e) => {
                 });
             }
 
-
-            // Sync Desktop Right Sidebar Finder & EQ to Main Inputs
-            const dtSong = document.getElementById('dt-online-song');
-            const dtArtistInput = document.getElementById('dt-online-artist');
-            const dtBtnFetch = document.getElementById('dt-btn-fetch');
-
-            const mainSong = document.getElementById('online-song-input');
-            const mainArtistInput = document.getElementById('online-artist-input');
-            const mainBtnFetch = document.getElementById('btn-fetch-online-lrc');
-
-            if (dtBtnFetch && mainBtnFetch) {
-                dtBtnFetch.addEventListener('click', () => {
-                    if (dtSong && mainSong) mainSong.value = dtSong.value;
-                    if (dtArtistInput && mainArtistInput) mainArtistInput.value = dtArtistInput.value;
-                    mainBtnFetch.click();
-                });
-            }
-
-            // Sync Desktop EQ Bands
-            const dtEqBands = document.querySelectorAll('.dt-eq-band');
-            const mainEqBands = document.querySelectorAll('.eq-band');
-
-            dtEqBands.forEach((dtBand) => {
-                dtBand.addEventListener('input', (e) => {
-                    const idx = e.target.getAttribute('data-band');
-                    const val = e.target.value;
-                    mainEqBands.forEach((mBand) => {
-                        if (mBand.getAttribute('data-band') === idx) {
-                            mBand.value = val;
-                            mBand.dispatchEvent(new Event('input'));
-                        }
-                    });
-                });
-            });
         });        
         
         
@@ -317,6 +265,31 @@ document.addEventListener('click', (e) => {
                 localStorage.setItem(STORAGE_KEY, JSON.stringify(userSettings));
             } catch (e) {
                 console.error('LocalStorage Write Error:', e);
+            }
+        }
+
+        // --- LAST PLAYED TRACK PERSISTENCE (remembers song + position across reloads) ---
+        const LAST_TRACK_KEY = 'lyrics_flow_pro_last_track_v1';
+
+        function saveLastTrackState() {
+            if (!activeSongId || activeSongId === 'custom-file') return;
+            try {
+                localStorage.setItem(LAST_TRACK_KEY, JSON.stringify({
+                    id: activeSongId,
+                    time: audio.currentTime || 0
+                }));
+            } catch (e) {
+                console.error('LocalStorage Write Error:', e);
+            }
+        }
+
+        function loadLastTrackState() {
+            try {
+                const saved = localStorage.getItem(LAST_TRACK_KEY);
+                return saved ? JSON.parse(saved) : null;
+            } catch (e) {
+                console.error('LocalStorage Read Error:', e);
+                return null;
             }
         }
 
@@ -366,6 +339,8 @@ document.addEventListener('click', (e) => {
         let dragStartY = 0;
         let dragStartTransformY = 0;
         let totalDragDistance = 0;
+
+        let isScrubbing = false;
 
         let barCount = window.innerWidth >= 768 ? 128 : 64;
         let smoothBars = new Array(128).fill(0);
@@ -995,7 +970,7 @@ for (let i = 0; i < barCount; i++) {
             if (!audio.paused && !audio.ended) {
                 const cur = audio.currentTime;
                 currTimeLbl.innerText = formatTime(cur);
-                if (audio.duration && !isNaN(audio.duration)) {
+                if (!isScrubbing && audio.duration && !isNaN(audio.duration)) {
                     scrubber.value = (cur / audio.duration) * 100;
                 }
 
@@ -1017,7 +992,8 @@ for (let i = 0; i < barCount; i++) {
 
         // --- DRAG / TOUCH FOR LYRICS ---
         function getCurrentTransformY() {
-            const matrix = new WebKitCSSMatrix(window.getComputedStyle(scroller).transform);
+            const MatrixCtor = window.DOMMatrix || window.WebKitCSSMatrix;
+            const matrix = new MatrixCtor(window.getComputedStyle(scroller).transform);
             return matrix.m42 || container.offsetHeight / 2;
         }
 
@@ -1095,7 +1071,6 @@ for (let i = 0; i < barCount; i++) {
                 return song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query);
             });
 
-            // ✅ হেডারে লাইভ ট্র্যাক কাউন্ট দেখানো (সার্চ করলে "X of Y")
             const countBadge = document.getElementById('library-track-count');
             if (countBadge) {
                 if (searchQuery.trim()) {
@@ -1109,7 +1084,7 @@ for (let i = 0; i < barCount; i++) {
                 playlistContainer.innerHTML = `
                     <div class="text-center py-8 text-slate-400">
                         <i class="fa-solid fa-magnifying-glass text-2xl mb-2 opacity-50 block"></i>
-                        <p class="text-xs font-semibold">No tracks found matching "${searchQuery}"</p>
+                        <p class="text-xs font-semibold">No tracks found matching "${escapeHTML(searchQuery)}"</p>
                     </div>
                 `;
                 return;
@@ -1145,10 +1120,10 @@ for (let i = 0; i < barCount; i++) {
                         </div>
                         <div class="min-w-0">
                             <div class="flex items-center gap-1.5 min-w-0">
-                                <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${song.title}</h4>
+                                <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${escapeHTML(song.title)}</h4>
                                 ${isSelected ? `<span class="shrink-0 text-[8px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background-color: rgba(var(--m3-primary-rgb), 0.2); color: var(--m3-primary);">${isPlaying ? 'Playing' : 'Paused'}</span>` : ''}
                             </div>
-                            <p class="text-[10px] md:text-xs text-slate-400 truncate">${song.artist}</p>
+                            <p class="text-[10px] md:text-xs text-slate-400 truncate">${escapeHTML(song.artist)}</p>
                         </div>
                     </div>
                     <button class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow ${isSelected ? '' : 'bg-white/10 text-slate-200'}" style="${isSelected ? 'background-color: var(--m3-primary); color: #0a0d14;' : ''}">
@@ -1161,9 +1136,6 @@ for (let i = 0; i < barCount; i++) {
             });
         }
 
-        // ✅ কারেন্ট/অ্যাক্টিভ গানটিকে লাইব্রেরি লিস্টের মাঝামাঝি স্ক্রল করে আনা
-        // (নোট: শিটের স্লাইড-ইন transition ০.৩৫s লাগে, তাই সেটা শেষ হওয়ার পর স্ক্রল করা হচ্ছে —
-        //  নাহলে transition চলাকালীন ভুল পজিশনে স্ক্রল হয়ে যেতে পারত)
         window.scrollToActiveTrack = function() {
             requestAnimationFrame(() => {
                 setTimeout(() => {
@@ -1193,8 +1165,9 @@ for (let i = 0; i < barCount; i++) {
             renderLibraryPlaylist();
         };
 
-                async function loadTrackFromLibrary(song) {
-            // ১. ডেক্সটপ ডিস্কের কভার ইমেজ আপডেট
+                async function loadTrackFromLibrary(song, options = {}) {
+            const { autoplay = true, resumeTime = null } = options;
+
             const coverImg = document.getElementById('desktop-cover-img');
             if (coverImg) {
                 if (song.coverUrl) {
@@ -1206,7 +1179,6 @@ for (let i = 0; i < barCount; i++) {
                 }
             }
 
-            // ২. একই গানে প্লে/পজ টগল করা
             if (song.id === activeSongId) {
                 if (audio.paused) {
                     await triggerPlay();
@@ -1239,6 +1211,14 @@ for (let i = 0; i < barCount; i++) {
             }
 
             renderLibraryPlaylist();
+            saveLastTrackState();
+
+            if (resumeTime && resumeTime > 0) {
+                seekAudioTo(resumeTime);
+            }
+
+            if (!autoplay) return;
+
             closeSheet(document.getElementById('library-sheet'));
             resumeAutoSync();
             await triggerPlay();
@@ -1264,7 +1244,7 @@ for (let i = 0; i < barCount; i++) {
             }
 
             fetchStatus.className = 'text-[10px] font-semibold text-sky-400 block';
-            fetchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${song}"...`;
+            fetchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${escapeHTML(song)}"...`;
 
             try {
                 let url = `https://lrclib.net/api/search?track_name=${encodeURIComponent(song)}`;
@@ -1353,7 +1333,14 @@ audio.onpause = () => {
     });
 
     renderLibraryPlaylist();
+    saveLastTrackState();
 };
+
+setInterval(() => {
+    if (!audio.paused) saveLastTrackState();
+}, 8000);
+
+window.addEventListener('beforeunload', saveLastTrackState);
 
 
 
@@ -1361,6 +1348,16 @@ audio.onpause = () => {
         audio.onloadedmetadata = () => {
             durTimeLbl.innerText = formatTime(audio.duration);
         };
+
+        scrubber.addEventListener('pointerdown', () => { isScrubbing = true; });
+        scrubber.addEventListener('mousedown', () => { isScrubbing = true; });
+        scrubber.addEventListener('touchstart', () => { isScrubbing = true; }, { passive: true });
+
+        const endScrub = () => { isScrubbing = false; };
+        scrubber.addEventListener('pointerup', endScrub);
+        scrubber.addEventListener('mouseup', endScrub);
+        scrubber.addEventListener('touchend', endScrub);
+        scrubber.addEventListener('change', endScrub);
 
         scrubber.oninput = e => {
             if (audio.duration && !isNaN(audio.duration)) {
@@ -1385,6 +1382,52 @@ audio.onpause = () => {
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
         };
 
+        // --- KEYBOARD SHORTCUTS ---
+        document.addEventListener('keydown', (e) => {
+            const tag = document.activeElement ? document.activeElement.tagName : '';
+            const isTyping = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' ||
+                (document.activeElement && document.activeElement.isContentEditable);
+            if (isTyping) return;
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    handlePlayPause();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    seekAudioTo((audio.currentTime || 0) + 5);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    seekAudioTo((audio.currentTime || 0) - 5);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (typeof window.stepVolume === 'function') window.stepVolume(0.05);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (typeof window.stepVolume === 'function') window.stepVolume(-0.05);
+                    break;
+                case 'KeyM':
+                    if (typeof window.toggleMute === 'function') window.toggleMute();
+                    break;
+                case 'KeyN':
+                    playNextTrack();
+                    break;
+                case 'KeyP':
+                    playPreviousTrack();
+                    break;
+                case 'KeyL':
+                    toggleLoopMode();
+                    break;
+                case 'Escape':
+                    document.querySelectorAll('.sheet-overlay.open').forEach(closeSheet);
+                    document.querySelectorAll('.dialog-overlay.open').forEach(d => d.classList.remove('open'));
+                    break;
+            }
+        });
 
         // --- EXPORT & COPY LRC TOOL ---
         document.getElementById('btn-export-lrc').onclick = () => {
@@ -1699,6 +1742,17 @@ audio.onpause = () => {
 
         applySettingsToUI();
         renderLibraryPlaylist();
+
+        // --- RESTORE LAST PLAYED TRACK ON RELOAD (loads track + position, no autoplay) ---
+        (function restoreLastTrack() {
+            const last = loadLastTrackState();
+            if (!last || !last.id) return;
+            const playlist = window.PLAYLIST_DATA || [];
+            const track = playlist.find(s => s.id === last.id);
+            if (track) {
+                loadTrackFromLibrary(track, { autoplay: false, resumeTime: last.time });
+            }
+        })();
 
         // --- SHEET & TAB NAVIGATION ---
         document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));

@@ -342,6 +342,33 @@ document.write(`
 
         .m3-slider::-webkit-slider-thumb:hover { transform: scale(1.25); }
 
+        /* Firefox স্লাইডার থাম্ব/ট্র্যাক স্টাইলিং (WebKit-এর সমতুল্য) */
+        .m3-slider::-moz-range-track {
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.12);
+            border: none;
+        }
+
+        .m3-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--m3-primary);
+            box-shadow: 0 0 10px var(--m3-primary);
+            border: none;
+            cursor: pointer;
+            transition: transform 0.15s ease;
+        }
+
+        .m3-slider::-moz-range-thumb:hover { transform: scale(1.25); }
+
+        .m3-slider::-moz-range-progress {
+            height: 6px;
+            border-radius: 3px;
+            background: var(--m3-primary);
+        }
+
         /* Visualizer Canvases */
         #viz-canvas-bg {
             position: absolute;
@@ -654,8 +681,6 @@ document.write(`
                         <i class="fa-solid fa-sliders text-[8px]"></i> Studio Workstation
                     </span>
                     <span id="theme-tag" class="text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest text-m3-primary">CYBER CYAN</span>
-                    <span id="offset-tag" class="text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/10 text-white/70">0.0s</span>
-                    
                     <!-- Sleep Timer Countdown Badge -->
                     <span id="sleep-countdown-badge" class="hidden text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1 animate-pulse">
                         <i class="fa-solid fa-moon text-[8px]"></i>
@@ -943,7 +968,7 @@ document.write(`
 
             <!-- 2. Center: Playback Buttons (Strictly Centered) -->
             <div class="flex items-center justify-center gap-3">
-                <button id="btn-prev-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
+                <button id="btn-prev-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track" aria-label="Previous track">
                     <i class="fa-solid fa-backward-step text-base"></i>
                 </button>
 
@@ -951,7 +976,7 @@ document.write(`
                     -5s
                 </button>
 
-                <button id="btn-play-pause" class="w-12 h-12 rounded-2xl bg-m3-primary text-slate-950 font-bold flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all" title="Play / Pause">
+                <button id="btn-play-pause" class="w-12 h-12 rounded-2xl bg-m3-primary text-slate-950 font-bold flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all" title="Play / Pause" aria-label="Play or pause">
                     <i class="fa-solid fa-play text-lg play-icon-target" id="play-icon"></i>
                     <i class="fa-solid fa-pause text-lg pause-icon-target hidden" id="pause-icon"></i>
                 </button>
@@ -960,7 +985,7 @@ document.write(`
                     +5s
                 </button>
 
-                <button id="btn-next-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Next Track">
+                <button id="btn-next-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Next Track" aria-label="Next track">
                     <i class="fa-solid fa-forward-step text-base"></i>
                 </button>
             </div>
@@ -975,7 +1000,7 @@ document.write(`
 
                 <!-- Volume Slider Control -->
                 <div class="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
-                    <button id="btn-mute" class="text-slate-300 hover:text-white flex items-center justify-center">
+                    <button id="btn-mute" class="text-slate-300 hover:text-white flex items-center justify-center" aria-label="Mute or unmute">
                         <i class="fa-solid fa-volume-high text-sky-400 text-xs" id="vol-icon"></i>
                     </button>
                     <input type="range" id="volume-slider" class="m3-slider w-20" min="0" max="1" step="0.01" value="1">
@@ -987,19 +1012,19 @@ document.write(`
 
         <!-- MOBILE PLAYBACK CONTROLS -->
         <div class="flex sm:hidden items-center justify-between px-2 pt-1">
-            <button id="btn-prev-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-prev-track').click()">
+            <button id="btn-prev-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-prev-track').click()" aria-label="Previous track">
                 <i class="fa-solid fa-backward-step text-base"></i>
             </button>
             <button id="btn-rewind-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-rewind').click()">-5s</button>
             
-            <button id="btn-play-pause-mob" class="w-14 h-14 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-lg active:scale-90" onclick="document.getElementById('btn-play-pause').click()">
+            <button id="btn-play-pause-mob" class="w-14 h-14 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-lg active:scale-90" onclick="document.getElementById('btn-play-pause').click()" aria-label="Play or pause">
     <i class="fa-solid fa-play text-lg ml-0.5 play-icon-target"></i>
     <i class="fa-solid fa-pause text-lg hidden pause-icon-target"></i>
 </button>
 
 
             <button id="btn-forward-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-forward').click()">+5s</button>
-            <button id="btn-next-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-next-track').click()">
+            <button id="btn-next-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-next-track').click()" aria-label="Next track">
                 <i class="fa-solid fa-forward-step text-base"></i>
             </button>
         </div>
@@ -1025,7 +1050,7 @@ document.write(`
                         <p class="text-[10px] md:text-xs text-slate-400">Select a song to load audio & synced lyrics</p>
                     </div>
                 </div>
-                <button class="close-library-btn w-8 h-8 rounded-full bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+                <button class="close-library-btn w-8 h-8 rounded-full bg-white/5 text-slate-400 hover:text-white flex items-center justify-center" aria-label="Close music library">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
@@ -1035,7 +1060,7 @@ document.write(`
                 <div class="relative flex items-center">
                     <i class="fa-solid fa-magnifying-glass absolute left-3.5 text-xs text-slate-400"></i>
                     <input type="text" id="library-search-input" placeholder="Search track name or artist..." class="m3-input pl-9 pr-8 py-2 text-xs">
-                    <button id="btn-clear-library-search" class="hidden absolute right-3 text-xs text-slate-400 hover:text-white">
+                    <button id="btn-clear-library-search" class="hidden absolute right-3 text-xs text-slate-400 hover:text-white" aria-label="Clear search">
                         <i class="fa-solid fa-circle-xmark"></i>
                     </button>
                 </div>
@@ -1066,7 +1091,7 @@ document.write(`
                         <p class="text-[10px] md:text-xs text-slate-400">Lyrics, Online Auto-Sync, EQ & DSP</p>
                     </div>
                 </div>
-                <button class="close-sheet-btn w-8 h-8 rounded-full bg-white/5 text-slate-400 hover:text-white flex items-center justify-center">
+                <button class="close-sheet-btn w-8 h-8 rounded-full bg-white/5 text-slate-400 hover:text-white flex items-center justify-center" aria-label="Close studio dashboard">
                     <i class="fa-solid fa-xmark text-sm"></i>
                 </button>
             </div>
@@ -1238,7 +1263,7 @@ document.write(`
                 <div id="tab-prefs" class="tab-pane hidden space-y-4">
                     
                     <!-- 1. ALWAYS DISPLAY ON FEATURE -->
-                    <div class="m3-list-row">
+                    <div class="m3-list-row" style="border-bottom: none;">
                         <div class="min-w-0 flex-1">
                             <span class="text-xs font-bold text-slate-200 block">Always Display On</span>
                             <p class="text-[10px] text-slate-400">Keep screen awake while viewing lyrics</p>
@@ -1287,17 +1312,17 @@ document.write(`
                     </div>
 
                     <!-- Material Theme Palette Picker -->
-                    <div id="theme-section" class="m3-list-row">
+                    <div id="theme-section" class="m3-list-row" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 16px;">
                         <span class="text-xs font-bold text-slate-200">Material Theme Accent</span>
                         <div class="flex items-center gap-2 flex-wrap" id="theme-picker">
-                            <button class="w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN"></button>
-                            <button class="w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE"></button>
-                            <button class="w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER"></button>
-                            <button class="w-8 h-8 rounded-xl bg-emerald-400 active:scale-90 transition-transform" data-color="#34D399" data-rgb="52, 211, 153" data-name="MATRIX GREEN"></button>
-                            <button class="w-8 h-8 rounded-xl bg-rose-500 active:scale-90 transition-transform" data-color="#F43F5E" data-rgb="244, 63, 94" data-name="NEON ROSE"></button>
-                            <button class="w-8 h-8 rounded-xl bg-indigo-500 active:scale-90 transition-transform" data-color="#6366F1" data-rgb="99, 102, 241" data-name="INDIGO NOVA"></button>
-                            <button class="w-8 h-8 rounded-xl bg-yellow-400 active:scale-90 transition-transform" data-color="#FACC15" data-rgb="250, 204, 21" data-name="GOLDEN SOLAR"></button>
-                            <button class="w-8 h-8 rounded-xl bg-red-500 active:scale-90 transition-transform" data-color="#EF4444" data-rgb="239, 68, 68" data-name="CRIMSON BLAZE"></button>
+                            <button class="w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN" aria-label="Cyber Cyan theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE" aria-label="Plasma Purple theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER" aria-label="Sunset Amber theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-emerald-400 active:scale-90 transition-transform" data-color="#34D399" data-rgb="52, 211, 153" data-name="MATRIX GREEN" aria-label="Matrix Green theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-rose-500 active:scale-90 transition-transform" data-color="#F43F5E" data-rgb="244, 63, 94" data-name="NEON ROSE" aria-label="Neon Rose theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-indigo-500 active:scale-90 transition-transform" data-color="#6366F1" data-rgb="99, 102, 241" data-name="INDIGO NOVA" aria-label="Indigo Nova theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-yellow-400 active:scale-90 transition-transform" data-color="#FACC15" data-rgb="250, 204, 21" data-name="GOLDEN SOLAR" aria-label="Golden Solar theme"></button>
+                            <button class="w-8 h-8 rounded-xl bg-red-500 active:scale-90 transition-transform" data-color="#EF4444" data-rgb="239, 68, 68" data-name="CRIMSON BLAZE" aria-label="Crimson Blaze theme"></button>
                         </div>
                     </div>
 
@@ -1482,13 +1507,28 @@ document.write(`
 
     <script src="Data/musicData.js"></script>
 
-    <!-- Preloader Minimum 3-Seconds Logic Script -->
+    <!-- Preloader Timing Logic Script -->
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const preloader = document.getElementById('preloader');
             const progressFill = document.getElementById('loader-progress');
+
+            // Full preloader only for first visits / long gaps; quick repeat visits skip the wait
+            const LAST_VISIT_KEY = 'lyrics_flow_pro_last_visit';
+            const RECENT_VISIT_WINDOW = 5 * 60 * 1000;
+
+            let minDuration = 3000;
+            try {
+                const lastVisit = parseInt(localStorage.getItem(LAST_VISIT_KEY), 10);
+                if (!isNaN(lastVisit) && (Date.now() - lastVisit) < RECENT_VISIT_WINDOW) {
+                    minDuration = 400;
+                }
+                localStorage.setItem(LAST_VISIT_KEY, Date.now().toString());
+            } catch (e) {
+                console.error('LocalStorage Error:', e);
+            }
+
             const startTime = Date.now();
-            const minDuration = 3000; // Minimum 3 seconds
 
             const updateProgress = () => {
                 const elapsedTime = Date.now() - startTime;

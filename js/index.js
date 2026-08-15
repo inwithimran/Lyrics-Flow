@@ -232,8 +232,8 @@ document.write(`
         }
 
         /* Lyrics Formatting */
-        .lyric-line {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease, font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+                .lyric-line {
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease;
             opacity: 0.35;
             transform: scale(0.75);
             transform-origin: center center;
@@ -1447,7 +1447,6 @@ document.write(`
 
 </body>
 </html>
-
 `);
 document.close();
 

@@ -1528,7 +1528,7 @@ audio.onpause = () => {
             };
         });
 
-                const fontScaleSlider = document.getElementById('font-scale-slider');
+                        const fontScaleSlider = document.getElementById('font-scale-slider');
         if (fontScaleSlider) {
             fontScaleSlider.oninput = e => {
                 const val = parseFloat(e.target.value);
@@ -1543,16 +1543,12 @@ audio.onpause = () => {
                 if (fontLbl) fontLbl.innerText = formattedLbl;
                 if (dtFontLbl) dtFontLbl.innerText = formattedLbl;
 
-                let frames = 0;
-                const keepCentered = () => {
+                requestAnimationFrame(() => {
                     updateScroll(activeIndex, true);
-                    if (++frames < 12) {
-                        requestAnimationFrame(keepCentered);
-                    }
-                };
-                requestAnimationFrame(keepCentered);
+                });
             };
         }
+
 
 
 

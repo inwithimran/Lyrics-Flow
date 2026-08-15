@@ -715,10 +715,15 @@ document.write(`
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
 </button>
 
+<button id="dt-btn-sleep-timer" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+    <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
+</button>
+
+
                 </div>
             </div>
 
-            <!-- Developer Quick Info (Next to Studio Navigation Quick Access) -->
+            <!-- Developer Quick Info -->
             <div class="p-3 rounded-2xl bg-slate-900/40 border border-white/5 space-y-1.5 mt-auto">
                 <div class="flex items-center gap-2.5">
                     <div class="w-8 h-8 rounded-xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-m3-primary font-bold text-xs">
@@ -863,7 +868,6 @@ document.write(`
                 <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
             </button>
 
-            <!-- Offset shifted right side above Next Track button -->
             <button id="btn-offset-modal" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
                 <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
                 <span id="offset-indicator" class="text-[11px]">0.0s</span>

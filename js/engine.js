@@ -16,17 +16,12 @@ document.addEventListener('DOMContentLoaded', () => {
                 });
             });
         
-        
-        // ==========================================
-// 1. DESKTOP EQ / FX QUICK ACCESS FIX (UPDATED)
-// ==========================================
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
-        // ১. স্টুডিও শিটে EQ / Audio FX সম্পর্কিত Tab Pill খুঁজে বের করা (Case-insensitive 'i' flag সহ)
         const fxPill = document.querySelector(
             '.m3-tab-pill[data-tab*="eq" i], ' +
             '.m3-tab-pill[data-tab*="fx" i], ' +
@@ -40,9 +35,8 @@ if (dtBtnEqFx) {
                 switchTab(fxPill.dataset.tab);
             }
         } else {
-            // ২. সিলেক্টর ব্যর্থ হলে সরাসরি আপনার HTML-এর EQ ট্যাবের সুনির্দিষ্ট ID ব্যবহার করুন
             if (typeof switchTab === 'function') {
-                switchTab('eq'); // আপনার HTML-এ EQ Tab Pane-এর id অনুযায়ী নাম বসান (যেমন: 'eq', 'equalizer', বা 'audio-fx')
+                switchTab('eq');
             }
         }
     });
@@ -56,7 +50,6 @@ btnOffsetModals.forEach(btn => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
-        // Preferences / Settings ট্যাবে সুইচ করা
         let prefsTab = 'prefs';
         const prefPill = document.querySelector('.m3-tab-pill[data-tab="prefs"], .m3-tab-pill[data-tab="settings"], .m3-tab-pill[data-tab*="pref"]');
         if (prefPill && prefPill.dataset.tab) {
@@ -67,7 +60,6 @@ btnOffsetModals.forEach(btn => {
             switchTab(prefsTab);
         }
 
-        // ডেক্সটপে শীর্ট সম্পূর্ণ অপেন হওয়া পর্যন্ত রিকোয়েস্ট এনিমেশন ফ্রেম ও টাইমার ব্যবহার করে স্ক্রল
         requestAnimationFrame(() => {
             setTimeout(() => {
                 const target = document.getElementById('offset-settings-container') || 
@@ -76,10 +68,34 @@ btnOffsetModals.forEach(btn => {
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
                 }
-            }, 450); // ডেস্কটপের সিএসএস ট্রানজিশনের সাথে সামঞ্জস্য রেখে ৪৫০ms করা হয়েছে
+            }, 450);
         });
     };
 });
+
+// Quick Access Sleep Timer
+
+const dtBtnSleep = document.getElementById('dt-btn-sleep-timer');
+if (dtBtnSleep) {
+    dtBtnSleep.addEventListener('click', () => {
+        const studioSheet = document.getElementById('studio-sheet');
+        if (studioSheet) openSheet(studioSheet);
+        
+        if (typeof switchTab === 'function') {
+            switchTab('prefs');
+        }
+
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                const target = document.getElementById('pref-sleep-status') || 
+                               document.querySelector('[id*="sleep"]');
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }, 400);
+        });
+    });
+}
 
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ

@@ -58,14 +58,16 @@ document.addEventListener('click', (e) => {
                 if (target) {
                     target.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
-                    document.querySelectorAll('.quick-access-highlight').forEach(el => {
-                        el.classList.remove('quick-access-highlight');
-                    });
-                    void target.offsetWidth;
-                    target.classList.add('quick-access-highlight');
                     setTimeout(() => {
-                        target.classList.remove('quick-access-highlight');
-                    }, 2200);
+                        document.querySelectorAll('.quick-access-highlight').forEach(el => {
+                            el.classList.remove('quick-access-highlight');
+                        });
+                        void target.offsetWidth;
+                        target.classList.add('quick-access-highlight');
+                        setTimeout(() => {
+                            target.classList.remove('quick-access-highlight');
+                        }, 2200);
+                    }, 400);
                 }
             }, 400);
         });
@@ -312,7 +314,6 @@ document.addEventListener('click', (e) => {
         let activeSongId = null;
 
         let searchQuery = '';
-        let isFirstTimeLoaded = false;
 
         let currentBlobUrl = null;
         let activeFetchController = null;
@@ -361,7 +362,6 @@ document.addEventListener('click', (e) => {
 
             if (!source) return;
 
-            isFirstTimeLoaded = true;
             audio.crossOrigin = 'anonymous';
 
             if (source instanceof File || source instanceof Blob) {
@@ -1601,7 +1601,6 @@ window.addEventListener('beforeunload', saveLastTrackState);
         renderLibraryPlaylist();
         executeOnlineSync(true);
         resumeAutoSync();
-        await triggerPlay(); 
     }
 };
 
@@ -1760,9 +1759,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
         document.getElementById('btn-apply-done').onclick = () => {
             closeSheet(document.getElementById('studio-sheet'));
-            if (isFirstTimeLoaded) {
+            // Local file uploads always autoplay on Apply & Done; library tracks keep their current play/pause state untouched
+            if (activeSongId === 'custom-file') {
                 triggerPlay();
-                isFirstTimeLoaded = false;
             }
         };
 

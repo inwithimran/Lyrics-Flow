@@ -711,9 +711,10 @@ document.write(`
                     <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-library-btn').click()">
                         <i class="fa-solid fa-list-ul text-sky-400 text-xs"></i> Tracks
                     </button>
-                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-studio-btn').click()">
-                        <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
-                    </button>
+                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="openStudioTab('tab-eq')">
+    <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
+</button>
+
                 </div>
             </div>
 
@@ -1447,7 +1448,6 @@ document.write(`
 
 </body>
 </html>
-
 `);
 document.close();
 

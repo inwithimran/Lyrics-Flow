@@ -1655,6 +1655,18 @@ audio.onpause = () => {
                 else pane.classList.add('hidden');
             });
         }
+    
+    // Quick Access Dirtect Tab switch
+function openStudioTab(tabId) {
+    const studioSheet = document.getElementById('studio-sheet');
+    if (studioSheet) {
+        openSheet(studioSheet);
+        if (tabId) {
+            switchTab(tabId);
+        }
+    }
+}
+
 
         document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
             chip.onclick = () => switchTab(chip.dataset.tab);

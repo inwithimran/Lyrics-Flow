@@ -1349,13 +1349,17 @@ document.write(`
                         </div>
                     </div>
 
-                    <!-- Typography Font Scale Slider -->
-                    <div class="py-2 space-y-2">
+                    <!-- Typography Font Scale Adjustment -->
+                    <div class="py-2 space-y-3">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-200">
                             <span>Lyrics Typography Size</span>
                             <span id="font-scale-lbl" class="font-mono text-sky-400">1.0x</span>
                         </div>
-                        <input type="range" id="font-scale-slider" class="m3-slider" min="0.7" max="1.8" step="0.05" value="1.0">
+                        <div class="flex items-center gap-3">
+                            <button id="btn-font-scale-minus" class="px-4 py-2 bg-white/10 text-slate-200 text-xs font-bold rounded-xl">A−</button>
+                            <button id="btn-font-scale-reset" class="flex-1 py-2 bg-white/5 text-slate-400 text-xs font-bold rounded-xl">Reset Size</button>
+                            <button id="btn-font-scale-plus" class="px-4 py-2 bg-white/10 text-slate-200 text-xs font-bold rounded-xl">A+</button>
+                        </div>
                     </div>
 
                     <!-- Global Sync Offset Adjustment -->

@@ -651,7 +651,6 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             });
 
             document.documentElement.style.setProperty('--font-scale', userSettings.fontScale);
-            document.getElementById('font-scale-slider').value = userSettings.fontScale;
             document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
 
             updateOffsetUI();
@@ -1668,31 +1667,44 @@ window.addEventListener('beforeunload', saveLastTrackState);
             };
         });
 
-                const fontScaleSlider = document.getElementById('font-scale-slider');
-        if (fontScaleSlider) {
-            fontScaleSlider.oninput = e => {
-                const val = parseFloat(e.target.value);
-                userSettings.fontScale = val;
-                saveSettings();
+        const FONT_SCALE_MIN = 0.7;
+        const FONT_SCALE_MAX = 1.8;
+        const FONT_SCALE_STEP = 0.05;
+        const FONT_SCALE_DEFAULT = 1.0;
 
-                document.documentElement.style.setProperty('--font-scale', val);
+        function applyFontScale(val) {
+            val = Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, val));
+            val = Math.round(val * 100) / 100;
 
-                const formattedLbl = val.toFixed(1) + 'x';
-                const fontLbl = document.getElementById('font-scale-lbl');
-                const dtFontLbl = document.getElementById('dt-font-scale-lbl');
-                if (fontLbl) fontLbl.innerText = formattedLbl;
-                if (dtFontLbl) dtFontLbl.innerText = formattedLbl;
+            userSettings.fontScale = val;
+            saveSettings();
 
-                let frames = 0;
-                const keepCentered = () => {
-                    updateScroll(activeIndex, true);
-                    if (++frames < 12) {
-                        requestAnimationFrame(keepCentered);
-                    }
-                };
-                requestAnimationFrame(keepCentered);
+            document.documentElement.style.setProperty('--font-scale', val);
+
+            const formattedLbl = val.toFixed(1) + 'x';
+            const fontLbl = document.getElementById('font-scale-lbl');
+            const dtFontLbl = document.getElementById('dt-font-scale-lbl');
+            if (fontLbl) fontLbl.innerText = formattedLbl;
+            if (dtFontLbl) dtFontLbl.innerText = formattedLbl;
+
+            let frames = 0;
+            const keepCentered = () => {
+                updateScroll(activeIndex, true);
+                if (++frames < 12) {
+                    requestAnimationFrame(keepCentered);
+                }
             };
+            requestAnimationFrame(keepCentered);
         }
+
+        const btnFontScaleMinus = document.getElementById('btn-font-scale-minus');
+        const btnFontScalePlus = document.getElementById('btn-font-scale-plus');
+        const btnFontScaleReset = document.getElementById('btn-font-scale-reset');
+
+        if (btnFontScaleMinus) btnFontScaleMinus.onclick = () => applyFontScale(userSettings.fontScale - FONT_SCALE_STEP);
+        if (btnFontScalePlus) btnFontScalePlus.onclick = () => applyFontScale(userSettings.fontScale + FONT_SCALE_STEP);
+        if (btnFontScaleReset) btnFontScaleReset.onclick = () => applyFontScale(FONT_SCALE_DEFAULT);
+
 
 
 

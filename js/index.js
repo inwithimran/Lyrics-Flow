@@ -641,8 +641,8 @@ document.write(`
     <canvas id="viz-canvas-bg"></canvas>
 
     <!-- Material Top App Header -->
-    <header class="w-full max-w-[1700px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between z-20 flex-shrink-0 relative">
-        <div class="flex items-center gap-3.5 min-w-0">
+    <header class="w-full max-w-[1700px] mx-auto px-4 sm:px-6 py-3 flex items-center justify-between z-20 flex-shrink-0 relative lg:grid lg:grid-cols-[1fr_auto_1fr] lg:items-center lg:gap-4">
+        <div class="flex items-center gap-3.5 min-w-0 lg:justify-self-start">
             <!-- Vinyl Artwork Badge (Mobile/Tablet View) -->
             <div id="track-art" class="shrink-0 flex items-center justify-center lg:hidden">
                 <i class="fa-solid fa-compact-disc text-4xl sm:text-5xl text-m3-primary" id="track-art-icon"></i>
@@ -668,7 +668,7 @@ document.write(`
         </div>
 
         <!-- Synchronized Lyrics Stage Bar (Desktop Top Header Alignment) -->
-        <div class="hidden lg:flex items-center gap-4 px-8 py-3 rounded-2xl bg-slate-950/40 border border-white/10">
+        <div class="hidden lg:flex items-center gap-4 px-8 py-3 rounded-2xl bg-slate-950/40 border border-white/10 lg:justify-self-center">
             <div class="flex items-center gap-2.5">
                 <i class="fa-solid fa-align-center text-xs text-m3-primary"></i>
                 <span class="text-xs font-bold text-slate-200 tracking-wide">Synchronized Lyrics Stage</span>
@@ -676,14 +676,14 @@ document.write(`
             <div class="flex items-center gap-2">
                 <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 text-[11px] font-mono">
                     <span class="text-slate-400">Offset:</span>
-                    <span id="stage-offset-lbl" class="text-sky-400 font-bold">0.0s</span>
+                    <span id="stage-offset-lbl" class="text-sky-400 font-bold inline-block min-w-[3.5ch] text-center tabular-nums">0.0s</span>
                 </div>
                 <button id="stage-offset-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Sync Offset">-</button>
                 <button id="stage-offset-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Sync Offset">+</button>
             </div>
         </div>
 
-        <div class="flex items-center gap-2.5 shrink-0">
+        <div class="flex items-center gap-2.5 shrink-0 lg:justify-self-end">
             <!-- Music Library Button -->
             <button id="open-library-btn" class="px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
                 <i class="fa-solid fa-music text-sky-400"></i>
@@ -757,10 +757,6 @@ document.write(`
                     </button>
                     <button data-studio-tab="tab-dsp" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
-</button>
-
-<button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
-    <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
 </button>
 
 <button data-studio-tab="tab-prefs" data-scroll-to="theme-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">

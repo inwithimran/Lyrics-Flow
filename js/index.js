@@ -869,64 +869,60 @@ document.write(`
             </button>
         </div>
 
-                <!-- DESKTOP ONE-LINE CONTROLS -->
-<div class="relative hidden sm:flex items-center justify-between w-full px-4">
-    
-    <div class="flex items-center justify-start z-10">
-        <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
-            <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
-            <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
-        </button>
-    </div>
-
-    <div class="absolute left-1/2 -translate-x-1/2 flex items-center gap-3 pointer-events-auto">
-    </div>
-
-    <div class="flex items-center justify-end z-10">
-    </div>
-
-</div>
-
-
-                <button id="btn-prev-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
-                    <i class="fa-solid fa-backward-step text-lg"></i>
-                </button>
-
-                <button id="btn-rewind" class="ctrl-btn w-12 h-12 font-mono text-xs font-extrabold text-slate-300 hover:scale-105 active:scale-95" title="Rewind 5s">
-                    -5s
-                </button>
-
-                <button id="btn-play-pause" class="w-16 h-16 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/30 hover:scale-105 active:scale-90 transition-transform shrink-0 mx-2" title="Play/Pause">
-                    <i class="fa-solid fa-play text-xl ml-0.5" id="play-icon"></i>
-                    <i class="fa-solid fa-pause text-xl hidden" id="pause-icon"></i>
-                </button>
-
-                <button id="btn-forward" class="ctrl-btn w-12 h-12 font-mono text-xs font-extrabold text-slate-300 hover:scale-105 active:scale-95" title="Forward 5s">
-                    +5s
-                </button>
-
-                <button id="btn-next-track" class="ctrl-btn w-12 h-12 text-slate-200 hover:scale-105 active:scale-95" title="Next Track">
-                    <i class="fa-solid fa-forward-step text-lg"></i>
+                                <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid) -->
+        <div class="hidden sm:grid sm:grid-cols-3 items-center gap-4 px-2 w-full">
+            
+            <!-- 1. Left Corner: Shuffle / Repeat Button -->
+            <div class="flex items-center justify-start">
+                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
+                    <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
+                    <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
                 </button>
             </div>
 
-            <!-- Right Corner: Offset & Desktop Volume Slider (Hidden on Mobile) -->
-            <div class="flex items-center gap-3">
-                <button id="btn-offset-modal-dt" class="ctrl-btn px-3.5 py-2 text-xs font-mono font-bold gap-2 bg-white/5 border border-white/10 hover:bg-white/10" onclick="document.getElementById('btn-offset-modal').click()">
-                    <i class="fa-solid fa-clock-rotate-left text-m3-primary text-xs"></i>
-                    <span>Offset</span>
+            <!-- 2. Center: Playback Buttons (Strictly Centered) -->
+            <div class="flex items-center justify-center gap-3">
+                <button id="btn-prev-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Previous Track">
+                    <i class="fa-solid fa-backward-step text-base"></i>
                 </button>
 
-                <!-- Desktop Volume Control (Only visible on desktop sm+) -->
-                <div class="flex items-center gap-2 bg-white/5 px-3 py-2 rounded-xl border border-white/10 w-36">
-                    <button id="btn-mute" class="text-slate-400 hover:text-white text-xs">
-                        <i class="fa-solid fa-volume-high text-sky-400" id="vol-icon"></i>
+                <button id="btn-rewind" class="ctrl-btn w-10 h-10 text-slate-300 hover:text-white hover:scale-105 active:scale-95" title="Rewind 5s">
+                    <i class="fa-solid fa-rotate-left text-sm"></i>
+                </button>
+
+                <button id="btn-play-pause" class="w-12 h-12 rounded-2xl bg-m3-primary text-slate-950 font-bold flex items-center justify-center shadow-lg hover:scale-105 active:scale-95 transition-all" title="Play / Pause">
+                    <i class="fa-solid fa-play text-lg play-icon-target" id="play-icon"></i>
+                    <i class="fa-solid fa-pause text-lg pause-icon-target hidden" id="pause-icon"></i>
+                </button>
+
+                <button id="btn-forward" class="ctrl-btn w-10 h-10 text-slate-300 hover:text-white hover:scale-105 active:scale-95" title="Forward 5s">
+                    <i class="fa-solid fa-rotate-right text-sm"></i>
+                </button>
+
+                <button id="btn-next-track" class="ctrl-btn w-10 h-10 text-slate-200 hover:scale-105 active:scale-95" title="Next Track">
+                    <i class="fa-solid fa-forward-step text-base"></i>
+                </button>
+            </div>
+
+            <!-- 3. Right Corner: Offset & Volume Controls -->
+            <div class="flex items-center justify-end gap-3">
+                <!-- Sync Offset Modal Trigger -->
+                <button id="btn-offset-modal" class="ctrl-btn px-3 py-2 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95">
+                    <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
+                    <span id="offset-indicator" class="text-[11px]">0.0s</span>
+                </button>
+
+                <!-- Volume Slider Control -->
+                <div class="flex items-center gap-2 bg-white/5 border border-white/10 px-3 py-1.5 rounded-xl">
+                    <button id="btn-mute" class="text-slate-300 hover:text-white flex items-center justify-center">
+                        <i class="fa-solid fa-volume-high text-sky-400 text-xs" id="vol-icon"></i>
                     </button>
-                    <input type="range" id="volume-slider" class="m3-slider h-1.5" min="0" max="1" step="0.05" value="1">
+                    <input type="range" id="volume-slider" class="m3-slider w-20" min="0" max="1" step="0.01" value="1">
                 </div>
             </div>
 
         </div>
+
 
         <!-- MOBILE PLAYBACK CONTROLS -->
         <div class="flex sm:hidden items-center justify-between px-2 pt-1">

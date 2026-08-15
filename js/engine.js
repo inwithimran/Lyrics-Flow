@@ -229,27 +229,18 @@ document.addEventListener('click', (e) => {
                 }
             }
 
-                       // Desktop Font Scale Shortcuts (Clean Trigger)
-            const dtFontUp = document.getElementById('dt-font-up');
-            const dtFontDown = document.getElementById('dt-font-down');
-            const fontSlider = document.getElementById('font-scale-slider');
+                       // Desktop Sync Offset Shortcuts (Synchronized Lyrics Stage Header)
+            const stageOffsetUp = document.getElementById('stage-offset-up');
+            const stageOffsetDown = document.getElementById('stage-offset-down');
 
-            if (dtFontUp && fontSlider) {
-                dtFontUp.addEventListener('click', () => {
-                    let current = parseFloat(fontSlider.value);
-                    if (current < 1.8) {
-                        fontSlider.value = Math.min(1.8, current + 0.1).toFixed(2);
-                        fontSlider.dispatchEvent(new Event('input'));
-                    }
+            if (stageOffsetUp) {
+                stageOffsetUp.addEventListener('click', () => {
+                    if (typeof adjustOffset === 'function') adjustOffset(0.1);
                 });
             }
-            if (dtFontDown && fontSlider) {
-                dtFontDown.addEventListener('click', () => {
-                    let current = parseFloat(fontSlider.value);
-                    if (current > 0.7) {
-                        fontSlider.value = Math.max(0.7, current - 0.1).toFixed(2);
-                        fontSlider.dispatchEvent(new Event('input'));
-                    }
+            if (stageOffsetDown) {
+                stageOffsetDown.addEventListener('click', () => {
+                    if (typeof adjustOffset === 'function') adjustOffset(-0.1);
                 });
             }
 
@@ -1678,6 +1669,9 @@ audio.onpause = () => {
 
             const offsetIndDt = document.getElementById('offset-indicator-dt');
             if (offsetIndDt) offsetIndDt.innerText = formatted;
+
+            const stageOffsetLbl = document.getElementById('stage-offset-lbl');
+            if (stageOffsetLbl) stageOffsetLbl.innerText = formatted;
 
             const offsetTag = document.getElementById('offset-tag');
             if (offsetTag) {

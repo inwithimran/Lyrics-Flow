@@ -675,11 +675,11 @@ document.write(`
             </div>
             <div class="flex items-center gap-2">
                 <div class="flex items-center gap-1.5 bg-white/5 px-2.5 py-1 rounded-xl border border-white/10 text-[11px] font-mono">
-                    <span class="text-slate-400">Scale:</span>
-                    <span id="dt-font-scale-lbl" class="text-sky-400 font-bold">1.0x</span>
+                    <span class="text-slate-400">Offset:</span>
+                    <span id="stage-offset-lbl" class="text-sky-400 font-bold">0.0s</span>
                 </div>
-                <button id="dt-font-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Font Size">-</button>
-                <button id="dt-font-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Font Size">+</button>
+                <button id="stage-offset-down" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Decrease Sync Offset">-</button>
+                <button id="stage-offset-up" class="w-7 h-7 rounded-lg bg-white/5 hover:bg-white/10 text-slate-300 flex items-center justify-center text-xs font-bold active:scale-95 transition-all border border-white/5" title="Increase Sync Offset">+</button>
             </div>
         </div>
 
@@ -759,8 +759,8 @@ document.write(`
     <i class="fa-solid fa-sliders text-purple-400 text-xs"></i> EQ / FX
 </button>
 
-<button data-studio-tab="tab-prefs" data-scroll-to="visualizer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
-    <i class="fa-solid fa-wave-square text-cyan-400 text-xs"></i> Visualizer
+<button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+    <i class="fa-solid fa-moon text-amber-400 text-xs"></i> Sleep
 </button>
 
 <button data-studio-tab="tab-prefs" data-scroll-to="theme-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
@@ -773,6 +773,10 @@ document.write(`
 
 <button data-studio-tab="tab-editor" data-scroll-to="export-copy-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
     <i class="fa-solid fa-file-export text-rose-400 text-xs"></i> Export & Copy
+</button>
+
+<button data-studio-tab="tab-prefs" data-scroll-to="visualizer-section" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
+    <i class="fa-solid fa-wave-square text-cyan-400 text-xs"></i> Visualizer
 </button>
 
 

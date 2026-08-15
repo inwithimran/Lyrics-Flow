@@ -15,6 +15,23 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 });
             });
+        
+        
+        // Desktop Studio Navigation Quick Access Controls
+const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
+if (dtBtnEqFx) {
+    dtBtnEqFx.addEventListener('click', () => {
+        const studioSheet = document.getElementById('studio-sheet');
+        if (studioSheet) {
+            openSheet(studioSheet);
+        }
+        
+        if (typeof switchTab === 'function') {
+            switchTab('tab-eq');
+        }
+    });
+}
+
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ
             mainEqBands.forEach((mBand) => {
@@ -1655,18 +1672,6 @@ audio.onpause = () => {
                 else pane.classList.add('hidden');
             });
         }
-    
-    // Quick Access Dirtect Tab switch
-function openStudioTab(tabId) {
-    const studioSheet = document.getElementById('studio-sheet');
-    if (studioSheet) {
-        openSheet(studioSheet);
-        if (tabId) {
-            switchTab(tabId);
-        }
-    }
-}
-
 
         document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
             chip.onclick = () => switchTab(chip.dataset.tab);

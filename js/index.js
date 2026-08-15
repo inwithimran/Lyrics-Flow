@@ -253,9 +253,9 @@ document.write(`
 
         /* Lyrics Formatting */
         .lyric-line {
-    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.3s ease, text-shadow 0.3s ease, font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s ease, color 0.1s ease, text-shadow 0.3s ease, font-size 0.3s cubic-bezier(0.16, 1, 0.3, 1);
             opacity: 0.35;
-            transform: scale(0.75);
+            transform: scale(0.70);
             transform-origin: center center;
             text-align: center;
             padding: 12px 24px;
@@ -556,6 +556,28 @@ document.write(`
             transition: background-color 0.3s ease;
         }
 
+        /* Theme swatch selection indicator */
+        .theme-swatch {
+            position: relative;
+        }
+        .theme-swatch.selected {
+            box-shadow: 0 0 0 2px #0A0D14, 0 0 0 4px rgba(255, 255, 255, 0.9);
+        }
+        .theme-swatch.selected::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #fff;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.65);
+            pointer-events: none;
+        }
+
         .theme-glass-card {
             background: linear-gradient(135deg, rgba(var(--m3-primary-rgb), 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
             border: 1px solid rgba(var(--m3-primary-rgb), 0.2);
@@ -851,7 +873,7 @@ document.write(`
                     <input type="text" id="dt-online-artist-input" placeholder="Artist Name (Optional)" class="m3-input py-2 text-xs">
                 </div>
 
-                <button id="dt-btn-fetch-online-lrc" class="w-full py-2.5 bg-sky-500 hover:bg-sky-400 text-slate-950 font-extrabold rounded-xl text-xs flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
+                <button id="dt-btn-fetch-online-lrc" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-xs w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
                     <i class="fa-solid fa-magnifying-glass text-xs"></i> Fetch & Auto-Sync Lyrics
                 </button>
 
@@ -1127,7 +1149,7 @@ document.write(`
                             <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block">1. Audio Source</span>
                             <p id="lbl-audio-name" class="text-xs font-semibold text-slate-200 truncate">Choose Local MP3 / WAV Track</p>
                         </div>
-                        <label class="px-4 py-2 bg-sky-500 text-slate-950 font-extrabold rounded-xl text-xs cursor-pointer shrink-0">
+                        <label class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-xs px-4 py-2 cursor-pointer shrink-0 transition-all">
                             <input type="file" id="audio-file-input" accept="audio/*" class="hidden">
                             Browse
                         </label>
@@ -1147,7 +1169,7 @@ document.write(`
                             <input type="text" id="online-artist-input" placeholder="Artist Name (Optional)" class="m3-input">
                         </div>
 
-                        <button id="btn-fetch-online-lrc" class="w-full py-3 bg-sky-500 text-slate-950 font-extrabold rounded-2xl text-xs flex items-center justify-center gap-2 shadow-lg transition-all active:scale-98">
+                        <button id="btn-fetch-online-lrc" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-2xl text-xs w-full py-3 flex items-center justify-center gap-2 shadow-lg transition-all active:scale-98">
                             <i class="fa-solid fa-magnifying-glass text-xs"></i> Fetch & Auto-Sync Lyrics
                         </button>
 
@@ -1249,7 +1271,7 @@ document.write(`
                         </p>
 
                         <div class="flex gap-2 pt-2">
-                            <button id="btn-export-lrc" class="flex-1 py-3 bg-sky-500 text-slate-950 text-xs font-extrabold rounded-2xl shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
+                            <button id="btn-export-lrc" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] text-xs font-extrabold rounded-2xl flex-1 py-3 shadow-lg active:scale-95 transition-all flex items-center justify-center gap-2">
                                 <i class="fa-solid fa-download text-sm"></i> Export .LRC
                             </button>
                             <button id="btn-copy-lrc" class="flex-1 py-3 bg-white/10 hover:bg-white/20 text-slate-200 text-xs font-bold rounded-2xl transition-all flex items-center justify-center gap-2 active:scale-95">
@@ -1296,7 +1318,7 @@ document.write(`
                         <!-- Custom Sleep Time Input & Cancel -->
                         <div class="flex gap-2">
                             <input type="number" id="custom-sleep-min" placeholder="Custom mins" class="m3-input py-2 text-xs font-mono flex-1" min="1" max="300">
-                            <button id="btn-set-custom-sleep" class="px-3 py-2 bg-sky-500 text-slate-950 font-extrabold text-xs rounded-xl">Set</button>
+                            <button id="btn-set-custom-sleep" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold text-xs rounded-xl px-3 py-2 transition-all">Set</button>
                             <button id="btn-cancel-sleep" class="px-3 py-2 bg-red-500/20 text-red-400 font-bold text-xs rounded-xl hover:bg-red-500/30 transition-all">Off</button>
                         </div>
                     </div>
@@ -1312,17 +1334,18 @@ document.write(`
                     </div>
 
                     <!-- Material Theme Palette Picker -->
-                    <div id="theme-section" class="m3-list-row" style="border-top: 1px solid rgba(255, 255, 255, 0.1); padding-top: 16px;">
-                        <span class="text-xs font-bold text-slate-200">Material Theme Accent</span>
-                        <div class="flex items-center gap-2 flex-wrap" id="theme-picker">
-                            <button class="w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN" aria-label="Cyber Cyan theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE" aria-label="Plasma Purple theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER" aria-label="Sunset Amber theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-emerald-400 active:scale-90 transition-transform" data-color="#34D399" data-rgb="52, 211, 153" data-name="MATRIX GREEN" aria-label="Matrix Green theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-rose-500 active:scale-90 transition-transform" data-color="#F43F5E" data-rgb="244, 63, 94" data-name="NEON ROSE" aria-label="Neon Rose theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-indigo-500 active:scale-90 transition-transform" data-color="#6366F1" data-rgb="99, 102, 241" data-name="INDIGO NOVA" aria-label="Indigo Nova theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-yellow-400 active:scale-90 transition-transform" data-color="#FACC15" data-rgb="250, 204, 21" data-name="GOLDEN SOLAR" aria-label="Golden Solar theme"></button>
-                            <button class="w-8 h-8 rounded-xl bg-red-500 active:scale-90 transition-transform" data-color="#EF4444" data-rgb="239, 68, 68" data-name="CRIMSON BLAZE" aria-label="Crimson Blaze theme"></button>
+                    <div id="theme-section" class="space-y-2" style="border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-top: 16px; padding-bottom: 12px;">
+                        <span class="text-xs font-bold text-slate-200 block">Material Theme Accent</span>
+                        <div class="flex items-center gap-2 overflow-x-auto pt-2 pb-2 pl-2 pr-2" id="theme-picker" style="flex-wrap: nowrap;">
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform shrink-0" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN" aria-label="Cyber Cyan theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform shrink-0" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE" aria-label="Plasma Purple theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform shrink-0" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER" aria-label="Sunset Amber theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-emerald-400 active:scale-90 transition-transform shrink-0" data-color="#34D399" data-rgb="52, 211, 153" data-name="MATRIX GREEN" aria-label="Matrix Green theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-rose-500 active:scale-90 transition-transform shrink-0" data-color="#F43F5E" data-rgb="244, 63, 94" data-name="NEON ROSE" aria-label="Neon Rose theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-indigo-500 active:scale-90 transition-transform shrink-0" data-color="#6366F1" data-rgb="99, 102, 241" data-name="INDIGO NOVA" aria-label="Indigo Nova theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-yellow-400 active:scale-90 transition-transform shrink-0" data-color="#FACC15" data-rgb="250, 204, 21" data-name="GOLDEN SOLAR" aria-label="Golden Solar theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-red-500 active:scale-90 transition-transform shrink-0" data-color="#EF4444" data-rgb="239, 68, 68" data-name="CRIMSON BLAZE" aria-label="Crimson Blaze theme"></button>
+                            <button class="theme-swatch w-8 h-8 rounded-xl bg-slate-500 active:scale-90 transition-transform shrink-0" data-color="#64748B" data-rgb="100, 116, 139" data-name="SLATE STORM" aria-label="Slate Storm theme"></button>
                         </div>
                     </div>
 
@@ -1358,112 +1381,102 @@ document.write(`
                 </div>
 
                 <!-- TAB 5: ABOUT & DEVELOPER INFO -->
-                <div id="tab-about" class="tab-pane hidden space-y-4">
-                    
-                    <!-- 1. Hero Developer Profile Card -->
-                    <div class="p-5 rounded-3xl theme-glass-card relative overflow-hidden flex flex-col items-center text-center space-y-3">
-                        
-                        <div class="absolute -top-12 -right-12 w-32 h-32 rounded-full opacity-30 pointer-events-none filter blur-2xl" style="background-color: var(--m3-primary);"></div>
-                        <div class="absolute -bottom-12 -left-12 w-32 h-32 rounded-full opacity-20 pointer-events-none filter blur-2xl" style="background-color: var(--m3-primary);"></div>
+                <div id="tab-about" class="tab-pane hidden">
 
-                        <!-- Profile Avatar -->
-                        <div class="relative group my-1">
-                            <div class="profile-avatar-bg relative z-10 flex items-center justify-center"></div>
-                            <div class="absolute -inset-1 rounded-full opacity-40 blur-md pointer-events-none" style="background-color: var(--m3-primary);"></div>
+                    <!-- Hero: Developer Identity -->
+                    <div class="relative flex flex-col items-center text-center pt-3 pb-6 overflow-hidden">
+                        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-64 h-64 rounded-full opacity-[0.18] blur-3xl pointer-events-none" style="background: var(--m3-primary);"></div>
+
+                        <div class="relative z-10">
+                            <div class="profile-avatar-bg mx-auto"></div>
                         </div>
 
-                        <!-- Developer Info -->
-                        <div class="space-y-1 z-10">
-                            <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wider uppercase border" style="background-color: rgba(var(--m3-primary-rgb), 0.12); border-color: rgba(var(--m3-primary-rgb), 0.3); color: var(--m3-primary);">
-                                <i class="fa-solid fa-code text-[9px]"></i> Lead Developer & Architect
-                            </div>
-                            <h3 class="text-lg font-black text-white tracking-tight pt-1">Tabib Imran</h3>
-                            <p class="text-xs text-slate-300 max-w-md leading-relaxed">
-                                Crafting immersive, ultra-responsive web audio environments and studio-grade lyrics engine architectures.
-                            </p>
+                        <h3 class="relative z-10 mt-4 text-2xl font-black tracking-tight text-white">Tabib Imran</h3>
+
+                        <div class="relative z-10 mt-1.5 flex items-center gap-2 text-[10px] font-extrabold uppercase tracking-[0.25em]" style="color: var(--m3-primary);">
+                            <span class="w-5 h-px" style="background: linear-gradient(to left, var(--m3-primary), transparent);"></span>
+                            Lead Developer & Architect
+                            <span class="w-5 h-px" style="background: linear-gradient(to right, var(--m3-primary), transparent);"></span>
                         </div>
 
-                        <!-- System Pills -->
-                        <div class="flex items-center gap-2 pt-1 z-10 flex-wrap justify-center">
-                            <span class="px-3 py-1 rounded-xl text-[10px] font-bold bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5">
-                                <i class="fa-solid fa-bolt text-amber-400"></i> Web Audio API
-                            </span>
-                            <span class="px-3 py-1 rounded-xl text-[10px] font-bold bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5">
-                                <i class="fa-solid fa-layer-group text-sky-400"></i> Material 3
-                            </span>
-                            <span class="px-3 py-1 rounded-xl text-[10px] font-bold bg-white/5 border border-white/10 text-slate-300 flex items-center gap-1.5">
-                                <i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> DSP Audio FX
-                            </span>
+                        <p class="relative z-10 mt-3 text-xs text-slate-400 leading-relaxed max-w-[260px]">
+                            Crafting immersive, ultra-responsive web audio environments and studio-grade lyrics engine architectures.
+                        </p>
+
+                        <div class="relative z-10 mt-4 flex items-center gap-2.5 text-[10px] font-semibold text-slate-400 flex-wrap justify-center">
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-bolt text-amber-400"></i> Web Audio API</span>
+                            <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-layer-group text-sky-400"></i> Material 3</span>
+                            <span class="w-1 h-1 rounded-full bg-slate-600"></span>
+                            <span class="flex items-center gap-1.5"><i class="fa-solid fa-wand-magic-sparkles text-purple-400"></i> DSP Audio FX</span>
                         </div>
                     </div>
 
-                    <!-- 2. Studio Application Overview -->
-                    <div class="p-4 rounded-2xl bg-white/[0.03] border border-white/10 space-y-2.5">
-                        <div class="flex items-center justify-between">
-                            <span class="text-xs font-black uppercase tracking-wider flex items-center gap-2" style="color: var(--m3-primary);">
-                                <i class="fa-solid fa-sliders"></i> Lyrics Flow Pro - Studio Edition
-                            </span>
-                            <span class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-md bg-white/10 text-slate-300">v2.5.0 Pro</span>
-                        </div>
-                        <p class="text-xs text-slate-300 leading-relaxed">
+                    <div class="h-px w-full" style="background: linear-gradient(90deg, transparent, rgba(var(--m3-primary-rgb), 0.45), transparent);"></div>
+
+                    <!-- Application Identity -->
+                    <div class="text-center py-6">
+                        <span class="text-[9px] font-mono font-bold tracking-[0.3em] text-slate-500 uppercase">Application</span>
+                        <h4 class="text-lg font-black text-white mt-1.5 leading-snug">
+                            Lyrics Flow Pro <span style="color: var(--m3-primary);">— Studio Edition</span>
+                        </h4>
+                        <span class="inline-block mt-1 text-[10px] font-mono text-slate-500 tracking-wide">v2.5.0 Pro</span>
+                        <p class="text-xs text-slate-400 leading-relaxed max-w-sm mx-auto mt-3">
                             A state-of-the-art Web Audio Player engineered for high-precision timestamped LRC synchronization, live frequency spectrum visualization, multi-preset 5-band parametric equalizer, and customizable dynamic color themes.
                         </p>
                     </div>
 
-                    <!-- 3. Feature Highlights Matrix -->
-                    <div class="space-y-2">
-                        <span class="text-[10px] font-extrabold text-slate-400 uppercase tracking-widest block px-0.5">Core System Capabilities</span>
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs">
-                            
-                            <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-all flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background-color: rgba(var(--m3-primary-rgb), 0.15); color: var(--m3-primary);">
-                                    <i class="fa-solid fa-cloud-arrow-down text-xs"></i>
+                    <div class="h-px w-full" style="background: linear-gradient(90deg, transparent, rgba(var(--m3-primary-rgb), 0.45), transparent);"></div>
+
+                    <!-- Core Capabilities Timeline -->
+                    <div class="py-6">
+                        <span class="text-[9px] font-mono font-bold tracking-[0.3em] text-slate-500 uppercase block mb-5 text-center">Core Capabilities</span>
+
+                        <div class="relative pl-9 max-w-sm mx-auto">
+                            <div class="absolute left-[15px] top-1 bottom-1 w-px" style="background: linear-gradient(to bottom, rgba(var(--m3-primary-rgb), 0.7), rgba(var(--m3-primary-rgb), 0.05));"></div>
+
+                            <div class="relative pb-6">
+                                <div class="absolute -left-9 top-0 w-[30px] h-[30px] rounded-full flex items-center justify-center text-[11px]" style="background-color: #0A0D14; box-shadow: inset 0 0 0 1.5px rgba(var(--m3-primary-rgb), 0.5); color: var(--m3-primary);">
+                                    <i class="fa-solid fa-cloud-arrow-down"></i>
                                 </div>
-                                <div class="space-y-0.5">
-                                    <h4 class="font-bold text-slate-100">LRCLIB Cloud Sync</h4>
-                                    <p class="text-[10px] text-slate-400 leading-normal">Automatic fetching & alignment for synchronized song lyrics.</p>
-                                </div>
+                                <h5 class="text-xs font-bold text-slate-100 pt-1.5">LRCLIB Cloud Sync</h5>
+                                <p class="text-[10px] text-slate-500 leading-normal mt-0.5">Automatic fetching & alignment for synchronized song lyrics.</p>
                             </div>
 
-                            <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-all flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background-color: rgba(var(--m3-primary-rgb), 0.15); color: var(--m3-primary);">
-                                    <i class="fa-solid fa-wave-square text-xs"></i>
+                            <div class="relative pb-6">
+                                <div class="absolute -left-9 top-0 w-[30px] h-[30px] rounded-full flex items-center justify-center text-[11px]" style="background-color: #0A0D14; box-shadow: inset 0 0 0 1.5px rgba(var(--m3-primary-rgb), 0.5); color: var(--m3-primary);">
+                                    <i class="fa-solid fa-wave-square"></i>
                                 </div>
-                                <div class="space-y-0.5">
-                                    <h4 class="font-bold text-slate-100">5-Band Acoustic EQ</h4>
-                                    <p class="text-[10px] text-slate-400 leading-normal">Biquad filter DSP processing with custom presets.</p>
-                                </div>
+                                <h5 class="text-xs font-bold text-slate-100 pt-1.5">5-Band Acoustic EQ</h5>
+                                <p class="text-[10px] text-slate-500 leading-normal mt-0.5">Biquad filter DSP processing with custom presets.</p>
                             </div>
 
-                            <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-all flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background-color: rgba(var(--m3-primary-rgb), 0.15); color: var(--m3-primary);">
-                                    <i class="fa-solid fa-palette text-xs"></i>
+                            <div class="relative pb-6">
+                                <div class="absolute -left-9 top-0 w-[30px] h-[30px] rounded-full flex items-center justify-center text-[11px]" style="background-color: #0A0D14; box-shadow: inset 0 0 0 1.5px rgba(var(--m3-primary-rgb), 0.5); color: var(--m3-primary);">
+                                    <i class="fa-solid fa-palette"></i>
                                 </div>
-                                <div class="space-y-0.5">
-                                    <h4 class="font-bold text-slate-100">Dynamic Material Themes</h4>
-                                    <p class="text-[10px] text-slate-400 leading-normal">Adaptive palette shifting with responsive neon accents.</p>
-                                </div>
+                                <h5 class="text-xs font-bold text-slate-100 pt-1.5">Dynamic Material Themes</h5>
+                                <p class="text-[10px] text-slate-500 leading-normal mt-0.5">Adaptive palette shifting with responsive neon accents.</p>
                             </div>
 
-                            <div class="p-3 rounded-2xl bg-white/[0.03] border border-white/5 hover:border-white/15 transition-all flex items-start gap-3">
-                                <div class="w-8 h-8 rounded-xl flex items-center justify-center shrink-0" style="background-color: rgba(var(--m3-primary-rgb), 0.15); color: var(--m3-primary);">
-                                    <i class="fa-solid fa-moon text-xs"></i>
+                            <div class="relative">
+                                <div class="absolute -left-9 top-0 w-[30px] h-[30px] rounded-full flex items-center justify-center text-[11px]" style="background-color: #0A0D14; box-shadow: inset 0 0 0 1.5px rgba(var(--m3-primary-rgb), 0.5); color: var(--m3-primary);">
+                                    <i class="fa-solid fa-moon"></i>
                                 </div>
-                                <div class="space-y-0.5">
-                                    <h4 class="font-bold text-slate-100">Sleep Mode Timer</h4>
-                                    <p class="text-[10px] text-slate-400 leading-normal">Automated playback timeout with visual countdown badge.</p>
-                                </div>
+                                <h5 class="text-xs font-bold text-slate-100 pt-1.5">Sleep Mode Timer</h5>
+                                <p class="text-[10px] text-slate-500 leading-normal mt-0.5">Automated playback timeout with visual countdown badge.</p>
                             </div>
-
                         </div>
                     </div>
 
-                    <!-- 4. Studio Technical Engine Specs -->
-                    <div class="pt-3 border-t border-white/10 flex items-center justify-between text-[10px] font-mono text-slate-400">
-                        <span class="flex items-center gap-1">
+                    <div class="h-px w-full" style="background: linear-gradient(90deg, transparent, rgba(var(--m3-primary-rgb), 0.45), transparent);"></div>
+
+                    <!-- Technical Engine Specs -->
+                    <div class="pt-4 pb-1 flex items-center justify-between text-[10px] font-mono text-slate-500">
+                        <span class="flex items-center gap-1.5">
                             <i class="fa-solid fa-microchip text-[9px]" style="color: var(--m3-primary);"></i> HTML5 / WebAudio DSP
                         </span>
-                        <span>Designed by Tabib Imran</span>
+                        <span>Designed by <span class="text-slate-300 font-bold">Tabib Imran</span></span>
                     </div>
 
                 </div>
@@ -1472,7 +1485,7 @@ document.write(`
 
             <!-- Apply CTA Button -->
             <div class="p-4 border-t border-white/10 shrink-0">
-                <button id="btn-apply-done" class="w-full py-3.5 bg-sky-500 text-slate-950 font-extrabold uppercase tracking-wider text-xs rounded-2xl shadow-lg active:scale-98 transition-all">
+                <button id="btn-apply-done" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold uppercase tracking-wider text-xs rounded-2xl w-full py-3.5 shadow-lg active:scale-98 transition-all">
                     Apply & Done
                 </button>
             </div>

@@ -645,6 +645,11 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
                 else btn.classList.remove('active');
             });
 
+            document.querySelectorAll('#theme-picker .theme-swatch').forEach(btn => {
+                if (btn.dataset.color === userSettings.themeColor) btn.classList.add('selected');
+                else btn.classList.remove('selected');
+            });
+
             document.documentElement.style.setProperty('--font-scale', userSettings.fontScale);
             document.getElementById('font-scale-slider').value = userSettings.fontScale;
             document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
@@ -1646,6 +1651,10 @@ window.addEventListener('beforeunload', saveLastTrackState);
                 document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
                 document.getElementById('theme-tag').innerText = userSettings.themeName;
                 document.getElementById('theme-tag').style.color = userSettings.themeColor;
+
+                document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+
                 updateLoopModeUI();
             };
         });

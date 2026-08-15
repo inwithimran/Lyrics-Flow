@@ -17,22 +17,30 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         
         
-        // Desktop Studio Navigation Quick Access Controls (Fixed Audio FX & EQ Tab)
+        // Desktop Studio Navigation Quick Access Controls 
 const dtBtnEqFx = document.getElementById('dt-btn-eq-fx');
 if (dtBtnEqFx) {
     dtBtnEqFx.addEventListener('click', () => {
         const studioSheet = document.getElementById('studio-sheet');
-        if (studioSheet) {
-            openSheet(studioSheet);
-        }
+        if (studioSheet) openSheet(studioSheet);
         
+        let targetTab = 'tab-audio';
+        if (document.getElementById('tab-audio')) {
+            targetTab = 'tab-audio';
+        } else if (document.getElementById('tab-eq')) {
+            targetTab = 'tab-eq';
+        } else if (document.getElementById('tab-audio-fx')) {
+            targetTab = 'tab-audio-fx';
+        } else {
+            const eqPill = document.querySelector('.m3-tab-pill[data-tab*="audio"], .m3-tab-pill[data-tab*="eq"]');
+            if (eqPill) targetTab = eqPill.dataset.tab;
+        }
+
         if (typeof switchTab === 'function') {
-            const targetTab = document.getElementById('tab-audio') ? 'tab-audio' : 'tab-eq';
             switchTab(targetTab);
         }
     });
 }
-
 
 
             // 2. Studio EQ / Reset -> Right Sidebar EQ
@@ -1302,25 +1310,35 @@ audio.onpause = () => {
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
         };
 
-        // Offset Button Click -> Open Studio, Switch to Prefs & Smooth Scroll (Fixed)
+        // Offset Button Click -> Open Studio, Switch to Prefs & Smooth Scroll (Desktop & Mobile Fixed)
 const btnOffsetModal = document.getElementById('btn-offset-modal');
 if (btnOffsetModal) {
     btnOffsetModal.onclick = () => {
         const studioSheet = document.getElementById('studio-sheet');
         if (studioSheet) openSheet(studioSheet);
         
+        // Preferences / Settings 
+        let prefsTab = 'tab-prefs';
+        if (!document.getElementById('tab-prefs')) {
+            const prefPill = document.querySelector('.m3-tab-pill[data-tab*="pref"], .m3-tab-pill[data-tab*="setting"]');
+            if (prefPill) prefsTab = prefPill.dataset.tab;
+        }
+
         if (typeof switchTab === 'function') {
-            switchTab('tab-prefs');
+            switchTab(prefsTab);
         }
 
         setTimeout(() => {
-            const target = document.getElementById('offset-settings-container');
+            const target = document.getElementById('offset-settings-container') || 
+                           document.getElementById('offset-val-display') || 
+                           document.querySelector('[id*="offset"]');
             if (target) {
                 target.scrollIntoView({ behavior: 'smooth', block: 'center' });
             }
-        }, 200);
+        }, 380);
     };
 }
+
 
 
         // --- EXPORT & COPY LRC TOOL ---

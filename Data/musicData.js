@@ -7,9 +7,9 @@ window.PLAYLIST_DATA = [
     },
     {
         id: 'track-2',
-        title: 'Let Me Down',
+        title: 'Let Me Down Slowly',
         artist: 'Alec Benjamin',
-        audioUrl: 'Data/music/Alec Benjamin - Let Me Down.mp3'
+        audioUrl: 'Data/music/Alec Benjamin - Let Me Down Slowly.mp3'
     },
     {
         id: 'track-3',

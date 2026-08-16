@@ -856,49 +856,33 @@ document.write(`
             </button>
         </main>
 
-        <!-- DESKTOP RIGHT SIDEBAR (Online LRC Search, Local Media & Equalizer Dock) -->
+        <!-- DESKTOP RIGHT SIDEBAR (Audio & Lyrics Dock, Equalizer) -->
         <aside class="hidden lg:flex lg:w-72 xl:w-80 flex-col gap-3.5 flex-shrink-0 h-full overflow-y-auto pl-0.5 pb-24">
-            
-            <!-- 1. ONLINE LRC FINDER CARD (DESKTOP RIGHT SIDEBAR INTEGRATION) -->
+
+            <!-- 1. AUDIO & LYRICS DOCK (Local Audio, Local/Online LRC, Apply) -->
             <div class="p-3.5 dt-panel-card space-y-3">
-                <div class="flex items-center justify-between">
-                    <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
-                        <i class="fa-solid fa-wand-magic-sparkles text-m3-primary text-xs"></i> Online LRC Search
-                    </span>
-                    <span class="text-[9px] bg-sky-500/20 text-sky-300 font-extrabold px-2 py-0.5 rounded-full border border-sky-500/30">LRCLIB</span>
-                </div>
-
-                <div class="space-y-2">
-                    <input type="text" id="dt-online-song-input" placeholder="Track Name *" class="m3-input py-2 text-xs">
-                    <input type="text" id="dt-online-artist-input" placeholder="Artist Name (Optional)" class="m3-input py-2 text-xs">
-                </div>
-
-                <button id="dt-btn-fetch-online-lrc" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-xs w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
-                    <i class="fa-solid fa-magnifying-glass text-xs"></i> Fetch & Auto-Sync Lyrics
-                </button>
-
-                <p id="dt-online-fetch-status" class="text-[10px] font-semibold text-slate-400 hidden text-center"></p>
-            </div>
-
-            <!-- 2. LOCAL FILE & LYRICS LOADER DOCK -->
-            <div class="p-3.5 dt-panel-card space-y-2.5">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
                         <i class="fa-solid fa-folder-open text-m3-primary text-xs"></i> Local Audio & LRC
                     </span>
-                    <span class="text-[9px] bg-white/5 text-slate-400 font-bold px-2 py-0.5 rounded-full">Local Files</span>
+                    <span class="text-[9px] bg-sky-500/20 text-sky-300 font-extrabold px-2 py-0.5 rounded-full border border-sky-500/30">LRCLIB</span>
                 </div>
-                
+
+                <!-- Step 1: Choose the local audio track -->
                 <div class="space-y-2 text-xs">
-                    <!-- Quick Local Audio Button -->
+                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block">1. Audio Track</span>
                     <button class="w-full py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95 shadow-sm" onclick="document.getElementById('audio-file-input').click()">
                         <span class="truncate flex items-center gap-2">
                             <i class="fa-solid fa-music text-sky-400"></i> <span id="dt-lbl-audio-name" class="truncate">Open Audio MP3</span>
                         </span>
                         <i class="fa-solid fa-plus text-[10px] text-slate-400"></i>
                     </button>
+                </div>
 
-                    <!-- Quick Local LRC Button -->
+                <!-- Step 2: Get matching lyrics — local .LRC file or online search -->
+                <div class="space-y-2 text-xs pt-1 border-t border-white/10">
+                    <span class="text-[9px] font-bold text-slate-500 uppercase tracking-wider block pt-1">2. Lyrics (Local or Online)</span>
+
                     <button class="w-full py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95 shadow-sm" onclick="document.getElementById('lrc-file-input').click()">
                         <span class="truncate flex items-center gap-2">
                             <i class="fa-solid fa-file-lines text-purple-400"></i> Load .LRC File
@@ -906,14 +890,29 @@ document.write(`
                         <i class="fa-solid fa-upload text-[10px] text-slate-400"></i>
                     </button>
 
-                    <!-- Apply & Auto-Play Local File Button -->
-                    <button id="dt-btn-apply-local" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-[11px] w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
-                        <i class="fa-solid fa-play text-xs"></i> Apply & Auto-Play
+                    <div class="flex items-center gap-2 py-0.5">
+                        <div class="h-px flex-1 bg-white/10"></div>
+                        <span class="text-[9px] font-bold text-slate-500">OR SEARCH ONLINE</span>
+                        <div class="h-px flex-1 bg-white/10"></div>
+                    </div>
+
+                    <input type="text" id="dt-online-song-input" placeholder="Track Name *" class="m3-input py-2 text-xs">
+                    <input type="text" id="dt-online-artist-input" placeholder="Artist Name (Optional)" class="m3-input py-2 text-xs">
+
+                    <button id="dt-btn-fetch-online-lrc" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-xs w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
+                        <i class="fa-solid fa-magnifying-glass text-xs"></i> Fetch & Auto-Sync Lyrics
                     </button>
+
+                    <p id="dt-online-fetch-status" class="text-[10px] font-semibold text-slate-400 hidden text-center"></p>
                 </div>
+
+                <!-- Step 3: Apply the staged audio track and auto-play -->
+                <button id="dt-btn-apply-local" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-[11px] w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
+                    <i class="fa-solid fa-play text-xs"></i> Apply & Auto-Play
+                </button>
             </div>
 
-            <!-- 3. Equalizer Quick Sliders Widget -->
+            <!-- 2. Equalizer Quick Sliders Widget -->
             <div class="p-3.5 dt-panel-card space-y-2.5">
                 <div class="flex items-center justify-between">
                     <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">

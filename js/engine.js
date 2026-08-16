@@ -1395,6 +1395,11 @@ for (let i = 0; i < barCount; i++) {
                 if (rawInput) rawInput.value = song.lrcText;
                 parseLRC(song.lrcText);
             } else {
+                // Clear old lyrics before searching, so a failed online lookup for this
+                // track leaves "no lyrics" instead of the previous song's lyrics.
+                const rawInput = document.getElementById('raw-lrc-input');
+                if (rawInput) rawInput.value = '';
+                parseLRC('');
                 executeOnlineSync(true);
             }
 
@@ -1859,8 +1864,13 @@ window.addEventListener('beforeunload', saveLastTrackState);
             updateHeaderTitle();
             renderLibraryPlaylist();
 
-            // Reuse the lyrics already fetched at selection time instead of fetching again;
-            // only hit LRCLIB now if that earlier auto-fetch didn't find anything.
+            // Applying a new local file must never leave the previous song's lyrics on
+            // screen. Clear the live scroller first, then reuse lyrics already fetched at
+            // selection time; only hit LRCLIB now if that earlier auto-fetch found nothing.
+            // If the fresh online lookup also fails, the clear above is what's left showing
+            // ("no lyrics"), instead of stale lyrics from the track played before this one.
+            parseLRC('');
+
             const rawLrcVal = document.getElementById('raw-lrc-input').value;
             if (rawLrcVal && rawLrcVal.trim()) {
                 parseLRC(rawLrcVal);

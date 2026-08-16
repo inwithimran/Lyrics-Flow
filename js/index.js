@@ -1340,6 +1340,8 @@ document.write(`
                             <button class="viz-style-chip m3-tab-pill active justify-center" data-style="circle">Galaxy Orbit</button>
                             <button class="viz-style-chip m3-tab-pill justify-center" data-style="bars">Soft Bars</button>
                             <button class="viz-style-chip m3-tab-pill justify-center" data-style="nebula">Nebula Bloom</button>
+                            <button class="viz-style-chip m3-tab-pill justify-center" data-style="aurora">Aurora Waves</button>
+                            <button class="viz-style-chip m3-tab-pill justify-center" data-style="starburst">Starburst Comet</button>
                             <button class="viz-style-chip m3-tab-pill justify-center" data-style="off">Disabled</button>
                         </div>
                     </div>

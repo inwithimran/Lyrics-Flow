@@ -1027,6 +1027,129 @@ else if (userSettings.visualizerMode === 'nebula') {
 
     ctxBg.restore();
 }
+else if (userSettings.visualizerMode === 'aurora') {
+    // Ensure canvas sits in front of ambient background but behind lyric text
+    canvasBg.style.zIndex = '5';
+
+    const now = Date.now() / 1000;
+    const w = wBg, h = hBg;
+    const midY = h * 0.5;
+
+    ctxBg.save();
+    ctxBg.globalCompositeOperation = 'lighter';
+
+    // Layered, drifting ribbons of light — like curtains of aurora borealis —
+    // each layer at its own height/speed/color, height driven by live frequency
+    // data spread across the width of the screen.
+    const layerCount = 4;
+    const layerColors = [userSettings.themeColor, '#ffffff', userSettings.themeColor, '#a78bfa'];
+
+    for (let layer = 0; layer < layerCount; layer++) {
+        const speed = 0.12 + layer * 0.045;
+        const phase = now * speed + layer * 1.9;
+        const baseY = midY + (layer - (layerCount - 1) / 2) * (h * 0.05);
+        const amplitude = h * 0.08 * (1 - layer * 0.1);
+
+        const points = 72;
+        const pathTop = [];
+        for (let i = 0; i <= points; i++) {
+            const t = i / points;
+            const x = t * w;
+            const dataIdx = Math.floor(t * (barCount - 1));
+            const amp = smoothBars[dataIdx] / 255;
+            const y = baseY
+                + Math.sin(t * Math.PI * 2.6 + phase) * amplitude
+                + Math.sin(t * Math.PI * 6.2 + phase * 1.4) * amplitude * 0.25
+                - amp * h * 0.16;
+            pathTop.push({ x, y });
+        }
+
+        ctxBg.beginPath();
+        ctxBg.moveTo(pathTop[0].x, pathTop[0].y);
+        for (let i = 1; i < pathTop.length; i++) ctxBg.lineTo(pathTop[i].x, pathTop[i].y);
+        ctxBg.lineTo(w, h);
+        ctxBg.lineTo(0, h);
+        ctxBg.closePath();
+
+        const grad = ctxBg.createLinearGradient(0, baseY - amplitude - h * 0.15, 0, h * 0.85);
+        grad.addColorStop(0, layerColors[layer % layerColors.length]);
+        grad.addColorStop(0.55, 'rgba(255,255,255,0.12)');
+        grad.addColorStop(1, 'transparent');
+
+        ctxBg.fillStyle = grad;
+        ctxBg.globalAlpha = 0.4 - layer * 0.06;
+        ctxBg.fill();
+
+        // Bright leading edge line along the top of the ribbon for definition
+        ctxBg.beginPath();
+        ctxBg.moveTo(pathTop[0].x, pathTop[0].y);
+        for (let i = 1; i < pathTop.length; i++) ctxBg.lineTo(pathTop[i].x, pathTop[i].y);
+        ctxBg.strokeStyle = layerColors[layer % layerColors.length];
+        ctxBg.lineWidth = 1.5;
+        ctxBg.globalAlpha = 0.5 - layer * 0.08;
+        ctxBg.stroke();
+    }
+
+    ctxBg.restore();
+}
+else if (userSettings.visualizerMode === 'starburst') {
+    // Ensure canvas sits in front of ambient background but behind lyric text
+    canvasBg.style.zIndex = '5';
+
+    const containerRect = container.getBoundingClientRect();
+    const cx = containerRect.width > 0 ? (containerRect.left + containerRect.width / 2) : (window.innerWidth / 2);
+    const cy = containerRect.height > 0 ? (containerRect.top + containerRect.height / 2) : (window.innerHeight / 2);
+    const maxR = Math.max(window.innerWidth, window.innerHeight) * 0.62;
+
+    const now = Date.now() / 1000;
+
+    ctxBg.save();
+    ctxBg.translate(cx, cy);
+    ctxBg.globalCompositeOperation = 'lighter';
+
+    // A continuous rain of glowing comet streaks flying outward from the center,
+    // each one looping back to the core once it reaches the edge — speed, tail
+    // length, and brightness all pulse with live frequency data per streak.
+    const cometCount = barCount;
+    for (let i = 0; i < cometCount; i++) {
+        const amp = smoothBars[i] / 255;
+        const angle = (i / cometCount) * Math.PI * 2 + Math.sin(i * 12.9898) * 0.05;
+        const speed = 0.1 + (i % 5) * 0.014;
+        const progress = (now * speed + i * 0.618) % 1;
+        const dist = progress * maxR * (0.55 + amp * 0.65);
+
+        const tailLen = 26 + amp * 90;
+        const x2 = Math.cos(angle) * dist;
+        const y2 = Math.sin(angle) * dist;
+        const backDist = Math.max(0, dist - tailLen);
+        const x1 = Math.cos(angle) * backDist;
+        const y1 = Math.sin(angle) * backDist;
+
+        const fade = Math.max(0, 1 - progress);
+
+        const grad = ctxBg.createLinearGradient(x1, y1, x2, y2);
+        grad.addColorStop(0, 'transparent');
+        grad.addColorStop(1, userSettings.themeColor);
+
+        ctxBg.beginPath();
+        ctxBg.moveTo(x1, y1);
+        ctxBg.lineTo(x2, y2);
+        ctxBg.strokeStyle = grad;
+        ctxBg.lineWidth = 1.4 + amp * 3.4;
+        ctxBg.lineCap = 'round';
+        ctxBg.globalAlpha = fade * (0.35 + amp * 0.55);
+        ctxBg.stroke();
+
+        // Bright comet head
+        ctxBg.beginPath();
+        ctxBg.fillStyle = '#ffffff';
+        ctxBg.globalAlpha = fade * (0.5 + amp * 0.5);
+        ctxBg.arc(x2, y2, 1 + amp * 2.2, 0, Math.PI * 2);
+        ctxBg.fill();
+    }
+
+    ctxBg.restore();
+}
 
 
         }

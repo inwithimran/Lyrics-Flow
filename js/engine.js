@@ -2081,7 +2081,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
             // old silent-restore behavior rather than guessing.
             const gapMs = last.savedAt ? (Date.now() - last.savedAt) : 0;
 
-            if (last.savedAt && gapMs >= RESUME_PROMPT_GAP_MS) {
+            if (last.savedAt && gapMs >= RESUME_PROMPT_GAP_MS && savedTime > 0) {
                 // Load the track paused at the start; only jump to the saved position if
                 // the user confirms via the Resume Playback popup.
                 loadTrackFromLibrary(track, { autoplay: false });

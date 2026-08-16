@@ -944,45 +944,55 @@ for (let i = 0; i < barCount; i++) {
         drawVisualizer();
 
         // --- LRC PARSER & RENDERER ---
-        function parseLRC(text) {
-            lyrics = [];
-            if (!text || !text.trim()) { renderLyrics(); return; }
+        // applyToPlayer=false parses/validates the text WITHOUT touching the live
+        // `lyrics` array or the on-screen scroller — used while a local file is just
+        // staged (selected but not yet Applied) so a currently playing library track's
+        // lyrics aren't disturbed until the user actually hits Apply.
+        function parseLRC(text, applyToPlayer = true) {
+            const parsed = [];
 
-            const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/);
-            const timeReg = /[\[<\(]\s*(\d{1,3})\s*:\s*(\d{1,2})(?:\s*[\.\:,]\s*(\d{1,3}))?\s*[\]>\)]/g;
+            if (text && text.trim()) {
+                const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/);
+                const timeReg = /[\[<\(]\s*(\d{1,3})\s*:\s*(\d{1,2})(?:\s*[\.\:,]\s*(\d{1,3}))?\s*[\]>\)]/g;
 
-            let timestamped = false;
+                let timestamped = false;
 
-            lines.forEach((line) => {
-                if (/^\s*[\[<\(]\s*(ar|ti|al|by|offset|length)\s*:/i.test(line)) return;
+                lines.forEach((line) => {
+                    if (/^\s*[\[<\(]\s*(ar|ti|al|by|offset|length)\s*:/i.test(line)) return;
 
-                const matches = [...line.matchAll(timeReg)];
-                if (matches.length > 0) {
-                    timestamped = true;
-                    let content = line.replace(timeReg, '').trim() || "♪ ♪ ♪";
-                    matches.forEach(m => {
-                        const min = parseInt(m[1], 10);
-                        const sec = parseInt(m[2], 10);
-                        let ms = 0;
-                        if (m[3]) {
-                            const raw = m[3];
-                            ms = raw.length === 1 ? parseInt(raw, 10) * 100 : (raw.length === 2 ? parseInt(raw, 10) * 10 : parseInt(raw, 10));
-                        }
-                        lyrics.push({ time: min * 60 + sec + ms / 1000, content });
+                    const matches = [...line.matchAll(timeReg)];
+                    if (matches.length > 0) {
+                        timestamped = true;
+                        let content = line.replace(timeReg, '').trim() || "♪ ♪ ♪";
+                        matches.forEach(m => {
+                            const min = parseInt(m[1], 10);
+                            const sec = parseInt(m[2], 10);
+                            let ms = 0;
+                            if (m[3]) {
+                                const raw = m[3];
+                                ms = raw.length === 1 ? parseInt(raw, 10) * 100 : (raw.length === 2 ? parseInt(raw, 10) * 10 : parseInt(raw, 10));
+                            }
+                            parsed.push({ time: min * 60 + sec + ms / 1000, content });
+                        });
+                    }
+                });
+
+                if (!timestamped) {
+                    const cleanLines = lines.filter(l => l.trim() !== '');
+                    const step = (audio.duration && !isNaN(audio.duration)) ? audio.duration / cleanLines.length : 3.5;
+                    cleanLines.forEach((content, i) => {
+                        parsed.push({ time: i * step, content: content.trim() });
                     });
                 }
-            });
 
-            if (!timestamped) {
-                const cleanLines = lines.filter(l => l.trim() !== '');
-                const step = (audio.duration && !isNaN(audio.duration)) ? audio.duration / cleanLines.length : 3.5;
-                cleanLines.forEach((content, i) => {
-                    lyrics.push({ time: i * step, content: content.trim() });
-                });
+                parsed.sort((a, b) => a.time - b.time);
             }
 
-            lyrics.sort((a, b) => a.time - b.time);
+            if (!applyToPlayer) return parsed;
+
+            lyrics = parsed;
             renderLyrics();
+            return parsed;
         }
 
         function renderLyrics() {
@@ -1318,7 +1328,11 @@ for (let i = 0; i < barCount; i++) {
         const fetchOnlineBtn = document.getElementById('btn-fetch-online-lrc');
         const fetchStatus = document.getElementById('online-fetch-status');
 
-        async function executeOnlineSync(silent = false) {
+        // applyToPlayer=false fetches/stages the LRC (fills the raw-lrc-input box and
+        // remembers the matched title/artist for later) WITHOUT touching the live
+        // lyrics scroller or the main-page header — used when a local file is only
+        // staged, so it doesn't interrupt a library track that's currently playing.
+        async function executeOnlineSync(silent = false, applyToPlayer = true) {
             const song = songInput.value.trim();
             const artist = artistInput.value.trim();
 
@@ -1351,17 +1365,20 @@ for (let i = 0; i < barCount; i++) {
 
                     if (lrcText) {
                         document.getElementById('raw-lrc-input').value = lrcText;
-                        parseLRC(lrcText);
 
                         onlineTrackTitle = match.trackName;
                         onlineArtistName = match.artistName || 'Unknown Artist';
-                        updateHeaderTitle();
 
                         document.getElementById('lbl-lrc-name').innerText = "✓ Online Synced: " + match.trackName;
 
                         fetchStatus.className = 'text-[10px] font-semibold text-emerald-400 block';
                         fetchStatus.innerText = `✓ Synced LRC Loaded for "${match.trackName}"!`;
-                        resumeAutoSync();
+
+                        if (applyToPlayer) {
+                            parseLRC(lrcText);
+                            updateHeaderTitle();
+                            resumeAutoSync();
+                        }
                     } else {
                         throw new Error("Found track but no synced timestamps available.");
                     }
@@ -1663,11 +1680,13 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
         // --- FILE INPUTS & SMART AUTO-FILL ---
         // Selecting a local file STAGES it (shows the name), pre-fills the Online LRC
-        // Search fields from the filename, and immediately auto-fetches matching lyrics
-        // from LRCLIB. The audio itself is only actually loaded/switched to and
-        // auto-played once the user taps an Apply button (mobile "Apply & Done" or the
-        // desktop "Apply & Auto-Play" button), via loadPendingLocalFile() below — so a
-        // currently playing library track is not interrupted just by selecting a file.
+        // Search fields from the filename, and auto-fetches matching lyrics from LRCLIB
+        // in the background — but only into the raw-LRC textbox (applyToPlayer=false),
+        // NOT onto the main-page lyrics scroller or header. The audio, lyrics, and title
+        // are only actually loaded/switched to and auto-played once the user taps an
+        // Apply button (mobile "Apply & Done" or the desktop "Apply & Auto-Play" button),
+        // via loadPendingLocalFile() below — so a currently playing library track's audio,
+        // lyrics, and title are never interrupted just by selecting a file.
         document.getElementById('audio-file-input').onchange = e => {
             const file = e.target.files[0];
             if (file) {
@@ -1705,7 +1724,11 @@ window.addEventListener('beforeunload', saveLastTrackState);
                 const rawLrcInputEl = document.getElementById('raw-lrc-input');
                 if (rawLrcInputEl) rawLrcInputEl.value = '';
 
-                executeOnlineSync(true);
+                // Stage only (applyToPlayer=false): fills the raw-LRC box and remembers
+                // the matched title for when Apply is pressed, but does NOT touch the
+                // main-page lyrics scroller or header — so a library track currently
+                // playing keeps showing its own lyrics/title until Apply is clicked.
+                executeOnlineSync(true, false);
             }
 
             // Reset so selecting the SAME file again still fires the 'change' event

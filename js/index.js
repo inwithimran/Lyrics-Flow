@@ -160,6 +160,12 @@ document.write(`
             will-change: transform;
         }
 
+        /* Mobile header disc spins a bit faster than the desktop vinyl; desktop keeps
+           its original 16s speed via .desktop-art-spin above. */
+        #track-art-icon {
+            animation-duration: 9s;
+        }
+
         #track-art-icon.playing,
         .desktop-art-spin.playing {
             animation-play-state: running;

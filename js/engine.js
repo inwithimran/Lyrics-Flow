@@ -269,7 +269,7 @@ document.addEventListener('click', (e) => {
             themeColor: '#38BDF8',
             themeRgb: '56, 189, 248',
             themeName: 'CYBER CYAN',
-            visualizerMode: 'bars',
+            visualizerMode: 'circle',
             fontScale: 1.0,
             timeOffset: 0.0,
             eqPreset: 'flat',
@@ -957,6 +957,73 @@ for (let i = 0; i < barCount; i++) {
         ctxBg.globalAlpha = 0.85;
         ctxBg.stroke();
     }
+
+    ctxBg.restore();
+}
+else if (userSettings.visualizerMode === 'nebula') {
+    // Ensure canvas sits in front of ambient background but behind lyric text
+    canvasBg.style.zIndex = '5';
+
+    const containerRect = container.getBoundingClientRect();
+    const cx = containerRect.width > 0 ? (containerRect.left + containerRect.width / 2) : (window.innerWidth / 2);
+    const cy = containerRect.height > 0 ? (containerRect.top + containerRect.height / 2) : (window.innerHeight / 2);
+    const baseRadius = Math.min(containerRect.width || window.innerWidth, containerRect.height || window.innerHeight) * 0.2;
+
+    const now = Date.now() / 1000;
+
+    ctxBg.save();
+    ctxBg.translate(cx, cy);
+    ctxBg.globalCompositeOperation = 'lighter';
+
+    // Three orbiting rings of glowing particles, each spinning at its own speed
+    // and direction, with size/position modulated by live frequency data —
+    // reads like a slowly breathing, drifting galactic nebula.
+    const ringCount = 3;
+    const particlesPerRing = Math.max(8, Math.floor(barCount / ringCount));
+
+    for (let ring = 0; ring < ringCount; ring++) {
+        const ringRadius = baseRadius * (1 + ring * 0.6);
+        const rotSpeed = (ring % 2 === 0 ? 1 : -1) * (0.06 + ring * 0.035);
+        const rotation = now * rotSpeed;
+
+        for (let i = 0; i < particlesPerRing; i++) {
+            const dataIdx = (i * ringCount + ring) % barCount;
+            const amp = smoothBars[dataIdx] / 255;
+            const angle = (i / particlesPerRing) * Math.PI * 2 + rotation;
+            const wobble = Math.sin(now * 1.4 + i * 0.6 + ring * 2) * 8;
+            const r = ringRadius + amp * 55 + wobble;
+
+            const px = Math.cos(angle) * r;
+            const py = Math.sin(angle) * r * 0.55;
+
+            const size = (1.4 + amp * 6) * (1 - ring * 0.15);
+
+            const grad = ctxBg.createRadialGradient(px, py, 0, px, py, size * 3);
+            grad.addColorStop(0, '#ffffff');
+            grad.addColorStop(0.35, userSettings.themeColor);
+            grad.addColorStop(1, 'transparent');
+
+            ctxBg.beginPath();
+            ctxBg.fillStyle = grad;
+            ctxBg.globalAlpha = 0.4 + amp * 0.5;
+            ctxBg.arc(px, py, size * 3, 0, Math.PI * 2);
+            ctxBg.fill();
+        }
+    }
+
+    // Pulsing core at the center, driven by bass energy
+    const bass = (smoothBars[0] + smoothBars[1] + smoothBars[2]) / (3 * 255);
+    const coreRadius = 8 + bass * 20;
+    const coreGrad = ctxBg.createRadialGradient(0, 0, 0, 0, 0, coreRadius * 2.5);
+    coreGrad.addColorStop(0, '#ffffff');
+    coreGrad.addColorStop(0.35, userSettings.themeColor);
+    coreGrad.addColorStop(1, 'transparent');
+
+    ctxBg.beginPath();
+    ctxBg.fillStyle = coreGrad;
+    ctxBg.globalAlpha = 0.85;
+    ctxBg.arc(0, 0, coreRadius * 2.5, 0, Math.PI * 2);
+    ctxBg.fill();
 
     ctxBg.restore();
 }

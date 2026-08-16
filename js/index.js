@@ -1336,9 +1336,10 @@ document.write(`
                     <!-- Visualizer Mode -->
                     <div id="visualizer-section" class="space-y-2 pt-1">
                         <span class="text-[10px] font-bold text-sky-400 uppercase tracking-wider block">Visualizer Style</span>
-                        <div class="grid grid-cols-3 gap-2">
-                            <button class="viz-style-chip m3-tab-pill active justify-center" data-style="bars">Soft Bars</button>
-                            <button class="viz-style-chip m3-tab-pill justify-center" data-style="circle">Galaxy Orbit</button>
+                        <div class="grid grid-cols-2 gap-2">
+                            <button class="viz-style-chip m3-tab-pill active justify-center" data-style="circle">Galaxy Orbit</button>
+                            <button class="viz-style-chip m3-tab-pill justify-center" data-style="bars">Soft Bars</button>
+                            <button class="viz-style-chip m3-tab-pill justify-center" data-style="nebula">Nebula Bloom</button>
                             <button class="viz-style-chip m3-tab-pill justify-center" data-style="off">Disabled</button>
                         </div>
                     </div>

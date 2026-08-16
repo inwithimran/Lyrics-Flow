@@ -311,7 +311,8 @@ document.addEventListener('click', (e) => {
             try {
                 localStorage.setItem(LAST_TRACK_KEY, JSON.stringify({
                     id: activeSongId,
-                    time: audio.currentTime || 0
+                    time: audio.currentTime || 0,
+                    savedAt: Date.now() // timestamp of this save, used to measure how long the app has been closed/backgrounded
                 }));
             } catch (e) {
                 console.error('LocalStorage Write Error:', e);
@@ -531,6 +532,12 @@ document.addEventListener('click', (e) => {
         document.addEventListener('visibilitychange', async () => {
             if (wakeLock !== null && document.visibilityState === 'visible' && userSettings.isWakeLockActive) {
                 await requestWakeLock();
+            }
+            // Capture the "closed/backgrounded" timestamp reliably — on mobile, the app
+            // going to background (home button, switching apps, actually closing) fires
+            // this reliably, whereas 'beforeunload' often does not.
+            if (document.visibilityState === 'hidden') {
+                saveLastTrackState();
             }
         });
 
@@ -1961,9 +1968,10 @@ window.addEventListener('beforeunload', saveLastTrackState);
         applySettingsToUI();
         renderLibraryPlaylist();
 
-        // --- RESUME PLAYBACK CONFIRMATION (only asked when the saved position is 5
-        // minutes/300s or more; below that, the saved position is silently restored) ---
-        const RESUME_PROMPT_THRESHOLD_SECONDS = 300;
+        // --- RESUME PLAYBACK CONFIRMATION (only asked when the app has been
+        // closed/backgrounded for 5 minutes/300000ms or more; below that, the saved
+        // position is silently restored regardless of how far into the song it was) ---
+        const RESUME_PROMPT_GAP_MS = 5 * 60 * 1000;
         const resumeDialog = document.getElementById('resume-dialog');
         const resumeDialogTimeEl = document.getElementById('resume-dialog-time');
         const resumeDialogTrackEl = document.getElementById('resume-dialog-track');
@@ -1994,8 +2002,12 @@ window.addEventListener('beforeunload', saveLastTrackState);
             if (!track) return;
 
             const savedTime = last.time || 0;
+            // If we don't have a savedAt timestamp (data saved before this feature
+            // existed), we can't measure the closed-duration gap — fall back to the
+            // old silent-restore behavior rather than guessing.
+            const gapMs = last.savedAt ? (Date.now() - last.savedAt) : 0;
 
-            if (savedTime >= RESUME_PROMPT_THRESHOLD_SECONDS) {
+            if (last.savedAt && gapMs >= RESUME_PROMPT_GAP_MS) {
                 // Load the track paused at the start; only jump to the saved position if
                 // the user confirms via the Resume Playback popup.
                 loadTrackFromLibrary(track, { autoplay: false });

@@ -1932,18 +1932,16 @@ window.addEventListener('beforeunload', saveLastTrackState);
         document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
 
         document.getElementById('btn-apply-done').onclick = async () => {
-            // If a local file is staged but not yet loaded, load it now, then autoplay.
-            // Library tracks (already loaded via the Music Library sheet) keep their
-            // current play/pause state untouched.
+            // Autoplay ONLY happens when a newly staged local file is actually loaded here.
+            // If no new file was selected (pendingLocalAudioFile is empty), Apply must never
+            // touch playback — whatever the user manually set (playing or paused) stays as-is,
+            // whether the active track is a local file or a library track.
             if (pendingLocalAudioFile) {
                 await loadPendingLocalFile();
                 closeSheet(document.getElementById('studio-sheet'));
                 await triggerPlay();
             } else {
                 closeSheet(document.getElementById('studio-sheet'));
-                if (activeSongId === 'custom-file') {
-                    triggerPlay();
-                }
             }
         };
 
@@ -1951,12 +1949,12 @@ window.addEventListener('beforeunload', saveLastTrackState);
         const dtApplyLocalBtn = document.getElementById('dt-btn-apply-local');
         if (dtApplyLocalBtn) {
             dtApplyLocalBtn.onclick = async () => {
+                // Same rule as above: only a freshly staged file triggers autoplay.
+                // Clicking Apply with no pending file (e.g. just tweaking sync offset while
+                // the current local file is paused) must leave play/pause state untouched.
                 if (pendingLocalAudioFile) {
                     await loadPendingLocalFile();
                     await triggerPlay();
-                } else if (activeSongId === 'custom-file') {
-                    // Already-loaded local file: treat Apply as a resume/play action
-                    triggerPlay();
                 }
             };
         }

@@ -778,7 +778,7 @@ document.write(`
         <div class="absolute inset-0 rounded-full opacity-30 bg-gradient-to-tr from-transparent via-white/40 to-transparent pointer-events-none"></div>
         
         <!-- Center Hole & Ring -->
-        <div class="w-7 h-7 xl:w-8 xl:h-8 rounded-full border-2 border-slate-950 shadow-2xl flex items-center justify-center absolute z-10 bg-slate-800/70 backdrop-blur-xs">
+        <div class="w-9 h-9 xl:w-11 xl:h-11 rounded-full border-2 border-slate-950 shadow-2xl flex items-center justify-center absolute z-10 bg-slate-800/70 backdrop-blur-xs">
             <div class="w-3 h-3 rounded-full bg-slate-900 border border-white/20"></div>
         </div>
     </div>

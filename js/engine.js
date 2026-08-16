@@ -1971,7 +1971,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
         // --- RESUME PLAYBACK CONFIRMATION (only asked when the app has been
         // closed/backgrounded for 5 minutes/300000ms or more; below that, the saved
         // position is silently restored regardless of how far into the song it was) ---
-        const RESUME_PROMPT_GAP_MS = 5 * 60 * 1000;
+        const RESUME_PROMPT_GAP_MS = 1 * 60 * 1000;
         const resumeDialog = document.getElementById('resume-dialog');
         const resumeDialogTimeEl = document.getElementById('resume-dialog-time');
         const resumeDialogTrackEl = document.getElementById('resume-dialog-track');
@@ -1981,15 +1981,17 @@ window.addEventListener('beforeunload', saveLastTrackState);
             if (resumeDialogTrackEl) resumeDialogTrackEl.innerText = track.title || 'this track';
             resumeDialog.classList.add('open');
 
-            document.getElementById('btn-resume-yes').onclick = () => {
+            document.getElementById('btn-resume-yes').onclick = async () => {
                 seekAudioTo(savedTime);
                 resumeDialog.classList.remove('open');
+                await triggerPlay();
             };
-            document.getElementById('btn-resume-no').onclick = () => {
+            document.getElementById('btn-resume-no').onclick = async () => {
                 // Position stays at 0 (never seeked); persist that so a reload doesn't
                 // keep re-prompting for the same old position.
                 saveLastTrackState();
                 resumeDialog.classList.remove('open');
+                await triggerPlay();
             };
         }
 

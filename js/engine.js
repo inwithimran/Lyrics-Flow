@@ -1164,6 +1164,70 @@ for (let i = 0; i < barCount; i++) {
         const searchInput = document.getElementById('library-search-input');
         const clearSearchBtn = document.getElementById('btn-clear-library-search');
 
+        // --- AUTO COVER ART (iTunes Search API) ---
+        // Manual coverUrl/cover fields in musicData.js are no longer used. Every song's
+        // artwork is fetched automatically by title+artist and cached, so the default
+        // cover only shows while a lookup is pending or if the lookup fails.
+        const DEFAULT_COVER_SRC = 'Data/covers/default-cover.jpg';
+        const autoCoverCache = {};
+
+        function autoCoverCacheKey(song) {
+            return `${(song.title || '').trim()}::${(song.artist || '').trim()}`.toLowerCase();
+        }
+
+        async function fetchAutoCover(song) {
+            const key = autoCoverCacheKey(song);
+            if (Object.prototype.hasOwnProperty.call(autoCoverCache, key)) {
+                return autoCoverCache[key];
+            }
+
+            try {
+                const stored = localStorage.getItem('autoCover:' + key);
+                if (stored) {
+                    autoCoverCache[key] = stored;
+                    return stored;
+                }
+            } catch (e) { /* localStorage unavailable, ignore */ }
+
+            try {
+                const term = encodeURIComponent(`${song.title || ''} ${song.artist || ''}`.trim());
+                const res = await fetch(`https://itunes.apple.com/search?term=${term}&media=music&limit=1`);
+                if (!res.ok) throw new Error('iTunes search failed');
+                const data = await res.json();
+                const raw = data.results && data.results[0] && data.results[0].artworkUrl100;
+                const hiRes = raw ? raw.replace('100x100bb', '600x600bb') : null;
+
+                autoCoverCache[key] = hiRes;
+                if (hiRes) {
+                    try { localStorage.setItem('autoCover:' + key, hiRes); } catch (e) { /* ignore quota errors */ }
+                }
+                return hiRes;
+            } catch (e) {
+                autoCoverCache[key] = null;
+                return null;
+            }
+        }
+
+        // Fetches (or reuses the cached) auto cover for a song and applies it to an <img>,
+        // but only if the img is still displaying this same song by the time it resolves.
+        function applyAutoCover(imgEl, song) {
+            if (!imgEl || !song) return;
+            imgEl.src = DEFAULT_COVER_SRC;
+
+            const key = autoCoverCacheKey(song);
+            if (Object.prototype.hasOwnProperty.call(autoCoverCache, key)) {
+                if (autoCoverCache[key]) imgEl.src = autoCoverCache[key];
+                return;
+            }
+
+            fetchAutoCover(song).then(url => {
+                if (url && imgEl.dataset.songKey === key) {
+                    imgEl.src = url;
+                }
+            });
+            imgEl.dataset.songKey = key;
+        }
+
         window.renderLibraryPlaylist = renderLibraryPlaylist;
         function renderLibraryPlaylist() {
             playlistContainer.innerHTML = '';
@@ -1219,8 +1283,9 @@ for (let i = 0; i < barCount; i++) {
 
                 card.innerHTML = `
                     <div class="flex items-center gap-3 min-w-0">
-                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
-                            ${isSelected ? activeIconHtml : `<span class="library-track-index text-[10px] font-mono font-bold">${String(index + 1).padStart(2, '0')}</span>`}
+                        <div class="relative w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
+                            <img class="library-track-cover absolute inset-0 w-full h-full object-cover" alt="">
+                            ${isSelected ? `<div class="relative z-10 flex items-center justify-center w-full h-full" style="background-color: rgba(var(--m3-primary-rgb), 0.5);">${activeIconHtml}</div>` : `<span class="library-track-index relative z-10 text-[10px] font-mono font-bold" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">${String(index + 1).padStart(2, '0')}</span>`}
                         </div>
                         <div class="min-w-0">
                             <div class="flex items-center gap-1.5 min-w-0">
@@ -1237,6 +1302,9 @@ for (let i = 0; i < barCount; i++) {
 
                 card.onclick = () => loadTrackFromLibrary(song);
                 playlistContainer.appendChild(card);
+
+                const cardCoverImg = card.querySelector('.library-track-cover');
+                applyAutoCover(cardCoverImg, song);
             });
         }
 
@@ -1296,13 +1364,7 @@ for (let i = 0; i < barCount; i++) {
             const coverImg = document.getElementById('desktop-cover-img');
             if (coverImg) {
                 delete coverImg.dataset.fallback;
-                if (song.coverUrl) {
-                    coverImg.src = song.coverUrl;
-                } else if (song.cover) {
-                    coverImg.src = song.cover;
-                } else {
-                    coverImg.src = 'Data/covers/default-cover.jpg';
-                }
+                applyAutoCover(coverImg, song);
             }
 
             if (song.id === activeSongId) {

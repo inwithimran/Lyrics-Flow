@@ -1662,12 +1662,12 @@ window.addEventListener('beforeunload', saveLastTrackState);
         document.getElementById('btn-cancel-sleep').onclick = clearSleepTimer;
 
         // --- FILE INPUTS & SMART AUTO-FILL ---
-        // Selecting a local file only STAGES it (shows the name + pre-fills the Online LRC
-        // Search fields from the filename) — it does NOT interrupt whatever is currently
-        // playing (e.g. a library track) and does NOT touch the main lyrics view. The file
-        // is only actually loaded, synced, and auto-played once the user taps an Apply
-        // button (mobile "Apply & Done" or the desktop "Apply & Auto-Play" button), via
-        // loadPendingLocalFile() below.
+        // Selecting a local file STAGES it (shows the name), pre-fills the Online LRC
+        // Search fields from the filename, and immediately auto-fetches matching lyrics
+        // from LRCLIB. The audio itself is only actually loaded/switched to and
+        // auto-played once the user taps an Apply button (mobile "Apply & Done" or the
+        // desktop "Apply & Auto-Play" button), via loadPendingLocalFile() below — so a
+        // currently playing library track is not interrupted just by selecting a file.
         document.getElementById('audio-file-input').onchange = e => {
             const file = e.target.files[0];
             if (file) {
@@ -1679,9 +1679,8 @@ window.addEventListener('beforeunload', saveLastTrackState);
                 const dtLblAudio = document.getElementById('dt-lbl-audio-name');
                 if (dtLblAudio) dtLblAudio.innerText = file.name;
 
-                // Pre-fill the Online LRC Search fields (mobile + desktop, kept in sync via
-                // the bridge script) from the filename, purely as a convenience — this does
-                // NOT trigger a fetch or change the currently displayed lyrics.
+                // Pre-fill the Online LRC Search fields (mobile modal + desktop sidebar)
+                // from the filename, then auto-fetch matching lyrics right away.
                 const rawName = file.name.replace(/\.[^/.]+$/, "");
                 let guessedArtist = '';
                 let guessedTitle = rawName;
@@ -1690,8 +1689,23 @@ window.addEventListener('beforeunload', saveLastTrackState);
                     guessedArtist = parts[0].trim();
                     guessedTitle = parts.slice(1).join('-').trim();
                 }
+
                 if (songInput) songInput.value = guessedTitle;
                 if (artistInput) artistInput.value = guessedArtist;
+
+                const dtSongInputEl = document.getElementById('dt-online-song-input');
+                const dtArtistInputEl = document.getElementById('dt-online-artist-input');
+                if (dtSongInputEl) dtSongInputEl.value = guessedTitle;
+                if (dtArtistInputEl) dtArtistInputEl.value = guessedArtist;
+
+                // Clear any lyrics/title left over from a previously staged (but un-applied)
+                // file selection, so a failed fetch here doesn't leak stale data into Apply.
+                onlineTrackTitle = '';
+                onlineArtistName = '';
+                const rawLrcInputEl = document.getElementById('raw-lrc-input');
+                if (rawLrcInputEl) rawLrcInputEl.value = '';
+
+                executeOnlineSync(true);
             }
 
             // Reset so selecting the SAME file again still fires the 'change' event
@@ -1699,8 +1713,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
         };
 
         // Actually loads the staged local file into the player: sets it as the active
-        // source, resets the cover to default, auto-fills title/artist from the filename,
-        // and kicks off online lyric sync. Returns true if a pending file was applied.
+        // source and resets the cover to default. Lyrics were already auto-fetched (and
+        // the header/search fields already updated) at selection time, so this just
+        // re-parses whatever LRC is currently staged rather than fetching again.
         async function loadPendingLocalFile() {
             const file = pendingLocalAudioFile;
             if (!file) return false;
@@ -1715,27 +1730,30 @@ window.addEventListener('beforeunload', saveLastTrackState);
                 coverImg.src = 'Data/covers/default-cover.jpg';
             }
 
+            // Fallback title/artist guessed from the filename — only used by updateHeaderTitle()
+            // if the online auto-fetch (triggered at selection time) didn't find a match.
             const rawName = file.name.replace(/\.[^/.]+$/, "");
-
             if (rawName.includes('-')) {
                 const parts = rawName.split('-');
                 fileArtistName = parts[0].trim();
                 fileTrackTitle = parts.slice(1).join('-').trim();
-                artistInput.value = fileArtistName;
-                songInput.value = fileTrackTitle;
             } else {
                 fileTrackTitle = rawName;
                 fileArtistName = '';
-                songInput.value = rawName;
-                artistInput.value = '';
             }
 
-            onlineTrackTitle = '';
-            onlineArtistName = '';
             updateHeaderTitle();
-
             renderLibraryPlaylist();
-            executeOnlineSync(true);
+
+            // Reuse the lyrics already fetched at selection time instead of fetching again;
+            // only hit LRCLIB now if that earlier auto-fetch didn't find anything.
+            const rawLrcVal = document.getElementById('raw-lrc-input').value;
+            if (rawLrcVal && rawLrcVal.trim()) {
+                parseLRC(rawLrcVal);
+            } else {
+                executeOnlineSync(true);
+            }
+
             resumeAutoSync();
 
             pendingLocalAudioFile = null;

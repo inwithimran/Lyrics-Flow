@@ -1,1 +1,1866 @@
-const _0x416eb4=_0x4229;(function(_0x43de3a,_0x2a2f63){const _0x2e68ff=_0x4229,_0x174e4e=_0x43de3a();while(!![]){try{const _0x57cebb=parseInt(_0x2e68ff(0x2a1))/0x1*(parseInt(_0x2e68ff(0x22e))/0x2)+-parseInt(_0x2e68ff(0x377))/0x3*(-parseInt(_0x2e68ff(0x137))/0x4)+-parseInt(_0x2e68ff(0x219))/0x5+-parseInt(_0x2e68ff(0x41b))/0x6+parseInt(_0x2e68ff(0x360))/0x7+parseInt(_0x2e68ff(0x2c1))/0x8+-parseInt(_0x2e68ff(0x29f))/0x9*(parseInt(_0x2e68ff(0x416))/0xa);if(_0x57cebb===_0x2a2f63)break;else _0x174e4e['push'](_0x174e4e['shift']());}catch(_0x49db6a){_0x174e4e['push'](_0x174e4e['shift']());}}}(_0x880e,0xbb45c));function escapeHTML(_0xe7156d){const _0x51b08d=_0x4229;return String(_0xe7156d??'')[_0x51b08d(0x3a0)](/[&<>"']/g,_0xe12c45=>({'&':_0x51b08d(0x22b),'<':_0x51b08d(0x414),'>':_0x51b08d(0x236),'\x22':_0x51b08d(0x44d),'\x27':_0x51b08d(0x135)}[_0xe12c45]));}function openSheet(_0x53133c){const _0xf4ba5f=_0x4229;if(!_0x53133c)return;_0x53133c[_0xf4ba5f(0x25c)][_0xf4ba5f(0x32e)](_0xf4ba5f(0x2da)),_0x53133c['id']===_0xf4ba5f(0x346)+_0xf4ba5f(0x17d)&&(typeof window[_0xf4ba5f(0x2ba)+_0xf4ba5f(0x16a)+'t']===_0xf4ba5f(0x174)&&window[_0xf4ba5f(0x2ba)+_0xf4ba5f(0x16a)+'t'](),typeof window[_0xf4ba5f(0x39f)+_0xf4ba5f(0x464)]===_0xf4ba5f(0x174)&&window[_0xf4ba5f(0x39f)+_0xf4ba5f(0x464)]());}function closeSheet(_0x30dcc5){const _0x5ad6d5=_0x4229;if(_0x30dcc5)_0x30dcc5[_0x5ad6d5(0x25c)][_0x5ad6d5(0x36e)](_0x5ad6d5(0x2da));}function switchTab(_0x392845){const _0x561137=_0x4229;document[_0x561137(0x370)+_0x561137(0x170)](_0x561137(0x39b)+_0x561137(0x314)+'b]')[_0x561137(0x399)](_0x151efa=>{const _0x254e6e=_0x561137;_0x151efa[_0x254e6e(0x25c)][_0x254e6e(0x3ad)](_0x254e6e(0x386),_0x151efa[_0x254e6e(0x3cf)][_0x254e6e(0x36b)]===_0x392845);}),document[_0x561137(0x370)+_0x561137(0x170)](_0x561137(0x294))[_0x561137(0x399)](_0x3cc31d=>{const _0x1d9377=_0x561137;_0x3cc31d[_0x1d9377(0x25c)][_0x1d9377(0x3ad)](_0x1d9377(0x25e),_0x3cc31d['id']!==_0x392845);});}document[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x48d),_0x231a6c=>{const _0x45809f=_0x416eb4,_0x2e541b=_0x231a6c[_0x45809f(0x43d)][_0x45809f(0x213)](_0x45809f(0x2ed)+_0x45809f(0x456));if(!_0x2e541b)return;const _0x42c8b7=_0x2e541b[_0x45809f(0x3cf)][_0x45809f(0x24d)+'t']||_0x45809f(0x410)+'et',_0x4520d7=_0x2e541b[_0x45809f(0x3cf)][_0x45809f(0x1fb)],_0x538841=_0x2e541b[_0x45809f(0x3cf)][_0x45809f(0x483)],_0x141c1b=document[_0x45809f(0x391)+_0x45809f(0x363)](_0x42c8b7);_0x141c1b&&typeof openSheet===_0x45809f(0x174)&&openSheet(_0x141c1b),_0x4520d7&&typeof switchTab===_0x45809f(0x174)&&switchTab(_0x4520d7),_0x538841&&requestAnimationFrame(()=>{setTimeout(()=>{const _0x341921=_0x4229,_0x524970=document[_0x341921(0x391)+_0x341921(0x363)](_0x538841);_0x524970&&(_0x524970[_0x341921(0x427)+_0x341921(0x1bb)]({'behavior':_0x341921(0x31c),'block':_0x341921(0x2bf)}),setTimeout(()=>{const _0x53651c=_0x341921;document[_0x53651c(0x370)+_0x53651c(0x170)](_0x53651c(0x28d)+_0x53651c(0x392)+_0x53651c(0x3ee))[_0x53651c(0x399)](_0x3f6757=>{const _0x48fc55=_0x53651c;_0x3f6757[_0x48fc55(0x25c)][_0x48fc55(0x36e)](_0x48fc55(0x325)+_0x48fc55(0x2fe)+'ht');}),void _0x524970[_0x53651c(0x424)+'h'],_0x524970[_0x53651c(0x25c)][_0x53651c(0x32e)](_0x53651c(0x325)+_0x53651c(0x2fe)+'ht'),setTimeout(()=>{const _0x32bd4f=_0x53651c;_0x524970[_0x32bd4f(0x25c)][_0x32bd4f(0x36e)](_0x32bd4f(0x325)+_0x32bd4f(0x2fe)+'ht');},0x898);},0x190));},0x190);});}),document[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x406)+_0x416eb4(0x155),()=>{const _0x1bea51=_0x416eb4,_0xb44308=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x2b5)+_0x1bea51(0x447)),_0x2a64d7=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x2b5)+_0x1bea51(0x366)+'ut'),_0x21d359=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x240)+_0x1bea51(0x293)+_0x1bea51(0x342)),_0x5a2f39=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x2b5)+_0x1bea51(0x402)+'us'),_0x317e17=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x3be)+_0x1bea51(0x3b8)),_0x4a48d9=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x177)+_0x1bea51(0x315)),_0x4f665b=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x3de)+_0x1bea51(0x2a8)),_0x45b277=document[_0x1bea51(0x391)+_0x1bea51(0x363)](_0x1bea51(0x2f7)+_0x1bea51(0x175));if(!_0x21d359||!_0x4f665b)return;_0x21d359[_0x1bea51(0x23c)+_0x1bea51(0x341)](_0x1bea51(0x48d),()=>{const _0x2110cd=_0x1bea51;if(_0x317e17)_0x317e17[_0x2110cd(0x13e)]=_0xb44308?_0xb44308[_0x2110cd(0x13e)]:'';if(_0x4a48d9)_0x4a48d9[_0x2110cd(0x13e)]=_0x2a64d7?_0x2a64d7[_0x2110cd(0x13e)]:'';_0x4f665b[_0x2110cd(0x48d)]();});_0xb44308&&_0x317e17&&(_0xb44308[_0x1bea51(0x23c)+_0x1bea51(0x341)](_0x1bea51(0x38e),()=>_0x317e17[_0x1bea51(0x13e)]=_0xb44308[_0x1bea51(0x13e)]),_0x317e17[_0x1bea51(0x23c)+_0x1bea51(0x341)](_0x1bea51(0x38e),()=>_0xb44308[_0x1bea51(0x13e)]=_0x317e17[_0x1bea51(0x13e)]));_0x2a64d7&&_0x4a48d9&&(_0x2a64d7[_0x1bea51(0x23c)+_0x1bea51(0x341)](_0x1bea51(0x38e),()=>_0x4a48d9[_0x1bea51(0x13e)]=_0x2a64d7[_0x1bea51(0x13e)]),_0x4a48d9[_0x1bea51(0x23c)+_0x1bea51(0x341)](_0x1bea51(0x38e),()=>_0x2a64d7[_0x1bea51(0x13e)]=_0x4a48d9[_0x1bea51(0x13e)]));if(_0x45b277&&_0x5a2f39){const _0x356f43=new MutationObserver(()=>{const _0x172fe1=_0x1bea51;_0x5a2f39[_0x172fe1(0x37f)+'t']=_0x45b277[_0x172fe1(0x37f)+'t'],_0x5a2f39[_0x172fe1(0x48c)]=_0x45b277[_0x172fe1(0x48c)],_0x45b277[_0x172fe1(0x25c)][_0x172fe1(0x35d)](_0x172fe1(0x25e))?_0x5a2f39[_0x172fe1(0x25c)][_0x172fe1(0x32e)](_0x172fe1(0x25e)):_0x5a2f39[_0x172fe1(0x25c)][_0x172fe1(0x36e)](_0x172fe1(0x25e));});_0x356f43[_0x1bea51(0x441)](_0x45b277,{'attributes':!![],'childList':!![],'characterData':!![],'subtree':!![]});}}),document[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x406)+_0x416eb4(0x155),()=>{const _0x2c514c=_0x416eb4,_0xfe1a7f=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x407)+'er'),_0x2dc988=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x15e)+_0x2c514c(0x134)),_0x5f4ab4=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x194)),_0x492cf7=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x296)+_0x2c514c(0x3d5)),_0x3c90d7=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x437)),_0x1fc78d=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x368)+_0x2c514c(0x3d5));let _0x51f74a=0x1;_0x2dc988&&_0xfe1a7f&&_0x2dc988[_0x2c514c(0x23c)+_0x2c514c(0x341)](_0x2c514c(0x38e),_0x4b4217=>{const _0x34d900=_0x2c514c,_0x5a1a14=parseFloat(_0x4b4217[_0x34d900(0x43d)][_0x34d900(0x13e)]);_0xfe1a7f[_0x34d900(0x339)]=_0x5a1a14,_0x3e7db7(_0x5a1a14);});const _0x69bae=()=>{const _0x3fd537=_0x2c514c;if(_0xfe1a7f[_0x3fd537(0x339)]>0x0){_0x51f74a=_0xfe1a7f[_0x3fd537(0x339)],_0xfe1a7f[_0x3fd537(0x339)]=0x0;if(_0x2dc988)_0x2dc988[_0x3fd537(0x13e)]=0x0;_0x3e7db7(0x0);}else{_0xfe1a7f[_0x3fd537(0x339)]=_0x51f74a||0x1;if(_0x2dc988)_0x2dc988[_0x3fd537(0x13e)]=_0xfe1a7f[_0x3fd537(0x339)];_0x3e7db7(_0xfe1a7f[_0x3fd537(0x339)]);}};if(_0x5f4ab4&&_0xfe1a7f)_0x5f4ab4[_0x2c514c(0x23c)+_0x2c514c(0x341)](_0x2c514c(0x48d),_0x69bae);if(_0x492cf7&&_0xfe1a7f)_0x492cf7[_0x2c514c(0x23c)+_0x2c514c(0x341)](_0x2c514c(0x48d),_0x69bae);window[_0x2c514c(0x1ce)]=_0x69bae,window[_0x2c514c(0x1dc)]=_0x1704e0=>{const _0x2d9d26=_0x2c514c,_0x2f9c5a=Math[_0x2d9d26(0x2e9)](0x0,Math[_0x2d9d26(0x197)](0x1,(_0xfe1a7f[_0x2d9d26(0x339)]||0x0)+_0x1704e0));_0xfe1a7f[_0x2d9d26(0x339)]=_0x2f9c5a;if(_0x2dc988)_0x2dc988[_0x2d9d26(0x13e)]=_0x2f9c5a;_0x3e7db7(_0x2f9c5a);};function _0x3e7db7(_0x4090fc){const _0x38be21=_0x2c514c;[_0x3c90d7,_0x1fc78d][_0x38be21(0x399)](_0x444b9a=>{const _0x40c187=_0x38be21;if(!_0x444b9a)return;_0x444b9a[_0x40c187(0x48c)]='';if(_0x4090fc===0x0)_0x444b9a[_0x40c187(0x48c)]=_0x40c187(0x222)+_0x40c187(0x3cb)+_0x40c187(0x182)+_0x40c187(0x311)+_0x40c187(0x153);else _0x4090fc<0.5?_0x444b9a[_0x40c187(0x48c)]=_0x40c187(0x222)+_0x40c187(0x234)+_0x40c187(0x2d5)+_0x40c187(0x40d)+_0x40c187(0x362):_0x444b9a[_0x40c187(0x48c)]=_0x40c187(0x222)+_0x40c187(0x388)+_0x40c187(0x172)+_0x40c187(0x22f)+_0x40c187(0x3c0);_0x444b9a[_0x40c187(0x268)][_0x40c187(0x144)]=_0x40c187(0x184),_0x444b9a[_0x40c187(0x268)][_0x40c187(0x36c)]=_0x40c187(0x2bf);});}const _0x137de3=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x3ef)+'e'),_0x51e225=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x29a)+'st'),_0xcdcbd9=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x41d)+_0x2c514c(0x313)),_0x1f8518=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x41d)+_0x2c514c(0x445)),_0x34867a=document[_0x2c514c(0x370)+_0x2c514c(0x397)](_0x2c514c(0x24b)+_0x2c514c(0x418)),_0x468c2e=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x21b)+_0x2c514c(0x34f));if(_0x137de3&&_0xcdcbd9){const _0x1cf064=new MutationObserver(()=>{const _0x40ecf8=_0x2c514c;_0xcdcbd9[_0x40ecf8(0x37f)+'t']=_0x137de3[_0x40ecf8(0x37f)+'t'],_0x1f8518[_0x40ecf8(0x37f)+'t']=_0x51e225[_0x40ecf8(0x37f)+'t'],_0x468c2e&&_0x34867a&&(_0x468c2e[_0x40ecf8(0x25c)][_0x40ecf8(0x35d)](_0x40ecf8(0x1f6))?_0x34867a[_0x40ecf8(0x25c)][_0x40ecf8(0x32e)](_0x40ecf8(0x1f6)):_0x34867a[_0x40ecf8(0x25c)][_0x40ecf8(0x36e)](_0x40ecf8(0x1f6)));});_0x1cf064[_0x2c514c(0x441)](_0x137de3,{'childList':!![],'characterData':!![],'subtree':!![]});if(_0x468c2e){const _0x566df8=new MutationObserver(()=>{const _0x2fd7d8=_0x2c514c;_0x468c2e[_0x2fd7d8(0x25c)][_0x2fd7d8(0x35d)](_0x2fd7d8(0x1f6))?_0x34867a[_0x2fd7d8(0x25c)][_0x2fd7d8(0x32e)](_0x2fd7d8(0x1f6)):_0x34867a[_0x2fd7d8(0x25c)][_0x2fd7d8(0x36e)](_0x2fd7d8(0x1f6));});_0x566df8[_0x2c514c(0x441)](_0x468c2e,{'attributes':!![],'attributeFilter':[_0x2c514c(0x347)]});}}const _0x3a1a6a=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x1e4)+_0x2c514c(0x42d)),_0x58eedf=document[_0x2c514c(0x391)+_0x2c514c(0x363)](_0x2c514c(0x1e4)+_0x2c514c(0x45c));_0x3a1a6a&&_0x3a1a6a[_0x2c514c(0x23c)+_0x2c514c(0x341)](_0x2c514c(0x48d),()=>{const _0x2d5402=_0x2c514c;if(typeof adjustOffset===_0x2d5402(0x174))adjustOffset(0.1);}),_0x58eedf&&_0x58eedf[_0x2c514c(0x23c)+_0x2c514c(0x341)](_0x2c514c(0x48d),()=>{const _0x36d930=_0x2c514c;if(typeof adjustOffset===_0x36d930(0x174))adjustOffset(-0.1);});});const DEFAULT_SETTINGS={'isWakeLockActive':!![],'themeColor':_0x416eb4(0x422),'themeRgb':_0x416eb4(0x310)+'48','themeName':_0x416eb4(0x30e),'visualizerMode':_0x416eb4(0x1de),'fontScale':0x1,'timeOffset':0x0,'eqPreset':_0x416eb4(0x13b),'eqBands':[0x0,0x0,0x0,0x0,0x0],'playbackMode':_0x416eb4(0x1d4)},STORAGE_KEY=_0x416eb4(0x169)+_0x416eb4(0x3dd)+_0x416eb4(0x318);function loadSavedSettings(){const _0x3fc6b7=_0x416eb4,_0x155849=(function(){let _0x49e3a3=!![];return function(_0x3c3ec9,_0x328c3e){const _0x55e707=_0x49e3a3?function(){const _0x36f580=_0x4229;if(_0x328c3e){const _0x3ecbdf=_0x328c3e[_0x36f580(0x41a)](_0x3c3ec9,arguments);return _0x328c3e=null,_0x3ecbdf;}}:function(){};return _0x49e3a3=![],_0x55e707;};}()),_0x5d05f9=_0x155849(this,function(){const _0x1fb8aa=_0x4229;let _0x22d643;try{const _0x39a773=Function(_0x1fb8aa(0x352)+_0x1fb8aa(0x3a8)+(_0x1fb8aa(0x149)+_0x1fb8aa(0x192)+_0x1fb8aa(0x274)+'\x20)')+');');_0x22d643=_0x39a773();}catch(_0x46da67){_0x22d643=window;}const _0x386a1f=new RegExp(_0x1fb8aa(0x385)+_0x1fb8aa(0x254)+_0x1fb8aa(0x3b2)+_0x1fb8aa(0x2ff)+_0x1fb8aa(0x468)+_0x1fb8aa(0x2ca),'g'),_0xff8a3e=(_0x1fb8aa(0x38d)+_0x1fb8aa(0x353)+_0x1fb8aa(0x128)+_0x1fb8aa(0x2c9)+_0x1fb8aa(0x423)+_0x1fb8aa(0x301)+_0x1fb8aa(0x150)+_0x1fb8aa(0x446))[_0x1fb8aa(0x3a0)](_0x386a1f,'')[_0x1fb8aa(0x1be)](';');let _0x512f96,_0x41b618,_0x424ba5,_0x24df97;const _0x51da8b=function(_0x238676,_0x394113,_0xddce42){const _0x575200=_0x1fb8aa;if(_0x238676[_0x575200(0x171)]!=_0x394113)return![];for(let _0x35972=0x0;_0x35972<_0x394113;_0x35972++){for(let _0x16d4ff=0x0;_0x16d4ff<_0xddce42[_0x575200(0x171)];_0x16d4ff+=0x2){if(_0x35972==_0xddce42[_0x16d4ff]&&_0x238676[_0x575200(0x3ca)](_0x35972)!=_0xddce42[_0x16d4ff+0x1])return![];}}return!![];},_0x55b1b8=function(_0x6ba031,_0x23e5a9,_0x4c52a2){return _0x51da8b(_0x23e5a9,_0x4c52a2,_0x6ba031);},_0x31c2dd=function(_0x5d1e97,_0x404bcb,_0x5bcfd9){return _0x55b1b8(_0x404bcb,_0x5d1e97,_0x5bcfd9);},_0x5804f6=function(_0x287ecf,_0x5c1550,_0x66ad6f){return _0x31c2dd(_0x5c1550,_0x66ad6f,_0x287ecf);};for(let _0x100131 in _0x22d643){if(_0x51da8b(_0x100131,0x8,[0x7,0x74,0x5,0x65,0x3,0x75,0x0,0x64])){_0x512f96=_0x100131;break;}}for(let _0x3a9b90 in _0x22d643[_0x512f96]){if(_0x5804f6(0x6,_0x3a9b90,[0x5,0x6e,0x0,0x64])){_0x41b618=_0x3a9b90;break;}}for(let _0x55f671 in _0x22d643[_0x512f96]){if(_0x31c2dd(_0x55f671,[0x7,0x6e,0x0,0x6c],0x8)){_0x424ba5=_0x55f671;break;}}if(!('~'>_0x41b618))for(let _0x11a93e in _0x22d643[_0x512f96][_0x424ba5]){if(_0x55b1b8([0x7,0x65,0x0,0x68],_0x11a93e,0x8)){_0x24df97=_0x11a93e;break;}}if(!_0x512f96||!_0x22d643[_0x512f96])return;const _0x5b1baf=_0x22d643[_0x512f96][_0x41b618],_0x1b1fc6=!!_0x22d643[_0x512f96][_0x424ba5]&&_0x22d643[_0x512f96][_0x424ba5][_0x24df97],_0x57cc0f=_0x5b1baf||_0x1b1fc6;if(!_0x57cc0f)return;let _0x57a139=![];for(let _0x114886=0x0;_0x114886<_0xff8a3e[_0x1fb8aa(0x171)];_0x114886++){const _0x13e5b8=_0xff8a3e[_0x114886],_0xf6255=_0x13e5b8[0x0]===String[_0x1fb8aa(0x242)+'de'](0x2e)?_0x13e5b8[_0x1fb8aa(0x15c)](0x1):_0x13e5b8,_0x355e5e=_0x57cc0f[_0x1fb8aa(0x171)]-_0xf6255[_0x1fb8aa(0x171)],_0x892b59=_0x57cc0f[_0x1fb8aa(0x46a)](_0xf6255,_0x355e5e),_0x2ed39b=_0x892b59!==-0x1&&_0x892b59===_0x355e5e;_0x2ed39b&&((_0x57cc0f[_0x1fb8aa(0x171)]==_0x13e5b8[_0x1fb8aa(0x171)]||_0x13e5b8[_0x1fb8aa(0x46a)]('.')===0x0)&&(_0x57a139=!![]));}if(!_0x57a139){const _0x255cb6=new RegExp(_0x1fb8aa(0x340)+_0x1fb8aa(0x1e5)+_0x1fb8aa(0x26c)+_0x1fb8aa(0x264)+_0x1fb8aa(0x19e)+_0x1fb8aa(0x42c)+_0x1fb8aa(0x190),'g'),_0x3b88ec=(_0x1fb8aa(0x159)+_0x1fb8aa(0x193)+_0x1fb8aa(0x258)+_0x1fb8aa(0x2a4)+_0x1fb8aa(0x32b)+_0x1fb8aa(0x3fe)+_0x1fb8aa(0x1d7)+_0x1fb8aa(0x2b0)+_0x1fb8aa(0x2f3)+_0x1fb8aa(0x3f6))[_0x1fb8aa(0x3a0)](_0x255cb6,'');_0x22d643[_0x512f96][_0x424ba5]=_0x3b88ec;}});_0x5d05f9();const _0x4c2d84=(function(){let _0x27776c=!![];return function(_0x57bc56,_0x56e7cc){const _0x2886d3=_0x27776c?function(){const _0x1d535d=_0x4229;if(_0x56e7cc){const _0x5b5b47=_0x56e7cc[_0x1d535d(0x41a)](_0x57bc56,arguments);return _0x56e7cc=null,_0x5b5b47;}}:function(){};return _0x27776c=![],_0x2886d3;};}());(function(){_0x4c2d84(this,function(){const _0x348375=_0x4229,_0x39e5e9=new RegExp(_0x348375(0x21f)+_0x348375(0x452)),_0xa76479=new RegExp(_0x348375(0x2d7)+_0x348375(0x200)+_0x348375(0x257)+_0x348375(0x419),'i'),_0x4a81f0=_0xe50027(_0x348375(0x17e));!_0x39e5e9[_0x348375(0x1c4)](_0x4a81f0+_0x348375(0x201))||!_0xa76479[_0x348375(0x1c4)](_0x4a81f0+_0x348375(0x38e))?_0x4a81f0('0'):_0xe50027();})();}());try{const _0x3ff104=localStorage[_0x3fc6b7(0x33c)](STORAGE_KEY);return _0x3ff104?{...DEFAULT_SETTINGS,...JSON[_0x3fc6b7(0x288)](_0x3ff104)}:{...DEFAULT_SETTINGS};}catch(_0x5a66ec){return console[_0x3fc6b7(0x12c)](_0x3fc6b7(0x209)+_0x3fc6b7(0x359)+_0x3fc6b7(0x136),_0x5a66ec),{...DEFAULT_SETTINGS};}}let userSettings=loadSavedSettings();function saveSettings(){const _0x1e84aa=_0x416eb4;try{localStorage[_0x1e84aa(0x25f)](STORAGE_KEY,JSON[_0x1e84aa(0x319)](userSettings));}catch(_0x10b309){console[_0x1e84aa(0x12c)](_0x1e84aa(0x209)+_0x1e84aa(0x3aa)+_0x1e84aa(0x223),_0x10b309);}}const LAST_TRACK_KEY=_0x416eb4(0x169)+_0x416eb4(0x211)+_0x416eb4(0x3fd);function saveLastTrackState(){const _0x55f356=_0x416eb4;if(!activeSongId||activeSongId===_0x55f356(0x27d)+'e')return;try{localStorage[_0x55f356(0x25f)](LAST_TRACK_KEY,JSON[_0x55f356(0x319)]({'id':activeSongId,'time':audio[_0x55f356(0x455)+'e']||0x0}));}catch(_0x1a57cd){console[_0x55f356(0x12c)](_0x55f356(0x209)+_0x55f356(0x3aa)+_0x55f356(0x223),_0x1a57cd);}}function loadLastTrackState(){const _0x43b580=_0x416eb4;try{const _0x381b83=localStorage[_0x43b580(0x33c)](LAST_TRACK_KEY);return _0x381b83?JSON[_0x43b580(0x288)](_0x381b83):null;}catch(_0x4f2da7){return console[_0x43b580(0x12c)](_0x43b580(0x209)+_0x43b580(0x359)+_0x43b580(0x136),_0x4f2da7),null;}}const audio=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x407)+'er'),scroller=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x34b)+_0x416eb4(0x459)),container=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x364)+_0x416eb4(0x2e8)),btnPlayPause=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2f5)+_0x416eb4(0x2a6)),btnPlayPauseMob=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2f5)+_0x416eb4(0x3db)),scrubber=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x21e)+_0x416eb4(0x3bc)),currTimeLbl=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x338)),durTimeLbl=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x331)),resumeSyncBtn=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x3e5)+_0x416eb4(0x430)),trackArtIcon=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x21b)+_0x416eb4(0x34f));let onlineTrackTitle='',onlineArtistName='',fileTrackTitle='',fileArtistName='',activeSongId=null,searchQuery='',currentBlobUrl=null,activeFetchController=null,wakeLock=null;const canvasBar=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x420)+_0x416eb4(0x411)),ctxBar=canvasBar[_0x416eb4(0x326)]('2d'),canvasBg=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x420)+_0x416eb4(0x39d)),ctxBg=canvasBg[_0x416eb4(0x326)]('2d');let lyrics=[],activeIndex=-0x1,isAutoScrollLocked=![],audioCtx,analyser,dataArray,sourceNode,eqBands=[];const EQ_FREQS=[0x3c,0xe6,0x38e,0xfa0,0x36b0];let sleepEndTime=null,sleepTimerTimeout=null,sleepIntervalId=null,isDragging=![],dragStartY=0x0,dragStartTransformY=0x0,totalDragDistance=0x0,isScrubbing=![],barCount=window[_0x416eb4(0x215)]>=0x300?0x80:0x40,smoothBars=new Array(0x80)[_0x416eb4(0x475)](0x0),barVelocities=new Array(0x80)[_0x416eb4(0x475)](0x0);async function setAudioSource(_0x4bd36e){const _0x48b3ab=_0x416eb4;activeFetchController&&(activeFetchController[_0x48b3ab(0x165)](),activeFetchController=null);currentBlobUrl&&(URL[_0x48b3ab(0x269)+_0x48b3ab(0x1bc)](currentBlobUrl),currentBlobUrl=null);if(!_0x4bd36e)return;audio[_0x48b3ab(0x3e7)+'n']=_0x48b3ab(0x289);if(_0x4bd36e instanceof File||_0x4bd36e instanceof Blob){currentBlobUrl=URL[_0x48b3ab(0x123)+_0x48b3ab(0x1bc)](_0x4bd36e),audio[_0x48b3ab(0x321)]=currentBlobUrl;return;}if(typeof _0x4bd36e===_0x48b3ab(0x12f)){audio[_0x48b3ab(0x321)]=_0x4bd36e;if(_0x4bd36e[_0x48b3ab(0x33f)](_0x48b3ab(0x2aa))||_0x4bd36e[_0x48b3ab(0x33f)](_0x48b3ab(0x3d0))){const _0x3f6bec=new AbortController();activeFetchController=_0x3f6bec,fetch(_0x4bd36e,{'signal':_0x3f6bec[_0x48b3ab(0x12d)]})[_0x48b3ab(0x142)](_0x866dd0=>{const _0x286c0b=_0x48b3ab;if(!_0x866dd0['ok'])throw new Error(_0x286c0b(0x3ac)+_0x286c0b(0x33a)+_0x286c0b(0x1a6));return _0x866dd0[_0x286c0b(0x298)]();})[_0x48b3ab(0x142)](_0x39f5cb=>{const _0x3415d2=_0x48b3ab;if(activeFetchController!==_0x3f6bec)return;const _0x4fbdae=audio[_0x3415d2(0x455)+'e']||0x0,_0x1d0a47=audio[_0x3415d2(0x47b)];if(currentBlobUrl)URL[_0x3415d2(0x269)+_0x3415d2(0x1bc)](currentBlobUrl);currentBlobUrl=URL[_0x3415d2(0x123)+_0x3415d2(0x1bc)](_0x39f5cb),audio[_0x3415d2(0x321)]=currentBlobUrl;const _0x443237=()=>{const _0x25573c=_0x3415d2;seekAudioTo(_0x4fbdae),!_0x1d0a47&&triggerPlay(),audio[_0x25573c(0x2e7)+_0x25573c(0x18a)](_0x25573c(0x207)+_0x25573c(0x44b),_0x443237);};audio[_0x3415d2(0x454)]>=0x1?_0x443237():audio[_0x3415d2(0x23c)+_0x3415d2(0x341)](_0x3415d2(0x207)+_0x3415d2(0x44b),_0x443237);})[_0x48b3ab(0x2ec)](_0x598f3d=>{const _0x1e980e=_0x48b3ab;_0x598f3d[_0x1e980e(0x38b)]!==_0x1e980e(0x250)&&console[_0x1e980e(0x31e)](_0x1e980e(0x383)+_0x1e980e(0x2c5)+_0x1e980e(0x256)+_0x1e980e(0x479),_0x598f3d);});}}}function seekAudioTo(_0xed856e){const _0x28976e=_0x416eb4;if(!audio[_0x28976e(0x321)])return;if(isNaN(_0xed856e)||!isFinite(_0xed856e))return;let _0x28ac88=audio[_0x28976e(0x2a9)];(isNaN(_0x28ac88)||!isFinite(_0x28ac88))&&(audio[_0x28976e(0x334)]&&audio[_0x28976e(0x334)][_0x28976e(0x171)]>0x0?_0x28ac88=audio[_0x28976e(0x334)][_0x28976e(0x26b)](audio[_0x28976e(0x334)][_0x28976e(0x171)]-0x1):_0x28ac88=_0xed856e);const _0x5ca79f=Math[_0x28976e(0x2e9)](0x0,Math[_0x28976e(0x197)](_0x28ac88,_0xed856e));try{if(audio[_0x28976e(0x454)]>=0x1)audio[_0x28976e(0x455)+'e']=_0x5ca79f;else{const _0x5eab25=()=>{const _0x574ba=_0x28976e;audio[_0x574ba(0x455)+'e']=_0x5ca79f,audio[_0x574ba(0x2e7)+_0x574ba(0x18a)](_0x574ba(0x207)+_0x574ba(0x44b),_0x5eab25);};audio[_0x28976e(0x23c)+_0x28976e(0x341)](_0x28976e(0x207)+_0x28976e(0x44b),_0x5eab25);}}catch(_0x370d14){console[_0x28976e(0x31e)](_0x28976e(0x448)+':',_0x370d14);}}const wakeLockToggle=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x401)+_0x416eb4(0x3ad));async function requestWakeLock(){const _0x55261b=_0x416eb4;if(_0x55261b(0x21d)in navigator&&userSettings[_0x55261b(0x453)+_0x55261b(0x3b5)])try{wakeLock=await navigator[_0x55261b(0x21d)][_0x55261b(0x1d6)](_0x55261b(0x1b7));}catch(_0x5424bc){console[_0x55261b(0x2f9)](_0x55261b(0x1d2)+_0x55261b(0x317),_0x5424bc);}}function _0x880e(){const _0x394f2e=['B24TDgfYz2v0','vevyvefsrue','icaGicaGica','z2fPBG','Bw92zvrV','y29SB3i','CIbLEhbPCMvKlG','zgvYihrYyw5ZAq','y291BNrLCG','q1LcrviGq1LbtG','Bgv4igL0zw1Zlq','ntySide4osWGmG','C2XHDguTntaWia','Dg91y2HZDgfYDa','zguTDgL0Bgu','BgXBzgf0ys10yq','Axn0lwLUChv0','CgvHA2LUzW','rxjYB3i6','C192mG','C3rYAw5NAwz5','zxaGDgLTzxiGzq','DhjHBNnSyxrL','C21VB3rO','zxGGDgv4Dc1Bmq','D2fYBG','lwLJB24Sic5Kzq','B25JAgfUz2u','C3jJ','z2v0qNL0zuzYzq','ys1ZAhvMzMXLia','CMfJAW','CxvPy2STywnJzq','z2v0q29UDgv4Da','BgLUzvrV','A2vYigj1DhrVBG','xsbMB250lxnLBq','C3LUy2vKthLYAq','zxjby1nlzvvStq','BMuGBhLYAwnZlG','Dg9W','ywrK','4PYtifn5BMnLzcbm','lxjLzc00mdaGyG','zhvYlxrPBwu','AxndB250zw50rq','lMnSB3nLlxnOzq','C2vLA2fIBgu','C3rHDgvpyMPLyW','yMeODMfYkc0TBq','z0nSAwvUDfjLyW','y3vYCI10Aw1L','DM9SDw1L','C3bVBNnLihDHCW','ocbOltGGCM91BG','z2v0sxrLBq','EhqGC2v0Dxa6','A2vYic50AgvTzq','C3rHCNrZv2L0Aa','w3PqvKXnAKLeyG','C3rLBMvY','BhjJ','lteWma','y2XHC3m9iMzHlq','yxrHlwjHBMq9iG','BgLICMfYEs1ZAa','y2XHC3m','lMnSB3nLlwXPyG','C3bLzwqTC2XPza','C3rHBxbZigf2yq','BhLYAwnZlxnJCG','B25LBMrLza','B25WBgf5','AxrLlZuGAg92zq','AwnVBG','B2zMC2v0vg9W','qwn0AxzLihnSzq','CMv0DxjUicHMDq','tefJCY1RzNPSCq','Dgv4DgfYzwe','Bwf0y2HbBgW','BgLUzs4','y3jLyxrLqMLXDq','pK5Vihn5BMnOCG','z2uGuMvHzcbfCG','cIaGicaGicaGia','4PYtie9UBgLUzsbt','i3rYywnRlwfYDa','y29UDgfPBNm','ktSGyM9YzgvYlq','zMv0y2GGB25SAq','nJmWntG1mLvWDgDgBG','CM91BMrszwn0','lxHZ','qNLjza','BhLYAwnZlwnVBG','yw4Gy2XHC3m9iG','yxj0Axn0lwLUCa','CMvZzxqTzgLHBa','DM9SlwLJB24TBq','ysH2yxiOls1TmW','uKmGtg9HzgvKia','DgfI','Dgv4DefSAwDU','yuvSzw1LBNrtBW','CMvTB3zL','zgvIDq','CxvLCNLtzwXLyW','yMCTD2HPDguVnq','yM9KEq','yxj0Axn0','DhjPBq','DgHLBwvsz2i','Dc1ZBgf0zs00ma','mtaWmNPhBgfywq','lxDOAxrLlZeWia','pgKGy2XHC3m9iG','Chv0','qxjYB3DvCa','zNjLCxvLBMn5','Cc0Zia','l2K+ifnLyxjJAa','Dgv4DenVBNrLBG','uMvSzwfZzsbfCG','icaG','B25JBgLJAW','qMfJA2DYB3vUza','rgf0ys9JB3zLCG','w0frvwjxweXbAW','ywn0AxzL','y29SB3i6ihzHCG','ys12B2X1BwuTAa','C3rPzNKTy2vUDa','zMeTCgf1C2u','BMfTzq','lMvXlxbYzxnLDa','BhLbCLfvyMLxwa','Aw5WDxq','zw50','C3vZCgvUzgvK','z2v0rwXLBwvUDa','zxnZlwHPz2HSAq','DgHLBwvdB2XVCG','BIWGlNbHDxnLlq','DMvYlwLTzW','u0vmrunu','Dg9Y','B2rLlwr0','zM9YrwfJAa','CZ0IDgv4Dc1Jzq','lM0ZlxrHyI1WAq','lxHSigjNlxnSyq','lwjN','B25PBNb1Da','C2nYB2XSvg9byW','CMvWBgfJzq','Dg91y2HTB3zL','icaGpc9KAxy+cG','DgLZDa','uMvWzwf0','lxrYywnRlwLUza','lxjLC2v0','BNrLCIbHihnVBG','BMn0Aw9UkcKG','B25YzxnPEMu','z2uGv3jPDguGrq','u3rHDgu','tMv0D29YAYbYzq','Dg9Nz2XL','icaGicaG','BgX5ihbHDxnLCW','BgjSlwXYyY1Uyq','lxnSzwvW','EK1puhrlrePmsq','BMuGzM9YihrOAq','CZ0IC2HYAw5Rlq','qwn0AxzL','y3vZDg9TlxnSzq','pc9Ond4kicaGia','zY1PBNb1Da','Aw4GBxiTmsi+pa','CMvZDw1L','pc9ZCgfUpG','yMjLCG','DgfNtMfTzq','B25SAw5LlxnVBG','s2v5ua','Dc14CW','y2vPBa','DgvYigzSzxGGAq','zw1V','BgLUzvDPzhrO','Bw91C2v1Ca','Dg91y2HLBMq','Cg93','zxHLy0nVBw1HBG','yI0Yig9WywnPDa','y2HHCKnVzgvbDa','ys12B2X1BwuTEa','qxjYB3Dmzwz0','iNrLEhqTEhmGzG','BM93','zgf0yxnLDa','Ahr0Chm6lY8','yxjJAa','pc9WpGOGicaGia','Aw5UzxjuzxH0','CMXHEq','B2jPBgu','kc0TBtmTChjPBq','y29Kzq','CgfKu3rHCNq','lw1PBNvZ','DgfKyxrH','yxvZzs1TB2i','AxmTywn0AxzLia','D19WCM9FChjLzG','yNrUlwzLDgnOlq','zM9UDc1Zy2fSzq','4PYvifbSzwfZzsbL','Bg93C2HLBgy','y2TNCM91BMqTyW','C2nHBgu','qxjYB3DeB3DU','CMvZDw1Llxn5BG','y2fSzs1YzxnLDa','y3jVC3npCMLNAq','y3vZDg9T','BwvZC2fNzq','EhqGD2fYBMLUzW','lwrPC3bSyxK','ihnLyxjJAcbVBG','Ahr0Chm6lY9SCG','z2H0','DhjHy2STDgL0Ba','C3rVBs1ZBgvLCa','BwfYEsK7ignVBa','ms41ig1PBI13lq','s2v5tq','CgXHEq','tM8GBhLYAwnZia','ruvNzLLlrq','Dgv4Dc1KDa','i3bHDxnLlwLJBW','zgvYigjVCMrLCG','ChjLDMvUDerLzG','DJ4kicaGicaGia','lwXIBa','x3rYywnRx3yX','rY54yxbWrLfnva','CMDIksWGmc4Xoa','Dc14CYbTzdP0zq','D2fRzs1SB2nRlq','zMv0y2GTC3rHDa','qvrb','B2zMC2v0lxrHzW','z2XVyMfSqwXWAa','re9nq29UDgvUDa','yxvKAw8TCgXHEq','B250lxnLBwLIBW','ywnRAw5NlxDPza','AgfKB3CG','C29SAwqG','lMXYyW','Es00mdaGDgv4Da','B2rL','i2zMzMzMzG','C3r1zgLVlxnOzq','lwjHCG','icaGidXWignSyq','mda6mda','jMX0oW','EhbPCMLUzYbPBG','mtbLzMXXvge','t2zM','CNqTC3bPBG','jf0Qkq','yxbWBhK','mtm3mJiWmeLiDKncBW','CYb0CMfJAY4','zgvZA3rVCc1ZAq','AgLNAhnOzwXM','idXPignSyxnZpq','DML6lwnHBNzHCW','B25L','iZm4qKrgoa','EK1puhrlrePWta','B2zMC2v0v2LKDa','iL0Sic5KDc1LCq','C3rVChbLzc4','C2nYB2XSsw50BW','BNb1Da','yMfYlxzPEI13CG','y2LYy2XL','yxbWzw5Kq2HPBa','qNv4rxviEuzttG','zxqTDxa','y292zxiUANbN','CY9KzwzHDwX0lq','yY1IDg4','zxH0lxHZihrLEa','zgvZDgLUyxrPBW','icaGica8l2rPDG','vgfWig11C2LJia','mhb4xsbMB250lq','4PMQiokzQIdIMAO','DM9SlwLJB24','CMf3lwXYyY1PBG','lMX5CMLJlwXPBG','ywn0AxzLrwXLBq','yxrPB24','ChjLzI1ZBgvLCa','DgfYz2v0','BhjJvgv4Da','zg9Uzq','Bw91C2vTB3zL','B2jZzxj2zq','lMrPywXVzY1VDG','DguTotaWigjVCG','zMLSzxm','zguTyxj0Axn0','rgDksKu','C29UzY1PBNb1Da','u2vLAYbLCNjVCG','yMCTD2HPDguVmq','w2rHDgeTC29UzW','zgf0yq','y2XPyI5UzxqVyq','jNf1B3q7','B2fKzwq','mcb0zxH0lxnSyq','Bgf0zs0Ymda','Ef0GzM9UDc1LEa','xcGGkLWP','AxnxywTLtg9JAW','CMvHzhLtDgf0zq','y3vYCMvUDfrPBq','Aw8TDgfIxq','DgL0Bgu','ChGP','B2XSzxi','C2LU','iJ48l2K+cIaGia','zxqTzg93BG','C2H1zMzSzq','z2v0qM91BMrPBG','CxvLBMn5rgf0yq','y3jLyxrLtgLUzq','icaGicaGpgG0ia','ifbSyxLIywnRia','ugXHEsbLCNjVCG','DgL2zvrYywnR','yNrUlwnHBMnLBa','B25PEMvKigX5CG','Aw5NlwDSyxnZia','A0PUuNvhqMHdra','C29Uz0LK','Aw5KzxHpzG','zMeTBwfNBMLMEq','DhjHy2Toyw1L','iI4UlG','C3rVCfbYB3bHzW','tw9Kzq','DhjHBNnPDgLVBG','ignSyxnZpsjTAq','CgXHEwXPC3qTyW','DgrVD24TyMfKzW','AwjVBgqGDgv4Da','zMLSBa','Dg9tDhjPBMC','BgLUzunHCa','icaGicaGicaGpa','zwq6','C3m9iNrLEhqTwW','Cgf1C2vK','BNrLCIbWEs04ia','ugXHEwLUzW','y29Z','icaGicaGidXPia','Dg9gAxHLza','BhLYAwmTBgLUzq','lwjVBgqGDhj1BG','C2nYB2XSvg8','iJ4kicaGicaGia','idXWignSyxnZpq','mYWGmsK','Dgv4Dc1ZBgf0zq','pgrPDIbJBgfZCW','zgL0ywjSzq','CgXHEwjHy2Tsyq','zMLSBfn0EwXL','y2XHC3noyw1L','y2XPy2S','ywjZ','CIbQDxn0Awz5lq','yxj0Axn0tMfTzq','y3jLyxrLt2jQzq','zxGGAxrLBxmTyW','yxvKAw9vCMW','zgLZCgXHEq','lxnREs00mdaGyG','B3CUuNz6uMvYyW','B25SB2fKzwrTzq','BI13ltaIpGOGia','u3bHy2u','zxjYB3i','C2LNBMfS','CgXHAw5mExjPyW','C3rYAw5N','Bw9UBYbMB250lq','zxiTAwnVBIa','zxqTyNrUoM5VDa','CZ0IBgLICMfYEq','zgvY','jImZotS','CM9YoG','mtGWotjRBwvwEgK','Aw5JBhvKzxm','yNrUlxnLDc1JDq','B2XVCJOGCMDIyq','zMXHDa','Bw91C2vKB3DU','ihn0EwXLpsjIyq','DMfSDwu','BgLUzs0','re9ntwf0CML4','Dgv4Dc1ZBq','DgHLBG','ChjPBwfYEs1YzW','D2LKDgG','zxjSyxKUB3bLBG','C2f2zq','rM91BMqGDhjHyW','yMfUza','E30Uy29UC3rYDq','BMuGywn0AxzLiG','BgLICMfYEs1Zzq','ChvZAa','zxfqCMvZzxq','BM9Uzq','qxjYB3DsAwDODa','swTkBLj1r0jOqW','lwnVDw50zg93BG','Aw5NieXsq0XjqG','Dgv4Dc14CW','B2zMC2v0sgvPzW','tg9HzgvK','yNrUlwv4Cg9YDa','C29YDa','lwLKpsi','EMHqDfzmtxrQsq','mdaGyMXVy2S','khzHCIGTlw0Zlq','C2XPy2u','DgvTCY1Jzw50zq','DM9SDw1LlxnSAq','yw5PBwf0zs1ZCa','igjVCMrLCI13Aa','ANnVBG','idXKAxyGy2XHCW','ignSyxnZpsjMBa','Dgv4Dc1BmtbWEa','ywjVCNq','lwnVBg9YoIbYzW','yxvSDa','Dgv4Da','BhLYAwnZx2zSBW','yxj5ugXHEwXPCW','ihbSyxLIywnRia','y29UBMvJDa','zxH0lxnT','zg9JDw1LBNrfBa','yNrUlwzVBNqTCW','Dg9YqwXS','BgvUz3rO','AwDOihrLEhqTCW','CZ0IDY0XmcbOlq','zNvUy3rPB24','y2GTC3rHDhvZ','yNrUlwfWCgX5lq','B25SAw5LlwfYDa','CMvZDwX0','lxbSDxm','Dgv4Dc0YEgWGBq','lMvXlwjHBMrBza','ltqWma','zwv0','Aw5PDa','ywXLlwXIBa','BtqY','lNnOzwv0lw92zq','BwfYAYb0zxH0lq','ltmUnsbYB3vUza','mtrWEa','pGOGicaGicaGia','rMfPBgvKihrVia','yY1IzxPPzxiOma','lwXYyW','BgqIpK5VihrYyq','DeXPC3rLBMvY','D2HLBIbLEhbPCG','lJe2lcaXlcaWlG','iJWVCd4kicaGia','B3bLBI1ZDhvKAq','ywn0AxzLlw1Vza','tuvfz2zzs0vD','y2vUDgvYigP1CW','y3rVCIGICMv0Dq','rhbZyJPmlY9PBG','yNrUlw11Dgu','zMLUzeLUzgv4','CMDI','BwLU','ihrLEhqTEhmGCW','Cg9PBNrLCMrVDW','BhjJlwzPBguTAq','zNjLCxvLBMn5qG','DhjHBNnMB3jTia','Cgf1C2u','wKP5r2DIz1r1Dq','mcb0CNvUy2f0zq','BfjHDgLV','zw1ZlwnLBNrLCG','y29SB3i6ihjNyG','CgXHEwjHy2TnBW','ueXbwuXju1rFra','Ew5Jzwq6ia','ig5VDcbVAW','B2zMC2v0lwLUza','C3rHDgu','ChjLC2v0','ignVBg9YoIb2yq','igDHCc0Zig1PBG','Bwf0y2HPBMCGiG','lwvTzxjHBgqTna','lxn0yxr1CW','zgL2','C2vSzwn0zwq','yMvMB3jLDw5SBW','yNrUlwXVB3aTBq','BgjSlwf1zgLVlq','C2v0uhjVCgvYDa','zMLSDgvY','ls1TmY1WCMLTyq','C2nYzwvU','mci+cIaGicaGia','Bg9JAW','y3jLyxrLqw5HBa','vMLLDW','y3rvuKW','Cg9PBNrLCNvW','C3bSAxq','ltqWmci+cIaGia','BwfYEsK7','zxfcyw5KCW','u2XLzxaGDgLTzq','BgLICMfYEsbVCG','DgvZDa','zMfSBgjHy2S','DhLWzq','v2vIs2L0q1nttq','zMeTCgXHEq','B0nVBNrLEhq','icaGicaGidXZCa','mcb0zxH0lvS4Ca','AwnVBI10yxjNzq','yMfKz2u','Dg9Nz2XLtxv0zq','lxn3yxrJAa','CgKVC2vHCMnOpW','tM8GvhjHy2SGta','v2fRzsbmB2nRia','ig9Mia','B2zM','zxqTBgjS','CMvXDwvZDa','CvrQrLD1uKPMwG','icaGicaGpgrPDG','l2rPDJ4kicaGia','kcnIDg4TyxbWBa','yxj5ktSIpG','C3rLCfzVBhvTzq','i3rOzw1LlxbPyW','yMfYCW','zM91BMqGB25SAq','zhqTzM9UDc1ZyW','y2fSzs1WBhvZ','zg93BMXVywq','AwXHyMXLlG','C3rHz2uTB2zMCW','te9Nt1Djr0jwsG','D2vIA2L0qxvKAq','yNrUlwnVBMzPCG','DgHLBwvoyw1L','Bwu9','y292zxjvCMW','AwnHDg9Y','y2vKifrYywnR','z2DLCG','AwnHDg9Ylwr0','y2TZigzVDw5Kia','BY1IDg4','Dg91y2HLCW','y29UDgvUDa','CM91BMq','Dg9mB3DLCKnHCW','y29WEq','CgXHEwLUzW','DMLZAwjSzq','yMv0D2vLBIbNyq','zM9Yici','zgv2AwnLugL4zq','C3r1zgLVvgfI','B25WyxvZzq','zgvZA3rVCc1JBW','Aw5UzxjizwLNAa','s2v5ta','ys16qs1AxYrDwW','y2HHAw4','rxnJyxbL','lwnLBNrLCIbQDq','yxjJAc1PBNb1Da','CMvHzefZvgv4Da','CMvSzwfZzq','Bg9HzgvKBwv0yq','DguTmJaW','tg9JywXtDg9Yyq','lwnOAxa','yMvNAw5qyxrO','C21VB3rOAw5Nva','AgvPz2H0','Aw5Uzxjive1m','CMfYEs1IDg4','psjSExjPyY1SAq','D19WCM9FBgfZDa','yxjhCMfKAwvUDa','y2XVC2vZDa','DhjHBNnWyxjLBG','Aw5UzxjxAwr0Aa','z2iPlcaWlJqPoW','C3bPBG','DhjHy2TZ','mtuWmZyWmejwvvrfzq','C3rYB2TL','DhjHy2STyxj0lq','icaGicaGpc9KAq','D2fRzuXVy2S','yxvKAw8TC2nYDq','zNvUy3rPB24GkG','y2HLy2TLza','qxvKAw9dB250zq','zMeTC29SAwqGzG','CNjVCJO','s2v5tG','DgHLBwuTDgfN','ignSyxnZpsj3lq','A2v5zg93BG','yNrUlxbYzxyTDa','zxnLDc1TB2rHBa','zxH0lxHZ','jMfTCdS','ywnRlwnHCMqGCa','Aw5dB3vUDa','mtq4nZG1ofjiC0zMEq','A3KTndaWihrLEa','DxjJzq','zMXLEcbPDgvTCW','icaGicaGicaGia','ihn0DwrPBYbIDq','ys12B2X1BwuTBa','DgLMEs1Jzw50zq','jMD0oW','qxv0B21HDgLJyq','iMzHlxnVBgLKia','yIKSidaUmIK7ia','Es1KB25Lkq','zxf1ywXPEMvYlq','ywrKrxzLBNrmAq','CJPIzY13AgL0zq','icaGicaGicaG','ys1ZCgLUBMvYia','zhqTyNrUlwzLDa','zYb0AxrSzsb0BW','zNjVBunOyxjdBW','lZeWihrLEhqTCW','yNrUlw9MzNnLDa','y292zxi','DgLTzq','lwj0BG','mY1WCMLTyxj5lq','AwnVBI1KDa','yxbWzxi','lMrLC2T0B3aTyq','BMrLzc1MDwXSiG','DgfYz2v0u2HLzq','lNnSzwvWlwj0BG','DMLZAwjPBgL0Eq','qwjVCNrfCNjVCG','CMvTB3zLsxrLBq','ExnLCG','yM9Szci+','ENfsELjIrw1KyG','CMvTB3zLq2HPBa','AgLUzYbZA2LWCa','mc05ys16qs1AxW','t2DpD2LxsxrOAq','DhrVBNm','DgrVD24TDgv4Da','yMfYiJ48l3nWyq','y2XHC3nmAxn0','CNKTCMDI','AgLKzgvU','C2v0sxrLBq','yxj5ktS','t25SAw5Lifn5BG','zxiGChGTms41ia','yxvKAw8TzMLSzq','vhfuAKzxDvjkzG','zwqTmNHSigjVCG','ywrgAwX0zxi','zw50zxiGz2fWlq','C3r5Bgu','CMv2B2TLt2jQzq','zMXLEa','zw5K','qvnlvu1hEezrtq','zMz0u2L6zq','icaGpgj1DhrVBG','lMvXlwjHBMqSia','C2T0B3aTyxj0lq','zxaTBwLU','Bs1YzxnLDa','u2H1zMzSzq','CM4GDgHPCYiPka','BgvMDa','yxrYAxG','y2fSBa','lMr0lwvXlwjHBG','EhqTC20GzM9UDa','zMLUza','DhjHBNnMB3jT','CMfUzg9T','y3vZDg9TlwzPBa','AhjLzG','BJ4kicaGicaGia','ifrYywnR','tg9JywWGrMLSzq','pc9KAxy+','DgLTzu9MzNnLDa','icaGicaGidWVyG','su5qvvq','ChKTmc41ihjVDq','Dgv4Dc13AgL0zq','CgfYC2u','yw5VBNLTB3vZ','CIbZAhjPBMSTma','zxjSyxK','Aw1Lq29UC3rHBG','lNf1AwnRlwfJyW','zw1LBNq','Es01mcbIBg9JAW','B25SB2fK','y2HHBMDL','vw5RBM93BIbbCG','y2GTB25SAw5Llq','lNrHyI1Wyw5L','y29UC3rYDwn0BW','yNrUlw11DguTBq','zgvKlwz1BgWGzG','yMXVyG','lwnVBg9YoIb2yq','DhjHy2STyxj0Aq','C2XLzxaTy291BG','zxiGC2HYAw5Rlq','yNrUlwnSzwfYlq','ywn0Aw9U','mZy2nde5nZLqt3zbv2W','y2XHC3m9iNrLEa','mLbACMnsrW','zfn0EwXL','zM9UDfnJywXL','BxjhyujUvI52sG','ls1MB250lxnJyq','yxvZzq','CIGTlw0ZlxbYAq','B25SAw5LlwXYyW','zhvYyxrPB24','Ahr0CdOVlW','DxjZB3iTCg9PBG','z2v0q29TChv0zq','yMfJA2DYB3vUza','yNrUlw5LEhqTDa','zsKGE30','sNLhz2jNvhv1qG','mc40nxmGy3vIAq','igrHDgfIyxnLia','B250ywLUzxi','lwLUChv0','zhqTB25SAw5Llq','CMXHEs5VCgvU','B3bLBI1SAwjYyq','CgvYy2fZzsb0CG','B3i6icmWytbKmq','CMvUzgvYtgLICG','yNrUlwXVywqTza','lwjHBMrBzgf0yq','lxbYAw1HCNKTCG','AwnZigXVywrLza','y2vUDgvY','CZ0IzMXLEcbPDa','mte3ndC1ndrdvNv2wNy','DMLZDwfSAxPLCG','y2f0zsa','DhjHy2S','igf1zgLVignHyW','B2zMC2v0lxzHBa','ugf1C2vK','CNKTyNrU','yMvfBwWUzgjHCa','z0Pkrv0','y2fSzs1TAw51CW','C3rYB2TLu3r5Ba','zw5Kzwq','Ew5JzwqGDgLTzq','lxCTmci+cIaGia','yNrUlw9Wzw4TCG','ywnRlwnVDw50','yNrUlxjLD2LUza','C2vSzwn0','y2XPzw50wq','B3CGDgv4Dc1ZAW','Dgv4Dc9WBgfPBG','xcTCkYaQkd86wW','DgLVBI1HBgWGyW','DhjHy2TFBMfTzq','B3bLBG','jMfYDgLZDf9Uyq','lwjHBMq9iG','BhLYAwnZ','y3jLyxrLrwXLBq','y3jLyxrLtwvKAq','lcaUCgXHEs1PyW','EKLUzgv4','CMvZDg9Yzq','CZ0Izxf1ywXPEG','y2XLyxjszwn0','ys1YzxbLyxqGDa','BgLICMfYEs10CG','CMvTB3zLrxzLBG','DgfPBMvY','Bwf4','yNrUlwnVChKTBa','D2HPBguGkhrYDq','y2f0y2G','w2rHDgeTC3r1za','Dxr0B24+cIaGia','yNrUlwzVCNDHCG','AYbIDxqGBM8GCW','Bg9VCc1TB2rLlq','iIbZDhLSzt0I','DxHfDuH5rLnotq','AM9PBG','yNrUlxbSyxKTCa','mtbWEf0GBwq6Da','B25SAw5LlwzLDa','DhjHBNnSyxrLwq','Bg9N','DhjHyM9Szcb1Ca','ywrKq29SB3jtDa','phnWyw4Gy2XHCW','zMXVB3i','C3mTAgLNAgXPzW','DuXxsu1Trgrqsq','mtaGCM91BMrLza','sxvmv0LnBurKua','i3bSyxKTAwnVBG','lNzPEI1ZDhLSzq','C3bLzwqTDMfS'];_0x880e=function(){return _0x394f2e;};return _0x880e();}async function releaseWakeLock(){const _0x571804=_0x416eb4;if(wakeLock!==null)try{await wakeLock[_0x571804(0x206)](),wakeLock=null;}catch(_0x444fc9){console[_0x571804(0x2f9)](_0x571804(0x1d2)+_0x571804(0x380)+_0x571804(0x136),_0x444fc9);}}wakeLockToggle[_0x416eb4(0x320)]=async _0x389d22=>{const _0x4694f0=_0x416eb4;userSettings[_0x4694f0(0x453)+_0x4694f0(0x3b5)]=_0x389d22[_0x4694f0(0x43d)][_0x4694f0(0x220)],saveSettings(),userSettings[_0x4694f0(0x453)+_0x4694f0(0x3b5)]?await requestWakeLock():await releaseWakeLock();},document[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x24f)+_0x416eb4(0x291),async()=>{const _0x3dc252=_0x416eb4;wakeLock!==null&&document[_0x3dc252(0x24f)+_0x3dc252(0x3ab)]===_0x3dc252(0x1f7)&&userSettings[_0x3dc252(0x453)+_0x3dc252(0x3b5)]&&await requestWakeLock();});userSettings[_0x416eb4(0x453)+_0x416eb4(0x3b5)]&&requestWakeLock();function updateLoopModeUI(){const _0x3caa88=_0x416eb4,_0x523bdd=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x1b2)+_0x3caa88(0x40e)),_0x879b4a=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x2f1)+_0x3caa88(0x34f)),_0x120969=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x2f1)+_0x3caa88(0x168)),_0x58641f=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x2f1)+_0x3caa88(0x1cd)),_0x328dd7=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x1b2)+_0x3caa88(0x398)),_0x1c35ab=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x2f1)+_0x3caa88(0x249)),_0x2d5347=document[_0x3caa88(0x391)+_0x3caa88(0x363)](_0x3caa88(0x2f1)+_0x3caa88(0x3f7));_0x523bdd[_0x3caa88(0x25c)][_0x3caa88(0x36e)](_0x3caa88(0x18f)+'e');if(_0x328dd7)_0x328dd7[_0x3caa88(0x25c)][_0x3caa88(0x36e)](_0x3caa88(0x18f)+'e');_0x58641f[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x25e)),_0x58641f[_0x3caa88(0x25c)][_0x3caa88(0x36e)](_0x3caa88(0x26a));if(userSettings[_0x3caa88(0x1a3)+'de']===_0x3caa88(0x421)){_0x523bdd[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x18f)+'e');if(_0x328dd7)_0x328dd7[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x18f)+'e');_0x879b4a[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x2e5)+_0x3caa88(0x22a),_0x120969[_0x3caa88(0x3d3)]=_0x3caa88(0x3a4);if(_0x1c35ab)_0x1c35ab[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x2e5)+_0x3caa88(0x16d);if(_0x2d5347)_0x2d5347[_0x3caa88(0x3d3)]=_0x3caa88(0x3a4);_0x58641f[_0x3caa88(0x25c)][_0x3caa88(0x36e)](_0x3caa88(0x25e)),_0x58641f[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x26a));}else{if(userSettings[_0x3caa88(0x1a3)+'de']===_0x3caa88(0x45d)){_0x523bdd[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x18f)+'e');if(_0x328dd7)_0x328dd7[_0x3caa88(0x25c)][_0x3caa88(0x32e)](_0x3caa88(0x18f)+'e');_0x879b4a[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x323)+_0x3caa88(0x153),_0x120969[_0x3caa88(0x3d3)]=_0x3caa88(0x273);if(_0x1c35ab)_0x1c35ab[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x323)+_0x3caa88(0x141);if(_0x2d5347)_0x2d5347[_0x3caa88(0x3d3)]=_0x3caa88(0x273);}else{_0x879b4a[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x2e5)+_0x3caa88(0x22a),_0x120969[_0x3caa88(0x3d3)]=_0x3caa88(0x417);if(_0x1c35ab)_0x1c35ab[_0x3caa88(0x48c)]=_0x3caa88(0x222)+_0x3caa88(0x2e5)+_0x3caa88(0x16d);if(_0x2d5347)_0x2d5347[_0x3caa88(0x3d3)]=_0x3caa88(0x417);}}}const toggleLoopMode=()=>{const _0x31bf9a=_0x416eb4;if(userSettings[_0x31bf9a(0x1a3)+'de']===_0x31bf9a(0x1d4))userSettings[_0x31bf9a(0x1a3)+'de']=_0x31bf9a(0x421);else userSettings[_0x31bf9a(0x1a3)+'de']===_0x31bf9a(0x421)?userSettings[_0x31bf9a(0x1a3)+'de']=_0x31bf9a(0x45d):userSettings[_0x31bf9a(0x1a3)+'de']=_0x31bf9a(0x1d4);saveSettings(),updateLoopModeUI();},btnLoopMob=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x1b2)+_0x416eb4(0x40e)),btnLoopDt=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x1b2)+_0x416eb4(0x398));if(btnLoopMob)btnLoopMob[_0x416eb4(0x382)]=toggleLoopMode;if(btnLoopDt)btnLoopDt[_0x416eb4(0x382)]=toggleLoopMode;audio[_0x416eb4(0x34c)]=()=>{const _0x2817bb=_0x416eb4;if(userSettings[_0x2817bb(0x1a3)+'de']===_0x2817bb(0x421)){seekAudioTo(0x0),triggerPlay();return;}const _0x585b83=window[_0x2817bb(0x1a4)+_0x2817bb(0x403)]||[];if(!_0x585b83[_0x2817bb(0x171)]||activeSongId===_0x2817bb(0x27d)+'e'||!activeSongId)return;let _0x2c491c=null;if(userSettings[_0x2817bb(0x1a3)+'de']===_0x2817bb(0x45d)){let _0x18a601;do{_0x18a601=Math[_0x2817bb(0x2fd)](Math[_0x2817bb(0x27c)]()*_0x585b83[_0x2817bb(0x171)]);}while(_0x585b83[_0x2817bb(0x171)]>0x1&&_0x585b83[_0x18a601]['id']===activeSongId);_0x2c491c=_0x585b83[_0x18a601];}else{const _0x35ee74=_0x585b83[_0x2817bb(0x195)](_0x12896b=>_0x12896b['id']===activeSongId);if(_0x35ee74!==-0x1){const _0x4c0c6a=(_0x35ee74+0x1)%_0x585b83[_0x2817bb(0x171)];_0x2c491c=_0x585b83[_0x4c0c6a];}}_0x2c491c&&loadTrackFromLibrary(_0x2c491c);};function playPreviousTrack(){const _0x3eb0ea=_0x416eb4;if(audio[_0x3eb0ea(0x455)+'e']>0x3){seekAudioTo(0x0);return;}const _0xda5b20=window[_0x3eb0ea(0x1a4)+_0x3eb0ea(0x403)]||[];if(!_0xda5b20[_0x3eb0ea(0x171)]||activeSongId===_0x3eb0ea(0x27d)+'e'||!activeSongId){seekAudioTo(0x0);return;}let _0x47b93a=null;if(userSettings[_0x3eb0ea(0x1a3)+'de']===_0x3eb0ea(0x45d)){const _0x29812c=Math[_0x3eb0ea(0x2fd)](Math[_0x3eb0ea(0x27c)]()*_0xda5b20[_0x3eb0ea(0x171)]);_0x47b93a=_0xda5b20[_0x29812c];}else{const _0x1ae836=_0xda5b20[_0x3eb0ea(0x195)](_0x5949c5=>_0x5949c5['id']===activeSongId),_0x1342d3=(_0x1ae836-0x1+_0xda5b20[_0x3eb0ea(0x171)])%_0xda5b20[_0x3eb0ea(0x171)];_0x47b93a=_0xda5b20[_0x1342d3];}_0x47b93a&&loadTrackFromLibrary(_0x47b93a);}function playNextTrack(){const _0x1608ca=_0x416eb4,_0x1e067c=window[_0x1608ca(0x1a4)+_0x1608ca(0x403)]||[];if(!_0x1e067c[_0x1608ca(0x171)]||activeSongId===_0x1608ca(0x27d)+'e'||!activeSongId)return;let _0x216134=null;if(userSettings[_0x1608ca(0x1a3)+'de']===_0x1608ca(0x45d)){const _0x21d5b9=Math[_0x1608ca(0x2fd)](Math[_0x1608ca(0x27c)]()*_0x1e067c[_0x1608ca(0x171)]);_0x216134=_0x1e067c[_0x21d5b9];}else{const _0x52ae40=_0x1e067c[_0x1608ca(0x195)](_0x5ab59a=>_0x5ab59a['id']===activeSongId),_0x82f4bb=(_0x52ae40+0x1)%_0x1e067c[_0x1608ca(0x171)];_0x216134=_0x1e067c[_0x82f4bb];}_0x216134&&loadTrackFromLibrary(_0x216134);}document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x228)+_0x416eb4(0x324))[_0x416eb4(0x382)]=playPreviousTrack,document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2ae)+_0x416eb4(0x324))[_0x416eb4(0x382)]=playNextTrack;function updateBarVizVisibility(){const _0x13e5b5=_0x416eb4,_0x58595a=document[_0x13e5b5(0x391)+_0x13e5b5(0x363)](_0x13e5b5(0x429)+_0x13e5b5(0x24a));if(!_0x58595a)return;const _0x5e7115=window[_0x13e5b5(0x215)]>=0x400,_0x1d3c27=userSettings[_0x13e5b5(0x2c2)+_0x13e5b5(0x46f)]===_0x13e5b5(0x1de);_0x5e7115&&!_0x1d3c27?_0x58595a[_0x13e5b5(0x268)][_0x13e5b5(0x126)]=_0x13e5b5(0x14e):_0x58595a[_0x13e5b5(0x268)][_0x13e5b5(0x126)]='';}function applySettingsToUI(){const _0x3131e9=_0x416eb4;wakeLockToggle[_0x3131e9(0x220)]=userSettings[_0x3131e9(0x453)+_0x3131e9(0x3b5)],document[_0x3131e9(0x16e)+_0x3131e9(0x28e)][_0x3131e9(0x268)][_0x3131e9(0x1b4)+'y'](_0x3131e9(0x1b6)+'ry',userSettings[_0x3131e9(0x393)]),document[_0x3131e9(0x16e)+_0x3131e9(0x28e)][_0x3131e9(0x268)][_0x3131e9(0x1b4)+'y'](_0x3131e9(0x1b6)+_0x3131e9(0x25d),userSettings[_0x3131e9(0x375)]),document[_0x3131e9(0x391)+_0x3131e9(0x363)](_0x3131e9(0x225))[_0x3131e9(0x3d3)]=userSettings[_0x3131e9(0x1e8)],document[_0x3131e9(0x391)+_0x3131e9(0x363)](_0x3131e9(0x225))[_0x3131e9(0x268)][_0x3131e9(0x30a)]=userSettings[_0x3131e9(0x393)],document[_0x3131e9(0x370)+_0x3131e9(0x170)](_0x3131e9(0x303)+_0x3131e9(0x20a))[_0x3131e9(0x399)](_0x1a6983=>{const _0x4e6dd7=_0x3131e9;if(_0x1a6983[_0x4e6dd7(0x3cf)][_0x4e6dd7(0x268)]===userSettings[_0x4e6dd7(0x2c2)+_0x4e6dd7(0x46f)])_0x1a6983[_0x4e6dd7(0x25c)][_0x4e6dd7(0x32e)](_0x4e6dd7(0x386));else _0x1a6983[_0x4e6dd7(0x25c)][_0x4e6dd7(0x36e)](_0x4e6dd7(0x386));}),updateBarVizVisibility(),document[_0x3131e9(0x370)+_0x3131e9(0x170)](_0x3131e9(0x1dd)+_0x3131e9(0x33e)+_0x3131e9(0x1cf))[_0x3131e9(0x399)](_0x1bd9a4=>{const _0x52a65c=_0x3131e9;if(_0x1bd9a4[_0x52a65c(0x3cf)][_0x52a65c(0x30a)]===userSettings[_0x52a65c(0x393)])_0x1bd9a4[_0x52a65c(0x25c)][_0x52a65c(0x32e)](_0x52a65c(0x1b0));else _0x1bd9a4[_0x52a65c(0x25c)][_0x52a65c(0x36e)](_0x52a65c(0x1b0));}),document[_0x3131e9(0x16e)+_0x3131e9(0x28e)][_0x3131e9(0x268)][_0x3131e9(0x1b4)+'y'](_0x3131e9(0x2a5)+'le',userSettings[_0x3131e9(0x2a3)]),document[_0x3131e9(0x391)+_0x3131e9(0x363)](_0x3131e9(0x3df)+_0x3131e9(0x3fc))[_0x3131e9(0x3d3)]=parseFloat(userSettings[_0x3131e9(0x2a3)])[_0x3131e9(0x480)](0x2)+'x',updateOffsetUI(),updateLoopModeUI(),document[_0x3131e9(0x370)+_0x3131e9(0x170)](_0x3131e9(0x38c)+_0x3131e9(0x247))[_0x3131e9(0x399)](_0x3af8ae=>{const _0x2294a3=_0x3131e9;if(_0x3af8ae[_0x2294a3(0x3cf)][_0x2294a3(0x1a9)]===userSettings[_0x2294a3(0x14d)])_0x3af8ae[_0x2294a3(0x25c)][_0x2294a3(0x32e)](_0x2294a3(0x386));else _0x3af8ae[_0x2294a3(0x25c)][_0x2294a3(0x36e)](_0x2294a3(0x386));}),userSettings[_0x3131e9(0x1c1)][_0x3131e9(0x399)]((_0x148c41,_0x30e9d4)=>{const _0x166f7c=_0x3131e9,_0x3f46f7=document[_0x166f7c(0x370)+_0x166f7c(0x170)](_0x166f7c(0x17b)+_0x166f7c(0x345)+_0x30e9d4+(_0x166f7c(0x425)+_0x166f7c(0x2bc)+_0x166f7c(0x2dc))+_0x30e9d4+'\x22]');_0x3f46f7[_0x166f7c(0x399)](_0x4f697e=>{const _0x24375b=_0x166f7c;if(_0x4f697e)_0x4f697e[_0x24375b(0x13e)]=_0x148c41;});if(eqBands[_0x30e9d4])eqBands[_0x30e9d4][_0x166f7c(0x308)][_0x166f7c(0x13e)]=_0x148c41;}),updateScroll(activeIndex);}function updateHeaderTitle(){const _0x1f6d67=_0x416eb4,_0x5d67e9=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x3ef)+'e'),_0x541fee=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x29a)+'st'),_0x3b7ac2=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x2b5)+_0x1f6d67(0x447)),_0x39e394=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x2b5)+_0x1f6d67(0x366)+'ut'),_0xb27689=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x3be)+_0x1f6d67(0x3b8)),_0x5712ec=document[_0x1f6d67(0x391)+_0x1f6d67(0x363)](_0x1f6d67(0x177)+_0x1f6d67(0x315));let _0x4b2483=onlineTrackTitle||fileTrackTitle||'',_0x853469=onlineArtistName||fileArtistName||'';if(onlineTrackTitle)_0x5d67e9[_0x1f6d67(0x3d3)]=onlineTrackTitle,_0x541fee[_0x1f6d67(0x3d3)]=onlineArtistName||_0x1f6d67(0x261)+_0x1f6d67(0x1ec);else fileTrackTitle?(_0x5d67e9[_0x1f6d67(0x3d3)]=fileTrackTitle,_0x541fee[_0x1f6d67(0x3d3)]=fileArtistName||_0x1f6d67(0x281)+_0x1f6d67(0x280)):(_0x5d67e9[_0x1f6d67(0x3d3)]=_0x1f6d67(0x1d1)+_0x1f6d67(0x44e),_0x541fee[_0x1f6d67(0x3d3)]=_0x1f6d67(0x434)+_0x1f6d67(0x1c3)+_0x1f6d67(0x233)+_0x1f6d67(0x259));if(_0x4b2483){if(_0x3b7ac2)_0x3b7ac2[_0x1f6d67(0x13e)]=_0x4b2483;if(_0xb27689)_0xb27689[_0x1f6d67(0x13e)]=_0x4b2483;if(_0x39e394)_0x39e394[_0x1f6d67(0x13e)]=_0x853469;if(_0x5712ec)_0x5712ec[_0x1f6d67(0x13e)]=_0x853469;}}function initCanvas(){const _0x5b932a=_0x416eb4,_0x61ae20=window[_0x5b932a(0x1fa)+_0x5b932a(0x1a0)]||0x1,_0x58945e=document[_0x5b932a(0x391)+_0x5b932a(0x363)](_0x5b932a(0x429)+_0x5b932a(0x24a))[_0x5b932a(0x45e)+_0x5b932a(0x337)+'t']();canvasBar[_0x5b932a(0x144)]=_0x58945e[_0x5b932a(0x144)]*_0x61ae20,canvasBar[_0x5b932a(0x20d)]=_0x58945e[_0x5b932a(0x20d)]*_0x61ae20,ctxBar[_0x5b932a(0x3e3)](_0x61ae20,_0x61ae20),canvasBg[_0x5b932a(0x144)]=window[_0x5b932a(0x215)]*_0x61ae20,canvasBg[_0x5b932a(0x20d)]=window[_0x5b932a(0x1fe)+'t']*_0x61ae20,ctxBg[_0x5b932a(0x3e3)](_0x61ae20,_0x61ae20);if(window[_0x5b932a(0x215)]>=0x300){barCount=0x80;if(analyser)analyser[_0x5b932a(0x26d)]=0x200;}else{barCount=0x40;if(analyser)analyser[_0x5b932a(0x26d)]=0x100;}}window[_0x416eb4(0x3a9)]=()=>{initCanvas(),updateScroll(activeIndex),updateBarVizVisibility();},initCanvas();async function setupAudioContext(){const _0x298dec=_0x416eb4;if(audioCtx)return;try{audioCtx=new(window[(_0x298dec(0x221))+'xt']||window[(_0x298dec(0x1e6))+(_0x298dec(0x1c9))])(),analyser=audioCtx[_0x298dec(0x1ba)+_0x298dec(0x252)](),analyser[_0x298dec(0x26d)]=window[_0x298dec(0x215)]>=0x300?0x200:0x100,analyser[_0x298dec(0x20c)+_0x298dec(0x28c)+'t']=0.65,dataArray=new Uint8Array(analyser[_0x298dec(0x19b)+_0x298dec(0x22d)]),sourceNode=audioCtx[_0x298dec(0x2df)+_0x298dec(0x36d)+_0x298dec(0x230)](audio);let _0x1ffd42=sourceNode;EQ_FREQS[_0x298dec(0x399)]((_0x3bb206,_0x1f32ca)=>{const _0x30c024=_0x298dec,_0x56cf63=audioCtx[_0x30c024(0x357)+_0x30c024(0x266)]();if(_0x1f32ca===0x0)_0x56cf63[_0x30c024(0x1c6)]=_0x30c024(0x3e1);else{if(_0x1f32ca===EQ_FREQS[_0x30c024(0x171)]-0x1)_0x56cf63[_0x30c024(0x1c6)]=_0x30c024(0x41e);else _0x56cf63[_0x30c024(0x1c6)]=_0x30c024(0x316),_0x56cf63['Q'][_0x30c024(0x13e)]=0x1;}_0x56cf63[_0x30c024(0x37c)][_0x30c024(0x13e)]=_0x3bb206,_0x56cf63[_0x30c024(0x308)][_0x30c024(0x13e)]=userSettings[_0x30c024(0x1c1)][_0x1f32ca]||0x0,_0x1ffd42[_0x30c024(0x16c)](_0x56cf63),_0x1ffd42=_0x56cf63,eqBands[_0x30c024(0x14c)](_0x56cf63);}),_0x1ffd42[_0x298dec(0x16c)](analyser),analyser[_0x298dec(0x16c)](audioCtx[_0x298dec(0x432)+'n']);}catch(_0x3be706){console[_0x298dec(0x2f9)](_0x298dec(0x221)+_0x298dec(0x33d),_0x3be706);}}function drawVisualizer(){const _0x7a568b=_0x416eb4;requestAnimationFrame(drawVisualizer);const _0x1ea77f=canvasBar[_0x7a568b(0x144)]/(window[_0x7a568b(0x1fa)+_0x7a568b(0x1a0)]||0x1),_0x315e67=canvasBar[_0x7a568b(0x20d)]/(window[_0x7a568b(0x1fa)+_0x7a568b(0x1a0)]||0x1),_0x4c7e36=window[_0x7a568b(0x215)],_0x192e6c=window[_0x7a568b(0x1fe)+'t'];ctxBar[_0x7a568b(0x2e4)](0x0,0x0,_0x1ea77f,_0x315e67),ctxBg[_0x7a568b(0x2e4)](0x0,0x0,_0x4c7e36,_0x192e6c);if(userSettings[_0x7a568b(0x2c2)+_0x7a568b(0x46f)]===_0x7a568b(0x1d4))return;let _0x46b2d6=![];if(analyser&&!audio[_0x7a568b(0x47b)]){analyser[_0x7a568b(0x322)+_0x7a568b(0x45f)](dataArray);for(let _0x4897ec of dataArray)if(_0x4897ec>0x0){_0x46b2d6=!![];break;}}let _0x5ec050=new Array(barCount)[_0x7a568b(0x475)](0x0);if(_0x46b2d6){for(let _0x4240d5=0x0;_0x4240d5<barCount;_0x4240d5++)_0x5ec050[_0x4240d5]=dataArray[_0x4240d5]||0x0;}else{if(!audio[_0x7a568b(0x47b)]){const _0x35de03=Date[_0x7a568b(0x3ce)]()/0xc8;for(let _0x222b49=0x0;_0x222b49<barCount;_0x222b49++)_0x5ec050[_0x222b49]=(Math[_0x7a568b(0x45a)](_0x35de03+_0x222b49*0.3)*0.5+0.5)*0x78+0x14;}}const _0x92acc=1.8,_0x55c2ec=0.45;for(let _0x72c260=0x0;_0x72c260<barCount;_0x72c260++){let _0x5b5df1=Math[_0x7a568b(0x3c7)](_0x5ec050[_0x72c260]/0xff,1.8)*0xff;_0x5b5df1>smoothBars[_0x72c260]?(smoothBars[_0x72c260]+=(_0x5b5df1-smoothBars[_0x72c260])*_0x55c2ec,barVelocities[_0x72c260]=(_0x5b5df1-smoothBars[_0x72c260])*0.2):(barVelocities[_0x72c260]+=_0x92acc,smoothBars[_0x72c260]-=barVelocities[_0x72c260],smoothBars[_0x72c260]<0x0&&(smoothBars[_0x72c260]=0x0,barVelocities[_0x72c260]=0x0));}if(userSettings[_0x7a568b(0x2c2)+_0x7a568b(0x46f)]===_0x7a568b(0x1de)){const _0x2c9837=_0x1ea77f/barCount,_0x52da71=_0x2c9837*0.45;for(let _0xfbccfa=0x0;_0xfbccfa<barCount;_0xfbccfa++){const _0x3a0cbe=smoothBars[_0xfbccfa]/0xff*(_0x315e67*0x1),_0x41a939=_0xfbccfa*_0x2c9837+(_0x2c9837-_0x52da71)/0x2,_0x2c68a1=_0x315e67-_0x3a0cbe,_0x2bbe78=ctxBar[_0x7a568b(0x460)+_0x7a568b(0x212)](0x0,_0x315e67,0x0,_0x2c68a1);_0x2bbe78[_0x7a568b(0x2fb)+'op'](0x0,_0x7a568b(0x214)+'t'),_0x2bbe78[_0x7a568b(0x2fb)+'op'](0.4,userSettings[_0x7a568b(0x393)]),_0x2bbe78[_0x7a568b(0x2fb)+'op'](0x1,_0x7a568b(0x40f)),ctxBar[_0x7a568b(0x48b)]=_0x2bbe78,ctxBar[_0x7a568b(0x20b)](),ctxBar[_0x7a568b(0x361)](_0x41a939,_0x2c68a1,_0x52da71,_0x3a0cbe,[0x3,0x3,0x0,0x0]),ctxBar[_0x7a568b(0x475)]();}}else{if(userSettings[_0x7a568b(0x2c2)+_0x7a568b(0x46f)]===_0x7a568b(0x42a)){canvasBg[_0x7a568b(0x268)][_0x7a568b(0x2e1)]='5';const _0x23422b=window[_0x7a568b(0x1fa)+_0x7a568b(0x1a0)]||0x1,_0x50e577=container[_0x7a568b(0x45e)+_0x7a568b(0x337)+'t'](),_0x2143c6=_0x50e577[_0x7a568b(0x144)]>0x0?_0x50e577[_0x7a568b(0x275)]+_0x50e577[_0x7a568b(0x144)]/0x2:window[_0x7a568b(0x215)]/0x2,_0x28d72e=_0x50e577[_0x7a568b(0x20d)]>0x0?_0x50e577[_0x7a568b(0x32d)]+_0x50e577[_0x7a568b(0x20d)]/0x2:window[_0x7a568b(0x1fe)+'t']/0x2,_0x1639b9=Math[_0x7a568b(0x197)](_0x50e577[_0x7a568b(0x144)]||window[_0x7a568b(0x215)],_0x50e577[_0x7a568b(0x20d)]||window[_0x7a568b(0x1fe)+'t'])*0.28;ctxBg[_0x7a568b(0x146)](),ctxBg[_0x7a568b(0x31b)](_0x2143c6,_0x28d72e);for(let _0x2d7b02=0x0;_0x2d7b02<barCount;_0x2d7b02++){const _0x1cf85a=_0x2d7b02/barCount*Math['PI']*0x2,_0x31056b=smoothBars[_0x2d7b02]/0xff*(_0x1639b9*0.75),_0x47a3f0=Math[_0x7a568b(0x47e)](_0x1cf85a)*_0x1639b9,_0x48d9ae=Math[_0x7a568b(0x45a)](_0x1cf85a)*_0x1639b9,_0x4ced2c=Math[_0x7a568b(0x47e)](_0x1cf85a)*(_0x1639b9+_0x31056b),_0x485dcc=Math[_0x7a568b(0x45a)](_0x1cf85a)*(_0x1639b9+_0x31056b);ctxBg[_0x7a568b(0x20b)](),ctxBg[_0x7a568b(0x309)](_0x47a3f0,_0x48d9ae),ctxBg[_0x7a568b(0x327)](_0x4ced2c,_0x485dcc),ctxBg[_0x7a568b(0x2cc)+'e']=userSettings[_0x7a568b(0x393)],ctxBg[_0x7a568b(0x3c4)]=0x3,ctxBg[_0x7a568b(0x477)]=_0x7a568b(0x1f3),ctxBg[_0x7a568b(0x405)+'a']=0.85,ctxBg[_0x7a568b(0x21a)]();}ctxBg[_0x7a568b(0x2e2)]();}}}drawVisualizer();function parseLRC(_0x5dd601){const _0x419e37=_0x416eb4;lyrics=[];if(!_0x5dd601||!_0x5dd601[_0x419e37(0x374)]()){renderLyrics();return;}const _0x2be607=_0x5dd601[_0x419e37(0x3a0)](/^\uFEFF/,'')[_0x419e37(0x1be)](/\r?\n/),_0x25d3c8=/[\[<\(]\s*(\d{1,3})\s*:\s*(\d{1,2})(?:\s*[\.\:,]\s*(\d{1,3}))?\s*[\]>\)]/g;let _0x6df2fd=![];_0x2be607[_0x419e37(0x399)](_0x22a7d8=>{const _0x155cc4=_0x419e37;if(/^\s*[\[<\(]\s*(ar|ti|al|by|offset|length)\s*:/i[_0x155cc4(0x1c4)](_0x22a7d8))return;const _0x3903bd=[..._0x22a7d8[_0x155cc4(0x355)](_0x25d3c8)];if(_0x3903bd[_0x155cc4(0x171)]>0x0){_0x6df2fd=!![];let _0x3b1f62=_0x22a7d8[_0x155cc4(0x3a0)](_0x25d3c8,'')[_0x155cc4(0x374)]()||_0x155cc4(0x436);_0x3903bd[_0x155cc4(0x399)](_0x3e2149=>{const _0x4dc640=_0x155cc4,_0x4d5b58=parseInt(_0x3e2149[0x1],0xa),_0x2f04ef=parseInt(_0x3e2149[0x2],0xa);let _0x147efc=0x0;if(_0x3e2149[0x3]){const _0x25f00a=_0x3e2149[0x3];_0x147efc=_0x25f00a[_0x4dc640(0x171)]===0x1?parseInt(_0x25f00a,0xa)*0x64:_0x25f00a[_0x4dc640(0x171)]===0x2?parseInt(_0x25f00a,0xa)*0xa:parseInt(_0x25f00a,0xa);}lyrics[_0x4dc640(0x14c)]({'time':_0x4d5b58*0x3c+_0x2f04ef+_0x147efc/0x3e8,'content':_0x3b1f62});});}});if(!_0x6df2fd){const _0x4321a5=_0x2be607[_0x419e37(0x1b5)](_0x3ab565=>_0x3ab565[_0x419e37(0x374)]()!==''),_0x2f9ae3=audio[_0x419e37(0x2a9)]&&!isNaN(audio[_0x419e37(0x2a9)])?audio[_0x419e37(0x2a9)]/_0x4321a5[_0x419e37(0x171)]:3.5;_0x4321a5[_0x419e37(0x399)]((_0x712c41,_0x2d0a64)=>{const _0x440586=_0x419e37;lyrics[_0x440586(0x14c)]({'time':_0x2d0a64*_0x2f9ae3,'content':_0x712c41[_0x440586(0x374)]()});});}lyrics[_0x419e37(0x157)]((_0x789dc3,_0x25dc6e)=>_0x789dc3[_0x419e37(0x246)]-_0x25dc6e[_0x419e37(0x246)]),renderLyrics();}function renderLyrics(){const _0x36f875=_0x416eb4;scroller[_0x36f875(0x20e)]='';if(lyrics[_0x36f875(0x171)]===0x0){scroller[_0x36f875(0x20e)]=_0x36f875(0x488)+_0x36f875(0x210)+_0x36f875(0x14a)+_0x36f875(0x358)+_0x36f875(0x466)+_0x36f875(0x2be)+_0x36f875(0x282),updateScroll(-0x1);return;}lyrics[_0x36f875(0x399)]((_0x34376b,_0x2c9787)=>{const _0x49e0ef=_0x36f875,_0x5026fe=document[_0x49e0ef(0x2de)+_0x49e0ef(0x38f)](_0x49e0ef(0x1af));_0x5026fe[_0x49e0ef(0x48c)]=_0x49e0ef(0x481),_0x5026fe['id']=_0x49e0ef(0x13f)+_0x2c9787,_0x5026fe[_0x49e0ef(0x3d3)]=_0x34376b[_0x49e0ef(0x1f2)],_0x5026fe[_0x49e0ef(0x382)]=_0x4187c8=>{const _0x31e605=_0x49e0ef;_0x4187c8[_0x31e605(0x46e)+_0x31e605(0x43b)]();if(totalDragDistance>0xa)return;seekAudioTo(_0x34376b[_0x31e605(0x246)]+userSettings[_0x31e605(0x283)]);if(audio[_0x31e605(0x47b)])triggerPlay();isAutoScrollLocked=![],resumeSyncBtn[_0x31e605(0x25c)][_0x31e605(0x32e)](_0x31e605(0x25e)),updateScroll(_0x2c9787,!![]);},scroller[_0x49e0ef(0x42b)+'d'](_0x5026fe);}),activeIndex=-0x1,updateScroll(-0x1);}function updateScroll(_0x3ae73e,_0x3732a2=![]){const _0x40cd1d=_0x416eb4,_0x3a7f64=document[_0x40cd1d(0x370)+_0x40cd1d(0x170)](_0x40cd1d(0x439)+'e');_0x3a7f64[_0x40cd1d(0x399)](_0x285663=>_0x285663[_0x40cd1d(0x25c)][_0x40cd1d(0x36e)](_0x40cd1d(0x386)));const _0x2c0b26=container[_0x40cd1d(0x154)+'ht'];if(_0x3ae73e===-0x1||!_0x3a7f64[_0x40cd1d(0x171)]){(!isAutoScrollLocked||_0x3732a2)&&(scroller[_0x40cd1d(0x268)][_0x40cd1d(0x27b)]=_0x40cd1d(0x2f8)+'('+_0x2c0b26/0x2+_0x40cd1d(0x458));return;}const _0x207a0b=document[_0x40cd1d(0x391)+_0x40cd1d(0x363)](_0x40cd1d(0x13f)+_0x3ae73e);if(_0x207a0b){_0x207a0b[_0x40cd1d(0x25c)][_0x40cd1d(0x32e)](_0x40cd1d(0x386));if(!isAutoScrollLocked||_0x3732a2){const _0x29eea5=_0x207a0b[_0x40cd1d(0x350)]+_0x207a0b[_0x40cd1d(0x154)+'ht']/0x2;scroller[_0x40cd1d(0x268)][_0x40cd1d(0x27b)]=_0x40cd1d(0x2f8)+'('+(_0x2c0b26/0x2-_0x29eea5)+_0x40cd1d(0x458);}}}function syncLoop(){const _0x43f868=_0x416eb4;if(!audio[_0x43f868(0x47b)]&&!audio[_0x43f868(0x2cd)]){const _0x39d076=audio[_0x43f868(0x455)+'e'];currTimeLbl[_0x43f868(0x3d3)]=formatTime(_0x39d076);!isScrubbing&&audio[_0x43f868(0x2a9)]&&!isNaN(audio[_0x43f868(0x2a9)])&&(scrubber[_0x43f868(0x13e)]=_0x39d076/audio[_0x43f868(0x2a9)]*0x64);const _0x4fae2a=_0x39d076-userSettings[_0x43f868(0x283)];let _0x39ffcd=-0x1;for(let _0x57941c=0x0;_0x57941c<lyrics[_0x43f868(0x171)];_0x57941c++){if(_0x4fae2a>=lyrics[_0x57941c][_0x43f868(0x246)]-0.08)_0x39ffcd=_0x57941c;else break;}_0x39ffcd!==activeIndex&&(activeIndex=_0x39ffcd,updateScroll(_0x39ffcd));}requestAnimationFrame(syncLoop);}requestAnimationFrame(syncLoop);function getCurrentTransformY(){const _0x540467=_0x416eb4,_0xbe37e8=window[_0x540467(0x140)]||window[_0x540467(0x1c7)+_0x540467(0x276)],_0x218701=new _0xbe37e8(window[_0x540467(0x2ac)+_0x540467(0x2a2)](scroller)[_0x540467(0x27b)]);return _0x218701[_0x540467(0x180)]||container[_0x540467(0x154)+'ht']/0x2;}function startDrag(_0x48a9c0){const _0x4fedc6=_0x416eb4;if(!lyrics[_0x4fedc6(0x171)])return;isDragging=!![],dragStartY=_0x48a9c0,dragStartTransformY=getCurrentTransformY(),totalDragDistance=0x0,scroller[_0x4fedc6(0x268)][_0x4fedc6(0x470)]=_0x4fedc6(0x14e);}function moveDrag(_0x476402){const _0x2669de=_0x416eb4;if(!isDragging||!lyrics[_0x2669de(0x171)])return;const _0x510cdd=_0x476402-dragStartY;totalDragDistance+=Math[_0x2669de(0x48e)](_0x510cdd);totalDragDistance>0x5&&(isAutoScrollLocked=!![],resumeSyncBtn[_0x2669de(0x25c)][_0x2669de(0x36e)](_0x2669de(0x25e)));const _0x51d78a=document[_0x2669de(0x370)+_0x2669de(0x170)](_0x2669de(0x439)+'e');if(_0x51d78a[_0x2669de(0x171)]>0x0){const _0x24e86b=container[_0x2669de(0x154)+'ht'],_0x4f38dc=_0x51d78a[0x0],_0x2148af=_0x51d78a[_0x51d78a[_0x2669de(0x171)]-0x1],_0x218a24=_0x24e86b/0x2-(_0x4f38dc[_0x2669de(0x350)]+_0x4f38dc[_0x2669de(0x154)+'ht']/0x2),_0x37baed=_0x24e86b/0x2-(_0x2148af[_0x2669de(0x350)]+_0x2148af[_0x2669de(0x154)+'ht']/0x2),_0x279a8a=dragStartTransformY+_0x510cdd,_0x4eece2=Math[_0x2669de(0x2e9)](_0x37baed,Math[_0x2669de(0x197)](_0x218a24,_0x279a8a));scroller[_0x2669de(0x268)][_0x2669de(0x27b)]=_0x2669de(0x2f8)+'('+_0x4eece2+_0x2669de(0x458);}}function endDrag(){const _0x426b6a=_0x416eb4;if(!isDragging)return;isDragging=![],scroller[_0x426b6a(0x268)][_0x426b6a(0x470)]=_0x426b6a(0x19c)+_0x426b6a(0x2b1)+_0x426b6a(0x187)+_0x426b6a(0x18c)+_0x426b6a(0x486);}container[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x13c),_0x44b495=>startDrag(_0x44b495[_0x416eb4(0x2d4)])),window[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x440),_0x403cad=>{const _0x32f4b8=_0x416eb4;if(isDragging)moveDrag(_0x403cad[_0x32f4b8(0x2d4)]);}),window[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x3c5),endDrag),container[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x312),_0x3ea3d5=>{const _0x5c5eaa=_0x416eb4;if(_0x3ea3d5[_0x5c5eaa(0x1f1)][_0x5c5eaa(0x171)]===0x1)startDrag(_0x3ea3d5[_0x5c5eaa(0x1f1)][0x0][_0x5c5eaa(0x2d4)]);},{'passive':!![]}),container[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x3a1),_0x507b3f=>{const _0x5910d0=_0x416eb4;if(_0x507b3f[_0x5910d0(0x1f1)][_0x5910d0(0x171)]===0x1)moveDrag(_0x507b3f[_0x5910d0(0x1f1)][0x0][_0x5910d0(0x2d4)]);},{'passive':!![]}),container[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x3c6),endDrag);function resumeAutoSync(){const _0x285dd3=_0x416eb4;isAutoScrollLocked=![],resumeSyncBtn[_0x285dd3(0x25c)][_0x285dd3(0x32e)](_0x285dd3(0x25e)),updateScroll(activeIndex,!![]);}resumeSyncBtn[_0x416eb4(0x382)]=resumeAutoSync;const playlistContainer=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x472)+_0x416eb4(0x2b3)),searchInput=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x14b)+_0x416eb4(0x204)),clearSearchBtn=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x29d)+_0x416eb4(0x14b)+_0x416eb4(0x3d1));window[_0x416eb4(0x2ba)+_0x416eb4(0x16a)+'t']=renderLibraryPlaylist;function renderLibraryPlaylist(){const _0x5a59dd=_0x416eb4;playlistContainer[_0x5a59dd(0x20e)]='';const _0xcaa8eb=window[_0x5a59dd(0x1a4)+_0x5a59dd(0x403)]||[],_0xfc9969=_0xcaa8eb[_0x5a59dd(0x1b5)](_0x47648d=>{const _0x4ffe37=_0x5a59dd,_0x4daad1=searchQuery[_0x4ffe37(0x1f4)+'e']()[_0x4ffe37(0x374)]();if(!_0x4daad1)return!![];return _0x47648d[_0x4ffe37(0x457)][_0x4ffe37(0x1f4)+'e']()[_0x4ffe37(0x138)](_0x4daad1)||_0x47648d[_0x4ffe37(0x373)][_0x4ffe37(0x1f4)+'e']()[_0x4ffe37(0x138)](_0x4daad1);}),_0x1fd4ba=document[_0x5a59dd(0x391)+_0x5a59dd(0x363)](_0x5a59dd(0x2e6)+_0x5a59dd(0x2d1));_0x1fd4ba&&(searchQuery[_0x5a59dd(0x374)]()?_0x1fd4ba[_0x5a59dd(0x3d3)]=_0xfc9969[_0x5a59dd(0x171)]+_0x5a59dd(0x1d3)+_0xcaa8eb[_0x5a59dd(0x171)]:_0x1fd4ba[_0x5a59dd(0x3d3)]=_0xcaa8eb[_0x5a59dd(0x171)]+'\x20'+(_0xcaa8eb[_0x5a59dd(0x171)]===0x1?_0x5a59dd(0x2c4):_0x5a59dd(0x218)));if(_0xfc9969[_0x5a59dd(0x171)]===0x0){playlistContainer[_0x5a59dd(0x20e)]=_0x5a59dd(0x35a)+_0x5a59dd(0x232)+_0x5a59dd(0x162)+_0x5a59dd(0x39a)+_0x5a59dd(0x47c)+_0x5a59dd(0x487)+_0x5a59dd(0x1bf)+_0x5a59dd(0x232)+_0x5a59dd(0x232)+_0x5a59dd(0x41f)+_0x5a59dd(0x238)+_0x5a59dd(0x46b)+_0x5a59dd(0x467)+_0x5a59dd(0x17a)+_0x5a59dd(0x3c9)+_0x5a59dd(0x28f)+_0x5a59dd(0x45b)+_0x5a59dd(0x232)+_0x5a59dd(0x232)+_0x5a59dd(0x485)+_0x5a59dd(0x3cd)+_0x5a59dd(0x408)+_0x5a59dd(0x189)+_0x5a59dd(0x1ef)+_0x5a59dd(0x1ac)+escapeHTML(searchQuery)+(_0x5a59dd(0x18d)+_0x5a59dd(0x232)+_0x5a59dd(0x21c)+_0x5a59dd(0x3fb)+_0x5a59dd(0x23e));return;}_0xfc9969[_0x5a59dd(0x399)]((_0x5937c9,_0x5ecc3d)=>{const _0x3805ba=_0x5a59dd,_0x5e8fa9=_0x5937c9['id']===activeSongId,_0x105c23=_0x5e8fa9&&!audio[_0x3805ba(0x47b)],_0x3798d1=document[_0x3805ba(0x2de)+_0x3805ba(0x38f)](_0x3805ba(0x1af));_0x3798d1[_0x3805ba(0x3cf)][_0x3805ba(0x469)]=_0x5937c9['id'],_0x3798d1[_0x3805ba(0x48c)]=_0x3805ba(0x2e6)+_0x3805ba(0x22c)+_0x3805ba(0x183)+_0x3805ba(0x265)+_0x3805ba(0x30c)+_0x3805ba(0x2d8)+_0x3805ba(0x2ab)+_0x3805ba(0x3c2)+_0x3805ba(0x15d)+_0x3805ba(0x121)+_0x3805ba(0x1f8)+_0x3805ba(0x37d)+(_0x5e8fa9?_0x3805ba(0x3dc)+_0x3805ba(0x287):_0x3805ba(0x371)+_0x3805ba(0x160)+_0x3805ba(0x34e)+_0x3805ba(0x23d)+_0x3805ba(0x243)+_0x3805ba(0x450));const _0xc12c70=_0x3805ba(0x35a)+_0x3805ba(0x232)+_0x3805ba(0x162)+_0x3805ba(0x2e3)+_0x3805ba(0x131)+(_0x105c23?'':_0x3805ba(0x47b))+(_0x3805ba(0x484)+_0x3805ba(0x232)+_0x3805ba(0x1ca)+_0x3805ba(0x365)+_0x3805ba(0x23b)+_0x3805ba(0x25b)+_0x3805ba(0x27f)+_0x3805ba(0x232)+_0x3805ba(0x1ca)+_0x3805ba(0x365)+_0x3805ba(0x23b)+_0x3805ba(0x25b)+_0x3805ba(0x27f)+_0x3805ba(0x232)+_0x3805ba(0x1ca)+_0x3805ba(0x365)+_0x3805ba(0x23b)+_0x3805ba(0x25b)+_0x3805ba(0x27f)+_0x3805ba(0x232)+_0x3805ba(0x3a2)+_0x3805ba(0x232)+_0x3805ba(0x3ae)),_0x1aaf5d=_0x5e8fa9?_0x3805ba(0x2ad)+_0x3805ba(0x166)+_0x3805ba(0x336)+_0x3805ba(0x248)+_0x3805ba(0x3ff)+_0x3805ba(0x35e)+_0x3805ba(0x1a2)+_0x3805ba(0x369)+_0x3805ba(0x2bd)+_0x3805ba(0x216)+_0x3805ba(0x1aa)+_0x3805ba(0x2a7)+_0x3805ba(0x1c0):'';_0x3798d1[_0x3805ba(0x20e)]=_0x3805ba(0x35a)+_0x3805ba(0x232)+_0x3805ba(0x162)+_0x3805ba(0x2c0)+_0x3805ba(0x1a1)+_0x3805ba(0x1ab)+_0x3805ba(0x2cf)+_0x3805ba(0x232)+_0x3805ba(0x232)+_0x3805ba(0x162)+_0x3805ba(0x173)+_0x3805ba(0x300)+_0x3805ba(0x39c)+_0x3805ba(0x443)+_0x3805ba(0x3f9)+_0x3805ba(0x378)+_0x3805ba(0x231)+_0x3805ba(0x203)+_0x3805ba(0x389)+_0x3805ba(0x29c)+'0\x20'+(_0x5e8fa9?'':_0x3805ba(0x487)+_0x3805ba(0x17c))+_0x3805ba(0x2f2)+_0x1aaf5d+(_0x3805ba(0x484)+_0x3805ba(0x232)+_0x3805ba(0x232)+'\x20')+(_0x5e8fa9?_0xc12c70:_0x3805ba(0x2fc)+_0x3805ba(0x133)+_0x3805ba(0x3a5)+_0x3805ba(0x31d)+_0x3805ba(0x435)+_0x3805ba(0x130)+_0x3805ba(0x253)+String(_0x5ecc3d+0x1)[_0x3805ba(0x3d8)](0x2,'0')+_0x3805ba(0x3bb))+(_0x3805ba(0x35a)+_0x3805ba(0x232)+_0x3805ba(0x433)+_0x3805ba(0x185)+_0x3805ba(0x232)+_0x3805ba(0x1d8)+_0x3805ba(0x471)+_0x3805ba(0x12a)+_0x3805ba(0x232)+_0x3805ba(0x232)+_0x3805ba(0x1d8)+_0x3805ba(0x163)+_0x3805ba(0x124)+_0x3805ba(0x267)+_0x3805ba(0x3f2)+_0x3805ba(0x1b8)+_0x3805ba(0x232)+_0x3805ba(0x232)+_0x3805ba(0x461)+_0x3805ba(0x2a0)+_0x3805ba(0x400)+_0x3805ba(0x279)+_0x3805ba(0x482)+_0x3805ba(0x2c3))+(_0x5e8fa9?'':_0x3805ba(0x487)+_0x3805ba(0x343))+_0x3805ba(0x2f2)+(_0x5e8fa9?_0x3805ba(0x387)+_0x3805ba(0x3d6)+_0x3805ba(0x260):'')+'\x22>'+escapeHTML(_0x5937c9[_0x3805ba(0x457)])+(_0x3805ba(0x3b7)+_0x3805ba(0x232)+_0x3805ba(0x232)+_0x3805ba(0x307))+(_0x5e8fa9?_0x3805ba(0x2fc)+_0x3805ba(0x3b4)+_0x3805ba(0x1cb)+_0x3805ba(0x451)+_0x3805ba(0x2fa)+_0x3805ba(0x2b8)+_0x3805ba(0x409)+_0x3805ba(0x262)+_0x3805ba(0x286)+_0x3805ba(0x24c)+_0x3805ba(0x13d)+_0x3805ba(0x3e2)+_0x3805ba(0x13a)+_0x3805ba(0x15b)+_0x3805ba(0x143)+_0x3805ba(0x239)+_0x3805ba(0x387)+_0x3805ba(0x3d6)+_0x3805ba(0x1db)+(_0x105c23?_0x3805ba(0x47d):_0x3805ba(0x2c7))+_0x3805ba(0x3bb):'')+(_0x3805ba(0x35a)+_0x3805ba(0x232)+_0x3805ba(0x478)+_0x3805ba(0x1d9)+_0x3805ba(0x232)+_0x3805ba(0x232)+_0x3805ba(0x412)+_0x3805ba(0x47a)+_0x3805ba(0x2f6)+_0x3805ba(0x431)+_0x3805ba(0x376)+_0x3805ba(0x19f)+'\x22>')+escapeHTML(_0x5937c9[_0x3805ba(0x373)])+(_0x3805ba(0x3d2)+_0x3805ba(0x232)+_0x3805ba(0x478)+_0x3805ba(0x1d9)+_0x3805ba(0x232)+_0x3805ba(0x21c)+_0x3805ba(0x3fb)+_0x3805ba(0x232)+_0x3805ba(0x26e)+_0x3805ba(0x226)+_0x3805ba(0x33b)+_0x3805ba(0x297)+_0x3805ba(0x30f)+_0x3805ba(0x191)+_0x3805ba(0x235)+_0x3805ba(0x28a)+_0x3805ba(0x198)+_0x3805ba(0x40a))+(_0x5e8fa9?'':_0x3805ba(0x449)+_0x3805ba(0x44f)+_0x3805ba(0x208))+_0x3805ba(0x2f2)+(_0x5e8fa9?_0x3805ba(0x2ad)+_0x3805ba(0x299)+_0x3805ba(0x2a7)+_0x3805ba(0x3f1)+_0x3805ba(0x2b9)+'4;':'')+(_0x3805ba(0x484)+_0x3805ba(0x232)+_0x3805ba(0x47f)+_0x3805ba(0x344)+_0x3805ba(0x40b))+(_0x105c23?_0x3805ba(0x38a):_0x3805ba(0x1c8))+(_0x3805ba(0x45b)+_0x3805ba(0x232)+_0x3805ba(0x284)+_0x3805ba(0x2ee)+_0x3805ba(0x232)+_0x3805ba(0x381)),_0x3798d1[_0x3805ba(0x382)]=()=>loadTrackFromLibrary(_0x5937c9),playlistContainer[_0x3805ba(0x42b)+'d'](_0x3798d1);});}window[_0x416eb4(0x39f)+_0x416eb4(0x464)]=function(){requestAnimationFrame(()=>{setTimeout(()=>{const _0x55b1c6=_0x4229;if(!activeSongId)return;const _0x22e0a2=playlistContainer[_0x55b1c6(0x370)+_0x55b1c6(0x397)](_0x55b1c6(0x44a)+_0x55b1c6(0x158)+activeSongId+'\x22]');_0x22e0a2&&_0x22e0a2[_0x55b1c6(0x427)+_0x55b1c6(0x1bb)]({'behavior':_0x55b1c6(0x31c),'block':_0x55b1c6(0x2bf)});},0x1c2);});},searchInput[_0x416eb4(0x39e)]=_0xac69a0=>{const _0x7afaa4=_0x416eb4;searchQuery=_0xac69a0[_0x7afaa4(0x43d)][_0x7afaa4(0x13e)],searchQuery?clearSearchBtn[_0x7afaa4(0x25c)][_0x7afaa4(0x36e)](_0x7afaa4(0x25e)):clearSearchBtn[_0x7afaa4(0x25c)][_0x7afaa4(0x32e)](_0x7afaa4(0x25e)),renderLibraryPlaylist();},clearSearchBtn[_0x416eb4(0x382)]=()=>{const _0x3e7efe=_0x416eb4;searchInput[_0x3e7efe(0x13e)]='',searchQuery='',clearSearchBtn[_0x3e7efe(0x25c)][_0x3e7efe(0x32e)](_0x3e7efe(0x25e)),renderLibraryPlaylist();};async function loadTrackFromLibrary(_0x5968c3,_0x17e217={}){const _0x86d30f=_0x416eb4,{autoplay:autoplay=!![],resumeTime:resumeTime=null}=_0x17e217,_0x105458=document[_0x86d30f(0x391)+_0x86d30f(0x363)](_0x86d30f(0x1fd)+_0x86d30f(0x395));if(_0x105458){delete _0x105458[_0x86d30f(0x3cf)][_0x86d30f(0x1c5)];if(_0x5968c3[_0x86d30f(0x1ea)])_0x105458[_0x86d30f(0x321)]=_0x5968c3[_0x86d30f(0x1ea)];else _0x5968c3[_0x86d30f(0x245)]?_0x105458[_0x86d30f(0x321)]=_0x5968c3[_0x86d30f(0x245)]:_0x105458[_0x86d30f(0x321)]=_0x86d30f(0x384)+_0x86d30f(0x42f)+_0x86d30f(0x42e);}if(_0x5968c3['id']===activeSongId){audio[_0x86d30f(0x47b)]?await triggerPlay():audio[_0x86d30f(0x19d)]();closeSheet(document[_0x86d30f(0x391)+_0x86d30f(0x363)](_0x86d30f(0x346)+_0x86d30f(0x17d)));return;}activeSongId=_0x5968c3['id'],onlineTrackTitle=_0x5968c3[_0x86d30f(0x457)],onlineArtistName=_0x5968c3[_0x86d30f(0x373)],fileTrackTitle='',fileArtistName='',updateHeaderTitle(),await setAudioSource(_0x5968c3[_0x86d30f(0x125)]);if(songInput)songInput[_0x86d30f(0x13e)]=_0x5968c3[_0x86d30f(0x457)];if(artistInput)artistInput[_0x86d30f(0x13e)]=_0x5968c3[_0x86d30f(0x373)];if(_0x5968c3[_0x86d30f(0x43e)]){const _0x45684b=document[_0x86d30f(0x391)+_0x86d30f(0x363)](_0x86d30f(0x438)+_0x86d30f(0x37a));if(_0x45684b)_0x45684b[_0x86d30f(0x13e)]=_0x5968c3[_0x86d30f(0x43e)];parseLRC(_0x5968c3[_0x86d30f(0x43e)]);}else executeOnlineSync(!![]);renderLibraryPlaylist(),saveLastTrackState();resumeTime&&resumeTime>0x0&&seekAudioTo(resumeTime);if(!autoplay)return;closeSheet(document[_0x86d30f(0x391)+_0x86d30f(0x363)](_0x86d30f(0x346)+_0x86d30f(0x17d))),resumeAutoSync(),await triggerPlay();}const songInput=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x3be)+_0x416eb4(0x3b8)),artistInput=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x177)+_0x416eb4(0x315)),fetchOnlineBtn=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x3de)+_0x416eb4(0x2a8)),fetchStatus=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2f7)+_0x416eb4(0x175));async function executeOnlineSync(_0x3145de=![]){const _0x29764b=_0x416eb4,_0x431050=songInput[_0x29764b(0x13e)][_0x29764b(0x374)](),_0x5e92a4=artistInput[_0x29764b(0x13e)][_0x29764b(0x374)]();if(!_0x431050){!_0x3145de&&(fetchStatus[_0x29764b(0x48c)]=_0x29764b(0x164)+_0x29764b(0x329)+_0x29764b(0x474)+_0x29764b(0x330)+_0x29764b(0x1b9),fetchStatus[_0x29764b(0x3d3)]=_0x29764b(0x3e0)+_0x29764b(0x3a7)+_0x29764b(0x241)+_0x29764b(0x3ec)+_0x29764b(0x356));return;}fetchStatus[_0x29764b(0x48c)]=_0x29764b(0x164)+_0x29764b(0x329)+_0x29764b(0x474)+_0x29764b(0x127)+_0x29764b(0x1b9),fetchStatus[_0x29764b(0x20e)]=_0x29764b(0x379)+_0x29764b(0x222)+_0x29764b(0x23f)+_0x29764b(0x15f)+_0x29764b(0x3b9)+_0x29764b(0x37e)+_0x29764b(0x152)+_0x29764b(0x2b2)+_0x29764b(0x1f9)+escapeHTML(_0x431050)+_0x29764b(0x46d);try{let _0x338c88=_0x29764b(0x3ed)+_0x29764b(0x44c)+_0x29764b(0x1d0)+_0x29764b(0x2d9)+'='+encodeURIComponent(_0x431050);if(_0x5e92a4)_0x338c88+=_0x29764b(0x2db)+_0x29764b(0x1e9)+encodeURIComponent(_0x5e92a4);let _0x5efd0d=await fetch(_0x338c88),_0xd88e7c=await _0x5efd0d[_0x29764b(0x161)]();(!_0xd88e7c||_0xd88e7c[_0x29764b(0x171)]===0x0)&&(_0x5efd0d=await fetch(_0x29764b(0x3ed)+_0x29764b(0x44c)+_0x29764b(0x1d0)+'q='+encodeURIComponent(_0x431050+'\x20'+_0x5e92a4)),_0xd88e7c=await _0x5efd0d[_0x29764b(0x161)]());if(_0xd88e7c&&_0xd88e7c[_0x29764b(0x171)]>0x0){let _0xf83ce8=_0xd88e7c[_0x29764b(0x27a)](_0x45aef0=>_0x45aef0[_0x29764b(0x32a)+'cs'])||_0xd88e7c[0x0],_0xedfd33=_0xf83ce8[_0x29764b(0x32a)+'cs']||_0xf83ce8[_0x29764b(0x12e)+'s'];if(_0xedfd33)document[_0x29764b(0x391)+_0x29764b(0x363)](_0x29764b(0x438)+_0x29764b(0x37a))[_0x29764b(0x13e)]=_0xedfd33,parseLRC(_0xedfd33),onlineTrackTitle=_0xf83ce8[_0x29764b(0x46c)],onlineArtistName=_0xf83ce8[_0x29764b(0x122)]||_0x29764b(0x292)+_0x29764b(0x3a3),updateHeaderTitle(),document[_0x29764b(0x391)+_0x29764b(0x363)](_0x29764b(0x3b0)+'me')[_0x29764b(0x3d3)]=_0x29764b(0x35b)+_0x29764b(0x1a5)+_0xf83ce8[_0x29764b(0x46c)],fetchStatus[_0x29764b(0x48c)]=_0x29764b(0x164)+_0x29764b(0x329)+_0x29764b(0x474)+_0x29764b(0x1ad)+_0x29764b(0x15a),fetchStatus[_0x29764b(0x3d3)]=_0x29764b(0x32f)+_0x29764b(0x36a)+_0x29764b(0x1f9)+_0xf83ce8[_0x29764b(0x46c)]+'\x22!',resumeAutoSync();else throw new Error(_0x29764b(0x147)+_0x29764b(0x2f0)+_0x29764b(0x2ce)+_0x29764b(0x34a)+_0x29764b(0x1e3));}else throw new Error(_0x29764b(0x3f5)+_0x29764b(0x1df)+_0x29764b(0x3b3)+_0x29764b(0x41c));}catch(_0x405a59){fetchStatus[_0x29764b(0x48c)]=_0x29764b(0x164)+_0x29764b(0x329)+_0x29764b(0x474)+_0x29764b(0x330)+_0x29764b(0x1b9),fetchStatus[_0x29764b(0x3d3)]='✕\x20'+(_0x405a59[_0x29764b(0x3e9)]||_0x29764b(0x186)+_0x29764b(0x35f)+_0x29764b(0x32c));}}fetchOnlineBtn[_0x416eb4(0x382)]=()=>executeOnlineSync(![]);async function triggerPlay(){const _0x915c24=_0x416eb4;if(audio[_0x915c24(0x321)]){try{await setupAudioContext();if(audioCtx&&audioCtx[_0x915c24(0x1a8)]===_0x915c24(0x390))await audioCtx[_0x915c24(0x3ba)]();}catch(_0x264a05){console[_0x915c24(0x2f9)](_0x915c24(0x221)+_0x915c24(0x3ea)+':',_0x264a05);}try{await audio[_0x915c24(0x3f4)]();}catch(_0x2cd151){console[_0x915c24(0x2f9)](_0x915c24(0x463)+':',_0x2cd151);}}}const handlePlayPause=()=>{const _0x3a24f9=_0x416eb4;if(!audio[_0x3a24f9(0x321)]){openSheet(document[_0x3a24f9(0x391)+_0x3a24f9(0x363)](_0x3a24f9(0x346)+_0x3a24f9(0x17d)));return;}if(audio[_0x3a24f9(0x47b)])triggerPlay();else audio[_0x3a24f9(0x19d)]();};btnPlayPause[_0x416eb4(0x382)]=handlePlayPause;if(btnPlayPauseMob)btnPlayPauseMob[_0x416eb4(0x382)]=handlePlayPause;audio[_0x416eb4(0x34d)]=()=>{const _0x45c73b=_0x416eb4;document[_0x45c73b(0x370)+_0x45c73b(0x170)](_0x45c73b(0x302)+_0x45c73b(0x2e0)+_0x45c73b(0x305))[_0x45c73b(0x399)](_0x44c81b=>_0x44c81b[_0x45c73b(0x25c)][_0x45c73b(0x32e)](_0x45c73b(0x25e))),document[_0x45c73b(0x370)+_0x45c73b(0x170)](_0x45c73b(0x3f8)+_0x45c73b(0x394)+_0x45c73b(0x1cc)+'t')[_0x45c73b(0x399)](_0x3d2a82=>_0x3d2a82[_0x45c73b(0x25c)][_0x45c73b(0x36e)](_0x45c73b(0x25e))),document[_0x45c73b(0x370)+_0x45c73b(0x170)](_0x45c73b(0x35c)+_0x45c73b(0x31f)+_0x45c73b(0x270)+_0x45c73b(0x217))[_0x45c73b(0x399)](_0x323500=>{const _0x1a5088=_0x45c73b;_0x323500[_0x1a5088(0x25c)][_0x1a5088(0x32e)](_0x1a5088(0x1f6));}),renderLibraryPlaylist();},audio[_0x416eb4(0x1fc)]=()=>{const _0x380dab=_0x416eb4;document[_0x380dab(0x370)+_0x380dab(0x170)](_0x380dab(0x302)+_0x380dab(0x2e0)+_0x380dab(0x305))[_0x380dab(0x399)](_0x389ffe=>_0x389ffe[_0x380dab(0x25c)][_0x380dab(0x36e)](_0x380dab(0x25e))),document[_0x380dab(0x370)+_0x380dab(0x170)](_0x380dab(0x3f8)+_0x380dab(0x394)+_0x380dab(0x1cc)+'t')[_0x380dab(0x399)](_0x1f57b6=>_0x1f57b6[_0x380dab(0x25c)][_0x380dab(0x32e)](_0x380dab(0x25e))),document[_0x380dab(0x370)+_0x380dab(0x170)](_0x380dab(0x35c)+_0x380dab(0x31f)+_0x380dab(0x270)+_0x380dab(0x217))[_0x380dab(0x399)](_0x4681d9=>{const _0xb1e230=_0x380dab;_0x4681d9[_0xb1e230(0x25c)][_0xb1e230(0x36e)](_0xb1e230(0x1f6));}),renderLibraryPlaylist(),saveLastTrackState();},setInterval(()=>{const _0x146293=_0x416eb4;if(!audio[_0x146293(0x47b)])saveLastTrackState();},0x1f40),window[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x1b1)+'ad',saveLastTrackState),audio[_0x416eb4(0x129)+_0x416eb4(0x3da)]=()=>{const _0x45b9d4=_0x416eb4;durTimeLbl[_0x45b9d4(0x3d3)]=formatTime(audio[_0x45b9d4(0x2a9)]);},scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x199)+'n',()=>{isScrubbing=!![];}),scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x13c),()=>{isScrubbing=!![];}),scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x312),()=>{isScrubbing=!![];},{'passive':!![]});const endScrub=()=>{isScrubbing=![];};scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x1bd),endScrub),scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x3c5),endScrub),scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x3c6),endScrub),scrubber[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x291),endScrub),scrubber[_0x416eb4(0x39e)]=_0x251b35=>{const _0x103a58=_0x416eb4;if(audio[_0x103a58(0x2a9)]&&!isNaN(audio[_0x103a58(0x2a9)])){seekAudioTo(_0x251b35[_0x103a58(0x43d)][_0x103a58(0x13e)]/0x64*audio[_0x103a58(0x2a9)]);if(isAutoScrollLocked)resumeAutoSync();}},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2d2))[_0x416eb4(0x382)]=()=>{const _0x433613=_0x416eb4,_0x2ecc30=audio[_0x433613(0x455)+'e']||0x0;seekAudioTo(_0x2ecc30-0x5);},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2ef)+'d')[_0x416eb4(0x382)]=()=>{const _0x50833a=_0x416eb4,_0x3b055b=audio[_0x50833a(0x455)+'e']||0x0;seekAudioTo(_0x3b055b+0x5);};const speedSlider=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x349)+'er');speedSlider[_0x416eb4(0x39e)]=_0x132b65=>{const _0x21441a=_0x416eb4,_0x2622cf=parseFloat(_0x132b65[_0x21441a(0x43d)][_0x21441a(0x13e)]);audio[_0x21441a(0x48a)+'te']=_0x2622cf,document[_0x21441a(0x391)+_0x21441a(0x363)](_0x21441a(0x304))[_0x21441a(0x3d3)]=_0x2622cf[_0x21441a(0x480)](0x2)+'x';},document[_0x416eb4(0x23c)+_0x416eb4(0x341)](_0x416eb4(0x227),_0x4b13ee=>{const _0x43e00d=_0x416eb4,_0x577db1=document[_0x43e00d(0x43a)+_0x43e00d(0x38f)]?document[_0x43e00d(0x43a)+_0x43e00d(0x38f)][_0x43e00d(0x3bd)]:'',_0x3ddc84=_0x577db1===_0x43e00d(0x285)||_0x577db1===_0x43e00d(0x306)||_0x577db1===_0x43e00d(0x396)||document[_0x43e00d(0x43a)+_0x43e00d(0x38f)]&&document[_0x43e00d(0x43a)+_0x43e00d(0x38f)][_0x43e00d(0x332)+_0x43e00d(0x489)];if(_0x3ddc84)return;switch(_0x4b13ee[_0x43e00d(0x3d7)]){case _0x43e00d(0x12b):_0x4b13ee[_0x43e00d(0x3fa)+_0x43e00d(0x167)](),handlePlayPause();break;case _0x43e00d(0x14f):_0x4b13ee[_0x43e00d(0x3fa)+_0x43e00d(0x167)](),seekAudioTo((audio[_0x43e00d(0x455)+'e']||0x0)+0x5);break;case _0x43e00d(0x3cc):_0x4b13ee[_0x43e00d(0x3fa)+_0x43e00d(0x167)](),seekAudioTo((audio[_0x43e00d(0x455)+'e']||0x0)-0x5);break;case _0x43e00d(0x37b):_0x4b13ee[_0x43e00d(0x3fa)+_0x43e00d(0x167)]();if(typeof window[_0x43e00d(0x1dc)]===_0x43e00d(0x174))window[_0x43e00d(0x1dc)](0.05);break;case _0x43e00d(0x3e4):_0x4b13ee[_0x43e00d(0x3fa)+_0x43e00d(0x167)]();if(typeof window[_0x43e00d(0x1dc)]===_0x43e00d(0x174))window[_0x43e00d(0x1dc)](-0.05);break;case _0x43e00d(0x3f3):if(typeof window[_0x43e00d(0x1ce)]===_0x43e00d(0x174))window[_0x43e00d(0x1ce)]();break;case _0x43e00d(0x224):playNextTrack();break;case _0x43e00d(0x3bf):playPreviousTrack();break;case _0x43e00d(0x1ff):toggleLoopMode();break;case _0x43e00d(0x202):document[_0x43e00d(0x370)+_0x43e00d(0x170)](_0x43e00d(0x181)+_0x43e00d(0x2b6))[_0x43e00d(0x399)](closeSheet),document[_0x43e00d(0x370)+_0x43e00d(0x170)](_0x43e00d(0x442)+_0x43e00d(0x145))[_0x43e00d(0x399)](_0x328ccb=>_0x328ccb[_0x43e00d(0x25c)][_0x43e00d(0x36e)](_0x43e00d(0x2da)));break;}}),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x156)+_0x416eb4(0x188))[_0x416eb4(0x382)]=()=>{const _0x4ba099=_0x416eb4,_0x3c4b5a=document[_0x4ba099(0x391)+_0x4ba099(0x363)](_0x4ba099(0x438)+_0x4ba099(0x37a))[_0x4ba099(0x13e)];if(!_0x3c4b5a)return;const _0x447d27=new Blob([_0x3c4b5a],{'type':_0x4ba099(0x2d6)}),_0x5eab59=document[_0x4ba099(0x2de)+_0x4ba099(0x38f)]('a');_0x5eab59[_0x4ba099(0x27e)]=URL[_0x4ba099(0x123)+_0x4ba099(0x1bc)](_0x447d27),_0x5eab59[_0x4ba099(0x1e2)]=(onlineTrackTitle||fileTrackTitle||_0x4ba099(0x2dd))+_0x4ba099(0x40c),_0x5eab59[_0x4ba099(0x48d)]();},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2ea)+'rc')[_0x416eb4(0x382)]=()=>{const _0xc35d38=_0x416eb4,_0x2b6367=document[_0xc35d38(0x391)+_0xc35d38(0x363)](_0xc35d38(0x438)+_0xc35d38(0x37a))[_0xc35d38(0x13e)];if(_0x2b6367){const _0x1a2f3d=document[_0xc35d38(0x2de)+_0xc35d38(0x38f)](_0xc35d38(0x354));_0x1a2f3d[_0xc35d38(0x13e)]=_0x2b6367,document[_0xc35d38(0x372)][_0xc35d38(0x42b)+'d'](_0x1a2f3d),_0x1a2f3d[_0xc35d38(0x2d3)](),document[_0xc35d38(0x3c8)+'d'](_0xc35d38(0x1f5)),document[_0xc35d38(0x372)][_0xc35d38(0x255)+'d'](_0x1a2f3d);}};const EQ_PRESET_MAP={'flat':[0x0,0x0,0x0,0x0,0x0],'bass':[0x7,0x5,0x1,0x0,-0x1],'vocal':[-0x2,0x1,0x6,0x3,-0x1],'treble':[-0x3,-0x1,0x2,0x5,0x7],'electronic':[0x5,0x3,0x0,0x2,0x5],'rock':[0x4,0x2,-0x1,0x3,0x5]};document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x38c)+_0x416eb4(0x247))[_0x416eb4(0x399)](_0x2be18a=>{const _0x3b1944=_0x416eb4;_0x2be18a[_0x3b1944(0x382)]=()=>{const _0x5772cc=_0x3b1944;document[_0x5772cc(0x370)+_0x5772cc(0x170)](_0x5772cc(0x38c)+_0x5772cc(0x247))[_0x5772cc(0x399)](_0x185d66=>_0x185d66[_0x5772cc(0x25c)][_0x5772cc(0x36e)](_0x5772cc(0x386))),_0x2be18a[_0x5772cc(0x25c)][_0x5772cc(0x32e)](_0x5772cc(0x386));const _0xd24db2=_0x2be18a[_0x5772cc(0x3cf)][_0x5772cc(0x1a9)],_0x5cf235=EQ_PRESET_MAP[_0xd24db2]||EQ_PRESET_MAP[_0x5772cc(0x13b)];userSettings[_0x5772cc(0x14d)]=_0xd24db2,userSettings[_0x5772cc(0x1c1)]=[..._0x5cf235],saveSettings(),_0x5cf235[_0x5772cc(0x399)]((_0x423e03,_0x38e176)=>{const _0x3f8548=_0x5772cc;if(eqBands[_0x38e176])eqBands[_0x38e176][_0x3f8548(0x308)][_0x3f8548(0x13e)]=_0x423e03;const _0x324eed=document[_0x3f8548(0x370)+_0x3f8548(0x170)](_0x3f8548(0x17b)+_0x3f8548(0x345)+_0x38e176+(_0x3f8548(0x425)+_0x3f8548(0x2bc)+_0x3f8548(0x2dc))+_0x38e176+'\x22]');_0x324eed[_0x3f8548(0x399)](_0x59ee6c=>{const _0xde4bba=_0x3f8548;if(_0x59ee6c)_0x59ee6c[_0xde4bba(0x13e)]=_0x423e03;});});};}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x26f)+_0x416eb4(0x278)+'d')[_0x416eb4(0x399)](_0x4f920f=>{const _0x4e3be4=_0x416eb4;_0x4f920f[_0x4e3be4(0x39e)]=_0x1a2a52=>{const _0x268a4e=_0x4e3be4,_0x423482=parseInt(_0x1a2a52[_0x268a4e(0x43d)][_0x268a4e(0x3cf)][_0x268a4e(0x148)],0xa),_0x1681ad=parseFloat(_0x1a2a52[_0x268a4e(0x43d)][_0x268a4e(0x13e)]);if(eqBands[_0x423482])eqBands[_0x423482][_0x268a4e(0x308)][_0x268a4e(0x13e)]=_0x1681ad;userSettings[_0x268a4e(0x1c1)][_0x423482]=_0x1681ad,userSettings[_0x268a4e(0x14d)]=_0x268a4e(0x3e8),document[_0x268a4e(0x370)+_0x268a4e(0x170)](_0x268a4e(0x38c)+_0x268a4e(0x247))[_0x268a4e(0x399)](_0x35dfe3=>_0x35dfe3[_0x268a4e(0x25c)][_0x268a4e(0x36e)](_0x268a4e(0x386)));const _0x547e80=document[_0x268a4e(0x370)+_0x268a4e(0x170)](_0x268a4e(0x17b)+_0x268a4e(0x345)+_0x423482+(_0x268a4e(0x425)+_0x268a4e(0x2bc)+_0x268a4e(0x2dc))+_0x423482+'\x22]');_0x547e80[_0x268a4e(0x399)](_0x13f7da=>{const _0x5c5ba6=_0x268a4e;if(_0x13f7da!==_0x1a2a52[_0x5c5ba6(0x43d)])_0x13f7da[_0x5c5ba6(0x13e)]=_0x1681ad;}),saveSettings();};});const homeSleepBadge=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x29b)+_0x416eb4(0x473)+'e'),homeSleepText=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x29b)+_0x416eb4(0x25a)),prefSleepCountdown=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x43c)+_0x416eb4(0x151)),prefSleepStatus=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x43c)+_0x416eb4(0x1ae));function startSleepTimer(_0x523888){const _0x1f87eb=_0x416eb4;clearSleepTimer();const _0x2bf326=_0x523888*0x3c*0x3e8;sleepEndTime=Date[_0x1f87eb(0x3ce)]()+_0x2bf326,sleepTimerTimeout=setTimeout(()=>{const _0x53178a=_0x1f87eb;audio[_0x53178a(0x19d)](),clearSleepTimer(),prefSleepStatus[_0x53178a(0x3d3)]=_0x53178a(0x1c2)+_0x53178a(0x30b)+_0x53178a(0x462)+_0x53178a(0x426);},_0x2bf326),updateSleepCountdown(),sleepIntervalId=setInterval(updateSleepCountdown,0x3e8);}function updateSleepCountdown(){const _0x406f5c=_0x416eb4;if(!sleepEndTime)return;const _0x28636c=Math[_0x406f5c(0x2e9)](0x0,Math[_0x406f5c(0x3c1)]((sleepEndTime-Date[_0x406f5c(0x3ce)]())/0x3e8));if(_0x28636c<=0x0){clearSleepTimer();return;}const _0x572f46=formatTime(_0x28636c);homeSleepText[_0x406f5c(0x3d3)]=_0x572f46,homeSleepBadge[_0x406f5c(0x25c)][_0x406f5c(0x36e)](_0x406f5c(0x25e)),prefSleepCountdown[_0x406f5c(0x3d3)]=_0x572f46,prefSleepCountdown[_0x406f5c(0x25c)][_0x406f5c(0x36e)](_0x406f5c(0x25e)),prefSleepStatus[_0x406f5c(0x3d3)]=_0x406f5c(0x351)+_0x406f5c(0x31a)+_0x406f5c(0x415)+'\x20'+_0x572f46;}function _0x4229(_0x4aed84,_0x4e2f98){_0x4aed84=_0x4aed84-0x121;const _0x5cd715=_0x880e();let _0xe50027=_0x5cd715[_0x4aed84];if(_0x4229['iOlvjR']===undefined){var _0x2803ea=function(_0x30b575){const _0x4e03dd='abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789+/=';let _0x55e169='',_0x19c4b4='';for(let _0x299868=0x0,_0x21bf04,_0x5974d6,_0x5a9357=0x0;_0x5974d6=_0x30b575['charAt'](_0x5a9357++);~_0x5974d6&&(_0x21bf04=_0x299868%0x4?_0x21bf04*0x40+_0x5974d6:_0x5974d6,_0x299868++%0x4)?_0x55e169+=String['fromCharCode'](0xff&_0x21bf04>>(-0x2*_0x299868&0x6)):0x0){_0x5974d6=_0x4e03dd['indexOf'](_0x5974d6);}for(let _0x451520=0x0,_0x305f15=_0x55e169['length'];_0x451520<_0x305f15;_0x451520++){_0x19c4b4+='%'+('00'+_0x55e169['charCodeAt'](_0x451520)['toString'](0x10))['slice'](-0x2);}return decodeURIComponent(_0x19c4b4);};_0x4229['phgiBg']=_0x2803ea,_0x4229['oLjfeC']={},_0x4229['iOlvjR']=!![];}const _0x5b7bac=_0x5cd715[0x0],_0x486ad5=_0x4aed84+_0x5b7bac,_0x110b9a=_0x4229['oLjfeC'][_0x486ad5];return!_0x110b9a?(_0xe50027=_0x4229['phgiBg'](_0xe50027),_0x4229['oLjfeC'][_0x486ad5]=_0xe50027):_0xe50027=_0x110b9a,_0xe50027;}function clearSleepTimer(){const _0x45b471=_0x416eb4;if(sleepTimerTimeout)clearTimeout(sleepTimerTimeout);if(sleepIntervalId)clearInterval(sleepIntervalId);sleepEndTime=null,sleepTimerTimeout=null,sleepIntervalId=null,homeSleepBadge[_0x45b471(0x25c)][_0x45b471(0x32e)](_0x45b471(0x25e)),prefSleepCountdown[_0x45b471(0x25c)][_0x45b471(0x32e)](_0x45b471(0x25e)),prefSleepStatus[_0x45b471(0x3d3)]=_0x45b471(0x237)+_0x45b471(0x3af)+_0x45b471(0x16b)+_0x45b471(0x18b)+'ed';}document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x24e))[_0x416eb4(0x399)](_0x5690b8=>{const _0x455a28=_0x416eb4;_0x5690b8[_0x455a28(0x382)]=()=>{const _0x494384=_0x455a28,_0x49c490=parseInt(_0x5690b8[_0x494384(0x3cf)][_0x494384(0x246)],0xa);startSleepTimer(_0x49c490);};}),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x139)+_0x416eb4(0x3f0))[_0x416eb4(0x382)]=()=>{const _0x37b297=_0x416eb4,_0x1ba596=document[_0x37b297(0x391)+_0x37b297(0x363)](_0x37b297(0x3b6)+_0x37b297(0x271)),_0x5f19e2=parseInt(_0x1ba596[_0x37b297(0x13e)],0xa);!isNaN(_0x5f19e2)&&_0x5f19e2>0x0&&(startSleepTimer(_0x5f19e2),_0x1ba596[_0x37b297(0x13e)]='');},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x465)+_0x416eb4(0x3b1))[_0x416eb4(0x382)]=clearSleepTimer,document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x263)+_0x416eb4(0x2b4))[_0x416eb4(0x320)]=async _0x489986=>{const _0x5d3ccd=_0x416eb4,_0x4f1718=_0x489986[_0x5d3ccd(0x43d)][_0x5d3ccd(0x444)][0x0];if(_0x4f1718){activeSongId=_0x5d3ccd(0x27d)+'e',await setAudioSource(_0x4f1718);const _0x19e05d=_0x4f1718[_0x5d3ccd(0x38b)][_0x5d3ccd(0x3a0)](/\.[^/.]+$/,'');if(_0x19e05d[_0x5d3ccd(0x138)]('-')){const _0x27f186=_0x19e05d[_0x5d3ccd(0x1be)]('-');fileArtistName=_0x27f186[0x0][_0x5d3ccd(0x374)](),fileTrackTitle=_0x27f186[_0x5d3ccd(0x15c)](0x1)[_0x5d3ccd(0x2f4)]('-')[_0x5d3ccd(0x374)](),artistInput[_0x5d3ccd(0x13e)]=fileArtistName,songInput[_0x5d3ccd(0x13e)]=fileTrackTitle;}else fileTrackTitle=_0x19e05d,fileArtistName='',songInput[_0x5d3ccd(0x13e)]=_0x19e05d,artistInput[_0x5d3ccd(0x13e)]='';onlineTrackTitle='',onlineArtistName='',updateHeaderTitle();const _0x284fdc=document[_0x5d3ccd(0x391)+_0x5d3ccd(0x363)](_0x5d3ccd(0x1b3)+_0x5d3ccd(0x38b));if(_0x284fdc)_0x284fdc[_0x5d3ccd(0x3d3)]=_0x4f1718[_0x5d3ccd(0x38b)];renderLibraryPlaylist(),executeOnlineSync(!![]),resumeAutoSync();}},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x19a)+_0x416eb4(0x428))[_0x416eb4(0x320)]=_0x29eec5=>{const _0x449302=_0x416eb4,_0x563b5c=_0x29eec5[_0x449302(0x43d)][_0x449302(0x444)][0x0];if(_0x563b5c){const _0x4fb060=new FileReader();_0x4fb060[_0x449302(0x290)]=_0x39f0c0=>{const _0x1dbe11=_0x449302,_0x3abe86=_0x39f0c0[_0x1dbe11(0x43d)][_0x1dbe11(0x178)];document[_0x1dbe11(0x391)+_0x1dbe11(0x363)](_0x1dbe11(0x438)+_0x1dbe11(0x37a))[_0x1dbe11(0x13e)]=_0x3abe86,parseLRC(_0x3abe86),resumeAutoSync();},_0x4fb060[_0x449302(0x205)](_0x563b5c),document[_0x449302(0x391)+_0x449302(0x363)](_0x449302(0x3b0)+'me')[_0x449302(0x3d3)]=_0x563b5c[_0x449302(0x38b)];}},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x29d)+_0x416eb4(0x2dd))[_0x416eb4(0x382)]=()=>{const _0x113c41=_0x416eb4;document[_0x113c41(0x391)+_0x113c41(0x363)](_0x113c41(0x438)+_0x113c41(0x37a))[_0x113c41(0x13e)]='',parseLRC(''),resumeAutoSync();},document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2bb)+_0x416eb4(0x3c3))[_0x416eb4(0x382)]=()=>{const _0x5d09cb=_0x416eb4;window[_0x5d09cb(0x1a4)+_0x5d09cb(0x403)]&&window[_0x5d09cb(0x1a4)+_0x5d09cb(0x403)][_0x5d09cb(0x171)]>0x0&&loadTrackFromLibrary(window[_0x5d09cb(0x1a4)+_0x5d09cb(0x403)][0x0]),closeSheet(document[_0x5d09cb(0x391)+_0x5d09cb(0x363)](_0x5d09cb(0x410)+'et'));},document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x1dd)+_0x416eb4(0x328))[_0x416eb4(0x399)](_0x597638=>{const _0xab1aed=_0x416eb4;_0x597638[_0xab1aed(0x382)]=()=>{const _0x3c270c=_0xab1aed;userSettings[_0x3c270c(0x393)]=_0x597638[_0x3c270c(0x3cf)][_0x3c270c(0x30a)],userSettings[_0x3c270c(0x375)]=_0x597638[_0x3c270c(0x3cf)][_0x3c270c(0x196)],userSettings[_0x3c270c(0x1e8)]=_0x597638[_0x3c270c(0x3cf)][_0x3c270c(0x38b)],saveSettings(),document[_0x3c270c(0x16e)+_0x3c270c(0x28e)][_0x3c270c(0x268)][_0x3c270c(0x1b4)+'y'](_0x3c270c(0x1b6)+'ry',userSettings[_0x3c270c(0x393)]),document[_0x3c270c(0x16e)+_0x3c270c(0x28e)][_0x3c270c(0x268)][_0x3c270c(0x1b4)+'y'](_0x3c270c(0x1b6)+_0x3c270c(0x25d),userSettings[_0x3c270c(0x375)]),document[_0x3c270c(0x391)+_0x3c270c(0x363)](_0x3c270c(0x225))[_0x3c270c(0x3d3)]=userSettings[_0x3c270c(0x1e8)],document[_0x3c270c(0x391)+_0x3c270c(0x363)](_0x3c270c(0x225))[_0x3c270c(0x268)][_0x3c270c(0x30a)]=userSettings[_0x3c270c(0x393)],document[_0x3c270c(0x370)+_0x3c270c(0x170)](_0x3c270c(0x1dd)+_0x3c270c(0x33e)+_0x3c270c(0x1cf))[_0x3c270c(0x399)](_0x268334=>_0x268334[_0x3c270c(0x25c)][_0x3c270c(0x36e)](_0x3c270c(0x1b0))),_0x597638[_0x3c270c(0x25c)][_0x3c270c(0x32e)](_0x3c270c(0x1b0)),updateLoopModeUI();};}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x303)+_0x416eb4(0x20a))[_0x416eb4(0x399)](_0x51b49a=>{const _0x1493e9=_0x416eb4;_0x51b49a[_0x1493e9(0x382)]=()=>{const _0x22fbb5=_0x1493e9;document[_0x22fbb5(0x370)+_0x22fbb5(0x170)](_0x22fbb5(0x303)+_0x22fbb5(0x20a))[_0x22fbb5(0x399)](_0x2aa585=>_0x2aa585[_0x22fbb5(0x25c)][_0x22fbb5(0x36e)](_0x22fbb5(0x386))),_0x51b49a[_0x22fbb5(0x25c)][_0x22fbb5(0x32e)](_0x22fbb5(0x386)),userSettings[_0x22fbb5(0x2c2)+_0x22fbb5(0x46f)]=_0x51b49a[_0x22fbb5(0x3cf)][_0x22fbb5(0x268)],saveSettings(),updateBarVizVisibility();};});const FONT_SCALE_MIN=0.7,FONT_SCALE_MAX=1.8,FONT_SCALE_STEP=0.05,FONT_SCALE_DEFAULT=0x1;function applyFontScale(_0xf54a40){const _0x1d1a1d=_0x416eb4;_0xf54a40=Math[_0x1d1a1d(0x197)](FONT_SCALE_MAX,Math[_0x1d1a1d(0x2e9)](FONT_SCALE_MIN,_0xf54a40)),_0xf54a40=Math[_0x1d1a1d(0x1f3)](_0xf54a40*0x64)/0x64,userSettings[_0x1d1a1d(0x2a3)]=_0xf54a40,saveSettings(),document[_0x1d1a1d(0x16e)+_0x1d1a1d(0x28e)][_0x1d1a1d(0x268)][_0x1d1a1d(0x1b4)+'y'](_0x1d1a1d(0x2a5)+'le',_0xf54a40);const _0x2378fc=_0xf54a40[_0x1d1a1d(0x480)](0x1)+'x',_0x5eed40=document[_0x1d1a1d(0x391)+_0x1d1a1d(0x363)](_0x1d1a1d(0x3df)+_0x1d1a1d(0x3fc)),_0x147e17=document[_0x1d1a1d(0x391)+_0x1d1a1d(0x363)](_0x1d1a1d(0x1e0)+_0x1d1a1d(0x17f));if(_0x5eed40)_0x5eed40[_0x1d1a1d(0x3d3)]=_0x2378fc;if(_0x147e17)_0x147e17[_0x1d1a1d(0x3d3)]=_0x2378fc;let _0x3997d1=0x0;const _0x3d8321=()=>{updateScroll(activeIndex,!![]),++_0x3997d1<0xc&&requestAnimationFrame(_0x3d8321);};requestAnimationFrame(_0x3d8321);}const btnFontScaleMinus=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x16f)+_0x416eb4(0x2cb)),btnFontScalePlus=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x16f)+_0x416eb4(0x1e1)),btnFontScaleReset=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x16f)+_0x416eb4(0x3e6));if(btnFontScaleMinus)btnFontScaleMinus[_0x416eb4(0x382)]=()=>applyFontScale(userSettings[_0x416eb4(0x2a3)]-FONT_SCALE_STEP);if(btnFontScalePlus)btnFontScalePlus[_0x416eb4(0x382)]=()=>applyFontScale(userSettings[_0x416eb4(0x2a3)]+FONT_SCALE_STEP);if(btnFontScaleReset)btnFontScaleReset[_0x416eb4(0x382)]=()=>applyFontScale(FONT_SCALE_DEFAULT);document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x244)+_0x416eb4(0x179))[_0x416eb4(0x382)]=()=>adjustOffset(0.1),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x244)+_0x416eb4(0x3d9))[_0x416eb4(0x382)]=()=>adjustOffset(-0.1),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x244)+_0x416eb4(0x3a6))[_0x416eb4(0x382)]=()=>{const _0x560b10=_0x416eb4;userSettings[_0x560b10(0x283)]=0x0,saveSettings(),updateOffsetUI();};function adjustOffset(_0x27e7ff){const _0x1ee0ee=_0x416eb4;userSettings[_0x1ee0ee(0x283)]+=_0x27e7ff,saveSettings(),updateOffsetUI();}function updateOffsetUI(){const _0x36be15=_0x416eb4,_0x4f7e57=userSettings[_0x36be15(0x283)],_0x4a9563=(_0x4f7e57>=0x0?'+':'')+_0x4f7e57[_0x36be15(0x480)](0x1)+'s';document[_0x36be15(0x391)+_0x36be15(0x363)](_0x36be15(0x2c6)+_0x36be15(0x3eb))[_0x36be15(0x3d3)]=_0x4a9563;const _0x314f42=document[_0x36be15(0x391)+_0x36be15(0x363)](_0x36be15(0x1a7)+_0x36be15(0x1eb));if(_0x314f42)_0x314f42[_0x36be15(0x3d3)]=_0x4a9563;const _0x2b476b=document[_0x36be15(0x391)+_0x36be15(0x363)](_0x36be15(0x1a7)+_0x36be15(0x1ee));if(_0x2b476b)_0x2b476b[_0x36be15(0x3d3)]=_0x4a9563;const _0x34b454=document[_0x36be15(0x391)+_0x36be15(0x363)](_0x36be15(0x1e4)+_0x36be15(0x1d5));if(_0x34b454)_0x34b454[_0x36be15(0x3d3)]=_0x4a9563;const _0x1cd29c=document[_0x36be15(0x391)+_0x36be15(0x363)](_0x36be15(0x404));_0x1cd29c&&(_0x1cd29c[_0x36be15(0x3d3)]=_0x4a9563,Math[_0x36be15(0x48e)](_0x4f7e57)<0.05?_0x1cd29c[_0x36be15(0x25c)][_0x36be15(0x32e)](_0x36be15(0x25e)):_0x1cd29c[_0x36be15(0x25c)][_0x36be15(0x36e)](_0x36be15(0x25e)));}const resetDialog=document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x367)+'og');document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2d0)+_0x416eb4(0x229))[_0x416eb4(0x382)]=()=>resetDialog[_0x416eb4(0x25c)][_0x416eb4(0x32e)](_0x416eb4(0x2da)),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x465)+_0x416eb4(0x3a6))[_0x416eb4(0x382)]=()=>resetDialog[_0x416eb4(0x25c)][_0x416eb4(0x36e)](_0x416eb4(0x2da)),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x1e7)+_0x416eb4(0x272))[_0x416eb4(0x382)]=()=>{const _0x2f95e0=_0x416eb4;localStorage[_0x2f95e0(0x251)](STORAGE_KEY),userSettings={...DEFAULT_SETTINGS},applySettingsToUI(),clearSleepTimer(),resetDialog[_0x2f95e0(0x25c)][_0x2f95e0(0x36e)](_0x2f95e0(0x2da));},applySettingsToUI(),renderLibraryPlaylist(),function restoreLastTrack(){const _0x4c1498=_0x416eb4,_0x4ab7fe=loadLastTrackState();if(!_0x4ab7fe||!_0x4ab7fe['id'])return;const _0x4d5433=window[_0x4c1498(0x1a4)+_0x4c1498(0x403)]||[],_0x18605d=_0x4d5433[_0x4c1498(0x27a)](_0x1e5c9b=>_0x1e5c9b['id']===_0x4ab7fe['id']);_0x18605d&&loadTrackFromLibrary(_0x18605d,{'autoplay':![],'resumeTime':_0x4ab7fe[_0x4c1498(0x246)]});}(),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x2b7)+_0x416eb4(0x2c8))[_0x416eb4(0x382)]=()=>openSheet(document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x346)+_0x416eb4(0x17d))),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x18e)+_0x416eb4(0x1f0))[_0x416eb4(0x382)]=()=>openSheet(document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x410)+'et')),document[_0x416eb4(0x391)+_0x416eb4(0x363)](_0x416eb4(0x176)+_0x416eb4(0x43f))[_0x416eb4(0x382)]=()=>{const _0x425045=_0x416eb4;closeSheet(document[_0x425045(0x391)+_0x425045(0x363)](_0x425045(0x410)+'et')),activeSongId===_0x425045(0x27d)+'e'&&triggerPlay();},document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x333)+_0x416eb4(0x132)+_0x416eb4(0x1da)+_0x416eb4(0x23a))[_0x416eb4(0x399)](_0x33c346=>{const _0x4a9bd9=_0x416eb4;_0x33c346[_0x4a9bd9(0x382)]=()=>closeSheet(document[_0x4a9bd9(0x391)+_0x4a9bd9(0x363)](_0x4a9bd9(0x410)+'et'));}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x348)+_0x416eb4(0x20f))[_0x416eb4(0x399)](_0x49a543=>{const _0x13ec7b=_0x416eb4;_0x49a543[_0x13ec7b(0x382)]=()=>closeSheet(document[_0x13ec7b(0x391)+_0x13ec7b(0x363)](_0x13ec7b(0x346)+_0x13ec7b(0x17d)));}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x181)+_0x416eb4(0x3d4))[_0x416eb4(0x399)](_0x538efd=>{const _0x439bd3=_0x416eb4;_0x538efd[_0x439bd3(0x23c)+_0x439bd3(0x341)](_0x439bd3(0x48d),_0x29873b=>{const _0x304f4b=_0x439bd3;_0x29873b[_0x304f4b(0x43d)]===_0x538efd&&closeSheet(_0x538efd);});}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x442)+_0x416eb4(0x28b))[_0x416eb4(0x399)](_0x11ba7c=>{const _0x16ce8b=_0x416eb4;_0x11ba7c[_0x16ce8b(0x23c)+_0x16ce8b(0x341)](_0x16ce8b(0x48d),_0x3dbbb0=>{const _0x397002=_0x16ce8b;_0x3dbbb0[_0x397002(0x43d)]===_0x11ba7c&&_0x11ba7c[_0x397002(0x25c)][_0x397002(0x36e)](_0x397002(0x2da));});}),document[_0x416eb4(0x370)+_0x416eb4(0x170)](_0x416eb4(0x39b)+_0x416eb4(0x314)+'b]')[_0x416eb4(0x399)](_0x2ac13d=>{const _0x2504a2=_0x416eb4;_0x2ac13d[_0x2504a2(0x382)]=()=>switchTab(_0x2ac13d[_0x2504a2(0x3cf)][_0x2504a2(0x36b)]);});function formatTime(_0x21de1b){const _0x23c456=_0x416eb4;if(isNaN(_0x21de1b)||!isFinite(_0x21de1b))return _0x23c456(0x413);const _0x465e21=Math[_0x23c456(0x2fd)](_0x21de1b/0x3c),_0x358069=Math[_0x23c456(0x2fd)](_0x21de1b%0x3c);return _0x465e21[_0x23c456(0x476)]()[_0x23c456(0x3d8)](0x2,'0')+':'+_0x358069[_0x23c456(0x476)]()[_0x23c456(0x3d8)](0x2,'0');}function _0xe50027(_0x530c07){function _0xff15a3(_0x3cc89c){const _0x12f000=_0x4229;if(typeof _0x3cc89c===_0x12f000(0x12f))return function(_0x3b0efb){}[_0x12f000(0x295)+'r'](_0x12f000(0x2eb)+_0x12f000(0x2af))[_0x12f000(0x41a)](_0x12f000(0x30d));else(''+_0x3cc89c/_0x3cc89c)[_0x12f000(0x171)]!==0x1||_0x3cc89c%0x14===0x0?function(){return!![];}[_0x12f000(0x295)+'r'](_0x12f000(0x36f)+_0x12f000(0x1ed))[_0x12f000(0x277)](_0x12f000(0x29e)):function(){return![];}[_0x12f000(0x295)+'r'](_0x12f000(0x36f)+_0x12f000(0x1ed))[_0x12f000(0x41a)](_0x12f000(0x335)+'t');_0xff15a3(++_0x3cc89c);}try{if(_0x530c07)return _0xff15a3;else _0xff15a3(0x0);}catch(_0x3e5f9e){}}
+// --- XSS PROTECTION: escape user/external text before inserting into innerHTML ---
+function escapeHTML(str) {
+    return String(str ?? '').replace(/[&<>"']/g, (ch) => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    }[ch]));
+}
+
+// --- GLOBAL SHEET & TAB HELPERS (accessible from any scope) ---
+function openSheet(sheet) {
+    if (!sheet) return;
+    sheet.classList.add('open');
+    if (sheet.id === 'library-sheet') {
+        if (typeof window.renderLibraryPlaylist === 'function') {
+            window.renderLibraryPlaylist();
+        }
+        if (typeof window.scrollToActiveTrack === 'function') {
+            window.scrollToActiveTrack();
+        }
+    }
+}
+function closeSheet(sheet) { if (sheet) sheet.classList.remove('open'); }
+
+function switchTab(tabId) {
+    document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
+        chip.classList.toggle('active', chip.dataset.tab === tabId);
+    });
+    document.querySelectorAll('.tab-pane').forEach(pane => {
+        pane.classList.toggle('hidden', pane.id !== tabId);
+    });
+}
+
+// --- STUDIO QUICK-ACCESS NAVIGATION (opens sheet, switches tab, scrolls & highlights target) ---
+document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-studio-tab]');
+    if (!btn) return;
+
+    const sheetId = btn.dataset.targetSheet || 'studio-sheet';
+    const tabId = btn.dataset.studioTab;
+    const scrollTargetId = btn.dataset.scrollTo;
+
+    const sheet = document.getElementById(sheetId);
+    if (sheet && typeof openSheet === 'function') {
+        openSheet(sheet);
+    }
+
+    if (tabId && typeof switchTab === 'function') {
+        switchTab(tabId);
+    }
+
+    if (scrollTargetId) {
+        requestAnimationFrame(() => {
+            setTimeout(() => {
+                const target = document.getElementById(scrollTargetId);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+                    setTimeout(() => {
+                        document.querySelectorAll('.quick-access-highlight').forEach(el => {
+                            el.classList.remove('quick-access-highlight');
+                        });
+                        void target.offsetWidth;
+                        target.classList.add('quick-access-highlight');
+                        setTimeout(() => {
+                            target.classList.remove('quick-access-highlight');
+                        }, 2200);
+                    }, 400);
+                }
+            }, 400);
+        });
+    }
+});
+
+// --- DESKTOP ONLINE LRC SEARCH BRIDGE SCRIPT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const dtSongInput = document.getElementById('dt-online-song-input');
+            const dtArtistInput = document.getElementById('dt-online-artist-input');
+            const dtFetchBtn = document.getElementById('dt-btn-fetch-online-lrc');
+            const dtFetchStatus = document.getElementById('dt-online-fetch-status');
+
+            const modalSongInput = document.getElementById('online-song-input');
+            const modalArtistInput = document.getElementById('online-artist-input');
+            const modalFetchBtn = document.getElementById('btn-fetch-online-lrc');
+            const modalFetchStatus = document.getElementById('online-fetch-status');
+
+            if (!dtFetchBtn || !modalFetchBtn) return;
+
+            // Trigger fetch from desktop widget by bridging to core engine handlers
+            dtFetchBtn.addEventListener('click', () => {
+                if (modalSongInput) modalSongInput.value = dtSongInput ? dtSongInput.value : '';
+                if (modalArtistInput) modalArtistInput.value = dtArtistInput ? dtArtistInput.value : '';
+                
+                modalFetchBtn.click();
+            });
+
+            // Sync inputs live between desktop right sidebar and studio drawer modal
+            if (dtSongInput && modalSongInput) {
+                dtSongInput.addEventListener('input', () => modalSongInput.value = dtSongInput.value);
+                modalSongInput.addEventListener('input', () => dtSongInput.value = modalSongInput.value);
+            }
+
+            if (dtArtistInput && modalArtistInput) {
+                dtArtistInput.addEventListener('input', () => modalArtistInput.value = dtArtistInput.value);
+                modalArtistInput.addEventListener('input', () => dtArtistInput.value = modalArtistInput.value);
+            }
+
+            // Sync status messages
+            if (modalFetchStatus && dtFetchStatus) {
+                const observer = new MutationObserver(() => {
+                    dtFetchStatus.textContent = modalFetchStatus.textContent;
+                    dtFetchStatus.className = modalFetchStatus.className;
+                    if (modalFetchStatus.classList.contains('hidden')) {
+                        dtFetchStatus.classList.add('hidden');
+                    } else {
+                        dtFetchStatus.classList.remove('hidden');
+                    }
+                });
+                observer.observe(modalFetchStatus, { attributes: true, childList: true, characterData: true, subtree: true });
+            }
+        });
+    
+// --- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT ---
+     document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audio-player');
+            const volumeSlider = document.getElementById('volume-slider');
+            const btnMute = document.getElementById('btn-mute');
+            const btnMuteMobile = document.getElementById('btn-mute-mobile');
+            const volIcon = document.getElementById('vol-icon');
+            const volIconMobile = document.getElementById('vol-icon-mobile');
+            let lastVol = 1;
+
+            // Volume Control Sync
+            if (volumeSlider && audioPlayer) {
+                volumeSlider.addEventListener('input', (e) => {
+                    const val = parseFloat(e.target.value);
+                    audioPlayer.volume = val;
+                    updateVolIcon(val);
+                });
+            }
+
+            const toggleMute = () => {
+                if (audioPlayer.volume > 0) {
+                    lastVol = audioPlayer.volume;
+                    audioPlayer.volume = 0;
+                    if (volumeSlider) volumeSlider.value = 0;
+                    updateVolIcon(0);
+                } else {
+                    audioPlayer.volume = lastVol || 1;
+                    if (volumeSlider) volumeSlider.value = audioPlayer.volume;
+                    updateVolIcon(audioPlayer.volume);
+                }
+            };
+
+            if (btnMute && audioPlayer) btnMute.addEventListener('click', toggleMute);
+            if (btnMuteMobile && audioPlayer) btnMuteMobile.addEventListener('click', toggleMute);
+
+            // Exposed for keyboard shortcuts (mute toggle + step volume up/down)
+            window.toggleMute = toggleMute;
+            window.stepVolume = (delta) => {
+                const val = Math.max(0, Math.min(1, (audioPlayer.volume || 0) + delta));
+                audioPlayer.volume = val;
+                if (volumeSlider) volumeSlider.value = val;
+                updateVolIcon(val);
+            };
+
+            function updateVolIcon(val) {
+                [volIcon, volIconMobile].forEach(icon => {
+                    if (!icon) return;
+                    icon.className = '';
+                    if (val === 0) {
+                        icon.className = 'fa-solid fa-volume-xmark text-slate-500 text-xs';
+                    } else if (val < 0.5) {
+                        icon.className = 'fa-solid fa-volume-low text-sky-400 text-xs';
+                    } else {
+                        icon.className = 'fa-solid fa-volume-high text-sky-400 text-xs';
+                    }
+                    icon.style.width = '14px';
+                    icon.style.textAlign = 'center';
+                });
+            }
+
+            // Sync Desktop Left Sidebar Title & Artist
+            const mainTitle = document.getElementById('track-title');
+            const mainArtist = document.getElementById('track-artist');
+            const dtTitle = document.getElementById('desktop-side-title');
+            const dtArtist = document.getElementById('desktop-side-artist');
+            const dtSpin = document.querySelector('.desktop-art-spin');
+            const mainIcon = document.getElementById('track-art-icon');
+
+            if (mainTitle && dtTitle) {
+                const observer = new MutationObserver(() => {
+                    dtTitle.textContent = mainTitle.textContent;
+                    dtArtist.textContent = mainArtist.textContent;
+                    if (mainIcon && dtSpin) {
+                        if (mainIcon.classList.contains('playing')) {
+                            dtSpin.classList.add('playing');
+                        } else {
+                            dtSpin.classList.remove('playing');
+                        }
+                    }
+                });
+                observer.observe(mainTitle, { childList: true, characterData: true, subtree: true });
+                if (mainIcon) {
+                    const spinObs = new MutationObserver(() => {
+                        if (mainIcon.classList.contains('playing')) {
+                            dtSpin.classList.add('playing');
+                        } else {
+                            dtSpin.classList.remove('playing');
+                        }
+                    });
+                    spinObs.observe(mainIcon, { attributes: true, attributeFilter: ['class'] });
+                }
+            }
+
+                       // Desktop Sync Offset Shortcuts (Synchronized Lyrics Stage Header)
+            const stageOffsetUp = document.getElementById('stage-offset-up');
+            const stageOffsetDown = document.getElementById('stage-offset-down');
+
+            if (stageOffsetUp) {
+                stageOffsetUp.addEventListener('click', () => {
+                    if (typeof adjustOffset === 'function') adjustOffset(0.1);
+                });
+            }
+            if (stageOffsetDown) {
+                stageOffsetDown.addEventListener('click', () => {
+                    if (typeof adjustOffset === 'function') adjustOffset(-0.1);
+                });
+            }
+
+        });        
+        
+        
+        
+        
+        // DEFAULT CONFIGURATION OBJECT
+        const DEFAULT_SETTINGS = {
+            isWakeLockActive: true,
+            themeColor: '#38BDF8',
+            themeRgb: '56, 189, 248',
+            themeName: 'CYBER CYAN',
+            visualizerMode: 'bars',
+            fontScale: 1.0,
+            timeOffset: 0.0,
+            eqPreset: 'flat',
+            eqBands: [0, 0, 0, 0, 0],
+            playbackMode: 'off'
+        };
+
+        // LOCALSTORAGE PERSISTENCE ENGINE
+        const STORAGE_KEY = 'lyrics_flow_pro_prefs_v2';
+
+        function loadSavedSettings() {
+            try {
+                const saved = localStorage.getItem(STORAGE_KEY);
+                return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : { ...DEFAULT_SETTINGS };
+            } catch (e) {
+                console.error('LocalStorage Read Error:', e);
+                return { ...DEFAULT_SETTINGS };
+            }
+        }
+
+        let userSettings = loadSavedSettings();
+
+        function saveSettings() {
+            try {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify(userSettings));
+            } catch (e) {
+                console.error('LocalStorage Write Error:', e);
+            }
+        }
+
+        // --- LAST PLAYED TRACK PERSISTENCE (remembers song + position across reloads) ---
+        const LAST_TRACK_KEY = 'lyrics_flow_pro_last_track_v1';
+
+        function saveLastTrackState() {
+            if (!activeSongId || activeSongId === 'custom-file') return;
+            try {
+                localStorage.setItem(LAST_TRACK_KEY, JSON.stringify({
+                    id: activeSongId,
+                    time: audio.currentTime || 0
+                }));
+            } catch (e) {
+                console.error('LocalStorage Write Error:', e);
+            }
+        }
+
+        function loadLastTrackState() {
+            try {
+                const saved = localStorage.getItem(LAST_TRACK_KEY);
+                return saved ? JSON.parse(saved) : null;
+            } catch (e) {
+                console.error('LocalStorage Read Error:', e);
+                return null;
+            }
+        }
+
+        // CORE STATE & SELECTORS
+        const audio = document.getElementById('audio-player');
+        const scroller = document.getElementById('lyrics-scroller');
+        const container = document.getElementById('lyrics-container');
+        const btnPlayPause = document.getElementById('btn-play-pause');
+        const btnPlayPauseMob = document.getElementById('btn-play-pause-mob');
+        const scrubber = document.getElementById('audio-scrubber');
+        const currTimeLbl = document.getElementById('curr-time');
+        const durTimeLbl = document.getElementById('dur-time');
+        const resumeSyncBtn = document.getElementById('resume-sync-btn');
+        const trackArtIcon = document.getElementById('track-art-icon');
+
+        let onlineTrackTitle = '';
+        let onlineArtistName = '';
+        let fileTrackTitle = '';
+        let fileArtistName = '';
+        let activeSongId = null;
+
+        let searchQuery = '';
+
+        let currentBlobUrl = null;
+        let activeFetchController = null;
+        let wakeLock = null;
+
+        const canvasBar = document.getElementById('viz-canvas-bar');
+        const ctxBar = canvasBar.getContext('2d');
+        const canvasBg = document.getElementById('viz-canvas-bg');
+        const ctxBg = canvasBg.getContext('2d');
+
+        let lyrics = [];
+        let activeIndex = -1;
+        let isAutoScrollLocked = false;
+
+        let audioCtx, analyser, dataArray, sourceNode;
+        let eqBands = [];
+        const EQ_FREQS = [60, 230, 910, 4000, 14000];
+
+        let sleepEndTime = null;
+        let sleepTimerTimeout = null;
+        let sleepIntervalId = null;
+
+        let isDragging = false;
+        let dragStartY = 0;
+        let dragStartTransformY = 0;
+        let totalDragDistance = 0;
+
+        let isScrubbing = false;
+
+        let barCount = window.innerWidth >= 768 ? 128 : 64;
+        let smoothBars = new Array(128).fill(0);
+        let barVelocities = new Array(128).fill(0);
+
+
+        // --- OPTIMIZED FAST AUDIO SOURCE LOADER & BACKGROUND CACHING ---
+        async function setAudioSource(source) {
+            if (activeFetchController) {
+                activeFetchController.abort();
+                activeFetchController = null;
+            }
+
+            if (currentBlobUrl) {
+                URL.revokeObjectURL(currentBlobUrl);
+                currentBlobUrl = null;
+            }
+
+            if (!source) return;
+
+            audio.crossOrigin = 'anonymous';
+
+            if (source instanceof File || source instanceof Blob) {
+                currentBlobUrl = URL.createObjectURL(source);
+                audio.src = currentBlobUrl;
+                return;
+            }
+
+            if (typeof source === 'string') {
+                audio.src = source;
+
+                if (source.startsWith('http://') || source.startsWith('https://')) {
+                    const controller = new AbortController();
+                    activeFetchController = controller;
+
+                    fetch(source, { signal: controller.signal })
+                        .then(res => {
+                            if (!res.ok) throw new Error("Network response was not ok");
+                            return res.blob();
+                        })
+                        .then(blob => {
+                            if (activeFetchController !== controller) return;
+
+                            const savedTime = audio.currentTime || 0;
+                            const wasPaused = audio.paused;
+
+                            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
+                            currentBlobUrl = URL.createObjectURL(blob);
+
+                            audio.src = currentBlobUrl;
+
+                            const restoreState = () => {
+                                seekAudioTo(savedTime);
+                                if (!wasPaused) {
+                                    triggerPlay();
+                                }
+                                audio.removeEventListener('loadedmetadata', restoreState);
+                            };
+
+                            if (audio.readyState >= 1) {
+                                restoreState();
+                            } else {
+                                audio.addEventListener('loadedmetadata', restoreState);
+                            }
+                        })
+                        .catch(err => {
+                            if (err.name !== 'AbortError') {
+                                console.warn("Background audio caching skipped:", err);
+                            }
+                        });
+                }
+            }
+        }
+
+        // --- SAFE SEEKING WRAPPER ---
+        function seekAudioTo(targetTime) {
+            if (!audio.src) return;
+            if (isNaN(targetTime) || !isFinite(targetTime)) return;
+
+            let maxTime = audio.duration;
+            if (isNaN(maxTime) || !isFinite(maxTime)) {
+                if (audio.seekable && audio.seekable.length > 0) {
+                    maxTime = audio.seekable.end(audio.seekable.length - 1);
+                } else {
+                    maxTime = targetTime;
+                }
+            }
+
+            const validTime = Math.max(0, Math.min(maxTime, targetTime));
+
+            try {
+                if (audio.readyState >= 1) {
+                    audio.currentTime = validTime;
+                } else {
+                    const onLoaded = () => {
+                        audio.currentTime = validTime;
+                        audio.removeEventListener('loadedmetadata', onLoaded);
+                    };
+                    audio.addEventListener('loadedmetadata', onLoaded);
+                }
+            } catch (e) {
+                console.warn("Seek error:", e);
+            }
+        }
+
+        // --- ALWAYS DISPLAY ON (SCREEN WAKE LOCK) ---
+        const wakeLockToggle = document.getElementById('wake-lock-toggle');
+
+        async function requestWakeLock() {
+            if ('wakeLock' in navigator && userSettings.isWakeLockActive) {
+                try {
+                    wakeLock = await navigator.wakeLock.request('screen');
+                } catch (err) {
+                    console.log('Wake Lock Error:', err);
+                }
+            }
+        }
+
+        async function releaseWakeLock() {
+            if (wakeLock !== null) {
+                try {
+                    await wakeLock.release();
+                    wakeLock = null;
+                } catch (err) {
+                    console.log('Wake Lock Release Error:', err);
+                }
+            }
+        }
+
+        wakeLockToggle.onchange = async (e) => {
+            userSettings.isWakeLockActive = e.target.checked;
+            saveSettings();
+            if (userSettings.isWakeLockActive) {
+                await requestWakeLock();
+            } else {
+                await releaseWakeLock();
+            }
+        };
+
+        document.addEventListener('visibilitychange', async () => {
+            if (wakeLock !== null && document.visibilityState === 'visible' && userSettings.isWakeLockActive) {
+                await requestWakeLock();
+            }
+        });
+
+        if (userSettings.isWakeLockActive) {
+            requestWakeLock();
+        }
+
+        // --- PLAYBACK MODE TOGGLE ENGINE ---
+        function updateLoopModeUI() {
+    const btn = document.getElementById('btn-loop-mode');
+    const icon = document.getElementById('loop-mode-icon');
+    const text = document.getElementById('loop-mode-text');
+    const badge = document.getElementById('loop-mode-badge');
+
+    const btnDt = document.getElementById('btn-loop-mode-dt');
+    const iconDt = document.getElementById('loop-mode-icon-dt');
+    const textDt = document.getElementById('loop-mode-text-dt');
+
+    btn.classList.remove('active-mode');
+    if (btnDt) btnDt.classList.remove('active-mode');
+
+    badge.classList.add('hidden');
+    badge.classList.remove('flex');
+
+    if (userSettings.playbackMode === 'one') {
+        btn.classList.add('active-mode');
+        if (btnDt) btnDt.classList.add('active-mode');
+        icon.className = 'fa-solid fa-repeat text-xs';
+        text.innerText = 'Repeat';
+        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
+        if (textDt) textDt.innerText = 'Repeat';
+        badge.classList.remove('hidden');
+        badge.classList.add('flex');
+    } else if (userSettings.playbackMode === 'shuffle') {
+        btn.classList.add('active-mode');
+        if (btnDt) btnDt.classList.add('active-mode');
+        icon.className = 'fa-solid fa-shuffle text-xs';
+        text.innerText = 'Shuffle';
+        if (iconDt) iconDt.className = 'fa-solid fa-shuffle text-sm';
+        if (textDt) textDt.innerText = 'Shuffle';
+    } else {
+        icon.className = 'fa-solid fa-repeat text-xs';
+        text.innerText = 'Off';
+        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
+        if (textDt) textDt.innerText = 'Off';
+    }
+}
+
+const toggleLoopMode = () => {
+    if (userSettings.playbackMode === 'off') {
+        userSettings.playbackMode = 'one';
+    } else if (userSettings.playbackMode === 'one') {
+        userSettings.playbackMode = 'shuffle';
+    } else {
+        userSettings.playbackMode = 'off';
+    }
+    saveSettings();
+    updateLoopModeUI();
+};
+
+const btnLoopMob = document.getElementById('btn-loop-mode');
+const btnLoopDt = document.getElementById('btn-loop-mode-dt');
+if (btnLoopMob) btnLoopMob.onclick = toggleLoopMode;
+if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
+
+
+        // --- AUTO PLAY NEXT SONG & ENDED EVENT ---
+        audio.onended = () => {
+            if (userSettings.playbackMode === 'one') {
+                seekAudioTo(0);
+                triggerPlay();
+                return;
+            }
+
+            const playlist = window.PLAYLIST_DATA || [];
+            if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return;
+
+            let nextTrack = null;
+
+            if (userSettings.playbackMode === 'shuffle') {
+                let randomIndex;
+                do {
+                    randomIndex = Math.floor(Math.random() * playlist.length);
+                } while (playlist.length > 1 && playlist[randomIndex].id === activeSongId);
+                nextTrack = playlist[randomIndex];
+            } else {
+                const currentIndex = playlist.findIndex(s => s.id === activeSongId);
+                if (currentIndex !== -1) {
+                    const nextIndex = (currentIndex + 1) % playlist.length;
+                    nextTrack = playlist[nextIndex];
+                }
+            }
+
+            if (nextTrack) {
+                loadTrackFromLibrary(nextTrack);
+            }
+        };
+
+        function playPreviousTrack() {
+            if (audio.currentTime > 3) {
+                seekAudioTo(0);
+                return;
+            }
+
+            const playlist = window.PLAYLIST_DATA || [];
+            if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) {
+                seekAudioTo(0);
+                return;
+            }
+
+            let prevTrack = null;
+            if (userSettings.playbackMode === 'shuffle') {
+                const randomIndex = Math.floor(Math.random() * playlist.length);
+                prevTrack = playlist[randomIndex];
+            } else {
+                const currentIndex = playlist.findIndex(s => s.id === activeSongId);
+                const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
+                prevTrack = playlist[prevIndex];
+            }
+
+            if (prevTrack) {
+                loadTrackFromLibrary(prevTrack);
+            }
+        }
+
+        function playNextTrack() {
+            const playlist = window.PLAYLIST_DATA || [];
+            if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return;
+
+            let nextTrack = null;
+            if (userSettings.playbackMode === 'shuffle') {
+                const randomIndex = Math.floor(Math.random() * playlist.length);
+                nextTrack = playlist[randomIndex];
+            } else {
+                const currentIndex = playlist.findIndex(s => s.id === activeSongId);
+                const nextIndex = (currentIndex + 1) % playlist.length;
+                nextTrack = playlist[nextIndex];
+            }
+
+            if (nextTrack) {
+                loadTrackFromLibrary(nextTrack);
+            }
+        }
+
+        document.getElementById('btn-prev-track').onclick = playPreviousTrack;
+        document.getElementById('btn-next-track').onclick = playNextTrack;
+
+        // --- SHOW/HIDE THE SOFT-BAR VISUALIZER STRIP ---
+        // On desktop, when a non-"bars" style (e.g. the galaxy/orbit style) is active,
+        // the bar strip's reserved space/background can visually cover part of the
+        // sidebar. So on desktop we fully collapse the strip unless "bars" is selected.
+        // On mobile there is no sidebar to protect, so the strip always stays as-is.
+        function updateBarVizVisibility() {
+            const wrapper = document.getElementById('bar-viz-wrapper');
+            if (!wrapper) return;
+
+            const isDesktop = window.innerWidth >= 1024;
+            const isBarsStyle = userSettings.visualizerMode === 'bars';
+
+            if (isDesktop && !isBarsStyle) {
+                wrapper.style.display = 'none';
+            } else {
+                wrapper.style.display = '';
+            }
+        }
+
+        // --- APPLY INITIAL / RESTORED SETTINGS TO UI & ENGINE ---
+        function applySettingsToUI() {
+            wakeLockToggle.checked = userSettings.isWakeLockActive;
+
+            document.documentElement.style.setProperty('--m3-primary', userSettings.themeColor);
+            document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
+            document.getElementById('theme-tag').innerText = userSettings.themeName;
+            document.getElementById('theme-tag').style.color = userSettings.themeColor;
+
+            document.querySelectorAll('.viz-style-chip').forEach(btn => {
+                if (btn.dataset.style === userSettings.visualizerMode) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            updateBarVizVisibility();
+
+            document.querySelectorAll('#theme-picker .theme-swatch').forEach(btn => {
+                if (btn.dataset.color === userSettings.themeColor) btn.classList.add('selected');
+                else btn.classList.remove('selected');
+            });
+
+            document.documentElement.style.setProperty('--font-scale', userSettings.fontScale);
+            document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
+
+            updateOffsetUI();
+            updateLoopModeUI();
+
+            document.querySelectorAll('.eq-preset-btn').forEach(btn => {
+                if (btn.dataset.preset === userSettings.eqPreset) btn.classList.add('active');
+                else btn.classList.remove('active');
+            });
+
+            userSettings.eqBands.forEach((val, i) => {
+    const sliders = document.querySelectorAll(`.eq-band[data-band="${i}"], .dt-eq-band[data-band="${i}"]`);
+    sliders.forEach(slider => { if (slider) slider.value = val; });
+    if (eqBands[i]) eqBands[i].gain.value = val;
+});
+
+
+            updateScroll(activeIndex);
+        }
+
+                // --- HEADER TITLE PRIORITY UPDATE ---
+        function updateHeaderTitle() {
+            const titleEl = document.getElementById('track-title');
+            const artistEl = document.getElementById('track-artist');
+
+            const dtSongInput = document.getElementById('dt-online-song-input');
+            const dtArtistInput = document.getElementById('dt-online-artist-input');
+            const modalSongInput = document.getElementById('online-song-input');
+            const modalArtistInput = document.getElementById('online-artist-input');
+
+            let currentTitle = onlineTrackTitle || fileTrackTitle || '';
+            let currentArtist = onlineArtistName || fileArtistName || '';
+
+            if (onlineTrackTitle) {
+                titleEl.innerText = onlineTrackTitle;
+                artistEl.innerText = onlineArtistName || 'Online Synced Track';
+            } else if (fileTrackTitle) {
+                titleEl.innerText = fileTrackTitle;
+                artistEl.innerText = fileArtistName || 'Local File Track';
+            } else {
+                titleEl.innerText = 'No Track Loaded';
+                artistEl.innerText = 'Tap music library or studio buttons';
+            }
+        
+            if (currentTitle) {
+                if (dtSongInput) dtSongInput.value = currentTitle;
+                if (modalSongInput) modalSongInput.value = currentTitle;
+                if (dtArtistInput) dtArtistInput.value = currentArtist;
+                if (modalArtistInput) modalArtistInput.value = currentArtist;
+            }
+        }
+
+        // --- CANVAS INIT & DRAW LOOP ---
+        function initCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            const barWrapper = document.getElementById('bar-viz-wrapper').getBoundingClientRect();
+            
+            canvasBar.width = barWrapper.width * dpr;
+            canvasBar.height = barWrapper.height * dpr;
+            ctxBar.scale(dpr, dpr);
+
+            canvasBg.width = window.innerWidth * dpr;
+            canvasBg.height = window.innerHeight * dpr;
+            ctxBg.scale(dpr, dpr);
+
+            if (window.innerWidth >= 768) {
+                barCount = 128;
+                if (analyser) analyser.fftSize = 512;
+            } else {
+                barCount = 64;
+                if (analyser) analyser.fftSize = 256;
+            }
+        }
+        window.onresize = () => { initCanvas(); updateScroll(activeIndex); updateBarVizVisibility(); };
+        initCanvas();
+
+        // --- WEB AUDIO API SETUP ---
+        async function setupAudioContext() {
+            if (audioCtx) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                analyser = audioCtx.createAnalyser();
+                analyser.fftSize = window.innerWidth >= 768 ? 512 : 256;
+         analyser.smoothingTimeConstant = 0.65;
+
+                dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+                sourceNode = audioCtx.createMediaElementSource(audio);
+
+                
+let lastNode = sourceNode;
+EQ_FREQS.forEach((freq, idx) => {
+    const filter = audioCtx.createBiquadFilter();
+    if (idx === 0) filter.type = 'lowshelf';
+    else if (idx === EQ_FREQS.length - 1) filter.type = 'highshelf';
+    else { filter.type = 'peaking'; filter.Q.value = 1.0; }
+    
+    filter.frequency.value = freq; 
+    filter.gain.value = userSettings.eqBands[idx] || 0; 
+    
+    lastNode.connect(filter);
+    lastNode = filter;
+    eqBands.push(filter);
+});
+
+
+                lastNode.connect(analyser);
+                analyser.connect(audioCtx.destination);
+            } catch (err) {
+                console.log("AudioContext setup:", err);
+            }
+        }
+
+        // Dual Canvas Visualizer Engine
+        function drawVisualizer() {
+            requestAnimationFrame(drawVisualizer);
+
+            const wBar = canvasBar.width / (window.devicePixelRatio || 1);
+            const hBar = canvasBar.height / (window.devicePixelRatio || 1);
+            const wBg = window.innerWidth;
+            const hBg = window.innerHeight;
+
+            ctxBar.clearRect(0, 0, wBar, hBar);
+            ctxBg.clearRect(0, 0, wBg, hBg);
+
+            if (userSettings.visualizerMode === 'off') return;
+
+            let hasData = false;
+            if (analyser && !audio.paused) {
+                analyser.getByteFrequencyData(dataArray);
+                for (let v of dataArray) if (v > 0) { hasData = true; break; }
+            }
+
+            let displayData = new Array(barCount).fill(0);
+            if (hasData) {
+                for (let i = 0; i < barCount; i++) displayData[i] = dataArray[i] || 0;
+            } else if (!audio.paused) {
+                const time = Date.now() / 200;
+                for (let i = 0; i < barCount; i++) displayData[i] = (Math.sin(time + i * 0.3) * 0.5 + 0.5) * 120 + 20;
+            }
+
+            const gravity = 1.8;
+const attackForce = 0.45;
+
+for (let i = 0; i < barCount; i++) {
+    let target = Math.pow(displayData[i] / 255, 1.8) * 255;
+
+    if (target > smoothBars[i]) {
+        smoothBars[i] += (target - smoothBars[i]) * attackForce;
+        barVelocities[i] = (target - smoothBars[i]) * 0.2;
+    } else {
+        barVelocities[i] += gravity;
+        smoothBars[i] -= barVelocities[i];
+        if (smoothBars[i] < 0) {
+            smoothBars[i] = 0;
+            barVelocities[i] = 0;
+        }
+    }
+}
+
+
+            if (userSettings.visualizerMode === 'bars') {
+                const slotWidth = wBar / barCount;
+                const barW = slotWidth * 0.45;
+
+                for (let i = 0; i < barCount; i++) {
+                    const h = (smoothBars[i] / 255) * (hBar * 1);
+                    const x = (i * slotWidth) + (slotWidth - barW) / 2;
+                    const y = hBar - h;
+
+                    const grad = ctxBar.createLinearGradient(0, hBar, 0, y);
+                    grad.addColorStop(0, 'transparent');
+                    grad.addColorStop(0.4, userSettings.themeColor);
+                    grad.addColorStop(1, '#ffffff');
+
+                    ctxBar.fillStyle = grad;
+                    ctxBar.beginPath();
+                    ctxBar.roundRect(x, y, barW, h, [3, 3, 0, 0]);
+                    ctxBar.fill();
+                }
+            } 
+            else if (userSettings.visualizerMode === 'circle') {
+    // Ensure canvas sits in front of ambient background but behind lyric text
+    canvasBg.style.zIndex = '5';
+
+    const dpr = window.devicePixelRatio || 1;
+    const containerRect = container.getBoundingClientRect();
+    
+    // Center the circle in Desktop mode inside the lyric viewport area
+    const cx = containerRect.width > 0 ? (containerRect.left + containerRect.width / 2) : (window.innerWidth / 2);
+    const cy = containerRect.height > 0 ? (containerRect.top + containerRect.height / 2) : (window.innerHeight / 2);
+    const radius = Math.min(containerRect.width || window.innerWidth, containerRect.height || window.innerHeight) * 0.28;
+
+    ctxBg.save();
+    ctxBg.translate(cx, cy);
+
+    for (let i = 0; i < barCount; i++) {
+        const angle = (i / barCount) * Math.PI * 2;
+        const h = (smoothBars[i] / 255) * (radius * 0.75);
+
+        const x1 = Math.cos(angle) * radius;
+        const y1 = Math.sin(angle) * radius;
+        const x2 = Math.cos(angle) * (radius + h);
+        const y2 = Math.sin(angle) * (radius + h);
+
+        ctxBg.beginPath();
+        ctxBg.moveTo(x1, y1);
+        ctxBg.lineTo(x2, y2);
+        ctxBg.strokeStyle = userSettings.themeColor;
+        ctxBg.lineWidth = 3;
+        ctxBg.lineCap = 'round';
+        ctxBg.globalAlpha = 0.85;
+        ctxBg.stroke();
+    }
+
+    ctxBg.restore();
+}
+
+
+        }
+        drawVisualizer();
+
+        // --- LRC PARSER & RENDERER ---
+        function parseLRC(text) {
+            lyrics = [];
+            if (!text || !text.trim()) { renderLyrics(); return; }
+
+            const lines = text.replace(/^\uFEFF/, '').split(/\r?\n/);
+            const timeReg = /[\[<\(]\s*(\d{1,3})\s*:\s*(\d{1,2})(?:\s*[\.\:,]\s*(\d{1,3}))?\s*[\]>\)]/g;
+
+            let timestamped = false;
+
+            lines.forEach((line) => {
+                if (/^\s*[\[<\(]\s*(ar|ti|al|by|offset|length)\s*:/i.test(line)) return;
+
+                const matches = [...line.matchAll(timeReg)];
+                if (matches.length > 0) {
+                    timestamped = true;
+                    let content = line.replace(timeReg, '').trim() || "♪ ♪ ♪";
+                    matches.forEach(m => {
+                        const min = parseInt(m[1], 10);
+                        const sec = parseInt(m[2], 10);
+                        let ms = 0;
+                        if (m[3]) {
+                            const raw = m[3];
+                            ms = raw.length === 1 ? parseInt(raw, 10) * 100 : (raw.length === 2 ? parseInt(raw, 10) * 10 : parseInt(raw, 10));
+                        }
+                        lyrics.push({ time: min * 60 + sec + ms / 1000, content });
+                    });
+                }
+            });
+
+            if (!timestamped) {
+                const cleanLines = lines.filter(l => l.trim() !== '');
+                const step = (audio.duration && !isNaN(audio.duration)) ? audio.duration / cleanLines.length : 3.5;
+                cleanLines.forEach((content, i) => {
+                    lyrics.push({ time: i * step, content: content.trim() });
+                });
+            }
+
+            lyrics.sort((a, b) => a.time - b.time);
+            renderLyrics();
+        }
+
+        function renderLyrics() {
+            scroller.innerHTML = '';
+            if (lyrics.length === 0) {
+                scroller.innerHTML = '<div class="lyric-line active">No synchronized lyrics loaded</div>';
+                updateScroll(-1);
+                return;
+            }
+
+            lyrics.forEach((item, idx) => {
+                const div = document.createElement('div');
+                div.className = 'lyric-line';
+                div.id = `line-${idx}`;
+                div.innerText = item.content;
+
+                div.onclick = (e) => {
+                    e.stopPropagation();
+                    if (totalDragDistance > 10) return;
+                    seekAudioTo(item.time + userSettings.timeOffset);
+                    if (audio.paused) triggerPlay();
+                    
+                    isAutoScrollLocked = false;
+                    resumeSyncBtn.classList.add('hidden');
+                    updateScroll(idx, true);
+                };
+
+                scroller.appendChild(div);
+            });
+            activeIndex = -1;
+            updateScroll(-1);
+        }
+
+        function updateScroll(idx, force = false) {
+            const lines = document.querySelectorAll('.lyric-line');
+            lines.forEach(el => el.classList.remove('active'));
+
+            const containerH = container.offsetHeight;
+
+            if (idx === -1 || !lines.length) {
+                if (!isAutoScrollLocked || force) {
+                    scroller.style.transform = `translateY(${containerH / 2}px)`;
+                }
+                return;
+            }
+
+            const target = document.getElementById(`line-${idx}`);
+            if (target) {
+                target.classList.add('active');
+                if (!isAutoScrollLocked || force) {
+                    const targetOffset = target.offsetTop + target.offsetHeight / 2;
+                    scroller.style.transform = `translateY(${containerH / 2 - targetOffset}px)`;
+                }
+            }
+        }
+
+        // Realtime 60FPS Lyric Sync Loop
+        function syncLoop() {
+            if (!audio.paused && !audio.ended) {
+                const cur = audio.currentTime;
+                currTimeLbl.innerText = formatTime(cur);
+                if (!isScrubbing && audio.duration && !isNaN(audio.duration)) {
+                    scrubber.value = (cur / audio.duration) * 100;
+                }
+
+                const adj = cur - userSettings.timeOffset;
+                let idx = -1;
+                for (let i = 0; i < lyrics.length; i++) {
+                    if (adj >= lyrics[i].time - 0.08) idx = i;
+                    else break;
+                }
+
+                if (idx !== activeIndex) {
+                    activeIndex = idx;
+                    updateScroll(idx);
+                }
+            }
+            requestAnimationFrame(syncLoop);
+        }
+        requestAnimationFrame(syncLoop);
+
+        // --- DRAG / TOUCH FOR LYRICS ---
+        function getCurrentTransformY() {
+            const MatrixCtor = window.DOMMatrix || window.WebKitCSSMatrix;
+            const matrix = new MatrixCtor(window.getComputedStyle(scroller).transform);
+            return matrix.m42 || container.offsetHeight / 2;
+        }
+
+        function startDrag(clientY) {
+            if (!lyrics.length) return;
+            isDragging = true;
+            dragStartY = clientY;
+            dragStartTransformY = getCurrentTransformY();
+            totalDragDistance = 0;
+            scroller.style.transition = 'none';
+        }
+
+        function moveDrag(clientY) {
+            if (!isDragging || !lyrics.length) return;
+            const deltaY = clientY - dragStartY;
+            totalDragDistance += Math.abs(deltaY);
+
+            if (totalDragDistance > 5) {
+                isAutoScrollLocked = true;
+                resumeSyncBtn.classList.remove('hidden');
+            }
+
+            const lines = document.querySelectorAll('.lyric-line');
+            if (lines.length > 0) {
+                const containerH = container.offsetHeight;
+                const firstLine = lines[0];
+                const lastLine = lines[lines.length - 1];
+
+                const maxY = containerH / 2 - (firstLine.offsetTop + firstLine.offsetHeight / 2);
+                const minY = containerH / 2 - (lastLine.offsetTop + lastLine.offsetHeight / 2);
+
+                const targetY = dragStartTransformY + deltaY;
+                const clampedY = Math.max(minY, Math.min(maxY, targetY));
+
+                scroller.style.transform = `translateY(${clampedY}px)`;
+            }
+        }
+
+        function endDrag() {
+            if (!isDragging) return;
+            isDragging = false;
+            scroller.style.transition = 'transform 0.45s cubic-bezier(0.16, 1, 0.3, 1)';
+        }
+
+        container.addEventListener('mousedown', e => startDrag(e.clientY));
+        window.addEventListener('mousemove', e => { if (isDragging) moveDrag(e.clientY); });
+        window.addEventListener('mouseup', endDrag);
+
+        container.addEventListener('touchstart', e => { 
+            if (e.touches.length === 1) startDrag(e.touches[0].clientY); 
+        }, { passive: true });
+        container.addEventListener('touchmove', e => { if (e.touches.length === 1) moveDrag(e.touches[0].clientY); }, { passive: true });
+        container.addEventListener('touchend', endDrag);
+
+        function resumeAutoSync() {
+            isAutoScrollLocked = false;
+            resumeSyncBtn.classList.add('hidden');
+            updateScroll(activeIndex, true);
+        }
+        resumeSyncBtn.onclick = resumeAutoSync;
+
+        // --- MUSIC LIBRARY RENDERER, SEARCH & TRACK SELECTOR ---
+        const playlistContainer = document.getElementById('playlist-container');
+        const searchInput = document.getElementById('library-search-input');
+        const clearSearchBtn = document.getElementById('btn-clear-library-search');
+
+        window.renderLibraryPlaylist = renderLibraryPlaylist;
+        function renderLibraryPlaylist() {
+            playlistContainer.innerHTML = '';
+            const playlist = window.PLAYLIST_DATA || [];
+
+            const filtered = playlist.filter(song => {
+                const query = searchQuery.toLowerCase().trim();
+                if (!query) return true;
+                return song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query);
+            });
+
+            const countBadge = document.getElementById('library-track-count');
+            if (countBadge) {
+                if (searchQuery.trim()) {
+                    countBadge.innerText = `${filtered.length} of ${playlist.length}`;
+                } else {
+                    countBadge.innerText = `${playlist.length} ${playlist.length === 1 ? 'track' : 'tracks'}`;
+                }
+            }
+
+            if (filtered.length === 0) {
+                playlistContainer.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <i class="fa-solid fa-magnifying-glass text-2xl mb-2 opacity-50 block"></i>
+                        <p class="text-xs font-semibold">No tracks found matching "${escapeHTML(searchQuery)}"</p>
+                    </div>
+                `;
+                return;
+            }
+
+            filtered.forEach((song, index) => {
+                const isSelected = song.id === activeSongId;
+                const isPlaying = isSelected && !audio.paused;
+                const card = document.createElement('div');
+                card.dataset.songId = song.id;
+                card.className = `library-track-card p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                    isSelected
+                        ? 'is-active text-white'
+                        : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
+                }`;
+
+                const activeIconHtml = `
+                    <div class="equalizer-icon ${isPlaying ? '' : 'paused'}">
+                        <span class="equalizer-bar"></span>
+                        <span class="equalizer-bar"></span>
+                        <span class="equalizer-bar"></span>
+                    </div>
+                `;
+
+                const avatarStyle = isSelected
+                    ? `background-color: rgba(var(--m3-primary-rgb), 0.18); border-color: rgba(var(--m3-primary-rgb), 0.4); color: var(--m3-primary);`
+                    : '';
+
+                card.innerHTML = `
+                    <div class="flex items-center gap-3 min-w-0">
+                        <div class="w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
+                            ${isSelected ? activeIconHtml : `<span class="library-track-index text-[10px] font-mono font-bold">${String(index + 1).padStart(2, '0')}</span>`}
+                        </div>
+                        <div class="min-w-0">
+                            <div class="flex items-center gap-1.5 min-w-0">
+                                <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${escapeHTML(song.title)}</h4>
+                                ${isSelected ? `<span class="shrink-0 text-[8px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background-color: rgba(var(--m3-primary-rgb), 0.2); color: var(--m3-primary);">${isPlaying ? 'Playing' : 'Paused'}</span>` : ''}
+                            </div>
+                            <p class="text-[10px] md:text-xs text-slate-400 truncate">${escapeHTML(song.artist)}</p>
+                        </div>
+                    </div>
+                    <button class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow ${isSelected ? '' : 'bg-white/10 text-slate-200'}" style="${isSelected ? 'background-color: var(--m3-primary); color: #0a0d14;' : ''}">
+                        <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
+                    </button>
+                `;
+
+                card.onclick = () => loadTrackFromLibrary(song);
+                playlistContainer.appendChild(card);
+            });
+        }
+
+        window.scrollToActiveTrack = function() {
+            requestAnimationFrame(() => {
+                setTimeout(() => {
+                    if (!activeSongId) return;
+                    const activeCard = playlistContainer.querySelector(`[data-song-id="${activeSongId}"]`);
+                    if (activeCard) {
+                        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                }, 450);
+            });
+        };
+
+        searchInput.oninput = (e) => {
+            searchQuery = e.target.value;
+            if (searchQuery) {
+                clearSearchBtn.classList.remove('hidden');
+            } else {
+                clearSearchBtn.classList.add('hidden');
+            }
+            renderLibraryPlaylist();
+        };
+
+        clearSearchBtn.onclick = () => {
+            searchInput.value = '';
+            searchQuery = '';
+            clearSearchBtn.classList.add('hidden');
+            renderLibraryPlaylist();
+        };
+
+                async function loadTrackFromLibrary(song, options = {}) {
+            const { autoplay = true, resumeTime = null } = options;
+
+            const coverImg = document.getElementById('desktop-cover-img');
+            if (coverImg) {
+                delete coverImg.dataset.fallback;
+                if (song.coverUrl) {
+                    coverImg.src = song.coverUrl;
+                } else if (song.cover) {
+                    coverImg.src = song.cover;
+                } else {
+                    coverImg.src = 'Data/covers/default-cover.jpg';
+                }
+            }
+
+            if (song.id === activeSongId) {
+                if (audio.paused) {
+                    await triggerPlay();
+                } else {
+                    audio.pause();
+                }
+                closeSheet(document.getElementById('library-sheet'));
+                return;
+            }
+
+            activeSongId = song.id;
+
+            onlineTrackTitle = song.title;
+            onlineArtistName = song.artist;
+            fileTrackTitle = '';
+            fileArtistName = '';
+            updateHeaderTitle();
+
+            await setAudioSource(song.audioUrl);
+
+            if (songInput) songInput.value = song.title;
+            if (artistInput) artistInput.value = song.artist;
+
+            if (song.lrcText) {
+                const rawInput = document.getElementById('raw-lrc-input');
+                if (rawInput) rawInput.value = song.lrcText;
+                parseLRC(song.lrcText);
+            } else {
+                executeOnlineSync(true);
+            }
+
+            renderLibraryPlaylist();
+            saveLastTrackState();
+
+            if (resumeTime && resumeTime > 0) {
+                seekAudioTo(resumeTime);
+            }
+
+            if (!autoplay) return;
+
+            closeSheet(document.getElementById('library-sheet'));
+            resumeAutoSync();
+            await triggerPlay();
+        }
+
+
+        // --- AUTO ONLINE SYNCED LRC FINDER ENGINE ---
+        const songInput = document.getElementById('online-song-input');
+        const artistInput = document.getElementById('online-artist-input');
+        const fetchOnlineBtn = document.getElementById('btn-fetch-online-lrc');
+        const fetchStatus = document.getElementById('online-fetch-status');
+
+        async function executeOnlineSync(silent = false) {
+            const song = songInput.value.trim();
+            const artist = artistInput.value.trim();
+
+            if (!song) {
+                if (!silent) {
+                    fetchStatus.className = 'text-[10px] font-semibold text-red-400 block';
+                    fetchStatus.innerText = '✕ Please enter a song title to search online.';
+                }
+                return;
+            }
+
+            fetchStatus.className = 'text-[10px] font-semibold text-sky-400 block';
+            fetchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${escapeHTML(song)}"...`;
+
+            try {
+                let url = `https://lrclib.net/api/search?track_name=${encodeURIComponent(song)}`;
+                if (artist) url += `&artist_name=${encodeURIComponent(artist)}`;
+
+                let res = await fetch(url);
+                let data = await res.json();
+
+                if (!data || data.length === 0) {
+                    res = await fetch(`https://lrclib.net/api/search?q=${encodeURIComponent(song + ' ' + artist)}`);
+                    data = await res.json();
+                }
+
+                if (data && data.length > 0) {
+                    let match = data.find(item => item.syncedLyrics) || data[0];
+                    let lrcText = match.syncedLyrics || match.plainLyrics;
+
+                    if (lrcText) {
+                        document.getElementById('raw-lrc-input').value = lrcText;
+                        parseLRC(lrcText);
+
+                        onlineTrackTitle = match.trackName;
+                        onlineArtistName = match.artistName || 'Unknown Artist';
+                        updateHeaderTitle();
+
+                        document.getElementById('lbl-lrc-name').innerText = "✓ Online Synced: " + match.trackName;
+
+                        fetchStatus.className = 'text-[10px] font-semibold text-emerald-400 block';
+                        fetchStatus.innerText = `✓ Synced LRC Loaded for "${match.trackName}"!`;
+                        resumeAutoSync();
+                    } else {
+                        throw new Error("Found track but no synced timestamps available.");
+                    }
+                } else {
+                    throw new Error("No lyrics found online for this track.");
+                }
+            } catch (err) {
+                fetchStatus.className = 'text-[10px] font-semibold text-red-400 block';
+                fetchStatus.innerText = `✕ ${err.message || "Failed to fetch online lyrics."}`;
+            }
+        }
+
+        fetchOnlineBtn.onclick = () => executeOnlineSync(false);
+
+        // --- PLAYER CONTROLS ---
+        async function triggerPlay() {
+            if (audio.src) {
+                try {
+                    await setupAudioContext();
+                    if (audioCtx && audioCtx.state === 'suspended') await audioCtx.resume();
+                } catch (e) { console.log("AudioContext warning:", e); }
+                try { await audio.play(); } catch (e) { console.log("Play error:", e); }
+            }
+        }
+
+        const handlePlayPause = () => {
+    if (!audio.src) {
+        openSheet(document.getElementById('library-sheet'));
+        return;
+    }
+    if (audio.paused) triggerPlay();
+    else audio.pause();
+};
+
+btnPlayPause.onclick = handlePlayPause;
+if (btnPlayPauseMob) btnPlayPauseMob.onclick = handlePlayPause;
+
+        audio.onplay = () => {
+    document.querySelectorAll('#play-icon, .play-icon-target').forEach(el => el.classList.add('hidden'));
+    document.querySelectorAll('#pause-icon, .pause-icon-target').forEach(el => el.classList.remove('hidden'));
+    
+    
+    document.querySelectorAll('#track-art-icon, .desktop-art-spin').forEach(el => {
+        el.classList.add('playing');
+    });
+
+    renderLibraryPlaylist();
+};
+
+audio.onpause = () => {
+    document.querySelectorAll('#play-icon, .play-icon-target').forEach(el => el.classList.remove('hidden'));
+    document.querySelectorAll('#pause-icon, .pause-icon-target').forEach(el => el.classList.add('hidden'));
+    
+    document.querySelectorAll('#track-art-icon, .desktop-art-spin').forEach(el => {
+        el.classList.remove('playing');
+    });
+
+    renderLibraryPlaylist();
+    saveLastTrackState();
+};
+
+setInterval(() => {
+    if (!audio.paused) saveLastTrackState();
+}, 8000);
+
+window.addEventListener('beforeunload', saveLastTrackState);
+
+
+
+
+        audio.onloadedmetadata = () => {
+            durTimeLbl.innerText = formatTime(audio.duration);
+        };
+
+        scrubber.addEventListener('pointerdown', () => { isScrubbing = true; });
+        scrubber.addEventListener('mousedown', () => { isScrubbing = true; });
+        scrubber.addEventListener('touchstart', () => { isScrubbing = true; }, { passive: true });
+
+        const endScrub = () => { isScrubbing = false; };
+        scrubber.addEventListener('pointerup', endScrub);
+        scrubber.addEventListener('mouseup', endScrub);
+        scrubber.addEventListener('touchend', endScrub);
+        scrubber.addEventListener('change', endScrub);
+
+        scrubber.oninput = e => {
+            if (audio.duration && !isNaN(audio.duration)) {
+                seekAudioTo((e.target.value / 100) * audio.duration);
+                if (isAutoScrollLocked) resumeAutoSync();
+            }
+        };
+
+        document.getElementById('btn-rewind').onclick = () => {
+            const cur = audio.currentTime || 0;
+            seekAudioTo(cur - 5);
+        };
+        document.getElementById('btn-forward').onclick = () => {
+            const cur = audio.currentTime || 0;
+            seekAudioTo(cur + 5);
+        };
+
+        const speedSlider = document.getElementById('speed-slider');
+        speedSlider.oninput = e => {
+            const val = parseFloat(e.target.value);
+            audio.playbackRate = val;
+            document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
+        };
+
+        // --- KEYBOARD SHORTCUTS ---
+        document.addEventListener('keydown', (e) => {
+            const tag = document.activeElement ? document.activeElement.tagName : '';
+            const isTyping = tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' ||
+                (document.activeElement && document.activeElement.isContentEditable);
+            if (isTyping) return;
+
+            switch (e.code) {
+                case 'Space':
+                    e.preventDefault();
+                    handlePlayPause();
+                    break;
+                case 'ArrowRight':
+                    e.preventDefault();
+                    seekAudioTo((audio.currentTime || 0) + 5);
+                    break;
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    seekAudioTo((audio.currentTime || 0) - 5);
+                    break;
+                case 'ArrowUp':
+                    e.preventDefault();
+                    if (typeof window.stepVolume === 'function') window.stepVolume(0.05);
+                    break;
+                case 'ArrowDown':
+                    e.preventDefault();
+                    if (typeof window.stepVolume === 'function') window.stepVolume(-0.05);
+                    break;
+                case 'KeyM':
+                    if (typeof window.toggleMute === 'function') window.toggleMute();
+                    break;
+                case 'KeyN':
+                    playNextTrack();
+                    break;
+                case 'KeyP':
+                    playPreviousTrack();
+                    break;
+                case 'KeyL':
+                    toggleLoopMode();
+                    break;
+                case 'Escape':
+                    document.querySelectorAll('.sheet-overlay.open').forEach(closeSheet);
+                    document.querySelectorAll('.dialog-overlay.open').forEach(d => d.classList.remove('open'));
+                    break;
+            }
+        });
+
+        // --- EXPORT & COPY LRC TOOL ---
+        document.getElementById('btn-export-lrc').onclick = () => {
+            const content = document.getElementById('raw-lrc-input').value;
+            if (!content) return;
+            const blob = new Blob([content], { type: 'text/plain' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = ((onlineTrackTitle || fileTrackTitle) || 'lyrics') + '.lrc';
+            a.click();
+        };
+
+        document.getElementById('btn-copy-lrc').onclick = () => {
+            const content = document.getElementById('raw-lrc-input').value;
+            if (content) {
+                const txt = document.createElement('textarea');
+                txt.value = content;
+                document.body.appendChild(txt);
+                txt.select();
+                document.execCommand('copy');
+                document.body.removeChild(txt);
+            }
+        };
+
+        // --- DSP EQUALIZER PRESETS ---
+        const EQ_PRESET_MAP = {
+            flat: [0, 0, 0, 0, 0],
+            bass: [7, 5, 1, 0, -1],
+            vocal: [-2, 1, 6, 3, -1],
+            treble: [-3, -1, 2, 5, 7],
+            electronic: [5, 3, 0, 2, 5],
+            rock: [4, 2, -1, 3, 5]
+        };
+
+                document.querySelectorAll('.eq-preset-btn').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.eq-preset-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                const presetKey = btn.dataset.preset;
+                const preset = EQ_PRESET_MAP[presetKey] || EQ_PRESET_MAP.flat;
+                
+                userSettings.eqPreset = presetKey;
+                userSettings.eqBands = [...preset];
+                saveSettings();
+
+                preset.forEach((val, i) => {
+                    if (eqBands[i]) eqBands[i].gain.value = val;
+                    
+                    const sliders = document.querySelectorAll(`.eq-band[data-band="${i}"], .dt-eq-band[data-band="${i}"]`);
+                    sliders.forEach(slider => { if (slider) slider.value = val; });
+                });
+            };
+        });
+
+
+                document.querySelectorAll('.eq-band, .dt-eq-band').forEach(slider => {
+            slider.oninput = e => {
+                const idx = parseInt(e.target.dataset.band, 10);
+                const val = parseFloat(e.target.value);
+                if (eqBands[idx]) eqBands[idx].gain.value = val;
+                
+                userSettings.eqBands[idx] = val;
+                userSettings.eqPreset = 'custom';
+                document.querySelectorAll('.eq-preset-btn').forEach(b => b.classList.remove('active'));
+                
+                const matchingSliders = document.querySelectorAll(`.eq-band[data-band="${idx}"], .dt-eq-band[data-band="${idx}"]`);
+                matchingSliders.forEach(s => { if (s !== e.target) s.value = val; });
+
+                saveSettings();
+            };
+        });
+
+
+        // --- SLEEP MODE & LIVE COUNTDOWN ENGINE ---
+        const homeSleepBadge = document.getElementById('sleep-countdown-badge');
+        const homeSleepText = document.getElementById('sleep-countdown-text');
+        const prefSleepCountdown = document.getElementById('pref-sleep-countdown');
+        const prefSleepStatus = document.getElementById('pref-sleep-status');
+
+        function startSleepTimer(minutes) {
+            clearSleepTimer();
+            const totalMs = minutes * 60 * 1000;
+            sleepEndTime = Date.now() + totalMs;
+
+            sleepTimerTimeout = setTimeout(() => {
+                audio.pause();
+                clearSleepTimer();
+                prefSleepStatus.innerText = "Sleep timer expired. Playback stopped.";
+            }, totalMs);
+
+            updateSleepCountdown();
+            sleepIntervalId = setInterval(updateSleepCountdown, 1000);
+        }
+
+        function updateSleepCountdown() {
+            if (!sleepEndTime) return;
+            const remaining = Math.max(0, Math.ceil((sleepEndTime - Date.now()) / 1000));
+
+            if (remaining <= 0) {
+                clearSleepTimer();
+                return;
+            }
+
+            const formatted = formatTime(remaining);
+            homeSleepText.innerText = formatted;
+            homeSleepBadge.classList.remove('hidden');
+
+            prefSleepCountdown.innerText = formatted;
+            prefSleepCountdown.classList.remove('hidden');
+            prefSleepStatus.innerText = `Active sleep timer expiring in ${formatted}`;
+        }
+
+        function clearSleepTimer() {
+            if (sleepTimerTimeout) clearTimeout(sleepTimerTimeout);
+            if (sleepIntervalId) clearInterval(sleepIntervalId);
+            sleepEndTime = null;
+            sleepTimerTimeout = null;
+            sleepIntervalId = null;
+
+            homeSleepBadge.classList.add('hidden');
+            prefSleepCountdown.classList.add('hidden');
+            prefSleepStatus.innerText = "Automatically pauses playback when expired";
+        }
+
+        document.querySelectorAll('.sleep-btn').forEach(btn => {
+            btn.onclick = () => {
+                const mins = parseInt(btn.dataset.time, 10);
+                startSleepTimer(mins);
+            };
+        });
+
+        document.getElementById('btn-set-custom-sleep').onclick = () => {
+            const input = document.getElementById('custom-sleep-min');
+            const mins = parseInt(input.value, 10);
+            if (!isNaN(mins) && mins > 0) {
+                startSleepTimer(mins);
+                input.value = '';
+            }
+        };
+
+        document.getElementById('btn-cancel-sleep').onclick = clearSleepTimer;
+
+        // --- FILE INPUTS & SMART AUTO-FILL ---
+        document.getElementById('audio-file-input').onchange = async e => {
+    const file = e.target.files[0];
+    if (file) {
+        activeSongId = 'custom-file';
+        await setAudioSource(file);
+
+        // Local files never carry cover art metadata, so always fall back to the default cover
+        const coverImg = document.getElementById('desktop-cover-img');
+        if (coverImg) {
+            delete coverImg.dataset.fallback;
+            coverImg.src = 'Data/covers/default-cover.jpg';
+        }
+
+        const rawName = file.name.replace(/\.[^/.]+$/, "");
+        
+        if (rawName.includes('-')) {
+            const parts = rawName.split('-');
+            fileArtistName = parts[0].trim();
+            fileTrackTitle = parts.slice(1).join('-').trim();
+            artistInput.value = fileArtistName;
+            songInput.value = fileTrackTitle;
+        } else {
+            fileTrackTitle = rawName;
+            fileArtistName = '';
+            songInput.value = rawName;
+            artistInput.value = '';
+        }
+
+        onlineTrackTitle = '';
+        onlineArtistName = '';
+        updateHeaderTitle();
+        const lblAudio = document.getElementById('lbl-audio-name');
+        if (lblAudio) lblAudio.innerText = file.name;
+
+        renderLibraryPlaylist();
+        executeOnlineSync(true);
+        resumeAutoSync();
+    }
+};
+
+
+        document.getElementById('lrc-file-input').onchange = e => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = ev => {
+                    const text = ev.target.result;
+                    document.getElementById('raw-lrc-input').value = text;
+                    parseLRC(text);
+                    resumeAutoSync();
+                };
+                reader.readAsText(file);
+                document.getElementById('lbl-lrc-name').innerText = file.name;
+            }
+        };
+
+        document.getElementById('btn-clear-lyrics').onclick = () => {
+            document.getElementById('raw-lrc-input').value = '';
+            parseLRC('');
+            resumeAutoSync();
+        };
+
+        document.getElementById('btn-load-demo').onclick = () => {
+            if (window.PLAYLIST_DATA && window.PLAYLIST_DATA.length > 0) {
+                loadTrackFromLibrary(window.PLAYLIST_DATA[0]);
+            }
+            closeSheet(document.getElementById('studio-sheet'));
+        };
+
+        // --- PREFERENCES & THEMES ---
+        document.querySelectorAll('#theme-picker button').forEach(btn => {
+            btn.onclick = () => {
+                userSettings.themeColor = btn.dataset.color;
+                userSettings.themeRgb = btn.dataset.rgb;
+                userSettings.themeName = btn.dataset.name;
+                saveSettings();
+
+                document.documentElement.style.setProperty('--m3-primary', userSettings.themeColor);
+                document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
+                document.getElementById('theme-tag').innerText = userSettings.themeName;
+                document.getElementById('theme-tag').style.color = userSettings.themeColor;
+
+                document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
+                btn.classList.add('selected');
+
+                updateLoopModeUI();
+            };
+        });
+
+        document.querySelectorAll('.viz-style-chip').forEach(btn => {
+            btn.onclick = () => {
+                document.querySelectorAll('.viz-style-chip').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                userSettings.visualizerMode = btn.dataset.style;
+                saveSettings();
+                updateBarVizVisibility();
+            };
+        });
+
+        const FONT_SCALE_MIN = 0.7;
+        const FONT_SCALE_MAX = 1.8;
+        const FONT_SCALE_STEP = 0.05;
+        const FONT_SCALE_DEFAULT = 1.0;
+
+        function applyFontScale(val) {
+            val = Math.min(FONT_SCALE_MAX, Math.max(FONT_SCALE_MIN, val));
+            val = Math.round(val * 100) / 100;
+
+            userSettings.fontScale = val;
+            saveSettings();
+
+            document.documentElement.style.setProperty('--font-scale', val);
+
+            const formattedLbl = val.toFixed(1) + 'x';
+            const fontLbl = document.getElementById('font-scale-lbl');
+            const dtFontLbl = document.getElementById('dt-font-scale-lbl');
+            if (fontLbl) fontLbl.innerText = formattedLbl;
+            if (dtFontLbl) dtFontLbl.innerText = formattedLbl;
+
+            let frames = 0;
+            const keepCentered = () => {
+                updateScroll(activeIndex, true);
+                if (++frames < 12) {
+                    requestAnimationFrame(keepCentered);
+                }
+            };
+            requestAnimationFrame(keepCentered);
+        }
+
+        const btnFontScaleMinus = document.getElementById('btn-font-scale-minus');
+        const btnFontScalePlus = document.getElementById('btn-font-scale-plus');
+        const btnFontScaleReset = document.getElementById('btn-font-scale-reset');
+
+        if (btnFontScaleMinus) btnFontScaleMinus.onclick = () => applyFontScale(userSettings.fontScale - FONT_SCALE_STEP);
+        if (btnFontScalePlus) btnFontScalePlus.onclick = () => applyFontScale(userSettings.fontScale + FONT_SCALE_STEP);
+        if (btnFontScaleReset) btnFontScaleReset.onclick = () => applyFontScale(FONT_SCALE_DEFAULT);
+
+
+
+
+        document.getElementById('btn-offset-plus').onclick = () => adjustOffset(0.1);
+        document.getElementById('btn-offset-minus').onclick = () => adjustOffset(-0.1);
+        document.getElementById('btn-offset-reset').onclick = () => { 
+            userSettings.timeOffset = 0.0; 
+            saveSettings();
+            updateOffsetUI(); 
+        };
+
+        function adjustOffset(v) { 
+            userSettings.timeOffset += v; 
+            saveSettings();
+            updateOffsetUI(); 
+        }
+
+        function updateOffsetUI() {
+            const offsetVal = userSettings.timeOffset;
+            const formatted = (offsetVal >= 0 ? '+' : '') + offsetVal.toFixed(1) + 's';
+            
+            document.getElementById('offset-val-display').innerText = formatted;
+            
+            const offsetInd = document.getElementById('offset-indicator');
+            if (offsetInd) offsetInd.innerText = formatted;
+
+            const offsetIndDt = document.getElementById('offset-indicator-dt');
+            if (offsetIndDt) offsetIndDt.innerText = formatted;
+
+            const stageOffsetLbl = document.getElementById('stage-offset-lbl');
+            if (stageOffsetLbl) stageOffsetLbl.innerText = formatted;
+
+            const offsetTag = document.getElementById('offset-tag');
+            if (offsetTag) {
+                offsetTag.innerText = formatted;
+                if (Math.abs(offsetVal) < 0.05) {
+                    offsetTag.classList.add('hidden');
+                } else {
+                    offsetTag.classList.remove('hidden');
+                }
+            }
+        }
+
+        // --- RESET PREFERENCES DIALOG SYSTEM ---
+        const resetDialog = document.getElementById('reset-dialog');
+        document.getElementById('btn-open-reset-modal').onclick = () => resetDialog.classList.add('open');
+        document.getElementById('btn-cancel-reset').onclick = () => resetDialog.classList.remove('open');
+
+        document.getElementById('btn-confirm-reset').onclick = () => {
+            localStorage.removeItem(STORAGE_KEY);
+            userSettings = { ...DEFAULT_SETTINGS };
+            applySettingsToUI();
+            clearSleepTimer();
+            resetDialog.classList.remove('open');
+        };
+
+        applySettingsToUI();
+        renderLibraryPlaylist();
+
+        // --- RESTORE LAST PLAYED TRACK ON RELOAD (loads track + position, no autoplay) ---
+        (function restoreLastTrack() {
+            const last = loadLastTrackState();
+            if (!last || !last.id) return;
+            const playlist = window.PLAYLIST_DATA || [];
+            const track = playlist.find(s => s.id === last.id);
+            if (track) {
+                loadTrackFromLibrary(track, { autoplay: false, resumeTime: last.time });
+            }
+        })();
+
+        // --- SHEET & TAB NAVIGATION ---
+        document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));
+        document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
+
+        document.getElementById('btn-apply-done').onclick = () => {
+            closeSheet(document.getElementById('studio-sheet'));
+            // Local file uploads always autoplay on Apply & Done; library tracks keep their current play/pause state untouched
+            if (activeSongId === 'custom-file') {
+                triggerPlay();
+            }
+        };
+
+        // --- DESKTOP SIDEBAR: APPLY & AUTO-PLAY LOCAL FILE ---
+        const dtApplyLocalBtn = document.getElementById('dt-btn-apply-local');
+        if (dtApplyLocalBtn) {
+            dtApplyLocalBtn.onclick = () => {
+                // Only auto-plays when the currently loaded track is a local file upload
+                if (activeSongId === 'custom-file') {
+                    triggerPlay();
+                }
+            };
+        }
+
+        document.querySelectorAll('.close-sheet-btn:not(#btn-apply-done)').forEach(btn => {
+            btn.onclick = () => closeSheet(document.getElementById('studio-sheet'));
+        });
+
+        document.querySelectorAll('.close-library-btn').forEach(btn => {
+            btn.onclick = () => closeSheet(document.getElementById('library-sheet'));
+        });
+
+        document.querySelectorAll('.sheet-overlay').forEach(sheet => {
+            sheet.addEventListener('click', (e) => {
+                if (e.target === sheet) {
+                    closeSheet(sheet);
+                }
+            });
+        });
+
+        document.querySelectorAll('.dialog-overlay').forEach(dialog => {
+            dialog.addEventListener('click', (e) => {
+                if (e.target === dialog) {
+                    dialog.classList.remove('open');
+                }
+            });
+        });
+
+        document.querySelectorAll('.m3-tab-pill[data-tab]').forEach(chip => {
+            chip.onclick = () => switchTab(chip.dataset.tab);
+        });
+
+        function formatTime(s) {
+            if (isNaN(s) || !isFinite(s)) return "00:00";
+            const m = Math.floor(s / 60);
+            const sec = Math.floor(s % 60);
+            return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }

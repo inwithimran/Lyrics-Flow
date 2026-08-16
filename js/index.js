@@ -905,6 +905,11 @@ document.write(`
                         </span>
                         <i class="fa-solid fa-upload text-[10px] text-slate-400"></i>
                     </button>
+
+                    <!-- Apply & Auto-Play Local File Button -->
+                    <button id="dt-btn-apply-local" class="theme-accent-bg hover:brightness-110 text-[#0A0D14] font-extrabold rounded-xl text-[11px] w-full py-2.5 flex items-center justify-center gap-2 shadow-md transition-all active:scale-95">
+                        <i class="fa-solid fa-play text-xs"></i> Apply & Auto-Play
+                    </button>
                 </div>
             </div>
 
@@ -1572,49 +1577,3 @@ document.write(`
 </body>
 </html>
 `);
-document.close();
-
-(function () {
-  const allowedHost = "lyrics-flow.vercel.app";
-  const currentHost = window.location.hostname;
-
-  const isAuthorized = currentHost === allowedHost;
-
-  if (!isAuthorized) {
-    const showAccessRestrictedScreen = () => {
-      const styleElement = document.createElement("style");
-      styleElement.innerHTML = "";
-      document.head.appendChild(styleElement);
-
-      document.body.innerHTML = `
-        <div style="height: 100vh; width: 100vw; background-color: #0B0F17; color: #E2E8F0; display: flex; align-items: center; justify-content: center; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0; padding: 24px; box-sizing: border-box; overflow: hidden;">
-          <div class="restricted-container" style="max-width: 440px; width: 100%; text-align: center;">
-            <div style="display: inline-flex; align-items: center; justify-content: center; margin-bottom: 20px; opacity: 0.8;">
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F43F5E" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-              </svg>
-            </div>
-            <h1 style="font-size: 1.25rem; font-weight: 600; margin: 0 0 10px 0; color: #F8FAFC; letter-spacing: -0.01em;">
-              Access Restricted
-            </h1>
-            <p style="color: #64748B; font-size: 0.925rem; line-height: 1.6; margin: 0 0 28px 0;">
-              Nice try, developer! This application is protected and locked to its official host domain. Public execution on this host is unauthorized. Please respect the creator's hard work and build your own code.
-            </p>
-            <div style="font-size: 0.775rem; color: #475569; letter-spacing: 0.03em;">
-              DEVELOPED BY <span style="color: #94A3B8; font-weight: 500;">TABIB IMRAN</span>
-            </div>
-          </div>
-        </div>
-      `;
-    };
-
-    if (document.readyState === "loading") {
-      document.addEventListener("DOMContentLoaded", showAccessRestrictedScreen);
-    } else {
-      showAccessRestrictedScreen();
-    }
-
-    throw new Error("Unauthorized domain execution.");
-  }
-})();

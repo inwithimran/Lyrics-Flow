@@ -893,7 +893,7 @@ document.write(`
                     <!-- Quick Local Audio Button -->
                     <button class="w-full py-2.5 px-3 bg-white/5 hover:bg-white/10 border border-white/10 text-slate-200 rounded-xl text-[11px] font-bold flex items-center justify-between transition-all active:scale-95 shadow-sm" onclick="document.getElementById('audio-file-input').click()">
                         <span class="truncate flex items-center gap-2">
-                            <i class="fa-solid fa-music text-sky-400"></i> Open Audio MP3
+                            <i class="fa-solid fa-music text-sky-400"></i> <span id="dt-lbl-audio-name" class="truncate">Open Audio MP3</span>
                         </span>
                         <i class="fa-solid fa-plus text-[10px] text-slate-400"></i>
                     </button>

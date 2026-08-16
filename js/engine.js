@@ -314,6 +314,7 @@ document.addEventListener('click', (e) => {
         let fileTrackTitle = '';
         let fileArtistName = '';
         let activeSongId = null;
+        let pendingLocalAudioFile = null; // Selected but not yet applied local file (waits for Apply button)
 
         let searchQuery = '';
 
@@ -1195,6 +1196,15 @@ for (let i = 0; i < barCount; i++) {
                 async function loadTrackFromLibrary(song, options = {}) {
             const { autoplay = true, resumeTime = null } = options;
 
+            // Choosing a library track cancels any staged (not-yet-applied) local file
+            if (pendingLocalAudioFile) {
+                pendingLocalAudioFile = null;
+                const lblAudioReset = document.getElementById('lbl-audio-name');
+                if (lblAudioReset) lblAudioReset.innerText = 'Choose Local MP3 / WAV Track';
+                const dtLblAudioReset = document.getElementById('dt-lbl-audio-name');
+                if (dtLblAudioReset) dtLblAudioReset.innerText = 'Open Audio MP3';
+            }
+
             const coverImg = document.getElementById('desktop-cover-img');
             if (coverImg) {
                 delete coverImg.dataset.fallback;
@@ -1600,45 +1610,66 @@ window.addEventListener('beforeunload', saveLastTrackState);
         document.getElementById('btn-cancel-sleep').onclick = clearSleepTimer;
 
         // --- FILE INPUTS & SMART AUTO-FILL ---
-        document.getElementById('audio-file-input').onchange = async e => {
-    const file = e.target.files[0];
-    if (file) {
-        activeSongId = 'custom-file';
-        await setAudioSource(file);
+        // Selecting a local file only STAGES it (shows the name) — it does NOT interrupt
+        // whatever is currently playing (e.g. a library track). The file is only actually
+        // loaded and auto-played once the user taps an Apply button (mobile "Apply & Done"
+        // or the desktop "Apply & Auto-Play" button), via loadPendingLocalFile() below.
+        document.getElementById('audio-file-input').onchange = e => {
+            const file = e.target.files[0];
+            if (file) {
+                pendingLocalAudioFile = file;
 
-        // Local files never carry cover art metadata, so always fall back to the default cover
-        const coverImg = document.getElementById('desktop-cover-img');
-        if (coverImg) {
-            delete coverImg.dataset.fallback;
-            coverImg.src = 'Data/covers/default-cover.jpg';
+                const lblAudio = document.getElementById('lbl-audio-name');
+                if (lblAudio) lblAudio.innerText = file.name;
+
+                const dtLblAudio = document.getElementById('dt-lbl-audio-name');
+                if (dtLblAudio) dtLblAudio.innerText = file.name;
+            }
+        };
+
+        // Actually loads the staged local file into the player: sets it as the active
+        // source, resets the cover to default, auto-fills title/artist from the filename,
+        // and kicks off online lyric sync. Returns true if a pending file was applied.
+        async function loadPendingLocalFile() {
+            const file = pendingLocalAudioFile;
+            if (!file) return false;
+
+            activeSongId = 'custom-file';
+            await setAudioSource(file);
+
+            // Local files never carry cover art metadata, so always fall back to the default cover
+            const coverImg = document.getElementById('desktop-cover-img');
+            if (coverImg) {
+                delete coverImg.dataset.fallback;
+                coverImg.src = 'Data/covers/default-cover.jpg';
+            }
+
+            const rawName = file.name.replace(/\.[^/.]+$/, "");
+
+            if (rawName.includes('-')) {
+                const parts = rawName.split('-');
+                fileArtistName = parts[0].trim();
+                fileTrackTitle = parts.slice(1).join('-').trim();
+                artistInput.value = fileArtistName;
+                songInput.value = fileTrackTitle;
+            } else {
+                fileTrackTitle = rawName;
+                fileArtistName = '';
+                songInput.value = rawName;
+                artistInput.value = '';
+            }
+
+            onlineTrackTitle = '';
+            onlineArtistName = '';
+            updateHeaderTitle();
+
+            renderLibraryPlaylist();
+            executeOnlineSync(true);
+            resumeAutoSync();
+
+            pendingLocalAudioFile = null;
+            return true;
         }
-
-        const rawName = file.name.replace(/\.[^/.]+$/, "");
-        
-        if (rawName.includes('-')) {
-            const parts = rawName.split('-');
-            fileArtistName = parts[0].trim();
-            fileTrackTitle = parts.slice(1).join('-').trim();
-            artistInput.value = fileArtistName;
-            songInput.value = fileTrackTitle;
-        } else {
-            fileTrackTitle = rawName;
-            fileArtistName = '';
-            songInput.value = rawName;
-            artistInput.value = '';
-        }
-
-        onlineTrackTitle = '';
-        onlineArtistName = '';
-        updateHeaderTitle();
-        const lblAudio = document.getElementById('lbl-audio-name');
-        if (lblAudio) lblAudio.innerText = file.name;
-
-        renderLibraryPlaylist();
-        executeOnlineSync(true);
-        resumeAutoSync();
-    }
-};
 
 
         document.getElementById('lrc-file-input').onchange = e => {
@@ -1811,20 +1842,31 @@ window.addEventListener('beforeunload', saveLastTrackState);
         document.getElementById('open-library-btn').onclick = () => openSheet(document.getElementById('library-sheet'));
         document.getElementById('open-studio-btn').onclick = () => openSheet(document.getElementById('studio-sheet'));
 
-        document.getElementById('btn-apply-done').onclick = () => {
-            closeSheet(document.getElementById('studio-sheet'));
-            // Local file uploads always autoplay on Apply & Done; library tracks keep their current play/pause state untouched
-            if (activeSongId === 'custom-file') {
-                triggerPlay();
+        document.getElementById('btn-apply-done').onclick = async () => {
+            // If a local file is staged but not yet loaded, load it now, then autoplay.
+            // Library tracks (already loaded via the Music Library sheet) keep their
+            // current play/pause state untouched.
+            if (pendingLocalAudioFile) {
+                await loadPendingLocalFile();
+                closeSheet(document.getElementById('studio-sheet'));
+                await triggerPlay();
+            } else {
+                closeSheet(document.getElementById('studio-sheet'));
+                if (activeSongId === 'custom-file') {
+                    triggerPlay();
+                }
             }
         };
 
         // --- DESKTOP SIDEBAR: APPLY & AUTO-PLAY LOCAL FILE ---
         const dtApplyLocalBtn = document.getElementById('dt-btn-apply-local');
         if (dtApplyLocalBtn) {
-            dtApplyLocalBtn.onclick = () => {
-                // Only auto-plays when the currently loaded track is a local file upload
-                if (activeSongId === 'custom-file') {
+            dtApplyLocalBtn.onclick = async () => {
+                if (pendingLocalAudioFile) {
+                    await loadPendingLocalFile();
+                    await triggerPlay();
+                } else if (activeSongId === 'custom-file') {
+                    // Already-loaded local file: treat Apply as a resume/play action
                     triggerPlay();
                 }
             };

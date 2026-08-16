@@ -754,9 +754,11 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             // Restore saved playback speed
             const speedSliderEl = document.getElementById('speed-slider');
             const speedValEl = document.getElementById('speed-val');
+            const speedIndDtEl = document.getElementById('speed-indicator-dt');
             audio.playbackRate = userSettings.playbackRate;
             if (speedSliderEl) speedSliderEl.value = userSettings.playbackRate;
             if (speedValEl) speedValEl.innerText = parseFloat(userSettings.playbackRate).toFixed(2) + 'x';
+            if (speedIndDtEl) speedIndDtEl.innerText = parseFloat(userSettings.playbackRate).toFixed(1) + 'x';
 
             updateScroll(activeIndex);
         }
@@ -1581,6 +1583,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
             audio.playbackRate = val;
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
 
+            const speedIndDt = document.getElementById('speed-indicator-dt');
+            if (speedIndDt) speedIndDt.innerText = val.toFixed(1) + 'x';
+
             userSettings.playbackRate = val;
             saveSettings();
         };
@@ -1842,13 +1847,6 @@ window.addEventListener('beforeunload', saveLastTrackState);
             activeSongId = 'custom-file';
             await setAudioSource(file);
 
-            // Local files never carry cover art metadata, so always fall back to the default cover
-            const coverImg = document.getElementById('desktop-cover-img');
-            if (coverImg) {
-                delete coverImg.dataset.fallback;
-                coverImg.src = 'Data/covers/default-cover.jpg';
-            }
-
             // Fallback title/artist guessed from the filename — only used by updateHeaderTitle()
             // if the online auto-fetch (triggered at selection time) didn't find a match.
             const rawName = file.name.replace(/\.[^/.]+$/, "");
@@ -1859,6 +1857,20 @@ window.addEventListener('beforeunload', saveLastTrackState);
             } else {
                 fileTrackTitle = rawName;
                 fileArtistName = '';
+            }
+
+            // Local files carry no embedded cover art, so look up an auto cover using
+            // whichever title/artist we have (the matched online track name if the
+            // LRCLIB lookup at selection time found one, otherwise the filename guess).
+            // applyAutoCover() itself shows the default cover immediately and swaps in
+            // the fetched artwork only if a match is found, so this degrades gracefully.
+            const coverImg = document.getElementById('desktop-cover-img');
+            if (coverImg) {
+                delete coverImg.dataset.fallback;
+                applyAutoCover(coverImg, {
+                    title: onlineTrackTitle || fileTrackTitle,
+                    artist: onlineArtistName || fileArtistName
+                });
             }
 
             updateHeaderTitle();

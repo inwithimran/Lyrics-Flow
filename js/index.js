@@ -1024,10 +1024,10 @@ document.write(`
 
             <!-- 3. Right Corner: Offset & Volume Controls -->
             <div class="flex items-center justify-end gap-3">
-                <!-- Sync Offset Modal Trigger -->
-                <button id="btn-offset-modal-dt" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn px-3 py-2 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95">
-                    <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
-                    <span id="offset-indicator-dt" class="text-[11px]">0.0s</span>
+                <!-- Playback Speed Quick-Access Trigger (desktop only — mobile keeps the Sync Offset trigger) -->
+                <button id="btn-speed-modal-dt" data-studio-tab="tab-dsp" data-scroll-to="speed-settings-container" class="ctrl-btn px-3 py-2 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 hover:bg-white/10 active:scale-95" title="Playback Speed">
+                    <i class="fa-solid fa-gauge-high text-xs text-m3-primary"></i>
+                    <span id="speed-indicator-dt" class="text-[11px]">1.0x</span>
                 </button>
 
                 <!-- Volume Slider Control -->
@@ -1259,7 +1259,7 @@ document.write(`
                     </div>
 
                     <!-- Pitch / Speed Controls -->
-                    <div class="py-2 space-y-2">
+                    <div id="speed-settings-container" class="py-2 space-y-2">
                         <div class="flex justify-between items-center text-xs font-bold text-slate-200">
                             <span>Playback Speed</span>
                             <span id="speed-val" class="font-mono text-sky-400">1.0x</span>

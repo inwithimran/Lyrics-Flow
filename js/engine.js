@@ -1252,12 +1252,21 @@ for (let i = 0; i < barCount; i++) {
                 async function loadTrackFromLibrary(song, options = {}) {
             const { autoplay = true, resumeTime = null, keepPendingLocalFile = false } = options;
 
+            const wasStagedLocalFile = !!pendingLocalAudioFile;
+            const wasAppliedLocalFile = (activeSongId === 'custom-file');
+
             // Explicitly choosing a library track cancels any staged (not-yet-applied) local
-            // file. An automatic advance (song ended, playlist moves on) passes
-            // keepPendingLocalFile so the user's pending selection survives until they
-            // either apply it or pick a track themselves.
-            if (pendingLocalAudioFile && !keepPendingLocalFile) {
+            // file, and also clears the local-file selector's label if a local file was
+            // either staged OR already applied/playing — otherwise the old filename lingers
+            // in the selector even though a library track is now active. An automatic
+            // advance (song ended, playlist moves on) passes keepPendingLocalFile so the
+            // user's staged-but-not-applied selection survives until they either apply it
+            // or pick a track themselves.
+            if (wasStagedLocalFile && !keepPendingLocalFile) {
                 pendingLocalAudioFile = null;
+            }
+
+            if ((wasStagedLocalFile && !keepPendingLocalFile) || wasAppliedLocalFile) {
                 const lblAudioReset = document.getElementById('lbl-audio-name');
                 if (lblAudioReset) lblAudioReset.innerText = 'Choose Local MP3 / WAV Track';
                 const dtLblAudioReset = document.getElementById('dt-lbl-audio-name');

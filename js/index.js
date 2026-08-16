@@ -1577,3 +1577,4 @@ document.write(`
 </body>
 </html>
 `);
+document.close();

@@ -130,7 +130,15 @@ document.addEventListener('click', (e) => {
             const btnMuteMobile = document.getElementById('btn-mute-mobile');
             const volIcon = document.getElementById('vol-icon');
             const volIconMobile = document.getElementById('vol-icon-mobile');
-            let lastVol = 1;
+            let lastVol = userSettings.volume > 0 ? userSettings.volume : 1;
+
+            // Restore saved volume & mute state (otherwise it silently resets to 100% on every reload)
+            if (audioPlayer) {
+                const initialVol = userSettings.muted ? 0 : userSettings.volume;
+                audioPlayer.volume = initialVol;
+                if (volumeSlider) volumeSlider.value = initialVol;
+                updateVolIcon(initialVol);
+            }
 
             // Volume Control Sync
             if (volumeSlider && audioPlayer) {
@@ -138,6 +146,11 @@ document.addEventListener('click', (e) => {
                     const val = parseFloat(e.target.value);
                     audioPlayer.volume = val;
                     updateVolIcon(val);
+
+                    userSettings.volume = val;
+                    userSettings.muted = (val === 0);
+                    if (val > 0) lastVol = val;
+                    saveSettings();
                 });
             }
 
@@ -147,10 +160,17 @@ document.addEventListener('click', (e) => {
                     audioPlayer.volume = 0;
                     if (volumeSlider) volumeSlider.value = 0;
                     updateVolIcon(0);
+
+                    userSettings.muted = true;
+                    saveSettings();
                 } else {
                     audioPlayer.volume = lastVol || 1;
                     if (volumeSlider) volumeSlider.value = audioPlayer.volume;
                     updateVolIcon(audioPlayer.volume);
+
+                    userSettings.muted = false;
+                    userSettings.volume = audioPlayer.volume;
+                    saveSettings();
                 }
             };
 
@@ -164,6 +184,11 @@ document.addEventListener('click', (e) => {
                 audioPlayer.volume = val;
                 if (volumeSlider) volumeSlider.value = val;
                 updateVolIcon(val);
+
+                userSettings.volume = val;
+                userSettings.muted = (val === 0);
+                if (val > 0) lastVol = val;
+                saveSettings();
             };
 
             function updateVolIcon(val) {
@@ -181,6 +206,9 @@ document.addEventListener('click', (e) => {
                     icon.style.textAlign = 'center';
                 });
             }
+
+            // Exposed so applySettingsToUI() can refresh the icon too (e.g. after Reset Preferences)
+            window.updateVolIcon = updateVolIcon;
 
             // Sync Desktop Left Sidebar Title & Artist
             const mainTitle = document.getElementById('track-title');
@@ -246,7 +274,10 @@ document.addEventListener('click', (e) => {
             timeOffset: 0.0,
             eqPreset: 'flat',
             eqBands: [0, 0, 0, 0, 0],
-            playbackMode: 'off'
+            playbackMode: 'off',
+            volume: 1.0,
+            muted: false,
+            playbackRate: 1.0
         };
 
         // LOCALSTORAGE PERSISTENCE ENGINE
@@ -581,7 +612,9 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             }
 
             if (nextTrack) {
-                loadTrackFromLibrary(nextTrack);
+                // Automatic advance shouldn't wipe out a local file the user has staged
+                // but not yet applied — only an explicit user pick should do that.
+                loadTrackFromLibrary(nextTrack, { keepPendingLocalFile: true });
             }
         };
 
@@ -691,6 +724,19 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
     if (eqBands[i]) eqBands[i].gain.value = val;
 });
 
+            // Restore saved volume/mute state
+            const volSliderEl = document.getElementById('volume-slider');
+            const initialVol = userSettings.muted ? 0 : userSettings.volume;
+            audio.volume = initialVol;
+            if (volSliderEl) volSliderEl.value = initialVol;
+            if (typeof window.updateVolIcon === 'function') window.updateVolIcon(initialVol);
+
+            // Restore saved playback speed
+            const speedSliderEl = document.getElementById('speed-slider');
+            const speedValEl = document.getElementById('speed-val');
+            audio.playbackRate = userSettings.playbackRate;
+            if (speedSliderEl) speedSliderEl.value = userSettings.playbackRate;
+            if (speedValEl) speedValEl.innerText = parseFloat(userSettings.playbackRate).toFixed(2) + 'x';
 
             updateScroll(activeIndex);
         }
@@ -1194,10 +1240,13 @@ for (let i = 0; i < barCount; i++) {
         };
 
                 async function loadTrackFromLibrary(song, options = {}) {
-            const { autoplay = true, resumeTime = null } = options;
+            const { autoplay = true, resumeTime = null, keepPendingLocalFile = false } = options;
 
-            // Choosing a library track cancels any staged (not-yet-applied) local file
-            if (pendingLocalAudioFile) {
+            // Explicitly choosing a library track cancels any staged (not-yet-applied) local
+            // file. An automatic advance (song ended, playlist moves on) passes
+            // keepPendingLocalFile so the user's pending selection survives until they
+            // either apply it or pick a track themselves.
+            if (pendingLocalAudioFile && !keepPendingLocalFile) {
                 pendingLocalAudioFile = null;
                 const lblAudioReset = document.getElementById('lbl-audio-name');
                 if (lblAudioReset) lblAudioReset.innerText = 'Choose Local MP3 / WAV Track';
@@ -1418,6 +1467,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
             const val = parseFloat(e.target.value);
             audio.playbackRate = val;
             document.getElementById('speed-val').innerText = val.toFixed(2) + 'x';
+
+            userSettings.playbackRate = val;
+            saveSettings();
         };
 
         // --- KEYBOARD SHORTCUTS ---
@@ -1610,10 +1662,12 @@ window.addEventListener('beforeunload', saveLastTrackState);
         document.getElementById('btn-cancel-sleep').onclick = clearSleepTimer;
 
         // --- FILE INPUTS & SMART AUTO-FILL ---
-        // Selecting a local file only STAGES it (shows the name) — it does NOT interrupt
-        // whatever is currently playing (e.g. a library track). The file is only actually
-        // loaded and auto-played once the user taps an Apply button (mobile "Apply & Done"
-        // or the desktop "Apply & Auto-Play" button), via loadPendingLocalFile() below.
+        // Selecting a local file only STAGES it (shows the name + pre-fills the Online LRC
+        // Search fields from the filename) — it does NOT interrupt whatever is currently
+        // playing (e.g. a library track) and does NOT touch the main lyrics view. The file
+        // is only actually loaded, synced, and auto-played once the user taps an Apply
+        // button (mobile "Apply & Done" or the desktop "Apply & Auto-Play" button), via
+        // loadPendingLocalFile() below.
         document.getElementById('audio-file-input').onchange = e => {
             const file = e.target.files[0];
             if (file) {
@@ -1624,7 +1678,24 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
                 const dtLblAudio = document.getElementById('dt-lbl-audio-name');
                 if (dtLblAudio) dtLblAudio.innerText = file.name;
+
+                // Pre-fill the Online LRC Search fields (mobile + desktop, kept in sync via
+                // the bridge script) from the filename, purely as a convenience — this does
+                // NOT trigger a fetch or change the currently displayed lyrics.
+                const rawName = file.name.replace(/\.[^/.]+$/, "");
+                let guessedArtist = '';
+                let guessedTitle = rawName;
+                if (rawName.includes('-')) {
+                    const parts = rawName.split('-');
+                    guessedArtist = parts[0].trim();
+                    guessedTitle = parts.slice(1).join('-').trim();
+                }
+                if (songInput) songInput.value = guessedTitle;
+                if (artistInput) artistInput.value = guessedArtist;
             }
+
+            // Reset so selecting the SAME file again still fires the 'change' event
+            e.target.value = '';
         };
 
         // Actually loads the staged local file into the player: sets it as the active

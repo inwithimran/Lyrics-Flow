@@ -1530,6 +1530,30 @@ document.write(`
         </div>
     </div>
 
+    <!-- RESUME PLAYBACK CONFIRMATION MODAL DIALOG (shown on load only if the saved
+         position for the last-played library track is 5 minutes or more) -->
+    <div id="resume-dialog" class="dialog-overlay">
+        <div class="m3-dialog space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-m3-primary text-xl mx-auto">
+                <i class="fa-solid fa-clock-rotate-left"></i>
+            </div>
+            <div class="text-center space-y-1">
+                <h3 class="text-base font-extrabold text-white">Resume Playback?</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    You were <span id="resume-dialog-time" class="text-slate-200 font-bold"></span> into <span id="resume-dialog-track" class="text-slate-200 font-bold"></span>. Continue from there?
+                </p>
+            </div>
+            <div class="flex gap-2 pt-2">
+                <button id="btn-resume-no" class="flex-1 py-2.5 bg-white/10 hover:bg-white/15 text-slate-300 font-bold text-xs rounded-xl transition-all">
+                    No, Start Over
+                </button>
+                <button id="btn-resume-yes" class="flex-1 py-2.5 bg-m3-primary text-white font-extrabold text-xs rounded-xl shadow-lg active:scale-95 transition-all">
+                    Yes, Resume
+                </button>
+            </div>
+        </div>
+    </div>
+
     <audio id="audio-player" crossorigin="anonymous"></audio>
 
     <script src="Data/musicData.js"></script>

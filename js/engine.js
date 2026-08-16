@@ -466,12 +466,25 @@ document.addEventListener('click', (e) => {
 
             const validTime = Math.max(0, Math.min(maxTime, targetTime));
 
+            // Reflect the new position in the time label / scrubber immediately, even
+            // while paused — syncLoop() only updates them during active playback, so
+            // without this a restored/seeked position wouldn't show live until Play is
+            // pressed.
+            const reflectInUI = () => {
+                currTimeLbl.innerText = formatTime(audio.currentTime);
+                if (!isScrubbing && audio.duration && !isNaN(audio.duration)) {
+                    scrubber.value = (audio.currentTime / audio.duration) * 100;
+                }
+            };
+
             try {
                 if (audio.readyState >= 1) {
                     audio.currentTime = validTime;
+                    reflectInUI();
                 } else {
                     const onLoaded = () => {
                         audio.currentTime = validTime;
+                        reflectInUI();
                         audio.removeEventListener('loadedmetadata', onLoaded);
                     };
                     audio.addEventListener('loadedmetadata', onLoaded);
@@ -1948,14 +1961,47 @@ window.addEventListener('beforeunload', saveLastTrackState);
         applySettingsToUI();
         renderLibraryPlaylist();
 
+        // --- RESUME PLAYBACK CONFIRMATION (only asked when the saved position is 5
+        // minutes/300s or more; below that, the saved position is silently restored) ---
+        const RESUME_PROMPT_THRESHOLD_SECONDS = 300;
+        const resumeDialog = document.getElementById('resume-dialog');
+        const resumeDialogTimeEl = document.getElementById('resume-dialog-time');
+        const resumeDialogTrackEl = document.getElementById('resume-dialog-track');
+
+        function showResumeDialog(track, savedTime) {
+            if (resumeDialogTimeEl) resumeDialogTimeEl.innerText = formatTime(savedTime);
+            if (resumeDialogTrackEl) resumeDialogTrackEl.innerText = track.title || 'this track';
+            resumeDialog.classList.add('open');
+
+            document.getElementById('btn-resume-yes').onclick = () => {
+                seekAudioTo(savedTime);
+                resumeDialog.classList.remove('open');
+            };
+            document.getElementById('btn-resume-no').onclick = () => {
+                // Position stays at 0 (never seeked); persist that so a reload doesn't
+                // keep re-prompting for the same old position.
+                saveLastTrackState();
+                resumeDialog.classList.remove('open');
+            };
+        }
+
         // --- RESTORE LAST PLAYED TRACK ON RELOAD (loads track + position, no autoplay) ---
         (function restoreLastTrack() {
             const last = loadLastTrackState();
             if (!last || !last.id) return;
             const playlist = window.PLAYLIST_DATA || [];
             const track = playlist.find(s => s.id === last.id);
-            if (track) {
-                loadTrackFromLibrary(track, { autoplay: false, resumeTime: last.time });
+            if (!track) return;
+
+            const savedTime = last.time || 0;
+
+            if (savedTime >= RESUME_PROMPT_THRESHOLD_SECONDS) {
+                // Load the track paused at the start; only jump to the saved position if
+                // the user confirms via the Resume Playback popup.
+                loadTrackFromLibrary(track, { autoplay: false });
+                showResumeDialog(track, savedTime);
+            } else {
+                loadTrackFromLibrary(track, { autoplay: false, resumeTime: savedTime });
             }
         })();
 

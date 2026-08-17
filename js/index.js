@@ -764,15 +764,15 @@ document.write(`
                     <span class="text-[9px] font-extrabold uppercase tracking-widest text-m3-primary hidden lg:inline-flex items-center gap-1.5 bg-sky-500/10 px-2.5 py-0.5 rounded-full border border-sky-500/20 shadow-sm">
                         <i class="fa-solid fa-sliders text-[8px]"></i> Studio Workstation
                     </span>
-                    <span id="theme-tag" class="text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest text-m3-primary">CYBER CYAN</span>
+                    <span id="theme-tag" class="hidden text-[9px] md:text-[10px] font-extrabold uppercase tracking-widest text-m3-primary">ADAPTIVE COVER</span>
                     <!-- Sleep Timer Countdown Badge -->
                     <span id="sleep-countdown-badge" class="hidden text-[9px] md:text-[10px] font-mono px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30 flex items-center gap-1 animate-pulse">
                         <i class="fa-solid fa-moon text-[8px]"></i>
                         <span id="sleep-countdown-text">00:00</span>
                     </span>
                 </div>
-                <h1 id="track-title" class="text-xs sm:text-sm md:text-base lg:text-lg font-black truncate text-slate-100 leading-tight">No Track Loaded</h1>
-                <p id="track-artist" class="text-[11px] md:text-xs text-slate-400 truncate">Tap music library button or studio controls</p>
+                <h1 id="track-title" class="text-sm sm:text-base md:text-lg lg:text-xl font-black truncate text-slate-100 leading-tight">No Track Loaded</h1>
+                <p id="track-artist" class="text-xs sm:text-sm md:text-sm text-slate-400 truncate">Tap music library button or studio controls</p>
             </div>
         </div>
 

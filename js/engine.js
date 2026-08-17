@@ -229,7 +229,7 @@ document.addEventListener('click', (e) => {
             isWakeLockActive: true,
             themeColor: '#38BDF8',
             themeRgb: '56, 189, 248',
-            themeName: 'CYBER CYAN',
+            themeName: 'ADAPTIVE COVER',
             visualizerMode: 'circle',
             fontScale: 1.0,
             timeOffset: 0.0,
@@ -242,7 +242,7 @@ document.addEventListener('click', (e) => {
             playbackRate: 1.0,
             crossfadeEnabled: false,
             crossfadeDuration: 4,
-            autoThemeFromCover: false
+            autoThemeFromCover: true
         };
 
         // LOCALSTORAGE PERSISTENCE ENGINE
@@ -388,48 +388,13 @@ document.addEventListener('click', (e) => {
             }
 
             if (typeof source === 'string') {
+                // সরাসরি স্ট্রিম হিসেবে সেট করা হচ্ছে যাতে ব্রাউজার নিজেই HTTP range
+                // রিকোয়েস্ট দিয়ে সাথে সাথে বাফারিং শুরু করতে পারে। আগে এখানে ব্যাকগ্রাউন্ডে
+                // পুরো ফাইলটা আবার fetch করে blob বানিয়ে চলতি অবস্থাতেই audio.src পাল্টে
+                // দেওয়া হতো — এটাই গান চলাকালীন হঠাৎ "হিজিবিজি"/ক্লিক শব্দ এবং ধীরগতির
+                // লোডিং-এর মূল কারণ ছিল (একই ফাইল দুইবার ডাউনলোড হতো, নেটওয়ার্ক ব্যান্ডউইথ
+                // ভাগাভাগি হতো, আর মাঝপথে src বদলালে ব্রাউজারকে নতুন করে ডিকোড শুরু করতে হতো)।
                 audio.src = source;
-
-                if (source.startsWith('http://') || source.startsWith('https://')) {
-                    const controller = new AbortController();
-                    activeFetchController = controller;
-
-                    fetch(source, { signal: controller.signal })
-                        .then(res => {
-                            if (!res.ok) throw new Error("Network response was not ok");
-                            return res.blob();
-                        })
-                        .then(blob => {
-                            if (activeFetchController !== controller) return;
-
-                            const savedTime = audio.currentTime || 0;
-                            const wasPaused = audio.paused;
-
-                            if (currentBlobUrl) URL.revokeObjectURL(currentBlobUrl);
-                            currentBlobUrl = URL.createObjectURL(blob);
-
-                            audio.src = currentBlobUrl;
-
-                            const restoreState = () => {
-                                seekAudioTo(savedTime);
-                                if (!wasPaused) {
-                                    triggerPlay();
-                                }
-                                audio.removeEventListener('loadedmetadata', restoreState);
-                            };
-
-                            if (audio.readyState >= 1) {
-                                restoreState();
-                            } else {
-                                audio.addEventListener('loadedmetadata', restoreState);
-                            }
-                        })
-                        .catch(err => {
-                            if (err.name !== 'AbortError') {
-                                console.warn("Background audio caching skipped:", err);
-                            }
-                        });
-                }
             }
         }
 
@@ -1690,7 +1655,11 @@ else if (userSettings.visualizerMode === 'starburst') {
             updateHeaderTitle();
 
             await setAudioSource(song.audioUrl);
-            generateWaveform(song.id, song.audioUrl);
+            // ওয়েভফর্মের জন্য অডিও ফাইলটা আলাদাভাবে আবার fetch করে ডিকোড করতে হয়;
+            // এটা মূল গানের বাফারিং-এর সাথে সাথে শুরু হলে নেটওয়ার্ক ব্যান্ডউইথ ভাগ হয়ে
+            // গান লোড হতে/পরের গানে যেতে দেরি হয়। তাই আগে গান বাজা শুরু হওয়ার একটু
+            // সুযোগ দিয়ে (canplay ইভেন্টের পর, বা সর্বোচ্চ ৮০০ms পর) ওয়েভফর্ম আনা হচ্ছে।
+            scheduleWaveformGeneration(song.id, song.audioUrl);
 
             if (songInput) songInput.value = song.title;
             if (artistInput) artistInput.value = song.artist;
@@ -2384,6 +2353,17 @@ window.addEventListener('beforeunload', saveLastTrackState);
             applySettingsToUI();
             clearSleepTimer();
             resetDialog.classList.remove('open');
+
+            // ডিফল্ট থিম এখন "Adaptive Cover" — কিন্তু কভার আর্টের ইমেজ এলিমেন্টটা
+            // যদি ইতিমধ্যে লোড হয়ে থাকে (নতুন করে লোড না হওয়ায়), তার 'load' ইভেন্ট
+            // আর ফায়ার হবে না, ফলে asli রঙ বের না হয়ে ফলব্যাক রঙ (#38BDF8, যেটা
+            // "CYBER CYAN" সোয়াচের রঙের সাথে হুবহু মিলে যায়) থেকে যেত এবং দেখতে মনে
+            // হতো দুই নম্বর সোয়াচটাই সিলেক্ট হয়ে আছে। তাই রিসেটের পরপরই বর্তমান
+            // কভার থেকে সরাসরি রঙ বের করে নেওয়া হচ্ছে।
+            const coverImgOnReset = document.getElementById('desktop-cover-img');
+            if (coverImgOnReset && coverImgOnReset.src && coverImgOnReset.src.indexOf('default-cover') === -1 && coverImgOnReset.complete) {
+                applyAdaptiveTheme(coverImgOnReset);
+            }
         };
 
         applySettingsToUI();
@@ -2758,6 +2738,37 @@ window.addEventListener('beforeunload', saveLastTrackState);
         }
         window.addEventListener('resize', resizeWaveformCanvas);
         resizeWaveformCanvas();
+
+        // মূল গানের অডিও বাফারিং শেষ না হওয়া পর্যন্ত ওয়েভফর্মের আলাদা fetch/decode
+        // শুরু না করার জন্য — audio.canplay ইভেন্টের অপেক্ষা করা হয়, তবে নেটওয়ার্ক
+        // ধীর হলেও গান খুব বেশি দেরি না করে যেন ওয়েভফর্ম আসে, তার জন্য ৮০০ms এর একটা
+        // সর্বোচ্চ সীমাও রাখা আছে।
+        let waveformScheduleTimer = null;
+        let waveformScheduleListener = null;
+
+        function scheduleWaveformGeneration(cacheKey, source) {
+            if (waveformScheduleTimer) {
+                clearTimeout(waveformScheduleTimer);
+                waveformScheduleTimer = null;
+            }
+            if (waveformScheduleListener) {
+                audio.removeEventListener('canplay', waveformScheduleListener);
+                waveformScheduleListener = null;
+            }
+
+            let started = false;
+            const start = () => {
+                if (started) return;
+                started = true;
+                if (waveformScheduleTimer) { clearTimeout(waveformScheduleTimer); waveformScheduleTimer = null; }
+                if (waveformScheduleListener) { audio.removeEventListener('canplay', waveformScheduleListener); waveformScheduleListener = null; }
+                generateWaveform(cacheKey, source);
+            };
+
+            waveformScheduleListener = start;
+            audio.addEventListener('canplay', waveformScheduleListener, { once: true });
+            waveformScheduleTimer = setTimeout(start, 800);
+        }
 
         async function generateWaveform(cacheKey, source) {
             if (!waveformCanvas || !waveformCtx) return;

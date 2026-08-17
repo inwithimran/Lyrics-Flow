@@ -1131,9 +1131,9 @@ document.write(`
         <!-- MOBILE-ONLY ROW 3 -->
         <div class="flex sm:hidden items-center justify-between px-1 pt-1.5">
             <button id="btn-loop-mode" class="ctrl-btn w-8 h-8 relative shrink-0" title="Repeat / Shuffle" aria-label="Cycle repeat and shuffle mode">
-                <i class="fa-solid fa-repeat text-base" id="loop-mode-icon"></i>
+                <i class="fa-solid fa-repeat text-base text-white" id="loop-mode-icon"></i>
+                <span class="material-symbols-outlined text-[19px] text-white hidden" id="loop-mode-icon-one">repeat_one</span>
                 <span id="loop-mode-text" class="sr-only">Off</span>
-                <span id="loop-mode-badge" class="hidden absolute top-1.5 right-2 w-3 h-3 bg-sky-400 text-slate-950 rounded-full text-[7px] font-extrabold items-center justify-center">1</span>
             </button>
 
             <div class="flex items-center gap-1">

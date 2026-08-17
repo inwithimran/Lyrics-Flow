@@ -591,32 +591,27 @@ function updateMobileComboUI() {
     const btn = document.getElementById('btn-loop-mode');
     if (!btn) return;
     const icon = document.getElementById('loop-mode-icon');
+    const iconOne = document.getElementById('loop-mode-icon-one');
     const text = document.getElementById('loop-mode-text');
-    const badge = document.getElementById('loop-mode-badge');
     const state = getMobileComboState();
 
-    btn.classList.remove('active-mode');
-    if (badge) {
-        badge.classList.add('hidden');
-        badge.classList.remove('flex');
-    }
+    btn.classList.remove('mode-active-flat');
+    if (icon) icon.classList.remove('hidden');
+    if (iconOne) iconOne.classList.add('hidden');
 
     if (state === 'one') {
-        if (icon) icon.className = 'fa-solid fa-repeat text-base';
-        btn.classList.add('active-mode');
-        if (badge) {
-            badge.classList.remove('hidden');
-            badge.classList.add('flex');
-        }
+        if (icon) icon.classList.add('hidden');
+        if (iconOne) iconOne.classList.remove('hidden');
+        btn.classList.add('mode-active-flat');
         if (text) text.innerText = 'Repeat One';
         btn.title = 'Repeat One';
     } else if (state === 'shuffle') {
-        if (icon) icon.className = 'fa-solid fa-shuffle text-base';
-        btn.classList.add('active-mode');
+        if (icon) icon.className = 'fa-solid fa-shuffle text-base text-white';
+        btn.classList.add('mode-active-flat');
         if (text) text.innerText = 'Shuffle';
         btn.title = 'Shuffle';
     } else {
-        if (icon) icon.className = 'fa-solid fa-repeat text-base';
+        if (icon) icon.className = 'fa-solid fa-repeat text-base text-white';
         if (text) text.innerText = 'Off';
         btn.title = 'Repeat / Shuffle';
     }

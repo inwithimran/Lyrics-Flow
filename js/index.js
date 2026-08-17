@@ -1130,7 +1130,7 @@ document.write(`
 
         <!-- MOBILE-ONLY ROW 3 -->
         <div class="flex sm:hidden items-center justify-between px-1 pt-1.5">
-            <button id="btn-loop-mode" class="ctrl-btn w-8 h-8 relative shrink-0" title="Repeat / Shuffle" aria-label="Cycle repeat and shuffle mode">
+            <button id="btn-loop-mode" class="ctrl-btn w-11 h-11 relative shrink-0" title="Repeat / Shuffle" aria-label="Cycle repeat and shuffle mode">
                 <i class="fa-solid fa-repeat text-base text-white" id="loop-mode-icon"></i>
                 <span class="material-symbols-outlined text-[19px] text-white hidden" id="loop-mode-icon-one">repeat_one</span>
                 <span id="loop-mode-text" class="sr-only">Off</span>
@@ -1151,7 +1151,7 @@ document.write(`
                 </button>
             </div>
 
-            <button id="open-library-btn-mob" class="ctrl-btn w-8 h-8 shrink-0" onclick="document.getElementById('open-library-btn').click()" title="Music Library" aria-label="Open music library">
+            <button id="open-library-btn-mob" class="ctrl-btn w-11 h-11 shrink-0" onclick="document.getElementById('open-library-btn').click()" title="Music Library" aria-label="Open music library">
                 <i class="fa-solid fa-music text-white text-base"></i>
             </button>
         </div>

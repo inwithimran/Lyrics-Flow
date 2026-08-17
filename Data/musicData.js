@@ -160,5 +160,11 @@ window.PLAYLIST_DATA = [
         title: 'Hymn For The Weekend',
         artist: 'coldplay',
         audioUrl: 'Data/music/coldplay - Hymn For The Weekend.mp3'
+    },
+    {
+        id: 'track-28',
+        title: 'The Search',
+        artist: 'NF',
+        audioUrl: 'Data/music/NF - The Search.mp3'
     }
 ];

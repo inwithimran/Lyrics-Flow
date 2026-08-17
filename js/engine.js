@@ -733,8 +733,6 @@ function pickShuffleTrack(playlist, excludeId) {
 
             document.documentElement.style.setProperty('--m3-primary', userSettings.themeColor);
             document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
-            document.getElementById('theme-tag').innerText = userSettings.themeName;
-            document.getElementById('theme-tag').style.color = userSettings.themeColor;
 
             document.querySelectorAll('.viz-style-chip').forEach(btn => {
                 if (btn.dataset.style === userSettings.visualizerMode) btn.classList.add('active');
@@ -2014,8 +2012,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
 
         // --- SLEEP MODE & LIVE COUNTDOWN ENGINE ---
-        const homeSleepBadge = document.getElementById('sleep-countdown-badge');
-        const homeSleepText = document.getElementById('sleep-countdown-text');
+        const sleepMobBtn = document.getElementById('btn-sleep-mob');
+        const sleepMobIcon = document.getElementById('sleep-mob-icon');
+        const sleepMobText = document.getElementById('sleep-mob-countdown-text');
         const prefSleepCountdown = document.getElementById('pref-sleep-countdown');
         const prefSleepStatus = document.getElementById('pref-sleep-status');
 
@@ -2044,8 +2043,14 @@ window.addEventListener('beforeunload', saveLastTrackState);
             }
 
             const formatted = formatTime(remaining);
-            homeSleepText.innerText = formatted;
-            homeSleepBadge.classList.remove('hidden');
+
+            if (sleepMobBtn && sleepMobIcon && sleepMobText) {
+                sleepMobIcon.classList.add('hidden');
+                sleepMobText.innerText = formatted;
+                sleepMobText.classList.remove('hidden');
+                sleepMobBtn.classList.remove('w-8');
+                sleepMobBtn.classList.add('px-2', 'gap-1');
+            }
 
             prefSleepCountdown.innerText = formatted;
             prefSleepCountdown.classList.remove('hidden');
@@ -2059,7 +2064,13 @@ window.addEventListener('beforeunload', saveLastTrackState);
             sleepTimerTimeout = null;
             sleepIntervalId = null;
 
-            homeSleepBadge.classList.add('hidden');
+            if (sleepMobBtn && sleepMobIcon && sleepMobText) {
+                sleepMobText.classList.add('hidden');
+                sleepMobIcon.classList.remove('hidden');
+                sleepMobBtn.classList.add('w-8');
+                sleepMobBtn.classList.remove('px-2', 'gap-1');
+            }
+
             prefSleepCountdown.classList.add('hidden');
             prefSleepStatus.innerText = "Automatically pauses playback when expired";
         }
@@ -2242,8 +2253,6 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
                 document.documentElement.style.setProperty('--m3-primary', userSettings.themeColor);
                 document.documentElement.style.setProperty('--m3-primary-rgb', userSettings.themeRgb);
-                document.getElementById('theme-tag').innerText = userSettings.themeName;
-                document.getElementById('theme-tag').style.color = userSettings.themeColor;
 
                 document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');

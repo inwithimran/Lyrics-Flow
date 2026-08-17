@@ -1207,10 +1207,22 @@ else if (userSettings.visualizerMode === 'starburst') {
             return parsed;
         }
 
+        // Message shown on the main lyric stage whenever there are no lyric lines
+        // loaded. Defaults to the generic "nothing loaded" message, but is swapped
+        // to "Finding lyrics..." while an online lookup is in flight, and to
+        // "Lyrics not found" if that lookup comes back empty/fails — so the stage
+        // never shows the plain "not loaded" text while a search is actually happening.
+        let lyricsEmptyMessage = 'No synchronized lyrics loaded';
+
+        function setLyricsEmptyMessage(msg) {
+            lyricsEmptyMessage = msg;
+            if (lyrics.length === 0) renderLyrics();
+        }
+
         function renderLyrics() {
             scroller.innerHTML = '';
             if (lyrics.length === 0) {
-                scroller.innerHTML = '<div class="lyric-line active">No synchronized lyrics loaded</div>';
+                scroller.innerHTML = `<div class="lyric-line active">${lyricsEmptyMessage}</div>`;
                 updateScroll(-1);
                 return;
             }
@@ -1632,6 +1644,10 @@ else if (userSettings.visualizerMode === 'starburst') {
                 return;
             }
 
+            // Only the call that's actually meant to land on the main stage
+            // (applyToPlayer) should change what the stage shows while it searches.
+            if (applyToPlayer) setLyricsEmptyMessage('Finding lyrics...');
+
             fetchStatus.className = 'text-[10px] font-semibold text-sky-400 block';
             fetchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${escapeHTML(song)}"...`;
 
@@ -1676,6 +1692,7 @@ else if (userSettings.visualizerMode === 'starburst') {
             } catch (err) {
                 fetchStatus.className = 'text-[10px] font-semibold text-red-400 block';
                 fetchStatus.innerText = `✕ ${err.message || "Failed to fetch online lyrics."}`;
+                if (applyToPlayer) setLyricsEmptyMessage('Lyrics not found');
             }
         }
 
@@ -2104,6 +2121,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
         document.getElementById('btn-clear-lyrics').onclick = () => {
             document.getElementById('raw-lrc-input').value = '';
+            setLyricsEmptyMessage('No synchronized lyrics loaded');
             parseLRC('');
             resumeAutoSync();
         };

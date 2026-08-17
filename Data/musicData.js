@@ -117,7 +117,7 @@ window.PLAYLIST_DATA = [
         id: 'track-20',
         title: 'Детство',
         artist: 'Rauf & Faik',
-        audioUrl: 'Data/music/Rauf & Faik - Детство.mp3'
+        audioUrl: 'Data/music/Rauf & Faik - детство.mp3'
     },
     {
         id: 'track-21',

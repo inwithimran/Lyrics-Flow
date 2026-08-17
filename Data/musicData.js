@@ -154,5 +154,11 @@ window.PLAYLIST_DATA = [
         title: 'Past Lives',
         artist: 'sapientdream',
         audioUrl: 'Data/music/sapientdream - Pastlives.mp3'
+    },
+    {
+        id: 'track-27',
+        title: 'Hymn For The Weekend',
+        artist: 'coldplay',
+        audioUrl: 'Data/music/coldplay - Hymn For The Weekend.mp3'
     }
 ];

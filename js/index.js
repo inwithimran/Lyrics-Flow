@@ -973,13 +973,19 @@ document.write(`
             </div>
         </div>
 
-        <!-- MOBILE-ONLY TOP ROW (Loop Mode Left, Sync Offset Right Above Next Track) -->
+        <!-- MOBILE-ONLY TOP ROW (Shuffle + Repeat Left, Sync Offset Right Above Next Track) -->
         <div class="flex sm:hidden items-center justify-between px-1">
-            <button id="btn-loop-mode" class="ctrl-btn px-3 py-1.5 text-xs font-semibold gap-1.5 relative bg-white/5 border border-white/10">
-                <i class="fa-solid fa-repeat text-xs" id="loop-mode-icon"></i>
-                <span id="loop-mode-text" class="text-[10px] font-bold">Off</span>
-                <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
-            </button>
+            <div class="flex items-center gap-2">
+                <button id="btn-shuffle-mode" class="ctrl-btn w-9 h-9 bg-white/5 border border-white/10" title="Shuffle" aria-label="Toggle shuffle">
+                    <i class="fa-solid fa-shuffle text-xs" id="shuffle-mode-icon"></i>
+                </button>
+
+                <button id="btn-loop-mode" class="ctrl-btn px-3 py-1.5 text-xs font-semibold gap-1.5 relative bg-white/5 border border-white/10" title="Repeat">
+                    <i class="fa-solid fa-repeat text-xs" id="loop-mode-icon"></i>
+                    <span id="loop-mode-text" class="text-[10px] font-bold">Off</span>
+                    <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
+                </button>
+            </div>
 
             <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
                 <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
@@ -990,9 +996,13 @@ document.write(`
                                 <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid) -->
         <div class="hidden sm:grid sm:grid-cols-3 items-center gap-4 px-2 w-full">
             
-            <!-- 1. Left Corner: Shuffle / Repeat Button -->
-            <div class="flex items-center justify-start">
-                <button id="btn-loop-mode-dt" class="ctrl-btn w-28 min-w-[7rem] py-2 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" onclick="document.getElementById('btn-loop-mode').click()">
+            <!-- 1. Left Corner: Shuffle + Repeat Buttons (independent toggles) -->
+            <div class="flex items-center justify-start gap-2">
+                <button id="btn-shuffle-mode-dt" class="ctrl-btn w-10 h-9 bg-white/5 border border-white/10 hover:bg-white/10 shrink-0" title="Shuffle" aria-label="Toggle shuffle" onclick="document.getElementById('btn-shuffle-mode').click()">
+                    <i class="fa-solid fa-shuffle text-sm" id="shuffle-mode-icon-dt"></i>
+                </button>
+
+                <button id="btn-loop-mode-dt" class="ctrl-btn py-2 px-3 text-xs font-semibold gap-2 bg-white/5 border border-white/10 hover:bg-white/10 justify-center shrink-0" title="Repeat" onclick="document.getElementById('btn-loop-mode').click()">
                     <i class="fa-solid fa-repeat text-sm" id="loop-mode-icon-dt"></i>
                     <span class="text-xs font-bold" id="loop-mode-text-dt">Off</span>
                 </button>

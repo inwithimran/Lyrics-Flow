@@ -79,12 +79,10 @@ document.addEventListener('click', (e) => {
             const dtSongInput = document.getElementById('dt-online-song-input');
             const dtArtistInput = document.getElementById('dt-online-artist-input');
             const dtFetchBtn = document.getElementById('dt-btn-fetch-online-lrc');
-            const dtFetchStatus = document.getElementById('dt-online-fetch-status');
 
             const modalSongInput = document.getElementById('online-song-input');
             const modalArtistInput = document.getElementById('online-artist-input');
             const modalFetchBtn = document.getElementById('btn-fetch-online-lrc');
-            const modalFetchStatus = document.getElementById('online-fetch-status');
 
             if (!dtFetchBtn || !modalFetchBtn) return;
 
@@ -107,19 +105,9 @@ document.addEventListener('click', (e) => {
                 modalArtistInput.addEventListener('input', () => dtArtistInput.value = modalArtistInput.value);
             }
 
-            // Sync status messages
-            if (modalFetchStatus && dtFetchStatus) {
-                const observer = new MutationObserver(() => {
-                    dtFetchStatus.textContent = modalFetchStatus.textContent;
-                    dtFetchStatus.className = modalFetchStatus.className;
-                    if (modalFetchStatus.classList.contains('hidden')) {
-                        dtFetchStatus.classList.add('hidden');
-                    } else {
-                        dtFetchStatus.classList.remove('hidden');
-                    }
-                });
-                observer.observe(modalFetchStatus, { attributes: true, childList: true, characterData: true, subtree: true });
-            }
+            // Status message mirroring is handled directly by setFetchStatusUI() inside
+            // executeOnlineSync() (writes to both #online-fetch-status and
+            // #dt-online-fetch-status together), so no observer is needed here.
         });
     
 // --- DESKTOP VOLUME & INTEGRATION ENHANCEMENT SCRIPT ---
@@ -210,38 +198,11 @@ document.addEventListener('click', (e) => {
             // Exposed so applySettingsToUI() can refresh the icon too (e.g. after Reset Preferences)
             window.updateVolIcon = updateVolIcon;
 
-            // Sync Desktop Left Sidebar Title & Artist
-            const mainTitle = document.getElementById('track-title');
-            const mainArtist = document.getElementById('track-artist');
-            const dtTitle = document.getElementById('desktop-side-title');
-            const dtArtist = document.getElementById('desktop-side-artist');
-            const dtSpin = document.querySelector('.desktop-art-spin');
-            const mainIcon = document.getElementById('track-art-icon');
-
-            if (mainTitle && dtTitle) {
-                const observer = new MutationObserver(() => {
-                    dtTitle.textContent = mainTitle.textContent;
-                    dtArtist.textContent = mainArtist.textContent;
-                    if (mainIcon && dtSpin) {
-                        if (mainIcon.classList.contains('playing')) {
-                            dtSpin.classList.add('playing');
-                        } else {
-                            dtSpin.classList.remove('playing');
-                        }
-                    }
-                });
-                observer.observe(mainTitle, { childList: true, characterData: true, subtree: true });
-                if (mainIcon) {
-                    const spinObs = new MutationObserver(() => {
-                        if (mainIcon.classList.contains('playing')) {
-                            dtSpin.classList.add('playing');
-                        } else {
-                            dtSpin.classList.remove('playing');
-                        }
-                    });
-                    spinObs.observe(mainIcon, { attributes: true, attributeFilter: ['class'] });
-                }
-            }
+            // Desktop sidebar title/artist are now kept in sync directly inside
+            // updateHeaderTitle() (single source of truth) instead of via a
+            // MutationObserver here. The vinyl "playing" spin class is likewise applied
+            // directly to both '#track-art-icon' and '.desktop-art-spin' together in
+            // audio.onplay/onpause below, so no separate mirroring observer is needed.
 
                        // Desktop Sync Offset Shortcuts (Synchronized Lyrics Stage Header)
             const stageOffsetUp = document.getElementById('stage-offset-up');
@@ -274,7 +235,8 @@ document.addEventListener('click', (e) => {
             timeOffset: 0.0,
             eqPreset: 'flat',
             eqBands: [0, 0, 0, 0, 0],
-            playbackMode: 'off',
+            repeatMode: 'off',
+            shuffleEnabled: false,
             volume: 1.0,
             muted: false,
             playbackRate: 1.0
@@ -286,7 +248,18 @@ document.addEventListener('click', (e) => {
         function loadSavedSettings() {
             try {
                 const saved = localStorage.getItem(STORAGE_KEY);
-                return saved ? { ...DEFAULT_SETTINGS, ...JSON.parse(saved) } : { ...DEFAULT_SETTINGS };
+                const parsed = saved ? JSON.parse(saved) : {};
+
+                // Migrate the old combined playbackMode ('off'/'one'/'shuffle') into the
+                // current independent repeatMode + shuffleEnabled fields, so prefs saved
+                // before Shuffle and Repeat became separate toggles still carry over.
+                if (parsed && parsed.playbackMode !== undefined && parsed.repeatMode === undefined) {
+                    parsed.repeatMode = parsed.playbackMode === 'one' ? 'one' : 'off';
+                    parsed.shuffleEnabled = parsed.playbackMode === 'shuffle';
+                    delete parsed.playbackMode;
+                }
+
+                return { ...DEFAULT_SETTINGS, ...parsed };
             } catch (e) {
                 console.error('LocalStorage Read Error:', e);
                 return { ...DEFAULT_SETTINGS };
@@ -546,7 +519,9 @@ document.addEventListener('click', (e) => {
         }
 
         // --- PLAYBACK MODE TOGGLE ENGINE ---
-        function updateLoopModeUI() {
+        // Repeat (Off -> All -> One -> Off) and Shuffle (independent on/off) are two
+        // separate controls so they can be combined freely, e.g. Shuffle + Repeat All.
+        function updateRepeatModeUI() {
     const btn = document.getElementById('btn-loop-mode');
     const icon = document.getElementById('loop-mode-icon');
     const text = document.getElementById('loop-mode-text');
@@ -562,51 +537,84 @@ document.addEventListener('click', (e) => {
     badge.classList.add('hidden');
     badge.classList.remove('flex');
 
-    if (userSettings.playbackMode === 'one') {
+    icon.className = 'fa-solid fa-repeat text-xs';
+    if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
+
+    if (userSettings.repeatMode === 'one') {
         btn.classList.add('active-mode');
         if (btnDt) btnDt.classList.add('active-mode');
-        icon.className = 'fa-solid fa-repeat text-xs';
-        text.innerText = 'Repeat';
-        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
-        if (textDt) textDt.innerText = 'Repeat';
+        text.innerText = 'One';
+        if (textDt) textDt.innerText = 'One';
         badge.classList.remove('hidden');
         badge.classList.add('flex');
-    } else if (userSettings.playbackMode === 'shuffle') {
+    } else if (userSettings.repeatMode === 'all') {
         btn.classList.add('active-mode');
         if (btnDt) btnDt.classList.add('active-mode');
-        icon.className = 'fa-solid fa-shuffle text-xs';
-        text.innerText = 'Shuffle';
-        if (iconDt) iconDt.className = 'fa-solid fa-shuffle text-sm';
-        if (textDt) textDt.innerText = 'Shuffle';
+        text.innerText = 'All';
+        if (textDt) textDt.innerText = 'All';
     } else {
-        icon.className = 'fa-solid fa-repeat text-xs';
         text.innerText = 'Off';
-        if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
         if (textDt) textDt.innerText = 'Off';
     }
 }
 
-const toggleLoopMode = () => {
-    if (userSettings.playbackMode === 'off') {
-        userSettings.playbackMode = 'one';
-    } else if (userSettings.playbackMode === 'one') {
-        userSettings.playbackMode = 'shuffle';
+function updateShuffleUI() {
+    const btn = document.getElementById('btn-shuffle-mode');
+    const btnDt = document.getElementById('btn-shuffle-mode-dt');
+
+    [btn, btnDt].forEach(el => {
+        if (!el) return;
+        el.classList.toggle('active-mode', userSettings.shuffleEnabled);
+    });
+}
+
+const toggleRepeatMode = () => {
+    if (userSettings.repeatMode === 'off') {
+        userSettings.repeatMode = 'all';
+    } else if (userSettings.repeatMode === 'all') {
+        userSettings.repeatMode = 'one';
     } else {
-        userSettings.playbackMode = 'off';
+        userSettings.repeatMode = 'off';
     }
     saveSettings();
-    updateLoopModeUI();
+    updateRepeatModeUI();
+};
+
+const toggleShuffle = () => {
+    userSettings.shuffleEnabled = !userSettings.shuffleEnabled;
+    saveSettings();
+    updateShuffleUI();
 };
 
 const btnLoopMob = document.getElementById('btn-loop-mode');
 const btnLoopDt = document.getElementById('btn-loop-mode-dt');
-if (btnLoopMob) btnLoopMob.onclick = toggleLoopMode;
-if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
+if (btnLoopMob) btnLoopMob.onclick = toggleRepeatMode;
+if (btnLoopDt) btnLoopDt.onclick = toggleRepeatMode;
+
+const btnShuffleMob = document.getElementById('btn-shuffle-mode');
+if (btnShuffleMob) btnShuffleMob.onclick = toggleShuffle;
+// btn-shuffle-mode-dt forwards its click to btn-shuffle-mode via the inline
+// onclick set in the markup, so it doesn't need its own handler here.
+
+// Picks a random track from the playlist, avoiding an immediate repeat of the
+// currently playing track (when more than one track is available). Shared by
+// auto-advance-on-end and the manual Next/Previous buttons so shuffle behaves
+// identically no matter how the track change was triggered.
+function pickShuffleTrack(playlist, excludeId) {
+    if (!playlist.length) return null;
+    if (playlist.length === 1) return playlist[0];
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * playlist.length);
+    } while (playlist[randomIndex].id === excludeId);
+    return playlist[randomIndex];
+}
 
 
         // --- AUTO PLAY NEXT SONG & ENDED EVENT ---
         audio.onended = () => {
-            if (userSettings.playbackMode === 'one') {
+            // Repeat One always wins: replay the same track regardless of Shuffle.
+            if (userSettings.repeatMode === 'one') {
                 seekAudioTo(0);
                 triggerPlay();
                 return;
@@ -617,15 +625,15 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
 
             let nextTrack = null;
 
-            if (userSettings.playbackMode === 'shuffle') {
-                let randomIndex;
-                do {
-                    randomIndex = Math.floor(Math.random() * playlist.length);
-                } while (playlist.length > 1 && playlist[randomIndex].id === activeSongId);
-                nextTrack = playlist[randomIndex];
+            if (userSettings.shuffleEnabled) {
+                nextTrack = pickShuffleTrack(playlist, activeSongId);
             } else {
                 const currentIndex = playlist.findIndex(s => s.id === activeSongId);
                 if (currentIndex !== -1) {
+                    const isLastTrack = currentIndex === playlist.length - 1;
+                    // With Repeat off, stop after the last track instead of looping back
+                    // to the first; Repeat All wraps around and keeps playing.
+                    if (isLastTrack && userSettings.repeatMode !== 'all') return;
                     const nextIndex = (currentIndex + 1) % playlist.length;
                     nextTrack = playlist[nextIndex];
                 }
@@ -651,9 +659,8 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             }
 
             let prevTrack = null;
-            if (userSettings.playbackMode === 'shuffle') {
-                const randomIndex = Math.floor(Math.random() * playlist.length);
-                prevTrack = playlist[randomIndex];
+            if (userSettings.shuffleEnabled) {
+                prevTrack = pickShuffleTrack(playlist, activeSongId);
             } else {
                 const currentIndex = playlist.findIndex(s => s.id === activeSongId);
                 const prevIndex = (currentIndex - 1 + playlist.length) % playlist.length;
@@ -670,9 +677,8 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return;
 
             let nextTrack = null;
-            if (userSettings.playbackMode === 'shuffle') {
-                const randomIndex = Math.floor(Math.random() * playlist.length);
-                nextTrack = playlist[randomIndex];
+            if (userSettings.shuffleEnabled) {
+                nextTrack = pickShuffleTrack(playlist, activeSongId);
             } else {
                 const currentIndex = playlist.findIndex(s => s.id === activeSongId);
                 const nextIndex = (currentIndex + 1) % playlist.length;
@@ -731,7 +737,8 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
 
             updateOffsetUI();
-            updateLoopModeUI();
+            updateRepeatModeUI();
+            updateShuffleUI();
 
             document.querySelectorAll('.eq-preset-btn').forEach(btn => {
                 if (btn.dataset.preset === userSettings.eqPreset) btn.classList.add('active');
@@ -768,6 +775,12 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             const titleEl = document.getElementById('track-title');
             const artistEl = document.getElementById('track-artist');
 
+            // Desktop left-sidebar vinyl card mirrors the same title/artist — set
+            // directly here instead of via a MutationObserver watching titleEl, so the
+            // two stay in sync through one deterministic code path.
+            const dtTitleEl = document.getElementById('desktop-side-title');
+            const dtArtistEl = document.getElementById('desktop-side-artist');
+
             const dtSongInput = document.getElementById('dt-online-song-input');
             const dtArtistInput = document.getElementById('dt-online-artist-input');
             const modalSongInput = document.getElementById('online-song-input');
@@ -776,17 +789,23 @@ if (btnLoopDt) btnLoopDt.onclick = toggleLoopMode;
             let currentTitle = onlineTrackTitle || fileTrackTitle || '';
             let currentArtist = onlineArtistName || fileArtistName || '';
 
+            let displayTitle, displayArtist;
             if (onlineTrackTitle) {
-                titleEl.innerText = onlineTrackTitle;
-                artistEl.innerText = onlineArtistName || 'Online Synced Track';
+                displayTitle = onlineTrackTitle;
+                displayArtist = onlineArtistName || 'Online Synced Track';
             } else if (fileTrackTitle) {
-                titleEl.innerText = fileTrackTitle;
-                artistEl.innerText = fileArtistName || 'Local File Track';
+                displayTitle = fileTrackTitle;
+                displayArtist = fileArtistName || 'Local File Track';
             } else {
-                titleEl.innerText = 'No Track Loaded';
-                artistEl.innerText = 'Tap music library or studio buttons';
+                displayTitle = 'No Track Loaded';
+                displayArtist = 'Tap music library or studio buttons';
             }
-        
+
+            titleEl.innerText = displayTitle;
+            artistEl.innerText = displayArtist;
+            if (dtTitleEl) dtTitleEl.innerText = displayTitle;
+            if (dtArtistEl) dtArtistEl.innerText = displayArtist;
+
             if (currentTitle) {
                 if (dtSongInput) dtSongInput.value = currentTitle;
                 if (modalSongInput) modalSongInput.value = currentTitle;
@@ -1572,12 +1591,15 @@ else if (userSettings.visualizerMode === 'starburst') {
             }
 
             if (song.id === activeSongId) {
+                // Tapping the already-playing track to pause it should keep the library
+                // open (the user likely wants to browse for something else next); only
+                // starting playback closes the sheet, matching what tapping a new track does.
                 if (audio.paused) {
                     await triggerPlay();
+                    closeSheet(document.getElementById('library-sheet'));
                 } else {
                     audio.pause();
                 }
-                closeSheet(document.getElementById('library-sheet'));
                 return;
             }
 
@@ -1627,6 +1649,19 @@ else if (userSettings.visualizerMode === 'starburst') {
         const artistInput = document.getElementById('online-artist-input');
         const fetchOnlineBtn = document.getElementById('btn-fetch-online-lrc');
         const fetchStatus = document.getElementById('online-fetch-status');
+        // Desktop sidebar mirror of the status line above — updated directly alongside
+        // fetchStatus everywhere below instead of via a MutationObserver, so both stay
+        // in sync through one code path.
+        const dtFetchStatus = document.getElementById('dt-online-fetch-status');
+
+        function setFetchStatusUI(className, html) {
+            fetchStatus.className = className;
+            fetchStatus.innerHTML = html;
+            if (dtFetchStatus) {
+                dtFetchStatus.className = className + ' text-center';
+                dtFetchStatus.innerHTML = html;
+            }
+        }
 
         // applyToPlayer=false fetches/stages the LRC (fills the raw-lrc-input box and
         // remembers the matched title/artist for later) WITHOUT touching the live
@@ -1638,8 +1673,7 @@ else if (userSettings.visualizerMode === 'starburst') {
 
             if (!song) {
                 if (!silent) {
-                    fetchStatus.className = 'text-[10px] font-semibold text-red-400 block';
-                    fetchStatus.innerText = '✕ Please enter a song title to search online.';
+                    setFetchStatusUI('text-[10px] font-semibold text-red-400 block', '✕ Please enter a song title to search online.');
                 }
                 return;
             }
@@ -1648,8 +1682,10 @@ else if (userSettings.visualizerMode === 'starburst') {
             // (applyToPlayer) should change what the stage shows while it searches.
             if (applyToPlayer) setLyricsEmptyMessage('Finding lyrics...');
 
-            fetchStatus.className = 'text-[10px] font-semibold text-sky-400 block';
-            fetchStatus.innerHTML = `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${escapeHTML(song)}"...`;
+            setFetchStatusUI(
+                'text-[10px] font-semibold text-sky-400 block',
+                `<i class="fa-solid fa-spinner animate-spin mr-1"></i> Searching LRCLIB database for "${escapeHTML(song)}"...`
+            );
 
             try {
                 let url = `https://lrclib.net/api/search?track_name=${encodeURIComponent(song)}`;
@@ -1675,8 +1711,10 @@ else if (userSettings.visualizerMode === 'starburst') {
 
                         document.getElementById('lbl-lrc-name').innerText = "✓ Online Synced: " + match.trackName;
 
-                        fetchStatus.className = 'text-[10px] font-semibold text-emerald-400 block';
-                        fetchStatus.innerText = `✓ Synced LRC Loaded for "${match.trackName}"!`;
+                        setFetchStatusUI(
+                            'text-[10px] font-semibold text-emerald-400 block',
+                            `✓ Synced LRC Loaded for "${escapeHTML(match.trackName)}"!`
+                        );
 
                         if (applyToPlayer) {
                             parseLRC(lrcText);
@@ -1690,8 +1728,10 @@ else if (userSettings.visualizerMode === 'starburst') {
                     throw new Error("No lyrics found online for this track.");
                 }
             } catch (err) {
-                fetchStatus.className = 'text-[10px] font-semibold text-red-400 block';
-                fetchStatus.innerText = `✕ ${err.message || "Failed to fetch online lyrics."}`;
+                setFetchStatusUI(
+                    'text-[10px] font-semibold text-red-400 block',
+                    `✕ ${escapeHTML(err.message || "Failed to fetch online lyrics.")}`
+                );
                 if (applyToPlayer) setLyricsEmptyMessage('Lyrics not found');
             }
         }
@@ -1835,7 +1875,10 @@ window.addEventListener('beforeunload', saveLastTrackState);
                     playPreviousTrack();
                     break;
                 case 'KeyL':
-                    toggleLoopMode();
+                    toggleRepeatMode();
+                    break;
+                case 'KeyS':
+                    toggleShuffle();
                     break;
                 case 'Escape':
                     document.querySelectorAll('.sheet-overlay.open').forEach(closeSheet);
@@ -2149,7 +2192,8 @@ window.addEventListener('beforeunload', saveLastTrackState);
                 document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
                 btn.classList.add('selected');
 
-                updateLoopModeUI();
+                updateRepeatModeUI();
+                updateShuffleUI();
             };
         });
 
@@ -2226,9 +2270,6 @@ window.addEventListener('beforeunload', saveLastTrackState);
             
             const offsetInd = document.getElementById('offset-indicator');
             if (offsetInd) offsetInd.innerText = formatted;
-
-            const offsetIndDt = document.getElementById('offset-indicator-dt');
-            if (offsetIndDt) offsetIndDt.innerText = formatted;
 
             const stageOffsetLbl = document.getElementById('stage-offset-lbl');
             if (stageOffsetLbl) stageOffsetLbl.innerText = formatted;
@@ -2343,7 +2384,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
             };
         }
 
-        document.querySelectorAll('.close-sheet-btn:not(#btn-apply-done)').forEach(btn => {
+        document.querySelectorAll('.close-sheet-btn').forEach(btn => {
             btn.onclick = () => closeSheet(document.getElementById('studio-sheet'));
         });
 

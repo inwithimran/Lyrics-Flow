@@ -752,8 +752,8 @@ document.write(`
         </div>
 
         <div class="flex items-center gap-2.5 shrink-0 lg:justify-self-end">
-            <!-- Music Library Button -->
-            <button id="open-library-btn" class="px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold flex items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
+            <!-- Music Library Button (Desktop/Tablet header — moved to mobile footer control row below) -->
+            <button id="open-library-btn" class="hidden sm:flex px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
                 <i class="fa-solid fa-music text-sky-400"></i>
                 <span class="hidden sm:inline">Library</span>
             </button>
@@ -979,36 +979,37 @@ document.write(`
     <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-[1700px] mx-auto w-full">
     <div class="max-w-6xl mx-auto space-y-3">
         
-        <!-- Time Scrubber (with Waveform overlay) -->
-        <div class="space-y-0.5">
-            <div id="waveform-wrap" class="relative w-full" style="height: 28px;">
-                <canvas id="waveform-canvas" class="absolute inset-0 w-full h-full" style="pointer-events: none;"></canvas>
-                <input type="range" id="audio-scrubber" class="m3-slider absolute inset-0 w-full" style="top: 50%; transform: translateY(-50%); z-index: 10;" value="0" min="0" max="100" step="0.1">
-            </div>
-            <div class="flex justify-between text-[10px] md:text-xs font-mono font-bold text-slate-400 px-0.5">
-                <span id="curr-time">00:00</span>
-                <span id="dur-time">00:00</span>
-            </div>
+        <!-- MOBILE-ONLY ROW 1: Tool Buttons (Shuffle, Sync Offset) — Cardless Android-style -->
+        <div class="flex sm:hidden items-center justify-between px-1.5">
+            <button id="btn-shuffle-mode" class="ctrl-btn w-11 h-11" title="Shuffle" aria-label="Toggle shuffle">
+                <i class="fa-solid fa-shuffle text-sm" id="shuffle-mode-icon"></i>
+            </button>
+
+            <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn h-9 px-2.5 text-xs font-mono font-bold gap-1.5">
+                <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
+                <span id="offset-indicator" class="text-[11px] text-slate-300">0.0s</span>
+            </button>
         </div>
 
-        <!-- MOBILE-ONLY TOP ROW (Shuffle + Repeat Left, Sync Offset Right Above Next Track) -->
-        <div class="flex sm:hidden items-center justify-between px-1">
-            <div class="flex items-center gap-2">
-                <button id="btn-shuffle-mode" class="ctrl-btn w-9 h-9 bg-white/5 border border-white/10" title="Shuffle" aria-label="Toggle shuffle">
-                    <i class="fa-solid fa-shuffle text-xs" id="shuffle-mode-icon"></i>
-                </button>
+        <!-- MOBILE-ONLY ROW 2: Audio Seek (-5s / Scrubber / +5s). The scrubber itself
+             (waveform-wrap + audio-scrubber + time labels) is the single shared element
+             also used on desktop — on desktop the flanking -5s/+5s buttons stay hidden
+             since desktop already has its own -5s/+5s inside the control row below. -->
+        <div class="flex items-center gap-1">
+            <button id="btn-rewind-mob" class="flex sm:hidden ctrl-btn w-10 h-10 shrink-0 font-mono text-[10px] font-extrabold text-slate-400" onclick="document.getElementById('btn-rewind').click()" aria-label="Rewind 5 seconds">-5s</button>
 
-                <button id="btn-loop-mode" class="ctrl-btn px-3 py-1.5 text-xs font-semibold gap-1.5 relative bg-white/5 border border-white/10" title="Repeat">
-                    <i class="fa-solid fa-repeat text-xs" id="loop-mode-icon"></i>
-                    <span id="loop-mode-text" class="text-[10px] font-bold">Off</span>
-                    <span id="loop-mode-badge" class="hidden absolute -top-1 -right-1 w-3.5 h-3.5 bg-sky-400 text-slate-950 rounded-full text-[8px] font-extrabold items-center justify-center">1</span>
-                </button>
+            <div class="flex-1 min-w-0 space-y-0.5">
+                <div id="waveform-wrap" class="relative w-full" style="height: 28px;">
+                    <canvas id="waveform-canvas" class="absolute inset-0 w-full h-full" style="pointer-events: none;"></canvas>
+                    <input type="range" id="audio-scrubber" class="m3-slider absolute inset-0 w-full" style="top: 50%; transform: translateY(-50%); z-index: 10;" value="0" min="0" max="100" step="0.1">
+                </div>
+                <div class="flex justify-between text-[10px] md:text-xs font-mono font-bold text-slate-500 px-0.5 tabular-nums">
+                    <span id="curr-time">00:00</span>
+                    <span id="dur-time">00:00</span>
+                </div>
             </div>
 
-            <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn px-3 py-1.5 text-xs font-mono font-bold gap-1.5 bg-white/5 border border-white/10 active:scale-95">
-                <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
-                <span id="offset-indicator" class="text-[11px]">0.0s</span>
-            </button>
+            <button id="btn-forward-mob" class="flex sm:hidden ctrl-btn w-10 h-10 shrink-0 font-mono text-[10px] font-extrabold text-slate-400" onclick="document.getElementById('btn-forward').click()" aria-label="Forward 5 seconds">+5s</button>
         </div>
 
                                 <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid) -->
@@ -1070,22 +1071,33 @@ document.write(`
         </div>
 
 
-        <!-- MOBILE PLAYBACK CONTROLS -->
-        <div class="flex sm:hidden items-center justify-between px-2 pt-1">
-            <button id="btn-prev-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-prev-track').click()" aria-label="Previous track">
-                <i class="fa-solid fa-backward-step text-base"></i>
+        <!-- MOBILE-ONLY ROW 3: Repeat, Prev, Play/Pause, Next, Library — cardless, native
+             Android-player style transport bar: icon-only toggles, a large elevated
+             play/pause FAB as the visual anchor, and generous touch targets. -->
+        <div class="flex sm:hidden items-center justify-between px-1 pt-1.5">
+            <button id="btn-loop-mode" class="ctrl-btn w-11 h-11 relative shrink-0" title="Repeat">
+                <i class="fa-solid fa-repeat text-base" id="loop-mode-icon"></i>
+                <span id="loop-mode-text" class="sr-only">Off</span>
+                <span id="loop-mode-badge" class="hidden absolute top-1.5 right-2 w-3 h-3 bg-sky-400 text-slate-950 rounded-full text-[7px] font-extrabold items-center justify-center">1</span>
             </button>
-            <button id="btn-rewind-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-rewind').click()">-5s</button>
-            
-            <button id="btn-play-pause-mob" class="w-14 h-14 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-lg active:scale-90" onclick="document.getElementById('btn-play-pause').click()" aria-label="Play or pause">
-    <i class="fa-solid fa-play text-lg ml-0.5 play-icon-target"></i>
-    <i class="fa-solid fa-pause text-lg hidden pause-icon-target"></i>
-</button>
 
+            <div class="flex items-center gap-1">
+                <button id="btn-prev-track-mob" class="ctrl-btn w-12 h-12 text-slate-100" onclick="document.getElementById('btn-prev-track').click()" aria-label="Previous track">
+                    <i class="fa-solid fa-backward-step text-xl"></i>
+                </button>
 
-            <button id="btn-forward-mob" class="ctrl-btn w-11 h-11 font-mono text-xs font-extrabold text-slate-300" onclick="document.getElementById('btn-forward').click()">+5s</button>
-            <button id="btn-next-track-mob" class="ctrl-btn w-11 h-11 text-slate-200" onclick="document.getElementById('btn-next-track').click()" aria-label="Next track">
-                <i class="fa-solid fa-forward-step text-base"></i>
+                <button id="btn-play-pause-mob" class="w-16 h-16 mx-1 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform" onclick="document.getElementById('btn-play-pause').click()" aria-label="Play or pause">
+                    <i class="fa-solid fa-play text-2xl ml-1 play-icon-target"></i>
+                    <i class="fa-solid fa-pause text-2xl hidden pause-icon-target"></i>
+                </button>
+
+                <button id="btn-next-track-mob" class="ctrl-btn w-12 h-12 text-slate-100" onclick="document.getElementById('btn-next-track').click()" aria-label="Next track">
+                    <i class="fa-solid fa-forward-step text-xl"></i>
+                </button>
+            </div>
+
+            <button id="open-library-btn-mob" class="ctrl-btn w-11 h-11 shrink-0" onclick="document.getElementById('open-library-btn').click()" title="Music Library" aria-label="Open music library">
+                <i class="fa-solid fa-music text-sky-400 text-base"></i>
             </button>
         </div>
 

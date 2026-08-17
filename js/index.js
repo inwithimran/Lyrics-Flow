@@ -40,6 +40,7 @@ document.write(`
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,500,1,0" rel="stylesheet">
 
     <style>
         :root {
@@ -527,14 +528,27 @@ document.write(`
         /* Control Bar Buttons Styling */
         .ctrl-btn {
             color: #94A3B8;
-            transition: all 0.2s ease;
+            transition: color 0.12s ease, background 0.12s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             border-radius: 18px;
         }
 
-        .ctrl-btn:hover {
+        /* Real :hover is only wired up on devices that actually support hover
+           (mouse/trackpad). On touch devices, :hover would otherwise "stick"
+           after a tap until the user taps elsewhere — the .tap-active class
+           below (JS-driven) replaces it with an instant Android-style ripple
+           flash that ends the moment the touch ends. */
+        @media (hover: hover) and (pointer: fine) {
+            .ctrl-btn:hover {
+                color: #F8FAFC;
+                background: rgba(255, 255, 255, 0.08);
+            }
+        }
+
+        .ctrl-btn:active,
+        .ctrl-btn.tap-active {
             color: #F8FAFC;
             background: rgba(255, 255, 255, 0.08);
         }
@@ -547,6 +561,33 @@ document.write(`
             color: var(--m3-primary);
             background: rgba(var(--m3-primary-rgb), 0.12);
             border: 1px solid rgba(var(--m3-primary-rgb), 0.25);
+        }
+
+        /* Material Symbols icon base (used for the mobile 5s seek icons) */
+        .material-symbols-outlined {
+            font-family: 'Material Symbols Outlined';
+            font-weight: normal;
+            font-style: normal;
+            line-height: 1;
+            letter-spacing: normal;
+            text-transform: none;
+            display: inline-block;
+            white-space: nowrap;
+            word-wrap: normal;
+            direction: ltr;
+            -webkit-font-feature-settings: 'liga';
+            -webkit-font-smoothing: antialiased;
+            font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+        }
+
+        /* Mobile 5s seek buttons: tight padding so the icon reads bigger while
+           the tap target itself takes up less room. */
+        .seek-btn-mob {
+            padding: 0;
+        }
+
+        .seek-icon {
+            font-size: 30px;
         }
 
         /* Profile Avatar */
@@ -661,7 +702,7 @@ document.write(`
         ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.18); border-radius: 4px; }
         ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.35); }
 
-        /* ✅ Quick Access হাইলাইট ইফেক্ট: থিম অ্যাকসেন্ট কালার অনুযায়ী কয়েক সেকেন্ডের glow/pulse */
+        /*  Quick Access */
         .quick-access-highlight {
             position: relative;
             border-radius: 1rem;
@@ -979,24 +1020,38 @@ document.write(`
     <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-[1700px] mx-auto w-full">
     <div class="max-w-6xl mx-auto space-y-3">
         
-        <!-- MOBILE-ONLY ROW 1: Tool Buttons (Shuffle, Sync Offset) — Cardless Android-style -->
+        <!-- MOBILE-ONLY ROW 1 -->
         <div class="flex sm:hidden items-center justify-between px-1.5">
-            <button id="btn-shuffle-mode" class="ctrl-btn w-11 h-11" title="Shuffle" aria-label="Toggle shuffle">
-                <i class="fa-solid fa-shuffle text-sm" id="shuffle-mode-icon"></i>
+            <button id="btn-visualizer-mob" data-studio-tab="tab-prefs" data-scroll-to="visualizer-section" class="ctrl-btn w-8 h-8" title="Visualizer" aria-label="Visualizer settings">
+                <i class="fa-solid fa-wave-square text-base text-white" id="visualizer-mob-icon"></i>
             </button>
 
-            <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn h-9 px-2.5 text-xs font-mono font-bold gap-1.5">
-                <i class="fa-solid fa-clock-rotate-left text-xs text-m3-primary"></i>
+            <button id="btn-speed-modal-mob" data-studio-tab="tab-dsp" data-scroll-to="speed-settings-container" class="ctrl-btn h-8 px-2.5 text-base font-mono font-bold gap-1.5" onclick="document.getElementById('btn-speed-modal-dt').click()" title="Playback Speed" aria-label="Playback speed">
+                <span id="speed-indicator-mob" class="text-[11px] text-slate-300">1.0x</span>
+            </button>
+            
+            <button data-studio-tab="tab-prefs" data-scroll-to="sleep-timer-section" class="ctrl-btn w-8 h-8" title="Sleep Timer" aria-label="Sleep Mode Timer">
+                <i class="fa-solid fa-clock text-base text-white"></i>
+            </button>
+            
+            <button data-studio-tab="tab-prefs" data-scroll-to="theme-section" class="ctrl-btn w-8 h-8" title="Theme" aria-label="Theme Settings">
+                <i class="fa-solid fa-palette text-base text-white"></i>
+            </button>
+            
+          <!--  <button id="btn-mute-mob" class="ctrl-btn w-8 h-8" onclick="document.getElementById('btn-mute').click()" title="Mute" aria-label="Mute or unmute">
+                <i class="fa-solid fa-volume-high text-base text-white" id="vol-icon-mob"></i>
+            </button> -->
+
+            <button id="btn-offset-modal" data-studio-tab="tab-prefs" data-scroll-to="offset-settings-container" class="ctrl-btn h-8 px-2.5 text-base font-mono font-bold gap-1.5">
                 <span id="offset-indicator" class="text-[11px] text-slate-300">0.0s</span>
             </button>
         </div>
 
-        <!-- MOBILE-ONLY ROW 2: Audio Seek (-5s / Scrubber / +5s). The scrubber itself
-             (waveform-wrap + audio-scrubber + time labels) is the single shared element
-             also used on desktop — on desktop the flanking -5s/+5s buttons stay hidden
-             since desktop already has its own -5s/+5s inside the control row below. -->
-        <div class="flex items-center gap-1">
-            <button id="btn-rewind-mob" class="flex sm:hidden ctrl-btn w-10 h-10 shrink-0 font-mono text-[10px] font-extrabold text-slate-400" onclick="document.getElementById('btn-rewind').click()" aria-label="Rewind 5 seconds">-5s</button>
+        <!-- MOBILE-ONLY ROW 2 -->
+        <div class="flex items-center gap-3">
+            <button id="btn-rewind-mob" class="flex sm:hidden ctrl-btn seek-btn-mob w-9 h-9 shrink-0 text-white" onclick="document.getElementById('btn-rewind').click()" aria-label="Rewind 5 seconds">
+                <span class="material-symbols-outlined seek-icon">replay_5</span>
+            </button>
 
             <div class="flex-1 min-w-0 space-y-0.5">
                 <div id="waveform-wrap" class="relative w-full" style="height: 28px;">
@@ -1009,7 +1064,9 @@ document.write(`
                 </div>
             </div>
 
-            <button id="btn-forward-mob" class="flex sm:hidden ctrl-btn w-10 h-10 shrink-0 font-mono text-[10px] font-extrabold text-slate-400" onclick="document.getElementById('btn-forward').click()" aria-label="Forward 5 seconds">+5s</button>
+            <button id="btn-forward-mob" class="flex sm:hidden ctrl-btn seek-btn-mob w-9 h-9 shrink-0 text-white" onclick="document.getElementById('btn-forward').click()" aria-label="Forward 5 seconds">
+                <span class="material-symbols-outlined seek-icon">forward_5</span>
+            </button>
         </div>
 
                                 <!-- DESKTOP ONE-LINE ROW CONTROLS (Strictly Centered Grid) -->
@@ -1017,7 +1074,7 @@ document.write(`
             
             <!-- 1. Left Corner: Shuffle + Repeat Buttons (independent toggles) -->
             <div class="flex items-center justify-start gap-2">
-                <button id="btn-shuffle-mode-dt" class="ctrl-btn w-10 h-9 bg-white/5 border border-white/10 hover:bg-white/10 shrink-0" title="Shuffle" aria-label="Toggle shuffle" onclick="document.getElementById('btn-shuffle-mode').click()">
+                <button id="btn-shuffle-mode-dt" class="ctrl-btn w-10 h-9 bg-white/5 border border-white/10 hover:bg-white/10 shrink-0" title="Shuffle" aria-label="Toggle shuffle" onclick="window.toggleShuffle && window.toggleShuffle()">
                     <i class="fa-solid fa-shuffle text-sm" id="shuffle-mode-icon-dt"></i>
                 </button>
 
@@ -1071,11 +1128,9 @@ document.write(`
         </div>
 
 
-        <!-- MOBILE-ONLY ROW 3: Repeat, Prev, Play/Pause, Next, Library — cardless, native
-             Android-player style transport bar: icon-only toggles, a large elevated
-             play/pause FAB as the visual anchor, and generous touch targets. -->
+        <!-- MOBILE-ONLY ROW 3 -->
         <div class="flex sm:hidden items-center justify-between px-1 pt-1.5">
-            <button id="btn-loop-mode" class="ctrl-btn w-11 h-11 relative shrink-0" title="Repeat">
+            <button id="btn-loop-mode" class="ctrl-btn w-8 h-8 relative shrink-0" title="Repeat / Shuffle" aria-label="Cycle repeat and shuffle mode">
                 <i class="fa-solid fa-repeat text-base" id="loop-mode-icon"></i>
                 <span id="loop-mode-text" class="sr-only">Off</span>
                 <span id="loop-mode-badge" class="hidden absolute top-1.5 right-2 w-3 h-3 bg-sky-400 text-slate-950 rounded-full text-[7px] font-extrabold items-center justify-center">1</span>
@@ -1086,7 +1141,7 @@ document.write(`
                     <i class="fa-solid fa-backward-step text-xl"></i>
                 </button>
 
-                <button id="btn-play-pause-mob" class="w-16 h-16 mx-1 rounded-full bg-m3-primary text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform" onclick="document.getElementById('btn-play-pause').click()" aria-label="Play or pause">
+                <button id="btn-play-pause-mob" class="w-16 h-16 mx-1 rounded-full bg-white text-slate-950 flex items-center justify-center shadow-xl shadow-sky-500/25 active:scale-90 transition-transform" onclick="document.getElementById('btn-play-pause').click()" aria-label="Play or pause">
                     <i class="fa-solid fa-play text-2xl ml-1 play-icon-target"></i>
                     <i class="fa-solid fa-pause text-2xl hidden pause-icon-target"></i>
                 </button>
@@ -1096,8 +1151,8 @@ document.write(`
                 </button>
             </div>
 
-            <button id="open-library-btn-mob" class="ctrl-btn w-11 h-11 shrink-0" onclick="document.getElementById('open-library-btn').click()" title="Music Library" aria-label="Open music library">
-                <i class="fa-solid fa-music text-sky-400 text-base"></i>
+            <button id="open-library-btn-mob" class="ctrl-btn w-8 h-8 shrink-0" onclick="document.getElementById('open-library-btn').click()" title="Music Library" aria-label="Open music library">
+                <i class="fa-solid fa-music text-white text-base"></i>
             </button>
         </div>
 
@@ -1666,6 +1721,63 @@ document.write(`
             };
 
             requestAnimationFrame(updateProgress);
+        });
+    </script>
+
+    <!-- Android-style Tap Feedback for Audio Control Buttons.
+         Real CSS :hover is scoped (see .ctrl-btn @media hover:hover rule above)
+         to devices that support a genuine mouse hover, so it never "sticks" on
+         touch. On touch/click, this instantly flashes the same visual state and
+         removes it right away — a quick tap-flash rather than a lingering hover. -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const FLASH_MS = 140;
+
+            document.querySelectorAll('.ctrl-btn').forEach((btn) => {
+                let flashTimeout = null;
+
+                const startFlash = () => {
+                    btn.classList.add('tap-active');
+                };
+
+                const endFlash = () => {
+                    clearTimeout(flashTimeout);
+                    flashTimeout = setTimeout(() => {
+                        btn.classList.remove('tap-active');
+                    }, FLASH_MS);
+                };
+
+                btn.addEventListener('pointerdown', startFlash);
+                btn.addEventListener('pointerup', endFlash);
+                btn.addEventListener('pointercancel', endFlash);
+                btn.addEventListener('pointerleave', endFlash);
+            });
+
+            // Keep the new mobile quick-access Speed / Mute icons visually in
+            // sync with their real (desktop) counterparts, since they act as
+            // proxies that forward taps via .click().
+            const speedSrc = document.getElementById('speed-indicator-dt');
+            const speedDst = document.getElementById('speed-indicator-mob');
+            if (speedSrc && speedDst) {
+                speedDst.textContent = speedSrc.textContent;
+                new MutationObserver(() => {
+                    speedDst.textContent = speedSrc.textContent;
+                }).observe(speedSrc, { characterData: true, childList: true, subtree: true });
+            }
+
+            const volSrc = document.getElementById('vol-icon');
+            const volDst = document.getElementById('vol-icon-mob');
+            if (volSrc && volDst) {
+                const syncVolIcon = () => {
+                    const faClass = Array.from(volSrc.classList).find((c) => c.startsWith('fa-volume'));
+                    volDst.classList.forEach((c) => {
+                        if (c.startsWith('fa-volume')) volDst.classList.remove(c);
+                    });
+                    if (faClass) volDst.classList.add(faClass);
+                };
+                syncVolIcon();
+                new MutationObserver(syncVolIcon).observe(volSrc, { attributes: true, attributeFilter: ['class'] });
+            }
         });
     </script>
 

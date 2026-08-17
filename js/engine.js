@@ -531,51 +531,31 @@ document.addEventListener('click', (e) => {
         // --- PLAYBACK MODE TOGGLE ENGINE ---
         // Repeat (Off -> All -> One -> Off) and Shuffle (independent on/off) are two
         // separate controls so they can be combined freely, e.g. Shuffle + Repeat All.
+        // Desktop repeat control (Off -> All -> One -> Off). Only touches the
+        // -dt suffixed elements; the mobile row-3 button is a separate combined
+        // Repeat/Shuffle control handled by updateMobileComboUI() below.
         function updateRepeatModeUI() {
-    const btn = document.getElementById('btn-loop-mode');
-    const icon = document.getElementById('loop-mode-icon');
-    const text = document.getElementById('loop-mode-text');
-    const badge = document.getElementById('loop-mode-badge');
-
     const btnDt = document.getElementById('btn-loop-mode-dt');
     const iconDt = document.getElementById('loop-mode-icon-dt');
     const textDt = document.getElementById('loop-mode-text-dt');
 
-    btn.classList.remove('active-mode');
     if (btnDt) btnDt.classList.remove('active-mode');
-
-    badge.classList.add('hidden');
-    badge.classList.remove('flex');
-
-    icon.className = 'fa-solid fa-repeat text-xs';
     if (iconDt) iconDt.className = 'fa-solid fa-repeat text-sm';
 
     if (userSettings.repeatMode === 'one') {
-        btn.classList.add('active-mode');
         if (btnDt) btnDt.classList.add('active-mode');
-        text.innerText = 'One';
         if (textDt) textDt.innerText = 'One';
-        badge.classList.remove('hidden');
-        badge.classList.add('flex');
     } else if (userSettings.repeatMode === 'all') {
-        btn.classList.add('active-mode');
         if (btnDt) btnDt.classList.add('active-mode');
-        text.innerText = 'All';
         if (textDt) textDt.innerText = 'All';
     } else {
-        text.innerText = 'Off';
         if (textDt) textDt.innerText = 'Off';
     }
 }
 
 function updateShuffleUI() {
-    const btn = document.getElementById('btn-shuffle-mode');
     const btnDt = document.getElementById('btn-shuffle-mode-dt');
-
-    [btn, btnDt].forEach(el => {
-        if (!el) return;
-        el.classList.toggle('active-mode', userSettings.shuffleEnabled);
-    });
+    if (btnDt) btnDt.classList.toggle('active-mode', userSettings.shuffleEnabled);
 }
 
 const toggleRepeatMode = () => {
@@ -595,16 +575,78 @@ const toggleShuffle = () => {
     saveSettings();
     updateShuffleUI();
 };
+window.toggleShuffle = toggleShuffle;
+
+// --- MOBILE COMBINED REPEAT/SHUFFLE CONTROL (row 3, bottom-left) ---
+// A single button that cycles Off -> Shuffle -> Repeat One -> Off, swapping
+// its icon each tap (repeat / shuffle / repeat-1), while still driving the
+// same underlying repeatMode + shuffleEnabled settings the desktop controls use.
+function getMobileComboState() {
+    if (userSettings.repeatMode === 'one') return 'one';
+    if (userSettings.shuffleEnabled) return 'shuffle';
+    return 'off';
+}
+
+function updateMobileComboUI() {
+    const btn = document.getElementById('btn-loop-mode');
+    if (!btn) return;
+    const icon = document.getElementById('loop-mode-icon');
+    const text = document.getElementById('loop-mode-text');
+    const badge = document.getElementById('loop-mode-badge');
+    const state = getMobileComboState();
+
+    btn.classList.remove('active-mode');
+    if (badge) {
+        badge.classList.add('hidden');
+        badge.classList.remove('flex');
+    }
+
+    if (state === 'one') {
+        if (icon) icon.className = 'fa-solid fa-repeat text-base';
+        btn.classList.add('active-mode');
+        if (badge) {
+            badge.classList.remove('hidden');
+            badge.classList.add('flex');
+        }
+        if (text) text.innerText = 'Repeat One';
+        btn.title = 'Repeat One';
+    } else if (state === 'shuffle') {
+        if (icon) icon.className = 'fa-solid fa-shuffle text-base';
+        btn.classList.add('active-mode');
+        if (text) text.innerText = 'Shuffle';
+        btn.title = 'Shuffle';
+    } else {
+        if (icon) icon.className = 'fa-solid fa-repeat text-base';
+        if (text) text.innerText = 'Off';
+        btn.title = 'Repeat / Shuffle';
+    }
+}
+
+const toggleMobileComboMode = () => {
+    const state = getMobileComboState();
+    if (state === 'off') {
+        userSettings.repeatMode = 'off';
+        userSettings.shuffleEnabled = true;
+    } else if (state === 'shuffle') {
+        userSettings.repeatMode = 'one';
+        userSettings.shuffleEnabled = false;
+    } else {
+        userSettings.repeatMode = 'off';
+        userSettings.shuffleEnabled = false;
+    }
+    saveSettings();
+    updateRepeatModeUI();
+    updateShuffleUI();
+    updateMobileComboUI();
+};
 
 const btnLoopMob = document.getElementById('btn-loop-mode');
 const btnLoopDt = document.getElementById('btn-loop-mode-dt');
-if (btnLoopMob) btnLoopMob.onclick = toggleRepeatMode;
+if (btnLoopMob) btnLoopMob.onclick = toggleMobileComboMode;
 if (btnLoopDt) btnLoopDt.onclick = toggleRepeatMode;
 
-const btnShuffleMob = document.getElementById('btn-shuffle-mode');
-if (btnShuffleMob) btnShuffleMob.onclick = toggleShuffle;
-// btn-shuffle-mode-dt forwards its click to btn-shuffle-mode via the inline
-// onclick set in the markup, so it doesn't need its own handler here.
+const btnShuffleDt = document.getElementById('btn-shuffle-mode-dt');
+if (btnShuffleDt) btnShuffleDt.onclick = toggleShuffle;
 
 // Picks a random track from the playlist, avoiding an immediate repeat of the
 // currently playing track (when more than one track is available). Shared by
@@ -761,6 +803,7 @@ function pickShuffleTrack(playlist, excludeId) {
             updateOffsetUI();
             updateRepeatModeUI();
             updateShuffleUI();
+            updateMobileComboUI();
 
             document.querySelectorAll('.eq-preset-btn').forEach(btn => {
                 if (btn.dataset.preset === userSettings.eqPreset) btn.classList.add('active');
@@ -2243,6 +2286,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
                 updateRepeatModeUI();
                 updateShuffleUI();
+                updateMobileComboUI();
             };
         });
 

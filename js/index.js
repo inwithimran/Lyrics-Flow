@@ -375,6 +375,21 @@ document.write(`
             background: var(--m3-primary);
         }
 
+        /* Waveform Scrubber — ওয়েভফর্ম ক্যানভাস দৃশ্যমান রাখতে রেঞ্জ-ইনপুটের নিজস্ব
+           ট্র্যাক/প্রোগ্রেস ব্যাকগ্রাউন্ড স্বচ্ছ করে দেওয়া হয়, শুধু থাম্বটুকু দেখা যায় */
+        #audio-scrubber.waveform-active {
+            background: transparent;
+        }
+        #audio-scrubber.waveform-active::-moz-range-track {
+            background: transparent;
+        }
+        #audio-scrubber.waveform-active::-moz-range-progress {
+            background: transparent;
+        }
+        #audio-scrubber.waveform-active::-webkit-slider-thumb {
+            box-shadow: 0 0 6px rgba(0, 0, 0, 0.5), 0 0 10px var(--m3-primary);
+        }
+
         /* Visualizer Canvases */
         #viz-canvas-bg {
             position: absolute;
@@ -768,7 +783,7 @@ document.write(`
     <div id="desktop-vinyl-disc" class="w-full h-full rounded-full desktop-art-spin relative overflow-hidden flex items-center justify-center">
         
         <!-- Song Dynamic Cover Image -->
-        <img id="desktop-cover-img" src="Data/covers/default-cover.jpg" alt="Song Cover" class="w-full h-full object-cover transition-opacity duration-300" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='Data/img/default-cover.jpg';}else{this.onerror=null;}">
+        <img id="desktop-cover-img" crossorigin="anonymous" src="Data/covers/default-cover.jpg" alt="Song Cover" class="w-full h-full object-cover transition-opacity duration-300" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='Data/img/default-cover.jpg';}else{this.onerror=null;}">
         
         <!-- Clean Disc Edge Vignette Overlay -->
 <div class="absolute inset-0 rounded-full pointer-events-none ring-1 ring-inset ring-white/15 shadow-[inset_0_0_20px_rgba(0,0,0,0.6)]"></div>
@@ -964,9 +979,12 @@ document.write(`
     <footer class="m3-footer-surface px-4 sm:px-6 pt-2.5 pb-3 max-w-[1700px] mx-auto w-full">
     <div class="max-w-6xl mx-auto space-y-3">
         
-        <!-- Time Scrubber -->
+        <!-- Time Scrubber (with Waveform overlay) -->
         <div class="space-y-0.5">
-            <input type="range" id="audio-scrubber" class="m3-slider" value="0" min="0" max="100" step="0.1">
+            <div id="waveform-wrap" class="relative w-full" style="height: 28px;">
+                <canvas id="waveform-canvas" class="absolute inset-0 w-full h-full" style="pointer-events: none;"></canvas>
+                <input type="range" id="audio-scrubber" class="m3-slider absolute inset-0 w-full" style="top: 50%; transform: translateY(-50%); z-index: 10;" value="0" min="0" max="100" step="0.1">
+            </div>
             <div class="flex justify-between text-[10px] md:text-xs font-mono font-bold text-slate-400 px-0.5">
                 <span id="curr-time">00:00</span>
                 <span id="dur-time">00:00</span>
@@ -1316,6 +1334,26 @@ document.write(`
                         </label>
                     </div>
 
+                    <!-- 1B. CROSSFADE / GAPLESS PLAYBACK -->
+                    <div class="py-3 border-t border-white/10 space-y-3">
+                        <div class="m3-list-row" style="border-bottom: none; padding: 0;">
+                            <div class="min-w-0 flex-1">
+                                <span class="text-xs font-bold text-slate-200 block">Crossfade / Gapless Playback</span>
+                                <p class="text-[10px] text-slate-400">Smoothly blend into the next track instead of a hard cut</p>
+                            </div>
+                            <label class="relative inline-flex items-center cursor-pointer shrink-0">
+                                <input type="checkbox" id="crossfade-toggle" class="sr-only peer">
+                                <div class="w-11 h-6 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-sky-500"></div>
+                            </label>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <i class="fa-solid fa-shuffle text-[10px] text-slate-500 rotate-90"></i>
+                            <input type="range" id="crossfade-duration-slider" class="m3-slider flex-1" min="0.5" max="10" step="0.5" value="4">
+                            <span id="crossfade-duration-lbl" class="text-[10px] font-mono font-bold text-slate-300 w-9 text-right shrink-0">4.0s</span>
+                        </div>
+                        <p class="text-[10px] text-slate-500">Lower values (~1s) feel gapless; higher values give a longer DJ-style blend.</p>
+                    </div>
+
                     <!-- 2. SLEEP TIMER SECTION -->
                     <div id="sleep-timer-section" class="py-3 border-y border-white/10 space-y-3">
                         <div class="flex justify-between items-center">
@@ -1359,7 +1397,11 @@ document.write(`
                     <!-- Material Theme Palette Picker -->
                     <div id="theme-section" class="space-y-2" style="border-top: 1px solid rgba(255, 255, 255, 0.1); border-bottom: 1px solid rgba(255, 255, 255, 0.06); padding-top: 16px; padding-bottom: 12px;">
                         <span class="text-xs font-bold text-slate-200 block">Material Theme Accent</span>
+                        <p class="text-[10px] text-slate-500 -mt-1">Tap the magic-wand chip to auto-match the theme to each song's cover art.</p>
                         <div class="flex items-center gap-2 overflow-x-auto pt-2 pb-2 pl-2 pr-2" id="theme-picker" style="flex-wrap: nowrap;">
+                            <button id="theme-swatch-auto" class="theme-swatch w-8 h-8 rounded-xl active:scale-90 transition-transform shrink-0 flex items-center justify-center" style="background: conic-gradient(from 180deg, #38BDF8, #A855F7, #F97316, #34D399, #F43F5E, #38BDF8);" data-name="ADAPTIVE COVER" aria-label="Adaptive cover color theme" title="Auto theme from cover art">
+                                <i class="fa-solid fa-wand-magic-sparkles text-[10px] text-white" style="filter: drop-shadow(0 0 2px rgba(0,0,0,0.7));"></i>
+                            </button>
                             <button class="theme-swatch w-8 h-8 rounded-xl bg-cyan-400 active:scale-90 transition-transform shrink-0" data-color="#38BDF8" data-rgb="56, 189, 248" data-name="CYBER CYAN" aria-label="Cyber Cyan theme"></button>
                             <button class="theme-swatch w-8 h-8 rounded-xl bg-purple-500 active:scale-90 transition-transform shrink-0" data-color="#A855F7" data-rgb="168, 85, 247" data-name="PLASMA PURPLE" aria-label="Plasma Purple theme"></button>
                             <button class="theme-swatch w-8 h-8 rounded-xl bg-orange-500 active:scale-90 transition-transform shrink-0" data-color="#F97316" data-rgb="249, 115, 22" data-name="SUNSET AMBER" aria-label="Sunset Amber theme"></button>
@@ -1568,6 +1610,8 @@ document.write(`
     </div>
 
     <audio id="audio-player" crossorigin="anonymous"></audio>
+    <!-- Crossfade / Gapless Playback বাফার — শুধু ট্র্যাক পরিবর্তনের সময় মসৃণ ট্রানজিশনের জন্য ব্যবহৃত, ব্যবহারকারীর কাছে অদৃশ্য -->
+    <audio id="audio-player-crossfade" crossorigin="anonymous" preload="auto"></audio>
 
     <script src="Data/musicData.js"></script>
 

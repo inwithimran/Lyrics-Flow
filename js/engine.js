@@ -239,7 +239,10 @@ document.addEventListener('click', (e) => {
             shuffleEnabled: false,
             volume: 1.0,
             muted: false,
-            playbackRate: 1.0
+            playbackRate: 1.0,
+            crossfadeEnabled: false,
+            crossfadeDuration: 4,
+            autoThemeFromCover: false
         };
 
         // LOCALSTORAGE PERSISTENCE ENGINE
@@ -313,6 +316,12 @@ document.addEventListener('click', (e) => {
         const durTimeLbl = document.getElementById('dur-time');
         const resumeSyncBtn = document.getElementById('resume-sync-btn');
         const trackArtIcon = document.getElementById('track-art-icon');
+        // --- Crossfade Buffer Element (secondary <audio> used only for smooth track transitions) ---
+        const crossfadeAudio = document.getElementById('audio-player-crossfade');
+        let crossfadeTriggered = false;
+        // --- Waveform Scrubber Canvas ---
+        const waveformCanvas = document.getElementById('waveform-canvas');
+        const waveformCtx = waveformCanvas ? waveformCanvas.getContext('2d') : null;
 
         let onlineTrackTitle = '';
         let onlineArtistName = '';
@@ -449,6 +458,7 @@ document.addEventListener('click', (e) => {
                 if (!isScrubbing && audio.duration && !isNaN(audio.duration)) {
                     scrubber.value = (audio.currentTime / audio.duration) * 100;
                 }
+                updateMediaSessionPosition();
             };
 
             try {
@@ -613,6 +623,9 @@ function pickShuffleTrack(playlist, excludeId) {
 
         // --- AUTO PLAY NEXT SONG & ENDED EVENT ---
         audio.onended = () => {
+            // ক্রসফেড ইতিমধ্যে পরের ট্র্যাকে সুইচ করে দিয়ে থাকলে এই ডিফল্ট অ্যাডভান্স লজিক
+            // আর চালানো উচিত নয় (নাহলে একটার পর একটা দুইবার ট্র্যাক স্কিপ হয়ে যাবে)
+            if (crossfadeTriggered) return;
             // Repeat One always wins: replay the same track regardless of Shuffle.
             if (userSettings.repeatMode === 'one') {
                 seekAudioTo(0);
@@ -729,9 +742,18 @@ function pickShuffleTrack(playlist, excludeId) {
             updateBarVizVisibility();
 
             document.querySelectorAll('#theme-picker .theme-swatch').forEach(btn => {
-                if (btn.dataset.color === userSettings.themeColor) btn.classList.add('selected');
-                else btn.classList.remove('selected');
+                const isAutoChip = btn.id === 'theme-swatch-auto';
+                const shouldSelect = userSettings.autoThemeFromCover ? isAutoChip : (!isAutoChip && btn.dataset.color === userSettings.themeColor);
+                btn.classList.toggle('selected', shouldSelect);
             });
+
+            // Crossfade / Gapless Playback প্রেফারেন্স UI সিঙ্ক
+            const crossfadeToggleEl = document.getElementById('crossfade-toggle');
+            const crossfadeDurationSliderEl = document.getElementById('crossfade-duration-slider');
+            const crossfadeDurationLblEl = document.getElementById('crossfade-duration-lbl');
+            if (crossfadeToggleEl) crossfadeToggleEl.checked = !!userSettings.crossfadeEnabled;
+            if (crossfadeDurationSliderEl) crossfadeDurationSliderEl.value = userSettings.crossfadeDuration;
+            if (crossfadeDurationLblEl) crossfadeDurationLblEl.innerText = parseFloat(userSettings.crossfadeDuration).toFixed(1) + 's';
 
             document.documentElement.style.setProperty('--font-scale', userSettings.fontScale);
             document.getElementById('font-scale-lbl').innerText = parseFloat(userSettings.fontScale).toFixed(2) + 'x';
@@ -812,6 +834,8 @@ function pickShuffleTrack(playlist, excludeId) {
                 if (dtArtistInput) dtArtistInput.value = currentArtist;
                 if (modalArtistInput) modalArtistInput.value = currentArtist;
             }
+
+            updateMediaSessionMetadata(displayTitle, displayArtist);
         }
 
         // --- CANVAS INIT & DRAW LOOP ---
@@ -1293,6 +1317,7 @@ else if (userSettings.visualizerMode === 'starburst') {
         }
 
         // Realtime 60FPS Lyric Sync Loop
+        let __mediaSessionPosThrottle = 0;
         function syncLoop() {
             if (!audio.paused && !audio.ended) {
                 const cur = audio.currentTime;
@@ -1312,7 +1337,18 @@ else if (userSettings.visualizerMode === 'starburst') {
                     activeIndex = idx;
                     updateScroll(idx);
                 }
+
+                // লক-স্ক্রিন/নোটিফিকেশনের সিক-বার পজিশন প্রতি ~1 সেকেন্ডে একবার আপডেট
+                __mediaSessionPosThrottle++;
+                if (__mediaSessionPosThrottle >= 30) {
+                    __mediaSessionPosThrottle = 0;
+                    updateMediaSessionPosition();
+                }
+
+                // ক্রসফেড / গ্যাপলেস প্লেব্যাক: ট্র্যাক শেষ হওয়ার কাছাকাছি এলে ট্রিগার চেক করা
+                maybeStartCrossfade();
             }
+            drawWaveform();
             requestAnimationFrame(syncLoop);
         }
         requestAnimationFrame(syncLoop);
@@ -1561,7 +1597,11 @@ else if (userSettings.visualizerMode === 'starburst') {
         };
 
                 async function loadTrackFromLibrary(song, options = {}) {
-            const { autoplay = true, resumeTime = null, keepPendingLocalFile = false } = options;
+            const { autoplay = true, resumeTime = null, keepPendingLocalFile = false, __fromCrossfade = false } = options;
+
+            // এই কলটি ক্রসফেড হ্যান্ডঅফের অংশ না হলে, আগের যেকোনো চলমান ক্রসফেড
+            // বাফার সাথে সাথে বন্ধ করে দাও (ব্যবহারকারী নিজে অন্য ট্র্যাক বেছে নিলে)
+            if (!__fromCrossfade) stopCrossfadeBuffer();
 
             const wasStagedLocalFile = !!pendingLocalAudioFile;
             const wasAppliedLocalFile = (activeSongId === 'custom-file');
@@ -1612,6 +1652,7 @@ else if (userSettings.visualizerMode === 'starburst') {
             updateHeaderTitle();
 
             await setAudioSource(song.audioUrl);
+            generateWaveform(song.id, song.audioUrl);
 
             if (songInput) songInput.value = song.title;
             if (artistInput) artistInput.value = song.artist;
@@ -1771,6 +1812,7 @@ if (btnPlayPauseMob) btnPlayPauseMob.onclick = handlePlayPause;
     });
 
     renderLibraryPlaylist();
+    setMediaSessionPlaybackState('playing');
 };
 
 audio.onpause = () => {
@@ -1783,6 +1825,9 @@ audio.onpause = () => {
 
     renderLibraryPlaylist();
     saveLastTrackState();
+    // ক্রসফেড চলাকালীন হ্যান্ডঅফের জন্য যে সংক্ষিপ্ত pause() কল হয়, সেটাকে
+    // "paused" হিসেবে লক-স্ক্রিনে না দেখানোর জন্য এই গার্ড
+    if (!crossfadeTriggered) setMediaSessionPlaybackState('paused');
 };
 
 setInterval(() => {
@@ -1796,6 +1841,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
         audio.onloadedmetadata = () => {
             durTimeLbl.innerText = formatTime(audio.duration);
+            updateMediaSessionPosition();
         };
 
         scrubber.addEventListener('pointerdown', () => { isScrubbing = true; });
@@ -2096,6 +2142,7 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
             activeSongId = 'custom-file';
             await setAudioSource(file);
+            generateWaveform('custom-file', file);
 
             // Fallback title/artist guessed from the filename — only used by updateHeaderTitle()
             // if the online auto-fetch (triggered at selection time) didn't find a match.
@@ -2178,7 +2225,9 @@ window.addEventListener('beforeunload', saveLastTrackState);
 
         // --- PREFERENCES & THEMES ---
         document.querySelectorAll('#theme-picker button').forEach(btn => {
+            if (btn.id === 'theme-swatch-auto') return; // এটির নিজস্ব হ্যান্ডলার নিচে যুক্ত করা হয়েছে
             btn.onclick = () => {
+                userSettings.autoThemeFromCover = false;
                 userSettings.themeColor = btn.dataset.color;
                 userSettings.themeRgb = btn.dataset.rgb;
                 userSettings.themeName = btn.dataset.name;
@@ -2417,4 +2466,502 @@ window.addEventListener('beforeunload', saveLastTrackState);
             const m = Math.floor(s / 60);
             const sec = Math.floor(s % 60);
             return `${m.toString().padStart(2, '0')}:${sec.toString().padStart(2, '0')}`;
+        }
+
+        /* =========================================================================
+           NEW FEATURE BLOCK
+           1) Lock Screen / Notification Media Controls  — MediaSession API
+           2) Crossfade / Gapless Playback                — dual-buffer smooth handoff
+           3) Auto Theme From Cover Art                    — dominant color extraction
+           4) Waveform Scrubber                             — decoded-audio peak canvas
+           ========================================================================= */
+
+        // ---------------------------------------------------------------------
+        // 1) MEDIA SESSION API — লক স্ক্রিন / নোটিফিকেশন মিডিয়া কন্ট্রোল
+        // ---------------------------------------------------------------------
+        function updateMediaSessionMetadata(titleOverride, artistOverride) {
+            if (!('mediaSession' in navigator)) return;
+            try {
+                const titleEl = document.getElementById('track-title');
+                const artistEl = document.getElementById('track-artist');
+                const coverImg = document.getElementById('desktop-cover-img');
+
+                const title = titleOverride || (titleEl && titleEl.innerText) || 'Lyrics Flow Pro';
+                const artist = artistOverride || (artistEl && artistEl.innerText) || '';
+
+                let artworkSrc = coverImg ? coverImg.src : '';
+                if (!artworkSrc) artworkSrc = new URL('Data/covers/default-cover.jpg', document.baseURI).href;
+
+                navigator.mediaSession.metadata = new MediaMetadata({
+                    title: title,
+                    artist: artist,
+                    album: 'Lyrics Flow Pro — Studio Edition',
+                    artwork: [
+                        { src: artworkSrc, sizes: '96x96', type: 'image/jpeg' },
+                        { src: artworkSrc, sizes: '192x192', type: 'image/jpeg' },
+                        { src: artworkSrc, sizes: '256x256', type: 'image/jpeg' },
+                        { src: artworkSrc, sizes: '384x384', type: 'image/jpeg' },
+                        { src: artworkSrc, sizes: '512x512', type: 'image/jpeg' }
+                    ]
+                });
+            } catch (e) {
+                console.log('MediaSession metadata error:', e);
+            }
+        }
+
+        function setMediaSessionPlaybackState(state) {
+            if ('mediaSession' in navigator) {
+                try { navigator.mediaSession.playbackState = state; } catch (e) { /* ignore */ }
+            }
+        }
+
+        function updateMediaSessionPosition() {
+            if (!('mediaSession' in navigator) || typeof navigator.mediaSession.setPositionState !== 'function') return;
+            if (!audio.duration || isNaN(audio.duration) || !isFinite(audio.duration)) return;
+            try {
+                navigator.mediaSession.setPositionState({
+                    duration: audio.duration,
+                    playbackRate: audio.playbackRate || 1,
+                    position: Math.max(0, Math.min(audio.currentTime, audio.duration))
+                });
+            } catch (e) { /* কিছু ব্রাউজারে সাপোর্ট নাও থাকতে পারে */ }
+        }
+
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('play', () => { triggerPlay(); });
+            navigator.mediaSession.setActionHandler('pause', () => { audio.pause(); });
+            navigator.mediaSession.setActionHandler('previoustrack', () => { playPreviousTrack(); });
+            navigator.mediaSession.setActionHandler('nexttrack', () => { playNextTrack(); });
+            try { navigator.mediaSession.setActionHandler('stop', () => { audio.pause(); seekAudioTo(0); }); } catch (e) {}
+            try {
+                navigator.mediaSession.setActionHandler('seekto', (details) => {
+                    if (details.fastSeek && typeof audio.fastSeek === 'function') { audio.fastSeek(details.seekTime); return; }
+                    seekAudioTo(details.seekTime);
+                });
+            } catch (e) { /* seekto অসমর্থিত হতে পারে */ }
+            try {
+                navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+                    seekAudioTo((audio.currentTime || 0) - (details.seekOffset || 10));
+                });
+                navigator.mediaSession.setActionHandler('seekforward', (details) => {
+                    seekAudioTo((audio.currentTime || 0) + (details.seekOffset || 10));
+                });
+            } catch (e) { /* seekbackward/forward অসমর্থিত হতে পারে */ }
+        }
+
+        // Track load-time metadata refresh — cover art may resolve slightly after the
+        // header title, so re-push metadata once the artwork actually loads too.
+        (function bindCoverToMediaSessionAndAdaptiveTheme() {
+            const coverImg = document.getElementById('desktop-cover-img');
+            if (!coverImg) return;
+            coverImg.addEventListener('load', () => {
+                updateMediaSessionMetadata();
+                if (coverImg.src.indexOf('default-cover') === -1) {
+                    applyAdaptiveTheme(coverImg);
+                }
+            });
+        })();
+
+        // ---------------------------------------------------------------------
+        // 3) AUTO THEME FROM COVER ART — কভার আর্ট থেকে ডমিন্যান্ট কালার তুলে থিম বদল
+        // ---------------------------------------------------------------------
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(v => Math.max(0, Math.min(255, Math.round(v))).toString(16).padStart(2, '0')).join('');
+        }
+
+        function rgbToHsl(r, g, b) {
+            r /= 255; g /= 255; b /= 255;
+            const max = Math.max(r, g, b), min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                switch (max) {
+                    case r: h = (g - b) / d + (g < b ? 6 : 0); break;
+                    case g: h = (b - r) / d + 2; break;
+                    default: h = (r - g) / d + 4; break;
+                }
+                h /= 6;
+            }
+            return [h * 360, s * 100, l * 100];
+        }
+
+        function hslToRgb(h, s, l) {
+            h /= 360; s /= 100; l /= 100;
+            let r, g, b;
+            if (s === 0) {
+                r = g = b = l;
+            } else {
+                const hue2rgb = (p, q, t) => {
+                    if (t < 0) t += 1;
+                    if (t > 1) t -= 1;
+                    if (t < 1 / 6) return p + (q - p) * 6 * t;
+                    if (t < 1 / 2) return q;
+                    if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+                    return p;
+                };
+                const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+                const p = 2 * l - q;
+                r = hue2rgb(p, q, h + 1 / 3);
+                g = hue2rgb(p, q, h);
+                b = hue2rgb(p, q, h - 1 / 3);
+            }
+            return [r * 255, g * 255, b * 255];
+        }
+
+        // ছোট ক্যানভাসে কভার আঁকা হয়, তারপর সবচেয়ে ভাইব্র্যান্ট (saturated) পিক্সেলকে
+        // অগ্রাধিকার দিয়ে একটি ডমিন্যান্ট কালার বাছাই করা হয়, এরপর অ্যাপের নিয়ন-থিম
+        // স্টাইলের সাথে মানানসই করতে saturation/lightness একটু বুস্ট করা হয়।
+        function extractDominantColor(imgEl) {
+            try {
+                const size = 32;
+                const cnv = document.createElement('canvas');
+                cnv.width = size; cnv.height = size;
+                const cx = cnv.getContext('2d', { willReadFrequently: true });
+                cx.drawImage(imgEl, 0, 0, size, size);
+                const data = cx.getImageData(0, 0, size, size).data;
+
+                let rSum = 0, gSum = 0, bSum = 0, count = 0;
+                let bestSat = -1, bestColor = null;
+
+                for (let i = 0; i < data.length; i += 4) {
+                    const r = data[i], g = data[i + 1], b = data[i + 2], a = data[i + 3];
+                    if (a < 128) continue;
+                    const [, s, l] = rgbToHsl(r, g, b);
+                    if (l > 8 && l < 92) { rSum += r; gSum += g; bSum += b; count++; }
+                    if (s > bestSat && l > 15 && l < 85) { bestSat = s; bestColor = [r, g, b]; }
+                }
+
+                if (!count) return null;
+
+                let [r, g, b] = (bestColor && bestSat > 20) ? bestColor : [rSum / count, gSum / count, bSum / count];
+                let [h, s, l] = rgbToHsl(r, g, b);
+                s = Math.max(s, 55);
+                l = Math.min(Math.max(l, 42), 62);
+                [r, g, b] = hslToRgb(h, s, l);
+
+                return { hex: rgbToHex(r, g, b), rgb: `${Math.round(r)}, ${Math.round(g)}, ${Math.round(b)}` };
+            } catch (e) {
+                // ক্রস-অরিজিন ইমেজে ক্যানভাস "tainted" হয়ে গেলে এখানে ধরা পড়বে
+                console.log('Adaptive cover-color extraction blocked:', e);
+                return null;
+            }
+        }
+
+        function applyAdaptiveTheme(imgEl) {
+            if (!userSettings.autoThemeFromCover) return;
+            const color = extractDominantColor(imgEl);
+            if (!color) return;
+
+            userSettings.themeColor = color.hex;
+            userSettings.themeRgb = color.rgb;
+            userSettings.themeName = 'ADAPTIVE COVER';
+            saveSettings();
+
+            document.documentElement.style.setProperty('--m3-primary', color.hex);
+            document.documentElement.style.setProperty('--m3-primary-rgb', color.rgb);
+            const themeTag = document.getElementById('theme-tag');
+            if (themeTag) { themeTag.innerText = userSettings.themeName; themeTag.style.color = color.hex; }
+
+            document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
+            const autoChip = document.getElementById('theme-swatch-auto');
+            if (autoChip) autoChip.classList.add('selected');
+        }
+
+        const themeSwatchAuto = document.getElementById('theme-swatch-auto');
+        if (themeSwatchAuto) {
+            themeSwatchAuto.onclick = () => {
+                userSettings.autoThemeFromCover = true;
+                saveSettings();
+                const coverImg = document.getElementById('desktop-cover-img');
+                if (coverImg && coverImg.src && coverImg.src.indexOf('default-cover') === -1 && coverImg.complete) {
+                    applyAdaptiveTheme(coverImg);
+                } else {
+                    // কভার এখনো লোড না হলে অন্তত সিলেকশন-ইন্ডিকেটরটা আপডেট করো;
+                    // কভার লোড হওয়ার পর load ইভেন্ট হ্যান্ডলারই আসল রঙ বসাবে
+                    document.querySelectorAll('#theme-picker .theme-swatch').forEach(b => b.classList.remove('selected'));
+                    themeSwatchAuto.classList.add('selected');
+                    const themeTag = document.getElementById('theme-tag');
+                    if (themeTag) themeTag.innerText = 'ADAPTIVE COVER (WAITING...)';
+                }
+            };
+        }
+
+        // ---------------------------------------------------------------------
+        // 4) WAVEFORM SCRUBBER — ডিকোড করা অডিও থেকে পিক ওয়েভফর্ম আঁকা
+        // ---------------------------------------------------------------------
+        const waveformPeakCache = {}; // key -> Float32Array of normalized 0..1 peaks
+        let currentWaveformPeaks = null;
+        let waveformDecodeToken = 0; // রেস কন্ডিশন এড়াতে (দ্রুত ট্র্যাক পরিবর্তনে পুরনো ডিকোড আটকানো)
+        let waveformDecodeCtx = null;
+
+        function getWaveformDecodeContext() {
+            if (!waveformDecodeCtx) {
+                try {
+                    waveformDecodeCtx = new (window.AudioContext || window.webkitAudioContext)();
+                } catch (e) {
+                    waveformDecodeCtx = null;
+                }
+            }
+            return waveformDecodeCtx;
+        }
+
+        function resizeWaveformCanvas() {
+            if (!waveformCanvas) return;
+            const dpr = window.devicePixelRatio || 1;
+            const rect = waveformCanvas.getBoundingClientRect();
+            if (rect.width === 0 || rect.height === 0) return;
+            waveformCanvas.width = rect.width * dpr;
+            waveformCanvas.height = rect.height * dpr;
+            if (waveformCtx) waveformCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+        window.addEventListener('resize', resizeWaveformCanvas);
+        resizeWaveformCanvas();
+
+        async function generateWaveform(cacheKey, source) {
+            if (!waveformCanvas || !waveformCtx) return;
+
+            currentWaveformPeaks = null;
+            scrubber.classList.remove('waveform-active');
+            drawWaveform();
+
+            if (Object.prototype.hasOwnProperty.call(waveformPeakCache, cacheKey)) {
+                currentWaveformPeaks = waveformPeakCache[cacheKey];
+                if (currentWaveformPeaks) scrubber.classList.add('waveform-active');
+                drawWaveform();
+                return;
+            }
+
+            const myToken = ++waveformDecodeToken;
+
+            try {
+                let arrayBuffer;
+                if (source instanceof File || source instanceof Blob) {
+                    arrayBuffer = await source.arrayBuffer();
+                } else if (typeof source === 'string') {
+                    const res = await fetch(source);
+                    if (!res.ok) throw new Error('Waveform source fetch failed');
+                    arrayBuffer = await res.arrayBuffer();
+                } else {
+                    return;
+                }
+
+                const ctx = getWaveformDecodeContext();
+                if (!ctx) return;
+
+                // decodeAudioData মূল অ্যারে-বাফারটি "detach" করে ফেলে, তাই একটি কপি ব্যবহার করা হচ্ছে
+                const audioBuffer = await ctx.decodeAudioData(arrayBuffer.slice(0));
+
+                if (myToken !== waveformDecodeToken) return; // ইতিমধ্যে অন্য ট্র্যাকে চলে গেছে
+
+                const BAR_COUNT = 140;
+                const channelData = audioBuffer.getChannelData(0);
+                const samplesPerBar = Math.max(1, Math.floor(channelData.length / BAR_COUNT));
+                const peaks = new Float32Array(BAR_COUNT);
+
+                for (let i = 0; i < BAR_COUNT; i++) {
+                    const start = i * samplesPerBar;
+                    const end = Math.min(channelData.length, start + samplesPerBar);
+                    let max = 0;
+                    for (let j = start; j < end; j++) {
+                        const v = Math.abs(channelData[j]);
+                        if (v > max) max = v;
+                    }
+                    peaks[i] = max;
+                }
+
+                // 0..1 রেঞ্জে নরমালাইজ করা (খুব নিচু-ভলিউমের ট্র্যাকও দৃশ্যমান হওয়ার জন্য)
+                let peakMax = 0;
+                for (let i = 0; i < peaks.length; i++) if (peaks[i] > peakMax) peakMax = peaks[i];
+                if (peakMax > 0.001) {
+                    for (let i = 0; i < peaks.length; i++) peaks[i] = peaks[i] / peakMax;
+                }
+
+                waveformPeakCache[cacheKey] = peaks;
+                if (myToken === waveformDecodeToken) {
+                    currentWaveformPeaks = peaks;
+                    scrubber.classList.add('waveform-active');
+                    drawWaveform();
+                }
+            } catch (e) {
+                // ডিকোড ব্যর্থ হলে (CORS, ফরম্যাট, ইত্যাদি) — স্বাভাবিক প্লেন স্লাইডারে থেকে যাওয়াই ঠিক
+                console.log('Waveform generation skipped:', e && e.message ? e.message : e);
+                waveformPeakCache[cacheKey] = null;
+            }
+        }
+
+        function drawWaveform() {
+            if (!waveformCanvas || !waveformCtx) return;
+            if (waveformCanvas.width === 0 || waveformCanvas.height === 0) resizeWaveformCanvas();
+            const dpr = window.devicePixelRatio || 1;
+            const w = waveformCanvas.width / dpr;
+            const h = waveformCanvas.height / dpr;
+            if (w === 0 || h === 0) return;
+
+            waveformCtx.clearRect(0, 0, w, h);
+            if (!currentWaveformPeaks || !currentWaveformPeaks.length) return;
+
+            const progress = (audio.duration && !isNaN(audio.duration)) ? (audio.currentTime / audio.duration) : 0;
+            const primaryColor = getComputedStyle(document.documentElement).getPropertyValue('--m3-primary').trim() || '#38BDF8';
+
+            const barCountW = currentWaveformPeaks.length;
+            const gap = 2;
+            const barWidth = Math.max(1.5, (w - gap * (barCountW - 1)) / barCountW);
+            const midY = h / 2;
+
+            for (let i = 0; i < barCountW; i++) {
+                const x = i * (barWidth + gap);
+                const played = (x / w) <= progress;
+                const amp = Math.max(0.06, currentWaveformPeaks[i]);
+                const barH = Math.max(2, amp * h);
+
+                waveformCtx.fillStyle = played ? primaryColor : 'rgba(255, 255, 255, 0.18)';
+                const radius = Math.min(barWidth / 2, 2);
+                const y = midY - barH / 2;
+
+                waveformCtx.beginPath();
+                if (typeof waveformCtx.roundRect === 'function') {
+                    waveformCtx.roundRect(x, y, barWidth, barH, radius);
+                } else {
+                    waveformCtx.rect(x, y, barWidth, barH);
+                }
+                waveformCtx.fill();
+            }
+        }
+
+        // ---------------------------------------------------------------------
+        // 2) CROSSFADE / GAPLESS PLAYBACK — ট্র্যাক বদলের সময় মসৃণ ট্রানজিশন
+        // ---------------------------------------------------------------------
+        function stopCrossfadeBuffer() {
+            crossfadeTriggered = false;
+            if (!crossfadeAudio) return;
+            try {
+                if (!crossfadeAudio.paused) crossfadeAudio.pause();
+                crossfadeAudio.volume = 0;
+                crossfadeAudio.removeAttribute('src');
+                crossfadeAudio.load();
+            } catch (e) { /* ignore */ }
+        }
+
+        function getUpcomingTrack() {
+            const playlist = window.PLAYLIST_DATA || [];
+            if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return null;
+
+            if (userSettings.shuffleEnabled) return pickShuffleTrack(playlist, activeSongId);
+
+            const currentIndex = playlist.findIndex(s => s.id === activeSongId);
+            if (currentIndex === -1) return null;
+            const isLastTrack = currentIndex === playlist.length - 1;
+            if (isLastTrack && userSettings.repeatMode !== 'all') return null;
+            return playlist[(currentIndex + 1) % playlist.length];
+        }
+
+        function rampDualVolume(fromA, toA, fromB, toB, durationMs) {
+            return new Promise(resolve => {
+                if (durationMs <= 0) {
+                    audio.volume = toA;
+                    if (crossfadeAudio) crossfadeAudio.volume = toB;
+                    resolve();
+                    return;
+                }
+                const start = performance.now();
+                function step(now) {
+                    const t = Math.min(1, (now - start) / durationMs);
+                    audio.volume = fromA + (toA - fromA) * t;
+                    if (crossfadeAudio) crossfadeAudio.volume = fromB + (toB - fromB) * t;
+                    if (t < 1 && crossfadeTriggered) {
+                        requestAnimationFrame(step);
+                    } else {
+                        resolve();
+                    }
+                }
+                requestAnimationFrame(step);
+            });
+        }
+
+        async function runCrossfade(nextTrack, fadeSecs) {
+            if (!crossfadeAudio) { crossfadeTriggered = false; return; }
+            const targetVol = userSettings.muted ? 0 : userSettings.volume;
+            const startVolA = audio.volume;
+
+            try {
+                crossfadeAudio.crossOrigin = 'anonymous';
+                crossfadeAudio.src = nextTrack.audioUrl;
+                crossfadeAudio.currentTime = 0;
+                crossfadeAudio.volume = 0;
+                await crossfadeAudio.play();
+            } catch (e) {
+                stopCrossfadeBuffer();
+                return; // স্বাভাবিক audio.onended এখন সাধারণ অ্যাডভান্স হিসেবে কাজ করবে
+            }
+
+            // ধাপ ১: বর্তমান ট্র্যাক ফেড-আউট + পরের ট্র্যাক ফেড-ইন (বাফার এলিমেন্টে)
+            await rampDualVolume(startVolA, 0, 0, targetVol, fadeSecs * 1000 * 0.6);
+            if (!crossfadeTriggered) return; // মাঝপথে ব্যবহারকারী অন্য কিছু করেছে
+
+            // ধাপ ২: মূল <audio> এলিমেন্টেই পরের ট্র্যাক লোড করা হচ্ছে (যাতে EQ,
+            // ভিজুয়ালাইজার, লিরিক্স সিঙ্ক ও মিডিয়া সেশন — সবকিছু স্বাভাবিকভাবে কাজ করে)
+            const handoffTime = crossfadeAudio.currentTime;
+            audio.pause();
+            audio.volume = 0;
+
+            await loadTrackFromLibrary(nextTrack, {
+                autoplay: false,
+                keepPendingLocalFile: true,
+                resumeTime: handoffTime,
+                __fromCrossfade: true
+            });
+
+            if (!crossfadeTriggered) { stopCrossfadeBuffer(); return; }
+
+            await triggerPlay();
+
+            // ধাপ ৩: মূল এলিমেন্ট ফেড-ইন + বাফার এলিমেন্ট ফেড-আউট
+            await rampDualVolume(0, targetVol, crossfadeAudio.volume, 0, fadeSecs * 1000 * 0.4);
+
+            stopCrossfadeBuffer();
+        }
+
+        function maybeStartCrossfade() {
+            if (!userSettings.crossfadeEnabled || crossfadeTriggered) return;
+            if (userSettings.repeatMode === 'one') return;
+            if (!audio.duration || isNaN(audio.duration) || !isFinite(audio.duration)) return;
+
+            const fadeSecs = Math.max(0.5, Math.min(12, parseFloat(userSettings.crossfadeDuration) || 4));
+            if (audio.duration - audio.currentTime > fadeSecs) return;
+
+            const nextTrack = getUpcomingTrack();
+            if (!nextTrack) return;
+
+            crossfadeTriggered = true;
+            runCrossfade(nextTrack, fadeSecs).catch(err => {
+                console.log('Crossfade error, falling back to normal auto-advance:', err);
+                stopCrossfadeBuffer();
+            });
+        }
+
+        // --- Crossfade Preferences UI wiring ---
+        const crossfadeToggle = document.getElementById('crossfade-toggle');
+        const crossfadeDurationSlider = document.getElementById('crossfade-duration-slider');
+        const crossfadeDurationLbl = document.getElementById('crossfade-duration-lbl');
+
+        if (crossfadeToggle) {
+            crossfadeToggle.checked = !!userSettings.crossfadeEnabled;
+            crossfadeToggle.onchange = (e) => {
+                userSettings.crossfadeEnabled = e.target.checked;
+                saveSettings();
+                if (!userSettings.crossfadeEnabled) stopCrossfadeBuffer();
+            };
+        }
+        if (crossfadeDurationSlider) {
+            crossfadeDurationSlider.value = userSettings.crossfadeDuration;
+            if (crossfadeDurationLbl) crossfadeDurationLbl.innerText = parseFloat(userSettings.crossfadeDuration).toFixed(1) + 's';
+            crossfadeDurationSlider.oninput = (e) => {
+                const val = parseFloat(e.target.value);
+                userSettings.crossfadeDuration = val;
+                if (crossfadeDurationLbl) crossfadeDurationLbl.innerText = val.toFixed(1) + 's';
+                saveSettings();
+            };
         }

@@ -444,10 +444,14 @@ document.addEventListener('click', (e) => {
         }
 
         // --- ALWAYS DISPLAY ON (SCREEN WAKE LOCK) ---
+        // Wake lock is only ever HELD when the toggle is on, the song is
+        // actually playing, AND the lyrics are auto-flowing (not manually
+        // scroll-locked by the user). If any one of those three stops being
+        // true, the lock is released — the toggle stays on for next time.
         const wakeLockToggle = document.getElementById('wake-lock-toggle');
 
         async function requestWakeLock() {
-            if ('wakeLock' in navigator && userSettings.isWakeLockActive) {
+            if ('wakeLock' in navigator && wakeLock === null) {
                 try {
                     wakeLock = await navigator.wakeLock.request('screen');
                 } catch (err) {
@@ -467,19 +471,29 @@ document.addEventListener('click', (e) => {
             }
         }
 
-        wakeLockToggle.onchange = async (e) => {
-            userSettings.isWakeLockActive = e.target.checked;
-            saveSettings();
-            if (userSettings.isWakeLockActive) {
+        // Central gatekeeper: call this any time playback state, lyric-flow
+        // lock state, or the user's toggle changes.
+        function shouldHoldWakeLock() {
+            return userSettings.isWakeLockActive && !audio.paused && !isAutoScrollLocked;
+        }
+
+        async function updateWakeLockState() {
+            if (shouldHoldWakeLock()) {
                 await requestWakeLock();
             } else {
                 await releaseWakeLock();
             }
+        }
+
+        wakeLockToggle.onchange = async (e) => {
+            userSettings.isWakeLockActive = e.target.checked;
+            saveSettings();
+            await updateWakeLockState();
         };
 
         document.addEventListener('visibilitychange', async () => {
-            if (wakeLock !== null && document.visibilityState === 'visible' && userSettings.isWakeLockActive) {
-                await requestWakeLock();
+            if (document.visibilityState === 'visible') {
+                await updateWakeLockState();
             }
             // Capture the "closed/backgrounded" timestamp reliably — on mobile, the app
             // going to background (home button, switching apps, actually closing) fires
@@ -489,9 +503,7 @@ document.addEventListener('click', (e) => {
             }
         });
 
-        if (userSettings.isWakeLockActive) {
-            requestWakeLock();
-        }
+        updateWakeLockState();
 
         // --- PLAYBACK MODE TOGGLE ENGINE ---
         // Repeat (Off -> All -> One -> Off) and Shuffle (independent on/off) are two
@@ -1376,6 +1388,7 @@ else if (userSettings.visualizerMode === 'starburst') {
                     isAutoScrollLocked = false;
                     resumeSyncBtn.classList.add('hidden');
                     updateScroll(idx, true);
+                    updateWakeLockState();
                 };
 
                 scroller.appendChild(div);
@@ -1466,7 +1479,10 @@ else if (userSettings.visualizerMode === 'starburst') {
             totalDragDistance += Math.abs(deltaY);
 
             if (totalDragDistance > 5) {
-                isAutoScrollLocked = true;
+                if (!isAutoScrollLocked) {
+                    isAutoScrollLocked = true;
+                    updateWakeLockState();
+                }
                 resumeSyncBtn.classList.remove('hidden');
             }
 
@@ -1506,6 +1522,7 @@ else if (userSettings.visualizerMode === 'starburst') {
             isAutoScrollLocked = false;
             resumeSyncBtn.classList.add('hidden');
             updateScroll(activeIndex, true);
+            updateWakeLockState();
         }
         resumeSyncBtn.onclick = resumeAutoSync;
 
@@ -1909,6 +1926,7 @@ if (btnPlayPauseMob) btnPlayPauseMob.onclick = handlePlayPause;
 
     renderLibraryPlaylist();
     setMediaSessionPlaybackState('playing');
+    updateWakeLockState();
 };
 
 audio.onpause = () => {
@@ -1924,6 +1942,7 @@ audio.onpause = () => {
     // ক্রসফেড চলাকালীন হ্যান্ডঅফের জন্য যে সংক্ষিপ্ত pause() কল হয়, সেটাকে
     // "paused" হিসেবে লক-স্ক্রিনে না দেখানোর জন্য এই গার্ড
     if (!crossfadeTriggered) setMediaSessionPlaybackState('paused');
+    updateWakeLockState();
 };
 
 setInterval(() => {

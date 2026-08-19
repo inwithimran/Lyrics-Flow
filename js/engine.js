@@ -454,6 +454,14 @@ document.addEventListener('click', (e) => {
             if ('wakeLock' in navigator && wakeLock === null) {
                 try {
                     wakeLock = await navigator.wakeLock.request('screen');
+                    // The OS/browser can release the sentinel on its own (tab backgrounded,
+                    // app switched away, etc.) without going through releaseWakeLock().
+                    // Without this listener, our `wakeLock` variable would stay pointing at
+                    // a dead sentinel, so requestWakeLock() would think a lock is already
+                    // held and skip re-acquiring it when the app comes back to the foreground.
+                    wakeLock.addEventListener('release', () => {
+                        wakeLock = null;
+                    });
                 } catch (err) {
                     console.log('Wake Lock Error:', err);
                 }

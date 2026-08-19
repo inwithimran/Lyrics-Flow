@@ -667,6 +667,40 @@ document.write(`
             box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.5);
         }
 
+        /* Desktop Right-Sidebar Playlist Dock — same glass language as
+           .dt-panel-card, but with a fixed viewport height so a long library
+           scrolls internally instead of pushing the EQ/LRC cards below it
+           off-screen. */
+        .dt-playlist-card {
+            background: rgba(18, 23, 36, 0.65);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+            height: min(46vh, 420px);
+        }
+
+        .dt-playlist-card:hover {
+            border-color: rgba(var(--m3-primary-rgb), 0.3);
+            box-shadow: 0 12px 32px -10px rgba(0, 0, 0, 0.5);
+        }
+
+        .dt-playlist-scroll {
+            flex: 1 1 auto;
+            min-height: 0;
+        }
+
+        /* Brief highlight pulse when "Tracks" quick-nav scrolls the sidebar into view */
+        .dt-playlist-flash {
+            animation: dtPlaylistFlash 0.9s ease-out;
+        }
+
+        @keyframes dtPlaylistFlash {
+            0% { box-shadow: 0 0 0 2px rgba(var(--m3-primary-rgb), 0.6), 0 12px 32px -10px rgba(0, 0, 0, 0.5); }
+            100% { box-shadow: 0 0 0 0px rgba(var(--m3-primary-rgb), 0); }
+        }
+
         /* Seamless List Row */
         .m3-list-row {
             padding: 12px 0;
@@ -788,7 +822,7 @@ document.write(`
 
         <div class="flex items-center gap-2.5 shrink-0 lg:justify-self-end">
             <!-- Music Library Button (Desktop/Tablet header — moved to mobile footer control row below) -->
-            <button id="open-library-btn" class="hidden sm:flex px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
+            <button id="open-library-btn" class="hidden sm:flex lg:hidden px-5 py-2.5 sm:py-2 bg-white/5 hover:bg-white/10 rounded-2xl text-slate-300 hover:text-white transition-all text-xs font-bold items-center gap-2 active:scale-95 border border-white/10 shadow-sm" title="Music Library">
                 <i class="fa-solid fa-music text-sky-400"></i>
                 <span class="hidden sm:inline">Library</span>
             </button>
@@ -855,7 +889,7 @@ document.write(`
                     <span class="text-[9px] font-mono text-slate-400 bg-white/5 px-2 py-0.5 rounded-full">Quick Access</span>
                 </div>
                 <div class="grid grid-cols-2 gap-2 text-[11px] font-bold">
-                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="document.getElementById('open-library-btn').click()">
+                    <button class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm" onclick="window.jumpToDesktopPlaylist ? window.jumpToDesktopPlaylist() : document.getElementById('open-library-btn').click()">
                         <i class="fa-solid fa-list-ul text-sky-400 text-xs"></i> Tracks
                     </button>
                     <button data-studio-tab="tab-dsp" class="p-2.5 rounded-xl bg-white/5 hover:bg-white/10 border border-white/5 text-slate-300 flex items-center justify-center gap-2 transition-all active:scale-95 shadow-sm">
@@ -912,8 +946,36 @@ document.write(`
             </button>
         </main>
 
-        <!-- DESKTOP RIGHT SIDEBAR (Audio & Lyrics Dock, Equalizer) -->
+        <!-- DESKTOP RIGHT SIDEBAR (Playlist, Audio & Lyrics Dock, Equalizer) -->
         <aside class="hidden lg:flex lg:w-72 xl:w-80 flex-col gap-3.5 flex-shrink-0 h-full overflow-y-auto pl-0.5 pb-24">
+
+            <!-- 0. DESKTOP PLAYLIST DOCK — always-visible, searchable song list.
+                 Mirrors the mobile "Music Library" bottom sheet 1:1 in data/behavior
+                 (see #playlist-container / renderLibraryPlaylist in js/engine.js),
+                 just styled + docked for widescreen use instead of a modal. -->
+            <div class="dt-playlist-card flex flex-col shrink-0 overflow-hidden">
+                <div class="p-3.5 pb-3 border-b border-white/8 shrink-0 space-y-2.5">
+                    <div class="flex items-center justify-between gap-2">
+                        <span class="text-[11px] font-extrabold text-white flex items-center gap-1.5">
+                            <span class="w-6 h-6 rounded-lg bg-sky-500/15 border border-sky-500/25 flex items-center justify-center text-m3-primary shrink-0">
+                                <i class="fa-solid fa-list-ul text-[10px]"></i>
+                            </span>
+                            Playlist
+                        </span>
+                        <span id="library-track-count-desktop" class="text-[9px] font-mono font-bold px-2 py-0.5 rounded-full bg-white/5 border border-white/10 text-slate-300 shrink-0">0 tracks</span>
+                    </div>
+                    <div class="relative flex items-center">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 text-[10px] text-slate-400"></i>
+                        <input type="text" id="library-search-input-desktop" placeholder="Search track or artist..." class="m3-input pl-8 pr-7 py-2 text-[11px]">
+                        <button id="btn-clear-library-search-desktop" class="hidden absolute right-2.5 text-[11px] text-slate-400 hover:text-white" aria-label="Clear search">
+                            <i class="fa-solid fa-circle-xmark"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="dt-playlist-scroll px-3 py-3 space-y-2 overflow-y-auto" id="playlist-container-desktop">
+                    <!-- Dynamically populated by renderLibraryPlaylist() in js/engine.js -->
+                </div>
+            </div>
 
             <!-- 1. AUDIO & LYRICS DOCK (Local Audio, Local/Online LRC, Apply) -->
             <div class="p-3.5 dt-panel-card space-y-3">

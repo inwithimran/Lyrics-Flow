@@ -1535,9 +1535,15 @@ else if (userSettings.visualizerMode === 'starburst') {
         resumeSyncBtn.onclick = resumeAutoSync;
 
         // --- MUSIC LIBRARY RENDERER, SEARCH & TRACK SELECTOR ---
+        // Two render targets share one search query & one playlist state:
+        // the mobile/tablet bottom-sheet list, and the always-visible desktop
+        // right-sidebar list (desktop only — see #playlist-container-desktop).
         const playlistContainer = document.getElementById('playlist-container');
         const searchInput = document.getElementById('library-search-input');
         const clearSearchBtn = document.getElementById('btn-clear-library-search');
+        const playlistContainerDesktop = document.getElementById('playlist-container-desktop');
+        const searchInputDesktop = document.getElementById('library-search-input-desktop');
+        const clearSearchBtnDesktop = document.getElementById('btn-clear-library-search-desktop');
 
         // --- AUTO COVER ART (iTunes Search API) ---
         // Manual coverUrl/cover fields in musicData.js are no longer used. Every song's
@@ -1605,81 +1611,87 @@ else if (userSettings.visualizerMode === 'starburst') {
 
         window.renderLibraryPlaylist = renderLibraryPlaylist;
         function renderLibraryPlaylist() {
-            playlistContainer.innerHTML = '';
+            const renderTargets = [playlistContainer, playlistContainerDesktop].filter(Boolean);
+            if (!renderTargets.length) return;
+
             const playlist = window.PLAYLIST_DATA || [];
 
+            const query = searchQuery.toLowerCase().trim();
             const filtered = playlist.filter(song => {
-                const query = searchQuery.toLowerCase().trim();
                 if (!query) return true;
                 return song.title.toLowerCase().includes(query) || song.artist.toLowerCase().includes(query);
             });
 
-            const countBadge = document.getElementById('library-track-count');
-            if (countBadge) {
+            [document.getElementById('library-track-count'), document.getElementById('library-track-count-desktop')].forEach(countBadge => {
+                if (!countBadge) return;
                 if (searchQuery.trim()) {
                     countBadge.innerText = `${filtered.length} of ${playlist.length}`;
                 } else {
                     countBadge.innerText = `${playlist.length} ${playlist.length === 1 ? 'track' : 'tracks'}`;
                 }
-            }
+            });
 
-            if (filtered.length === 0) {
-                playlistContainer.innerHTML = `
-                    <div class="text-center py-8 text-slate-400">
-                        <i class="fa-solid fa-magnifying-glass text-2xl mb-2 opacity-50 block"></i>
-                        <p class="text-xs font-semibold">No tracks found matching "${escapeHTML(searchQuery)}"</p>
-                    </div>
-                `;
-                return;
-            }
+            renderTargets.forEach(target => {
+                target.innerHTML = '';
 
-            filtered.forEach((song, index) => {
-                const isSelected = song.id === activeSongId;
-                const isPlaying = isSelected && !audio.paused;
-                const card = document.createElement('div');
-                card.dataset.songId = song.id;
-                card.className = `library-track-card p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
-                    isSelected
-                        ? 'is-active text-white'
-                        : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
-                }`;
-
-                const activeIconHtml = `
-                    <div class="equalizer-icon ${isPlaying ? '' : 'paused'}">
-                        <span class="equalizer-bar"></span>
-                        <span class="equalizer-bar"></span>
-                        <span class="equalizer-bar"></span>
-                    </div>
-                `;
-
-                const avatarStyle = isSelected
-                    ? `background-color: rgba(var(--m3-primary-rgb), 0.18); border-color: rgba(var(--m3-primary-rgb), 0.4); color: var(--m3-primary);`
-                    : '';
-
-                card.innerHTML = `
-                    <div class="flex items-center gap-3 min-w-0">
-                        <div class="relative w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
-                            <img class="library-track-cover absolute inset-0 w-full h-full object-cover" alt="">
-                            ${isSelected ? `<div class="relative z-10 flex items-center justify-center w-full h-full" style="background-color: rgba(var(--m3-primary-rgb), 0.5);">${activeIconHtml}</div>` : `<span class="library-track-index relative z-10 text-[10px] font-mono font-bold" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">${String(index + 1).padStart(2, '0')}</span>`}
+                if (filtered.length === 0) {
+                    target.innerHTML = `
+                        <div class="text-center py-8 text-slate-400">
+                            <i class="fa-solid fa-magnifying-glass text-2xl mb-2 opacity-50 block"></i>
+                            <p class="text-xs font-semibold">No tracks found matching "${escapeHTML(searchQuery)}"</p>
                         </div>
-                        <div class="min-w-0">
-                            <div class="flex items-center gap-1.5 min-w-0">
-                                <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${escapeHTML(song.title)}</h4>
-                                ${isSelected ? `<span class="shrink-0 text-[8px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background-color: rgba(var(--m3-primary-rgb), 0.2); color: var(--m3-primary);">${isPlaying ? 'Playing' : 'Paused'}</span>` : ''}
+                    `;
+                    return;
+                }
+
+                filtered.forEach((song, index) => {
+                    const isSelected = song.id === activeSongId;
+                    const isPlaying = isSelected && !audio.paused;
+                    const card = document.createElement('div');
+                    card.dataset.songId = song.id;
+                    card.className = `library-track-card p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between gap-3 ${
+                        isSelected
+                            ? 'is-active text-white'
+                            : 'bg-white/5 border-white/5 hover:bg-white/10 text-slate-200'
+                    }`;
+
+                    const activeIconHtml = `
+                        <div class="equalizer-icon ${isPlaying ? '' : 'paused'}">
+                            <span class="equalizer-bar"></span>
+                            <span class="equalizer-bar"></span>
+                            <span class="equalizer-bar"></span>
+                        </div>
+                    `;
+
+                    const avatarStyle = isSelected
+                        ? `background-color: rgba(var(--m3-primary-rgb), 0.18); border-color: rgba(var(--m3-primary-rgb), 0.4); color: var(--m3-primary);`
+                        : '';
+
+                    card.innerHTML = `
+                        <div class="flex items-center gap-3 min-w-0">
+                            <div class="relative w-10 h-10 rounded-xl bg-slate-900 border border-white/10 flex items-center justify-center shrink-0 overflow-hidden ${isSelected ? '' : 'text-slate-400'}" style="${avatarStyle}">
+                                <img class="library-track-cover absolute inset-0 w-full h-full object-cover" alt="">
+                                ${isSelected ? `<div class="relative z-10 flex items-center justify-center w-full h-full" style="background-color: rgba(var(--m3-primary-rgb), 0.5);">${activeIconHtml}</div>` : `<span class="library-track-index relative z-10 text-[10px] font-mono font-bold" style="text-shadow: 0 1px 3px rgba(0,0,0,0.8);">${String(index + 1).padStart(2, '0')}</span>`}
                             </div>
-                            <p class="text-[10px] md:text-xs text-slate-400 truncate">${escapeHTML(song.artist)}</p>
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-1.5 min-w-0">
+                                    <h4 class="text-xs md:text-sm font-bold truncate ${isSelected ? '' : 'text-slate-100'}" style="${isSelected ? 'color: var(--m3-primary);' : ''}">${escapeHTML(song.title)}</h4>
+                                    ${isSelected ? `<span class="shrink-0 text-[8px] font-extrabold uppercase tracking-wider px-1.5 py-0.5 rounded-full" style="background-color: rgba(var(--m3-primary-rgb), 0.2); color: var(--m3-primary);">${isPlaying ? 'Playing' : 'Paused'}</span>` : ''}
+                                </div>
+                                <p class="text-[10px] md:text-xs text-slate-400 truncate">${escapeHTML(song.artist)}</p>
+                            </div>
                         </div>
-                    </div>
-                    <button class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow ${isSelected ? '' : 'bg-white/10 text-slate-200'}" style="${isSelected ? 'background-color: var(--m3-primary); color: #0a0d14;' : ''}">
-                        <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
-                    </button>
-                `;
+                        <button class="w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-xs shadow ${isSelected ? '' : 'bg-white/10 text-slate-200'}" style="${isSelected ? 'background-color: var(--m3-primary); color: #0a0d14;' : ''}">
+                            <i class="fa-solid ${isPlaying ? 'fa-pause' : 'fa-play'}"></i>
+                        </button>
+                    `;
 
-                card.onclick = () => loadTrackFromLibrary(song);
-                playlistContainer.appendChild(card);
+                    card.onclick = () => loadTrackFromLibrary(song);
+                    target.appendChild(card);
 
-                const cardCoverImg = card.querySelector('.library-track-cover');
-                applyAutoCover(cardCoverImg, song);
+                    const cardCoverImg = card.querySelector('.library-track-cover');
+                    applyAutoCover(cardCoverImg, song);
+                });
             });
         }
 
@@ -1687,29 +1699,51 @@ else if (userSettings.visualizerMode === 'starburst') {
             requestAnimationFrame(() => {
                 setTimeout(() => {
                     if (!activeSongId) return;
-                    const activeCard = playlistContainer.querySelector(`[data-song-id="${activeSongId}"]`);
-                    if (activeCard) {
-                        activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                    }
+                    [playlistContainer, playlistContainerDesktop].forEach(target => {
+                        if (!target) return;
+                        const activeCard = target.querySelector(`[data-song-id="${activeSongId}"]`);
+                        if (activeCard) {
+                            activeCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    });
                 }, 450);
             });
         };
 
-        searchInput.oninput = (e) => {
-            searchQuery = e.target.value;
-            if (searchQuery) {
-                clearSearchBtn.classList.remove('hidden');
-            } else {
-                clearSearchBtn.classList.add('hidden');
-            }
+        // A single search query drives both lists — typing in either the desktop
+        // sidebar search box or the mobile library-sheet search box keeps the
+        // other one in sync.
+        function handleLibrarySearchInput(value) {
+            searchQuery = value;
+            if (searchInput && searchInput.value !== value) searchInput.value = value;
+            if (searchInputDesktop && searchInputDesktop.value !== value) searchInputDesktop.value = value;
+            if (clearSearchBtn) clearSearchBtn.classList.toggle('hidden', !value);
+            if (clearSearchBtnDesktop) clearSearchBtnDesktop.classList.toggle('hidden', !value);
             renderLibraryPlaylist();
-        };
+        }
 
-        clearSearchBtn.onclick = () => {
-            searchInput.value = '';
-            searchQuery = '';
-            clearSearchBtn.classList.add('hidden');
-            renderLibraryPlaylist();
+        if (searchInput) searchInput.oninput = (e) => handleLibrarySearchInput(e.target.value);
+        if (clearSearchBtn) clearSearchBtn.onclick = () => handleLibrarySearchInput('');
+        if (searchInputDesktop) searchInputDesktop.oninput = (e) => handleLibrarySearchInput(e.target.value);
+        if (clearSearchBtnDesktop) clearSearchBtnDesktop.onclick = () => handleLibrarySearchInput('');
+
+        // Desktop "Tracks" quick-nav button target: scrolls the always-visible
+        // right-sidebar playlist dock into view and briefly highlights it,
+        // rather than opening the mobile-style library modal (which is hidden
+        // at the lg breakpoint now that the sidebar list replaces it there).
+        window.jumpToDesktopPlaylist = function() {
+            const card = playlistContainerDesktop && playlistContainerDesktop.closest('.dt-playlist-card');
+            if (!card) {
+                const fallbackBtn = document.getElementById('open-library-btn');
+                if (fallbackBtn) fallbackBtn.click();
+                return;
+            }
+            card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            card.classList.add('dt-playlist-flash');
+            setTimeout(() => card.classList.remove('dt-playlist-flash'), 900);
+            setTimeout(() => {
+                if (searchInputDesktop) searchInputDesktop.focus();
+            }, 350);
         };
 
                 async function loadTrackFromLibrary(song, options = {}) {

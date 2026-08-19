@@ -708,6 +708,96 @@ function pickShuffleTrack(playlist, excludeId) {
         document.getElementById('btn-prev-track').onclick = playPreviousTrack;
         document.getElementById('btn-next-track').onclick = playNextTrack;
 
+        // --- ADJACENT TRACK PRELOADING (previous 2 / next 2 in the library) ---
+        // Warms the browser's HTTP cache for the tracks around the one currently
+        // playing, so tapping Next/Prev feels instant instead of waiting for a
+        // fresh buffer. Only meaningful for the library's own sequential order —
+        // Shuffle picks its next track randomly at transition time, so there's
+        // nothing fixed to preload ahead of time for it.
+        const preloadedTracks = new Map(); // songId -> hidden Audio element
+        let preloadScheduleTimer = null;
+        let preloadScheduleListener = null;
+
+        function getAdjacentSongs(radius = 2) {
+            const playlist = window.PLAYLIST_DATA || [];
+            if (!playlist.length || activeSongId === 'custom-file' || !activeSongId) return [];
+
+            const currentIndex = playlist.findIndex(s => s.id === activeSongId);
+            if (currentIndex === -1) return [];
+
+            const wanted = new Map(); // songId -> song, de-duplicated (short playlists can wrap onto themselves)
+            for (let step = 1; step <= radius; step++) {
+                const nextSong = playlist[(currentIndex + step) % playlist.length];
+                const prevSong = playlist[(currentIndex - step + playlist.length) % playlist.length];
+                if (nextSong && nextSong.id !== activeSongId) wanted.set(nextSong.id, nextSong);
+                if (prevSong && prevSong.id !== activeSongId) wanted.set(prevSong.id, prevSong);
+            }
+            return Array.from(wanted.values());
+        }
+
+        function preloadAdjacentTracks() {
+            // Respect Data Saver / metered connections where the browser exposes it.
+            try {
+                if (navigator.connection && navigator.connection.saveData) return;
+            } catch (e) { /* navigator.connection unsupported, ignore */ }
+
+            const wantedSongs = getAdjacentSongs(2);
+            const wantedIds = new Set(wantedSongs.map(s => s.id));
+
+            // Evict anything preloaded that's no longer within the current window,
+            // so the pool can't grow unbounded as the user browses around and cap
+            // how much bandwidth/memory this feature can ever hold onto.
+            preloadedTracks.forEach((audioEl, songId) => {
+                if (!wantedIds.has(songId)) {
+                    try {
+                        audioEl.removeAttribute('src');
+                        audioEl.load();
+                    } catch (e) { /* ignore */ }
+                    preloadedTracks.delete(songId);
+                }
+            });
+
+            wantedSongs.forEach(song => {
+                if (!song.audioUrl || preloadedTracks.has(song.id)) return;
+                const preloadEl = new Audio();
+                preloadEl.preload = 'auto';
+                preloadEl.crossOrigin = 'anonymous';
+                preloadEl.muted = true;
+                preloadEl.src = song.audioUrl;
+                // Keep it off-DOM and silent — it exists purely to make the browser
+                // fetch/cache the file, never to actually play audible sound.
+                preloadedTracks.set(song.id, preloadEl);
+            });
+        }
+
+        // Deferred the same way scheduleWaveformGeneration() is: fire once the
+        // currently playing track can actually play (or after 800ms regardless),
+        // so this preloading never competes for bandwidth with the track that's
+        // supposed to be starting right now.
+        function schedulePreloadAdjacentTracks() {
+            if (preloadScheduleTimer) {
+                clearTimeout(preloadScheduleTimer);
+                preloadScheduleTimer = null;
+            }
+            if (preloadScheduleListener) {
+                audio.removeEventListener('canplay', preloadScheduleListener);
+                preloadScheduleListener = null;
+            }
+
+            let started = false;
+            const start = () => {
+                if (started) return;
+                started = true;
+                if (preloadScheduleTimer) { clearTimeout(preloadScheduleTimer); preloadScheduleTimer = null; }
+                if (preloadScheduleListener) { audio.removeEventListener('canplay', preloadScheduleListener); preloadScheduleListener = null; }
+                preloadAdjacentTracks();
+            };
+
+            preloadScheduleListener = start;
+            audio.addEventListener('canplay', preloadScheduleListener, { once: true });
+            preloadScheduleTimer = setTimeout(start, 800);
+        }
+
         // --- SHOW/HIDE THE SOFT-BAR VISUALIZER STRIP ---
         // On desktop, when a non-"bars" style (e.g. the galaxy/orbit style) is active,
         // the bar strip's reserved space/background can visually cover part of the
@@ -1658,6 +1748,7 @@ else if (userSettings.visualizerMode === 'starburst') {
             // গান লোড হতে/পরের গানে যেতে দেরি হয়। তাই আগে গান বাজা শুরু হওয়ার একটু
             // সুযোগ দিয়ে (canplay ইভেন্টের পর, বা সর্বোচ্চ ৮০০ms পর) ওয়েভফর্ম আনা হচ্ছে।
             scheduleWaveformGeneration(song.id, song.audioUrl);
+            schedulePreloadAdjacentTracks();
 
             if (songInput) songInput.value = song.title;
             if (artistInput) artistInput.value = song.artist;
